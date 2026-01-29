@@ -262,7 +262,7 @@ namespace MudBlazor
         public string? Height { get; set; }
 
         /// <summary>
-        /// The position of this drawer when opened, relative to a <see cref="MudAppBar"/> when inside a <see cref="MudLayout"/>.
+        /// The position of this drawer when opened, relative to a <see cref="HamkareAppBar"/> when inside a <see cref="MudLayout"/>.
         /// </summary>
         [Parameter, ParameterState(ParameterUsage = ParameterUsageOptions.None)]
         [Category(CategoryTypes.Drawer.Behavior)]

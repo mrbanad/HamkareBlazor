@@ -12,8 +12,8 @@ namespace MudBlazor;
 /// <summary>
 /// A contextual app bar.
 /// </summary>
-/// <seealso cref="MudAppBar"/>
-public partial class MudContextualActionBar : MudAppBar
+/// <seealso cref="HamkareAppBar"/>
+public partial class MudContextualActionBar : HamkareAppBar
 {
     private new bool Contextual { get; set; }
 

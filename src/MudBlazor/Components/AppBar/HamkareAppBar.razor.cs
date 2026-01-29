@@ -10,7 +10,7 @@ namespace MudBlazor;
 /// Displays actions, branding, navigation and screen titles. Keep the app bar persistent while browsing different pages to ease navigation and access to actions for users.
 /// </summary>
 /// <seealso cref="MudContextualActionBar"/>
-public partial class MudAppBar : MudComponentBase
+public partial class HamkareAppBar : MudComponentBase
 {
     internal static SectionOutlet ContextualActionBar { get; } = new();
 

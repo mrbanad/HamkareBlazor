@@ -101,7 +101,9 @@
     <ScssAssetInputs Include="Styles/**/*.scss" />
     <WebAssetInputs Include="@(JsAssetInputs);@(ScssAssetInputs)" />
     <UpToDateCheckInput Include="@(WebAssetInputs)" />
-    <WebAssetOutputs Include="wwwroot/MudBlazor.min.js;wwwroot/MudBlazor.min.js.map;wwwroot/MudBlazor.min.css" />
+    <WebAssetOutputs Include="wwwroot/MudBlazor.min.js" />
+    <WebAssetOutputs Include="wwwroot/MudBlazor.min.js.map" />
+    <WebAssetOutputs Include="wwwroot\HamkareBlazor.min.css" />
   </ItemGroup>
 
   <PropertyGroup>
