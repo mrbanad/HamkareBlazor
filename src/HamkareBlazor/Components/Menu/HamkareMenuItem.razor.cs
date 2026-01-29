@@ -1,15 +1,15 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using MudBlazor.Utilities;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
     /// <summary>
-    /// A choice displayed as part of a list within a <see cref="MudMenu"/> component.
+    /// A choice displayed as part of a list within a <see cref="HamkareMenu"/> component.
     /// </summary>
-    /// <seealso cref="MudMenu" />
-    public partial class MudMenuItem : MudComponentBase
+    /// <seealso cref="HamkareMenu" />
+    public partial class HamkareMenuItem : HamkareComponentBase
     {
         [Inject]
         protected NavigationManager UriHelper { get; set; } = null!;
@@ -18,19 +18,19 @@ namespace MudBlazor
         protected IJsApiService JsApiService { get; set; } = null!;
 
         protected string Classname =>
-            new CssBuilder("mud-menu-item")
-                .AddClass("mud-disabled", GetDisabled())
-                .AddClass("mud-ripple", !GetDisabled())
-                .AddClass("mud-list-item-clickable", !GetDisabled())
-                .AddClass("mud-menu-item-dense", GetDense())
+            new CssBuilder("hamkare-menu-item")
+                .AddClass("hamkare-disabled", GetDisabled())
+                .AddClass("hamkare-ripple", !GetDisabled())
+                .AddClass("hamkare-list-item-clickable", !GetDisabled())
+                .AddClass("hamkare-menu-item-dense", GetDense())
                 .AddClass(Class)
                 .Build();
 
         /// <summary>
-        /// The <see cref="MudMenu"/> which contains this item.
+        /// The <see cref="HamkareMenu"/> which contains this item.
         /// </summary>
         [CascadingParameter]
-        public MudMenu? ParentMenu { get; set; }
+        public HamkareMenu? ParentMenu { get; set; }
 
         /// <summary>
         /// The text shown on this menu item if <see cref="ChildContent"/> is not set.
@@ -136,7 +136,7 @@ namespace MudBlazor
         /// <summary>
         /// The menu item is acting as the activator for a sub menu.
         /// </summary>
-        protected bool ActivatesSubMenu => Class?.Contains("mud-menu-sub-menu-activator") == true;
+        protected bool ActivatesSubMenu => Class?.Contains("hamkare-menu-sub-menu-activator") == true;
 
         protected internal async Task OnClickHandlerAsync(MouseEventArgs ev)
         {

@@ -1,6 +1,6 @@
-﻿@namespace MudBlazor
-@using MudBlazor.Utilities
-@inherits MudComponentBase
+﻿@namespace HamkareBlazor
+@using HamkareBlazor.Utilities
+@inherits HamkareComponentBase
 
 <div @attributes="UserAttributes" class="@Classname" style="@Style">
     @ChildContent
@@ -9,10 +9,10 @@
 @code {
 #nullable enable
     protected string Classname =>
-        new CssBuilder("mud-container")
-            .AddClass($"mud-container-fixed", Fixed)
-            .AddClass($"mud-container-maxwidth-{MaxWidth.ToStringFast(true)}", !Fixed)
-            .AddClass($"mud-container--gutters", Gutters)
+        new CssBuilder("hamkare-container")
+            .AddClass($"hamkare-container-fixed", Fixed)
+            .AddClass($"hamkare-container-maxwidth-{MaxWidth.ToStringFast(true)}", !Fixed)
+            .AddClass($"hamkare-container--gutters", Gutters)
             .AddClass(Class)
             .Build();
 

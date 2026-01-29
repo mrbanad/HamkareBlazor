@@ -1,17 +1,17 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using MudBlazor.Interfaces;
+using HamkareBlazor.Interfaces;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
     /// <summary>
-    /// Represents the validation logic for a <see cref="MudDataGrid{T}"/> row.
+    /// Represents the validation logic for a <see cref="HamkareDataGrid{T}"/> row.
     /// </summary>
     public class DataGridRowValidator : IForm
     {

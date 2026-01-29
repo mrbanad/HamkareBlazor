@@ -1,10 +1,10 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using Microsoft.JSInterop;
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 #nullable enable
 /// <summary>
@@ -26,7 +26,7 @@ internal class JsApiService : IJsApiService
     /// <inheritdoc />
     public ValueTask CopyToClipboardAsync(string? text)
     {
-        return _jsRuntime.InvokeVoidAsync("mudWindow.copyToClipboard", text);
+        return _jsRuntime.InvokeVoidAsync("hamkareWindow.copyToClipboard", text);
     }
 
     /// <inheritdoc />
@@ -43,12 +43,12 @@ internal class JsApiService : IJsApiService
     /// <inheritdoc />
     public ValueTask OpenInNewTabAsync(string url)
     {
-        return _jsRuntime.InvokeVoidAsync("mudWindow.open", url, "_blank");
+        return _jsRuntime.InvokeVoidAsync("hamkareWindow.open", url, "_blank");
     }
 
     /// <inheritdoc />
     public ValueTask UpdateStyleProperty(string elementId, string propertyName, object value)
     {
-        return _jsRuntime.InvokeVoidAsync("mudWindow.updateStyleProperty", elementId, propertyName, value);
+        return _jsRuntime.InvokeVoidAsync("hamkareWindow.updateStyleProperty", elementId, propertyName, value);
     }
 }

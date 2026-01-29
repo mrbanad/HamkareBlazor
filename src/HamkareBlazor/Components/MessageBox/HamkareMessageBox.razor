@@ -1,15 +1,15 @@
-﻿@namespace MudBlazor
-@inherits MudComponentBase
+﻿@namespace HamkareBlazor
+@inherits HamkareComponentBase
 
 @{
 #nullable enable
 }
 
-<MudDialog @attributes="UserAttributes" Class="@Classname">
+<HamkareDialog @attributes="UserAttributes" Class="@Classname">
     <TitleContent>
         @if (TitleContent is null)
         {
-            <MudText Typo="Typo.h6">@Title</MudText>
+            <HamkareText Typo="Typo.h6">@Title</HamkareText>
         }
         else
         {
@@ -29,7 +29,7 @@
     </DialogContent>
     <DialogActions>
         <div tabindex="-1" class="d-contents">
-            <MudFocusTrap DefaultFocus="DefaultFocus.LastChild">
+            <HamkareFocusTrap DefaultFocus="DefaultFocus.LastChild">
                 @if (CancelButton is not null)
                 {
                     <CascadingValue Value="@_cancelCallback">
@@ -38,7 +38,7 @@
                 }
                 else if (!string.IsNullOrWhiteSpace(CancelText))
                 {
-                    <MudButton Class="mud-message-box__cancel-button" OnClick="OnCancelClicked">@CancelText</MudButton>
+                    <HamkareButton Class="hamkare-message-box__cancel-button" OnClick="OnCancelClicked">@CancelText</HamkareButton>
                 }
                 @if (NoButton is not null)
                 {
@@ -48,7 +48,7 @@
                 }
                 else if (!string.IsNullOrWhiteSpace(NoText))
                 {
-                    <MudButton Class="mud-message-box__no-button" OnClick="OnNoClicked">@NoText</MudButton>
+                    <HamkareButton Class="hamkare-message-box__no-button" OnClick="OnNoClicked">@NoText</HamkareButton>
                 }
                 @if (YesButton is not null)
                 {
@@ -58,10 +58,10 @@
                 }
                 else if (!string.IsNullOrWhiteSpace(YesText))
                 {
-                    <MudButton Class="mud-message-box__yes-button" Color="Color.Primary" OnClick="OnYesClicked">@YesText</MudButton>
+                    <HamkareButton Class="hamkare-message-box__yes-button" Color="Color.Primary" OnClick="OnYesClicked">@YesText</HamkareButton>
                 }
-            </MudFocusTrap>
+            </HamkareFocusTrap>
         </div>
 
     </DialogActions>
-</MudDialog>
+</HamkareDialog>

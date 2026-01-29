@@ -1,13 +1,13 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-class MudScrollManager {
+class HamkareScrollManager {
     constructor() {
         this._lockCount = 0; // internal tracking for the # of overlay locks
     }
 
-    //scrolls to year in MudDatePicker
+    //scrolls to year in HamkareDatePicker
     scrollToYear(elementId) {
         const element = document.getElementById(elementId);
 
@@ -110,4 +110,4 @@ class MudScrollManager {
         });
     }
 };
-window.mudScrollManager = new MudScrollManager();
+window.hamkareScrollManager = new HamkareScrollManager();

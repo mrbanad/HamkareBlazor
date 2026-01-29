@@ -1,12 +1,12 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 #nullable enable
 
@@ -17,7 +17,7 @@ namespace MudBlazor;
 /// This class provides a base implementation for a Popover component. It implements the <see cref="IPopover"/> interface
 /// and utilizes the <see cref="IPopoverService"/> to handle the creation, updating, and destruction of the popover.
 /// </remarks>
-public abstract class MudPopoverBase : MudComponentBase, IPopover, IAsyncDisposable
+public abstract class HamkarePopoverBase : HamkareComponentBase, IPopover, IAsyncDisposable
 {
     private bool _afterFirstRender;
 

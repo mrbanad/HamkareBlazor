@@ -1,13 +1,13 @@
-﻿.mud-rtl {
+﻿.hamkare-rtl {
   direction: rtl !important;
 }
 
-.mud-ltr {
+.hamkare-ltr {
   direction: ltr !important;
 }
 
-.mud-application-layout-rtl {
-  .mud-flip-x-rtl {
+.hamkare-application-layout-rtl {
+  .hamkare-flip-x-rtl {
     transform: scaleX(-1);
   }
 }

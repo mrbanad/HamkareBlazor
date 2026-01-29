@@ -1,15 +1,15 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Collections.Generic;
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 #nullable enable
 
 /// <summary>
-/// The data within a <see cref="MudTable{T}"/> group when grouping is enabled.
+/// The data within a <see cref="HamkareTable{T}"/> group when grouping is enabled.
 /// </summary>
 /// <typeparam name="TKey">The unique key of this group.</typeparam>
 /// <typeparam name="TElement">The type of data within this group.</typeparam>

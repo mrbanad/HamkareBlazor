@@ -1,5 +1,5 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System;
@@ -8,25 +8,25 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
-using MudBlazor.Interfaces;
-using MudBlazor.State;
-using MudBlazor.Utilities;
+using HamkareBlazor.Interfaces;
+using HamkareBlazor.State;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
     /// <summary>
-    /// Represents a column filter shown when <see cref="MudDataGrid{T}.FilterMode"/> is <see cref="DataGridFilterMode.ColumnFilterRow"/>.
+    /// Represents a column filter shown when <see cref="HamkareDataGrid{T}.FilterMode"/> is <see cref="DataGridFilterMode.ColumnFilterRow"/>.
     /// </summary>
-    /// <typeparam name="T">The type of value managed by the <see cref="MudDataGrid{T}"/></typeparam>
-    /// <seealso cref="MudDataGrid{T}"/>
-    public partial class FilterHeaderCell<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)] T> : MudComponentBase
+    /// <typeparam name="T">The type of value managed by the <see cref="HamkareDataGrid{T}"/></typeparam>
+    /// <seealso cref="HamkareDataGrid{T}"/>
+    public partial class FilterHeaderCell<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)] T> : HamkareComponentBase
     {
         /// <summary>
-        /// The <see cref="MudDataGrid{T}"/> containing this filter cell.
+        /// The <see cref="HamkareDataGrid{T}"/> containing this filter cell.
         /// </summary>
         [CascadingParameter]
-        public MudDataGrid<T> DataGrid { get; set; } = null!;
+        public HamkareDataGrid<T> DataGrid { get; set; } = null!;
 
         /// <summary>
         /// The column associated with this filter cell.
@@ -84,7 +84,7 @@ namespace MudBlazor
 
         private string chosenOperatorStyle(string o)
         {
-            return o == @operator ? "color:var(--mud-palette-primary-text);background-color:var(--mud-palette-primary)" : "";
+            return o == @operator ? "color:var(--hamkare-palette-primary-text);background-color:var(--hamkare-palette-primary)" : "";
         }
 
         #endregion
@@ -193,7 +193,7 @@ namespace MudBlazor
                 await DataGrid.ReloadServerData();
 
             DataGrid.GroupItems();
-            ((IMudStateHasChanged)DataGrid).StateHasChanged();
+            ((IHamkareStateHasChanged)DataGrid).StateHasChanged();
         }
 
         private async Task ClearFilterAsync()

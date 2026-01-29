@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 #nullable enable
 /// <summary>
@@ -12,10 +12,10 @@ namespace MudBlazor;
 /// or <see href="https://developer.mozilla.org/docs/Web/HTML/Element/a">anchor</see> if <c>Href</c> is set.<br/>
 /// You can directly add attributes like <c>title</c> or <c>aria-label</c>.
 /// </remarks>
-/// <seealso cref="MudButton" />
-/// <seealso cref="MudFab" />
-/// <seealso cref="MudIconButton" />
-public partial class MudToggleIconButton : MudComponentBase
+/// <seealso cref="HamkareButton" />
+/// <seealso cref="HamkareFab" />
+/// <seealso cref="HamkareIconButton" />
+public partial class HamkareToggleIconButton : HamkareComponentBase
 {
     /// <summary>
     /// Whether the icon is in the toggled state.

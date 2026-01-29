@@ -1,7 +1,7 @@
 ﻿using System.Runtime.CompilerServices;
 using Microsoft.AspNetCore.Components;
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 #nullable enable
 /// <summary>

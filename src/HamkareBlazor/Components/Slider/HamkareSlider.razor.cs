@@ -1,24 +1,24 @@
 ﻿using System.Globalization;
 using System.Numerics;
 using Microsoft.AspNetCore.Components;
-using MudBlazor.State;
-using MudBlazor.Utilities;
+using HamkareBlazor.State;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
     /// <summary>
     /// Allows users to select a value within a specified range. Sliders should present the full range of available values and the value should take effect immediately.
     /// </summary>
     /// <typeparam name="T">The type of the value the slider represents.</typeparam>
-    public partial class MudSlider<T> : MudComponentBase where T : struct, INumber<T>
+    public partial class HamkareSlider<T> : HamkareComponentBase where T : struct, INumber<T>
     {
         private int _tickMarkCount = 0;
         private bool _nullableValueResetToDefault = false;
         private readonly ParameterState<T> _valueState;
         private readonly ParameterState<T?> _nullableValueState;
 
-        public MudSlider()
+        public HamkareSlider()
         {
             using var registerScope = CreateRegisterScope();
             _valueState = registerScope.RegisterParameter<T>(nameof(Value))
@@ -32,10 +32,10 @@ namespace MudBlazor
         }
 
         protected string Classname =>
-            new CssBuilder("mud-slider")
-                .AddClass($"mud-slider-{Size.ToStringFast(true)}")
-                .AddClass($"mud-slider-{Color.ToStringFast(true)}")
-                .AddClass("mud-slider-vertical", Vertical)
+            new CssBuilder("hamkare-slider")
+                .AddClass($"hamkare-slider-{Size.ToStringFast(true)}")
+                .AddClass($"hamkare-slider-{Color.ToStringFast(true)}")
+                .AddClass("hamkare-slider-vertical", Vertical)
                 .AddClass(Class)
                 .Build();
 

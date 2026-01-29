@@ -1,17 +1,17 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Numerics;
-using MudBlazor.Extensions;
-using MudBlazor.Resources;
-using MudBlazor.Utilities.Converter.Dispatcher;
-using MudBlazor.Utilities.Exceptions;
-using static MudBlazor.DefaultConverter;
+using HamkareBlazor.Extensions;
+using HamkareBlazor.Resources;
+using HamkareBlazor.Utilities.Converter.Dispatcher;
+using HamkareBlazor.Utilities.Exceptions;
+using static HamkareBlazor.DefaultConverter;
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 #nullable enable
 /// <summary>
@@ -21,7 +21,7 @@ namespace MudBlazor;
 /// <remarks>
 /// This converter composes many built-in converters (numbers, dates, guid, boolean, char, BigInteger, etc.).
 /// It implements <see cref="ICultureAwareConverter"/> so that when used as
-/// a component converter (for example via a Mud form component) the host can automatically supply the
+/// a component converter (for example via a Hamkare form component) the host can automatically supply the
 /// <see cref="Culture"/> and <see cref="Format"/> delegates.
 /// </remarks>
 public sealed class DefaultConverter<T> : IReversibleConverter<T?, string?>, ICultureAwareConverter

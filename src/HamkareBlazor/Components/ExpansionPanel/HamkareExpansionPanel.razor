@@ -1,9 +1,9 @@
-﻿@namespace MudBlazor
-@inherits MudComponentBase
+﻿@namespace HamkareBlazor
+@inherits HamkareComponentBase
 
 <div @attributes="UserAttributes" class="@Classname" style="@Style">
     <div class="@HeaderClassname" @onclick="ToggleExpansionAsync" tabindex="@(Disabled ? null : "0")" @onkeydown="HandleKeyDownAsync">
-        <div class="mud-expand-panel-text">
+        <div class="hamkare-expand-panel-text">
             @if (TitleContent is not null)
             {
                 @TitleContent
@@ -15,15 +15,15 @@
         </div>
         @if (!HideIcon)
         {
-            <MudIcon Icon="@Icon" class="@(_expandedState.Value ? "mud-expand-panel-icon mud-transform" : "mud-expand-panel-icon")" />
+            <HamkareIcon Icon="@Icon" class="@(_expandedState.Value ? "hamkare-expand-panel-icon hamkare-transform" : "hamkare-expand-panel-icon")" />
         }
     </div>
-    <MudCollapse Expanded="_expandedState.Value" MaxHeight="@MaxHeight">
+    <HamkareCollapse Expanded="_expandedState.Value" MaxHeight="@MaxHeight">
         @if (KeepContentAlive || _expandedState.Value)
         {
             <div class="@PanelContentClassname">
                 @ChildContent
             </div>
         }
-    </MudCollapse>
+    </HamkareCollapse>
 </div>

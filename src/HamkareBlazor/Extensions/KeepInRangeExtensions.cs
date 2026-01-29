@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MudBlazor.Extensions
+namespace HamkareBlazor.Extensions
 {
 #nullable enable
     public static class KeepInRangeExtensions

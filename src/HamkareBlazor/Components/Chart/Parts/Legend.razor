@@ -1,27 +1,27 @@
-﻿@namespace MudBlazor.Charts
+﻿@namespace HamkareBlazor.Charts
 
-@inherits MudChartBase<T, IChartOptions>
+@inherits HamkareChartBase<T, IChartOptions>
 
 @typeparam T
 
 @if (ShowLegend is not false)
 {
-    <div @attributes="UserAttributes" class="mud-chart-legend">
+    <div @attributes="UserAttributes" class="hamkare-chart-legend">
         @foreach (var item in Data)        
         {
-            <div class="mud-chart-legend-item" 
+            <div class="hamkare-chart-legend-item" 
                  @onclick:stopPropagation=@(ChartContainer!=null)
                  @onclick=@(async ()=>{ if (OnLegendSelected.HasDelegate) { await OnLegendSelected.InvokeAsync(item.Index); }})>
                 @if(CanHideSeries == false)
                 {
-                    <span class="mud-chart-legend-marker" style="@($"background-color:{ChartPalette!.GetValue(item.Index % ChartPalette.Length)}")"></span>
-                    <MudText Typo="Typo.body2" HtmlTag="span">@item.Labels</MudText>
+                    <span class="hamkare-chart-legend-marker" style="@($"background-color:{ChartPalette!.GetValue(item.Index % ChartPalette.Length)}")"></span>
+                    <HamkareText Typo="Typo.body2" HtmlTag="span">@item.Labels</HamkareText>
                 }
                 else
                 {   
-                    <div class="mud-chart-legend-checkbox" style="@GetCheckBoxStyle(item.Index)">    
-                        <MudCheckBox Value="@item.Visible" ValueChanged="@((bool value) => item.HandleCheckboxChangeAsync())" Size="Size.Small" Dense></MudCheckBox>
-                        <MudText Typo="Typo.body2" Class="ml-n2 align-self-end" HtmlTag="span">@item.Labels</MudText>
+                    <div class="hamkare-chart-legend-checkbox" style="@GetCheckBoxStyle(item.Index)">    
+                        <HamkareCheckBox Value="@item.Visible" ValueChanged="@((bool value) => item.HandleCheckboxChangeAsync())" Size="Size.Small" Dense></HamkareCheckBox>
+                        <HamkareText Typo="Typo.body2" Class="ml-n2 align-self-end" HtmlTag="span">@item.Labels</HamkareText>
                     </div> 
                 }                 
             </div>

@@ -1,6 +1,6 @@
 @import '../abstracts/variables';
 
-.mud-button-root {
+.hamkare-button-root {
   color: inherit;
   border: 0;
   cursor: pointer;
@@ -24,167 +24,167 @@
   }
 
   &:disabled {
-    color: var(--mud-palette-action-disabled) !important;
+    color: var(--hamkare-palette-action-disabled) !important;
     cursor: default;
     pointer-events: none;
   }
 }
 
-.mud-button {
+.hamkare-button {
   padding: 6px 16px;
-  font-family: var(--mud-typography-button-family);
-  font-size: var(--mud-typography-button-size);
-  font-weight: var(--mud-typography-button-weight);
-  line-height: var(--mud-typography-button-lineheight);
-  letter-spacing: var(--mud-typography-button-letterspacing);
-  text-transform: var(--mud-typography-button-text-transform);
+  font-family: var(--hamkare-typography-button-family);
+  font-size: var(--hamkare-typography-button-size);
+  font-weight: var(--hamkare-typography-button-weight);
+  line-height: var(--hamkare-typography-button-lineheight);
+  letter-spacing: var(--hamkare-typography-button-letterspacing);
+  text-transform: var(--hamkare-typography-button-text-transform);
   min-width: 64px;
   box-sizing: border-box;
   transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-  border-radius: var(--mud-default-borderradius);
-  color: var(--mud-palette-text-primary);
-  --mud-ripple-color: var(--mud-palette-text-primary);
+  border-radius: var(--hamkare-default-borderradius);
+  color: var(--hamkare-palette-text-primary);
+  --hamkare-ripple-color: var(--hamkare-palette-text-primary);
 
   @media(hover: hover) and (pointer: fine) {
     &:hover {
-      background-color: var(--mud-palette-action-default-hover);
+      background-color: var(--hamkare-palette-action-default-hover);
     }
   }
 
   &:focus-visible, &:active {
-    background-color: var(--mud-palette-action-default-hover);
+    background-color: var(--hamkare-palette-action-default-hover);
   }
 }
 
-.mud-button-text {
+.hamkare-button-text {
   padding: 6px 8px;
 
-  &.mud-button-text-inherit {
+  &.hamkare-button-text-inherit {
     color: inherit;
   }
 
-  @each $color in $mud-palette-colors {
-    &.mud-button-text-#{$color} {
-      color: var(--mud-palette-#{$color});
-      --mud-ripple-color: var(--mud-palette-#{$color});
+  @each $color in $hamkare-palette-colors {
+    &.hamkare-button-text-#{$color} {
+      color: var(--hamkare-palette-#{$color});
+      --hamkare-ripple-color: var(--hamkare-palette-#{$color});
 
       @media(hover: hover) and (pointer: fine) {
         &:hover {
-          background-color: var(--mud-palette-#{$color}-hover);
+          background-color: var(--hamkare-palette-#{$color}-hover);
         }
       }
 
       &:focus-visible, &:active {
-        background-color: var(--mud-palette-#{$color}-hover);
+        background-color: var(--hamkare-palette-#{$color}-hover);
       }
     }
   }
 }
 
-.mud-button-outlined {
-  color: var(--mud-palette-text-primary);
-  border: 1px solid rgba(var(--mud-palette-text-primary-rgb), var(--mud-palette-border-opacity));
+.hamkare-button-outlined {
+  color: var(--hamkare-palette-text-primary);
+  border: 1px solid rgba(var(--hamkare-palette-text-primary-rgb), var(--hamkare-palette-border-opacity));
   padding: 5px 15px;
 
-  &.mud-button-outlined-inherit {
+  &.hamkare-button-outlined-inherit {
     color: inherit;
     border-color: currentColor;
   }
 
-  &.mud-icon-button {
+  &.hamkare-icon-button {
     padding: 5px;
   }
 
   @media(hover: hover) and (pointer: fine) {
     &:hover {
-      background-color: var(--mud-palette-action-default-hover);
+      background-color: var(--hamkare-palette-action-default-hover);
     }
   }
 
   &:focus-visible, &:active {
-    background-color: var(--mud-palette-action-default-hover);
+    background-color: var(--hamkare-palette-action-default-hover);
   }
 
-  @each $color in $mud-palette-colors {
-    &.mud-button-outlined-#{$color} {
-      color: var(--mud-palette-#{$color});
-      --mud-ripple-color: var(--mud-palette-#{$color});
-      border: 1px solid rgba(var(--mud-palette-#{$color}-rgb), var(--mud-palette-border-opacity));
+  @each $color in $hamkare-palette-colors {
+    &.hamkare-button-outlined-#{$color} {
+      color: var(--hamkare-palette-#{$color});
+      --hamkare-ripple-color: var(--hamkare-palette-#{$color});
+      border: 1px solid rgba(var(--hamkare-palette-#{$color}-rgb), var(--hamkare-palette-border-opacity));
 
       @media(hover: hover) and (pointer: fine) {
         &:hover {
-          border: 1px solid rgba(var(--mud-palette-#{$color}-rgb), var(--mud-palette-border-opacity));
-          background-color: var(--mud-palette-#{$color}-hover);
+          border: 1px solid rgba(var(--hamkare-palette-#{$color}-rgb), var(--hamkare-palette-border-opacity));
+          background-color: var(--hamkare-palette-#{$color}-hover);
         }
       }
 
       &:focus-visible, &:active {
-        border: 1px solid rgba(var(--mud-palette-#{$color}-rgb), var(--mud-palette-border-opacity));
-        background-color: var(--mud-palette-#{$color}-hover);
+        border: 1px solid rgba(var(--hamkare-palette-#{$color}-rgb), var(--hamkare-palette-border-opacity));
+        background-color: var(--hamkare-palette-#{$color}-hover);
       }
     }
   }
 
   &:disabled {
-    border: 1px solid var(--mud-palette-action-disabled-background);
+    border: 1px solid var(--hamkare-palette-action-disabled-background);
   }
 }
 
-.mud-button-filled {
-  color: var(--mud-palette-text-primary);
-  --mud-ripple-color: var(--mud-palette-text-primary);
-  --mud-ripple-opacity: var(--mud-ripple-opacity-secondary) !important;
+.hamkare-button-filled {
+  color: var(--hamkare-palette-text-primary);
+  --hamkare-ripple-color: var(--hamkare-palette-text-primary);
+  --hamkare-ripple-opacity: var(--hamkare-ripple-opacity-secondary) !important;
   box-shadow: 0px 3px 1px -2px rgba(0,0,0,0.2),0px 2px 2px 0px rgba(0,0,0,0.14),0px 1px 5px 0px rgba(0,0,0,0.12);
-  background-color: var(--mud-palette-action-default-hover);
+  background-color: var(--hamkare-palette-action-default-hover);
 
-  &.mud-icon-button {
+  &.hamkare-icon-button {
     padding: 6px;
   }
 
   @media(hover: hover) and (pointer: fine) {
     &:hover {
       box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0,0,0,.12);
-      background-color: var(--mud-palette-action-disabled-background);
+      background-color: var(--hamkare-palette-action-disabled-background);
     }
   }
 
   &:focus-visible {
     box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0,0,0,.12);
-    background-color: var(--mud-palette-action-disabled-background);
+    background-color: var(--hamkare-palette-action-disabled-background);
   }
 
   &:active {
     box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0,0,0,.12);
-    background-color: var(--mud-palette-action-disabled-background);
+    background-color: var(--hamkare-palette-action-disabled-background);
   }
 
 
   &:disabled {
-    color: var(--mud-palette-action-disabled);
+    color: var(--hamkare-palette-action-disabled);
     box-shadow: none;
-    background-color: var(--mud-palette-action-disabled-background) !important;
+    background-color: var(--hamkare-palette-action-disabled-background) !important;
   }
 
-  @each $color in $mud-palette-colors {
-    &.mud-button-filled-#{$color} {
-      color: var(--mud-palette-#{$color}-text);
-      --mud-ripple-color: var(--mud-palette-#{$color}-text);
-      background-color: var(--mud-palette-#{$color});
+  @each $color in $hamkare-palette-colors {
+    &.hamkare-button-filled-#{$color} {
+      color: var(--hamkare-palette-#{$color}-text);
+      --hamkare-ripple-color: var(--hamkare-palette-#{$color}-text);
+      background-color: var(--hamkare-palette-#{$color});
 
       @media(hover: hover) and (pointer: fine) {
         &:hover {
-          background-color: var(--mud-palette-#{$color}-darken);
+          background-color: var(--hamkare-palette-#{$color}-darken);
         }
       }
 
       &:focus-visible, &:active {
-        background-color: var(--mud-palette-#{$color}-darken);
+        background-color: var(--hamkare-palette-#{$color}-darken);
       }
     }
   }
 }
 
-.mud-button-disable-elevation {
+.hamkare-button-disable-elevation {
   box-shadow: none;
 
   @media(hover: hover) and (pointer: fine) {
@@ -197,7 +197,7 @@
     box-shadow: none;
   }
 
-  &.mud-focus-visible {
+  &.hamkare-focus-visible {
     box-shadow: none;
   }
 
@@ -207,89 +207,89 @@
 }
 
 
-.mud-button-color-inherit {
+.hamkare-button-color-inherit {
   color: inherit;
   border-color: currentColor;
 }
 
-.mud-button-text-size-small {
+.hamkare-button-text-size-small {
   padding: 4px 5px;
   font-size: 0.8125rem;
 }
 
-.mud-button-text-size-large {
+.hamkare-button-text-size-large {
   padding: 8px 11px;
   font-size: 0.9375rem;
 }
 
-.mud-button-outlined-size-small {
+.hamkare-button-outlined-size-small {
   padding: 3px 9px;
   font-size: 0.8125rem;
 
-  &.mud-icon-button {
+  &.hamkare-icon-button {
     padding: 4px;
   }
 }
 
-.mud-button-outlined-size-large {
+.hamkare-button-outlined-size-large {
   padding: 7px 21px;
   font-size: 0.9375rem;
 
-  &.mud-icon-button {
+  &.hamkare-icon-button {
     padding: 4px;
   }
 }
 
-.mud-button-filled-size-small {
+.hamkare-button-filled-size-small {
   padding: 4px 10px;
   font-size: 0.8125rem;
 
-  &.mud-icon-button {
+  &.hamkare-icon-button {
     padding: 5px;
   }
 }
 
-.mud-button-filled-size-large {
+.hamkare-button-filled-size-large {
   padding: 8px 22px;
   font-size: 0.9375rem;
 
-  &.mud-icon-button {
+  &.hamkare-icon-button {
     padding: 5px;
   }
 }
 
-.mud-button-full-width {
+.hamkare-button-full-width {
   width: 100%;
 }
 
-.mud-button-label {
+.hamkare-button-label {
   width: 100%;
   display: inherit;
   align-items: inherit;
   justify-content: inherit;
 
-  .mud-button-icon-start {
+  .hamkare-button-icon-start {
     display: inherit;
     margin-left: -4px;
     margin-right: 8px;
     margin-inline-start: -4px;
     margin-inline-end: 8px;
 
-    &.mud-button-icon-size-small {
+    &.hamkare-button-icon-size-small {
       margin-left: -2px;
       margin-inline-start: -2px;
       margin-inline-end: 8px;
     }
   }
 
-  .mud-button-icon-end {
+  .hamkare-button-icon-end {
     display: inherit;
     margin-left: 8px;
     margin-right: -4px;
     margin-inline-start: 8px;
     margin-inline-end: -4px;
 
-    &.mud-button-icon-size-small {
+    &.hamkare-button-icon-size-small {
       margin-right: -2px;
       margin-inline-end: -2px;
       margin-inline-start: 8px;
@@ -301,14 +301,14 @@
 
 
 
-.mud-button-icon-size-small > *:first-child {
+.hamkare-button-icon-size-small > *:first-child {
   font-size: 18px;
 }
 
-.mud-button-icon-size-medium > *:first-child {
+.hamkare-button-icon-size-medium > *:first-child {
   font-size: 20px;
 }
 
-.mud-button-icon-size-large > *:first-child {
+.hamkare-button-icon-size-large > *:first-child {
   font-size: 22px;
 }

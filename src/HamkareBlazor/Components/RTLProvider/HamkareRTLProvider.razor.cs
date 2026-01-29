@@ -1,20 +1,20 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using Microsoft.AspNetCore.Components;
-using MudBlazor.State;
-using MudBlazor.Utilities;
+using HamkareBlazor.State;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
     /// <summary>
     /// A language support provider for Right-to-Left (RTL) languages such as Arabic, Hebrew, and Persian.
     /// </summary>
-    public partial class MudRTLProvider : MudComponentBase
+    public partial class HamkareRTLProvider : HamkareComponentBase
     {
-        public MudRTLProvider()
+        public HamkareRTLProvider()
         {
             var registerScope = CreateRegisterScope();
             registerScope.RegisterParameter<bool>(nameof(RightToLeft))
@@ -23,8 +23,8 @@ namespace MudBlazor
         }
 
         protected string Classname =>
-            new CssBuilder("mud-rtl-provider")
-                .AddClass("mud-application-layout-rtl", RightToLeft)
+            new CssBuilder("hamkare-rtl-provider")
+                .AddClass("hamkare-application-layout-rtl", RightToLeft)
                 .AddClass(Class)
                 .Build();
 

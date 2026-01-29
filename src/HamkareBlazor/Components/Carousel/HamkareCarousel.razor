@@ -1,13 +1,13 @@
-﻿@namespace MudBlazor
-@using MudBlazor.Resources
-@inherits MudBaseBindableItemsControl<MudCarouselItem, TData>
+﻿@namespace HamkareBlazor
+@using HamkareBlazor.Resources
+@inherits HamkareBaseBindableItemsControl<HamkareCarouselItem, TData>
 @typeparam TData
-@inject InternalMudLocalizer Localizer
+@inject InternalHamkareLocalizer Localizer
 
 <section @attributes="UserAttributes" aria-roledescription="carousel" class="@Classname" style="@Style">
     <CascadingValue Value="this">
 
-        <MudSwipeArea OnSwipeEnd="OnSwipeEnd" Class="mud-carousel-swipe">
+        <HamkareSwipeArea OnSwipeEnd="OnSwipeEnd" Class="hamkare-carousel-swipe">
             @*Selected Content*@
             @if (ItemsSource is null)
             {
@@ -17,15 +17,15 @@
             {
                 foreach (var item in ItemsSource)
                 {
-                    <MudCarouselItem>
+                    <HamkareCarouselItem>
                         @if (ItemTemplate is not null)
                         {
                             @ItemTemplate(item)
                         }
-                    </MudCarouselItem>
+                    </HamkareCarouselItem>
                 }
             }
-        </MudSwipeArea>
+        </HamkareSwipeArea>
 
         @*Controls*@
         <div class="d-flex flex-grow-1 align-self-auto">
@@ -34,11 +34,11 @@
             {
                 @if (PreviousButtonTemplate is null)
                 {
-                    <MudIconButton tabindex="1" aria-label="@Localizer[LanguageResource.MudCarousel_Previous]" Class="@NavigationButtonsClassName" Style="z-index:3;opacity:0.75" Icon="@PreviousIcon" OnClick="Previous" Color="Color.Inherit" />
+                    <HamkareIconButton tabindex="1" aria-label="@Localizer[LanguageResource.HamkareCarousel_Previous]" Class="@NavigationButtonsClassName" Style="z-index:3;opacity:0.75" Icon="@PreviousIcon" OnClick="Previous" Color="Color.Inherit" />
                 }
                 else
                 {
-                    <div @onclick="Previous" tabindex="1" aria-label="@Localizer[LanguageResource.MudCarousel_Previous]" class="@NavigationButtonsClassName" style="z-index:3">
+                    <div @onclick="Previous" tabindex="1" aria-label="@Localizer[LanguageResource.HamkareCarousel_Previous]" class="@NavigationButtonsClassName" style="z-index:3">
                         @PreviousButtonTemplate
                     </div>
                 }
@@ -54,7 +54,7 @@
                             int current = i;
                             if (BulletTemplate is null)
                             {
-                                <MudIconButton tabindex="@(current+3)" aria-label="@Localizer[LanguageResource.MudCarousel_Index, $"{current + 1}"]" Class="@BulletsButtonsClassName" Style="z-index:3;opacity:0.75" Icon="@(current == SelectedIndex ? CheckedIcon : UncheckedIcon)" OnClick="(() => MoveTo(current))" Color="Color.Inherit" />
+                                <HamkareIconButton tabindex="@(current+3)" aria-label="@Localizer[LanguageResource.HamkareCarousel_Index, $"{current + 1}"]" Class="@BulletsButtonsClassName" Style="z-index:3;opacity:0.75" Icon="@(current == SelectedIndex ? CheckedIcon : UncheckedIcon)" OnClick="(() => MoveTo(current))" Color="Color.Inherit" />
                             }
                             else
                             {
@@ -72,11 +72,11 @@
             {
                 @if (NextButtonTemplate is null)
                 {
-                    <MudIconButton tabindex="2" aria-label="@Localizer[LanguageResource.MudCarousel_Next]" Class="@NavigationButtonsClassName" Style="z-index:3;opacity:0.75" Icon="@NextIcon" OnClick="Next" Color="Color.Inherit" />
+                    <HamkareIconButton tabindex="2" aria-label="@Localizer[LanguageResource.HamkareCarousel_Next]" Class="@NavigationButtonsClassName" Style="z-index:3;opacity:0.75" Icon="@NextIcon" OnClick="Next" Color="Color.Inherit" />
                 }
                 else
                 {
-                    <div @onclick="Next" tabindex="2" aria-label="@Localizer[LanguageResource.MudCarousel_Next]" class="@NavigationButtonsClassName" style="z-index:3">
+                    <div @onclick="Next" tabindex="2" aria-label="@Localizer[LanguageResource.HamkareCarousel_Next]" class="@NavigationButtonsClassName" style="z-index:3">
                         @NextButtonTemplate
                     </div>
                 }

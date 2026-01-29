@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Components;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
     internal static class ParameterViewExtensions

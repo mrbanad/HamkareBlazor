@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using NetEscapades.EnumGenerators;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
     /// <summary>
     /// Indicates the display variation applied to a component.

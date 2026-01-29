@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
 
     /// <summary>
-    /// The state of a <see cref="MudTable{T}"/> when requesting data via <see cref="MudTable{T}.ServerData"/>.
+    /// The state of a <see cref="HamkareTable{T}"/> when requesting data via <see cref="HamkareTable{T}.ServerData"/>.
     /// </summary>
     public class TableState
     {
@@ -37,7 +37,7 @@ namespace MudBlazor
     }
 
     /// <summary>
-    /// The result of a call to <see cref="MudTable{T}.ServerData"/>.
+    /// The result of a call to <see cref="HamkareTable{T}.ServerData"/>.
     /// </summary>
     /// <typeparam name="T">The type of item to display in the table.</typeparam>
     public class TableData<T>

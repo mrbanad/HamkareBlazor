@@ -1,15 +1,15 @@
-﻿@namespace MudBlazor
-@inherits MudComponentBase
+﻿@namespace HamkareBlazor
+@inherits HamkareComponentBase
 
 <div @attributes="UserAttributes" class="@Classname" style="@Style">
-    <div class="mud-input-control-input-container">
+    <div class="hamkare-input-control-input-container">
         @InputContent
         @if (!string.IsNullOrEmpty(Label))
         {
-            <MudInputLabel Class="mud-input-label-inputcontrol" Variant="@Variant" Disabled=@Disabled Error="@Error"
+            <HamkareInputLabel Class="hamkare-input-label-inputcontrol" Variant="@Variant" Disabled=@Disabled Error="@Error"
                            Margin="@Margin" ForId="@ForId">
                 @Label
-            </MudInputLabel>
+            </HamkareInputLabel>
         }
     </div>
     @if (Error || !string.IsNullOrEmpty(HelperText) || !string.IsNullOrEmpty(CounterText))

@@ -3,17 +3,17 @@ using System.Numerics;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
-using MudBlazor.Interop;
-using MudBlazor.Utilities;
+using HamkareBlazor.Interop;
+using HamkareBlazor.Utilities;
 
 #nullable enable
 
-namespace MudBlazor.Charts
+namespace HamkareBlazor.Charts
 {
     /// <summary>
     /// Represents a chart which displays data as nodes connected by weighted edges.
     /// </summary>
-    partial class Sankey<T> : MudChartBase<T, SankeyChartOptions>, IDisposable where T : struct, INumber<T>, IMinMaxValue<T>, IFormattable
+    partial class Sankey<T> : HamkareChartBase<T, SankeyChartOptions>, IDisposable where T : struct, INumber<T>, IMinMaxValue<T>, IFormattable
     {
         [Inject]
         private IJSRuntime JsRuntime { get; set; } = null!;
@@ -64,7 +64,7 @@ namespace MudBlazor.Charts
         /// The chart, if any, containing this component.
         /// </summary>
         [CascadingParameter]
-        public MudChart<T>? MudChartParent { get; set; }
+        public HamkareChart<T>? HamkareChartParent { get; set; }
 
         [DynamicDependency(nameof(OnElementSizeChanged))]
         [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(ElementSize))]
@@ -128,7 +128,7 @@ namespace MudBlazor.Charts
 
             if (firstRender)
             {
-                var elementSize = await JsRuntime.InvokeAsync<ElementSize>("mudObserveElementSize", _dotNetObjectReference, _elementReference);
+                var elementSize = await JsRuntime.InvokeAsync<ElementSize>("hamkareObserveElementSize", _dotNetObjectReference, _elementReference);
                 OnElementSizeChanged(elementSize);
             }
         }
@@ -499,7 +499,7 @@ namespace MudBlazor.Charts
         {
             if (_nodeLookup.TryGetValue(node.Name, out var definition) && definition.Color is not null)
             {
-                return definition.Color.ToString(MudColorOutputFormats.HexA);
+                return definition.Color.ToString(HamkareColorOutputFormats.HexA);
             }
 
             if (ChartOptions!.ChartPalette is { Length: > 0 } palette)

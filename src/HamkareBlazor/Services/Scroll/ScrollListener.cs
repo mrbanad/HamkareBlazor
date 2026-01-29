@@ -2,7 +2,7 @@
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.JSInterop;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
     /// <summary>
@@ -91,7 +91,7 @@ namespace MudBlazor
         private ValueTask<bool> Start()
         {
             _dotNetRef = DotNetObjectReference.Create(this);
-            return _js.InvokeVoidAsyncWithErrorHandling("mudScrollListener.listenForScroll", _dotNetRef, _listenerId, Selector, ReportRateMs);
+            return _js.InvokeVoidAsyncWithErrorHandling("hamkareScrollListener.listenForScroll", _dotNetRef, _listenerId, Selector, ReportRateMs);
         }
 
         /// <summary>
@@ -109,13 +109,13 @@ namespace MudBlazor
         /// </summary>
         private async ValueTask CancelAsync()
         {
-            await _js.InvokeVoidAsyncWithErrorHandling("mudScrollListener.cancelListener", _listenerId);
+            await _js.InvokeVoidAsyncWithErrorHandling("hamkareScrollListener.cancelListener", _listenerId);
         }
 
         /// <inheritdoc />
         public ValueTask<ScrollEventArgs> GetCurrentScrollDataAsync()
         {
-            return _js.InvokeAsync<ScrollEventArgs>("mudScrollListener.getCurrentScrollPosition", Selector);
+            return _js.InvokeAsync<ScrollEventArgs>("hamkareScrollListener.getCurrentScrollPosition", Selector);
         }
 
         /// <inheritdoc />

@@ -1,12 +1,12 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.JSInterop;
-using MudBlazor.Services;
+using HamkareBlazor.Services;
 
-namespace MudBlazor.Interop;
+namespace HamkareBlazor.Interop;
 
 #nullable enable
 internal class KeyInterceptorInterop
@@ -20,16 +20,16 @@ internal class KeyInterceptorInterop
 
     public ValueTask<bool> Connect<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicMethods)] T>(DotNetObjectReference<T> dotNetObjectReference, string elementId, KeyInterceptorOptions options) where T : class
     {
-        return _jsRuntime.InvokeVoidAsyncWithErrorHandling("mudKeyInterceptor.connect", dotNetObjectReference, elementId, options);
+        return _jsRuntime.InvokeVoidAsyncWithErrorHandling("hamkareKeyInterceptor.connect", dotNetObjectReference, elementId, options);
     }
 
     public ValueTask Disconnect(string elementId)
     {
-        return _jsRuntime.InvokeVoidAsyncIgnoreErrors("mudKeyInterceptor.disconnect", elementId);
+        return _jsRuntime.InvokeVoidAsyncIgnoreErrors("hamkareKeyInterceptor.disconnect", elementId);
     }
 
     public ValueTask UpdateKey(string elementId, KeyOptions option)
     {
-        return _jsRuntime.InvokeVoidAsyncIgnoreErrors("mudKeyInterceptor.updatekey", elementId, option);
+        return _jsRuntime.InvokeVoidAsyncIgnoreErrors("hamkareKeyInterceptor.updatekey", elementId, option);
     }
 }

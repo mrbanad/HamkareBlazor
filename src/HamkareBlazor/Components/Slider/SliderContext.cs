@@ -1,16 +1,16 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 #nullable enable
 
 /// <summary>
-/// The current state of a <see cref="MudSlider{T}"/> component, containing both the value and nullable value.
+/// The current state of a <see cref="HamkareSlider{T}"/> component, containing both the value and nullable value.
 /// </summary>
 /// <remarks>
-/// This state is a cascading parameter for <see cref="MudSlider{T}"/> components.
+/// This state is a cascading parameter for <see cref="HamkareSlider{T}"/> components.
 /// </remarks>
 /// <typeparam name="T">The type of the value the slider represents.</typeparam>
 public class SliderContext<T> where T : struct

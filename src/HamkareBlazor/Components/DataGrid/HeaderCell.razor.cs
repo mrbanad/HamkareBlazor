@@ -1,23 +1,23 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using MudBlazor.Interfaces;
-using MudBlazor.Utilities;
+using HamkareBlazor.Interfaces;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
     /// <summary>
-    /// Represents a cell displayed at the top of a <see cref="MudDataGrid{T}"/> column.
+    /// Represents a cell displayed at the top of a <see cref="HamkareDataGrid{T}"/> column.
     /// </summary>
     /// <typeparam name="T">The kind of item managed by the grid.</typeparam>
-    /// <seealso cref="MudDataGrid{T}"/>
-    public partial class HeaderCell<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)] T> : MudComponentBase, IDisposable
+    /// <seealso cref="HamkareDataGrid{T}"/>
+    public partial class HeaderCell<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)] T> : HamkareComponentBase, IDisposable
     {
         private bool _selected;
         private bool _isResizing;
@@ -34,10 +34,10 @@ namespace MudBlazor
         private Column<T>? _resizeNextColumn;
 
         /// <summary>
-        /// The <see cref="MudDataGrid{T}"/> which contains this header cell.
+        /// The <see cref="HamkareDataGrid{T}"/> which contains this header cell.
         /// </summary>
         [CascadingParameter]
-        public MudDataGrid<T> DataGrid { get; set; } = null!;
+        public HamkareDataGrid<T> DataGrid { get; set; } = null!;
 
         /// <summary>
         /// Displays the content right-to-left.
@@ -98,8 +98,8 @@ namespace MudBlazor
 
         private string ResizerClass =>
             new CssBuilder()
-                .AddClass("mud-resizing", when: _isResizing)
-                .AddClass("mud-resizer")
+                .AddClass("hamkare-resizing", when: _isResizing)
+                .AddClass("hamkare-resizer")
                 .Build();
 
         private string SortHeaderClass =>
@@ -126,7 +126,7 @@ namespace MudBlazor
 
         private bool Expanded => DataGrid?._openHierarchies.Count > 0;
 
-        internal bool IncludeHierarchyToggle => Column?.HeaderClass?.Contains("mud-header-togglehierarchy") ?? false;
+        internal bool IncludeHierarchyToggle => Column?.HeaderClass?.Contains("hamkare-header-togglehierarchy") ?? false;
 
         private string? computedTitle
         {
@@ -206,8 +206,8 @@ namespace MudBlazor
             {
                 return SortDirection switch
                 {
-                    SortDirection.Descending => "sort-direction-icon mud-direction-desc",
-                    SortDirection.Ascending => "sort-direction-icon mud-direction-asc",
+                    SortDirection.Descending => "sort-direction-icon hamkare-direction-desc",
+                    SortDirection.Ascending => "sort-direction-icon hamkare-direction-asc",
                     _ => "sort-direction-icon"
                 };
             }
@@ -360,10 +360,10 @@ namespace MudBlazor
             DataGrid.IsResizing = true;
 
             // Capture pointer to track movements even outside the element
-            await JSRuntime.InvokeVoidAsyncIgnoreErrors("mudPointerCapture.capture", _resizerElement, args.PointerId);
+            await JSRuntime.InvokeVoidAsyncIgnoreErrors("hamkarePointerCapture.capture", _resizerElement, args.PointerId);
 
             await InvokeAsync(StateHasChanged);
-            ((IMudStateHasChanged)DataGrid).StateHasChanged();
+            ((IHamkareStateHasChanged)DataGrid).StateHasChanged();
         }
 
         private async Task OnResizerPointerOver()
@@ -399,7 +399,7 @@ namespace MudBlazor
             await HandleResize(args.ClientX, true);
 
             // Release pointer capture
-            await JSRuntime.InvokeVoidAsyncIgnoreErrors("mudPointerCapture.release", _resizerElement, args.PointerId);
+            await JSRuntime.InvokeVoidAsyncIgnoreErrors("hamkarePointerCapture.release", _resizerElement, args.PointerId);
 
             _isResizing = false;
             _resizeNextColumn = null;
@@ -407,7 +407,7 @@ namespace MudBlazor
             Debug.Assert(DataGrid is not null);
             DataGrid.IsResizing = false;
             await InvokeAsync(StateHasChanged);
-            ((IMudStateHasChanged)DataGrid).StateHasChanged();
+            ((IHamkareStateHasChanged)DataGrid).StateHasChanged();
         }
 
         private async Task HandleResize(double clientX, bool finish)
@@ -476,7 +476,7 @@ namespace MudBlazor
 
         internal async Task<double> GetCurrentCellWidth()
         {
-            var boundingRect = await _headerElement.MudGetBoundingClientRectAsync();
+            var boundingRect = await _headerElement.HamkareGetBoundingClientRectAsync();
             return boundingRect.Width;
         }
 
@@ -579,7 +579,7 @@ namespace MudBlazor
             }
             else
             {
-                ((IMudStateHasChanged)DataGrid).StateHasChanged();
+                ((IHamkareStateHasChanged)DataGrid).StateHasChanged();
             }
             _filtersMenuVisible = false;
             DataGrid.DropContainerHasChanged();
@@ -598,7 +598,7 @@ namespace MudBlazor
             }
             else
             {
-                ((IMudStateHasChanged)DataGrid).StateHasChanged();
+                ((IHamkareStateHasChanged)DataGrid).StateHasChanged();
             }
             _filtersMenuVisible = false;
             DataGrid.DropContainerHasChanged();
@@ -615,7 +615,7 @@ namespace MudBlazor
             }
             else
             {
-                ((IMudStateHasChanged)DataGrid).StateHasChanged();
+                ((IHamkareStateHasChanged)DataGrid).StateHasChanged();
             }
             _filtersMenuVisible = false;
             DataGrid.DropContainerHasChanged();
@@ -629,7 +629,7 @@ namespace MudBlazor
             Column.FilterContext.FilterDefinition.Value = null;
             await DataGrid.RemoveFilterAsync(Column.FilterContext.FilterDefinition.Id);
             if (!DataGrid.HasServerData)
-                ((IMudStateHasChanged)DataGrid).StateHasChanged();
+                ((IHamkareStateHasChanged)DataGrid).StateHasChanged();
             _filtersMenuVisible = false;
             DataGrid.DropContainerHasChanged();
         }
@@ -639,7 +639,7 @@ namespace MudBlazor
             Debug.Assert(DataGrid is not null);
             await DataGrid.RemoveFilterAsync(filterDefinition.Id);
             if (!DataGrid.HasServerData)
-                ((IMudStateHasChanged)DataGrid).StateHasChanged();
+                ((IHamkareStateHasChanged)DataGrid).StateHasChanged();
             _filtersMenuVisible = false;
             DataGrid.DropContainerHasChanged();
         }
@@ -654,7 +654,7 @@ namespace MudBlazor
             }
             else
             {
-                ((IMudStateHasChanged)DataGrid).StateHasChanged();
+                ((IHamkareStateHasChanged)DataGrid).StateHasChanged();
             }
             _filtersMenuVisible = false;
             DataGrid.DropContainerHasChanged();
@@ -674,7 +674,7 @@ namespace MudBlazor
             if (Column is not null)
             {
                 await Column.HideAsync();
-                ((IMudStateHasChanged)DataGrid).StateHasChanged();
+                ((IHamkareStateHasChanged)DataGrid).StateHasChanged();
             }
         }
 

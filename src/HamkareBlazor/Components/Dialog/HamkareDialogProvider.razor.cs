@@ -1,27 +1,27 @@
 ﻿// Copyright (c) 2019 Blazored
 // License: MIT
 // See https://github.com/Blazored
-// Copyright (c) 2020 - Adapted by MudBlazor Contributors
+// Copyright (c) 2020 - Adapted by HamkareBlazor Contributors
 
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Routing;
 
 #nullable enable
-namespace MudBlazor
+namespace HamkareBlazor
 {
     /// <summary>
-    /// A manager for <see cref="MudDialog"/> instances.
+    /// A manager for <see cref="HamkareDialog"/> instances.
     /// </summary>
     /// <remarks>
     /// Add this component to your layout page if your application needs to display dialogs.
     /// </remarks>
-    /// <seealso cref="MudDialog"/>
-    /// <seealso cref="MudDialogContainer"/>
+    /// <seealso cref="HamkareDialog"/>
+    /// <seealso cref="HamkareDialogContainer"/>
     /// <seealso cref="DialogOptions"/>
     /// <seealso cref="DialogParameters{T}"/>
     /// <seealso cref="DialogReference"/>
-    /// <seealso cref="MudBlazor.DialogService"/>
-    public partial class MudDialogProvider : IDisposable
+    /// <seealso cref="HamkareBlazor.DialogService"/>
+    public partial class HamkareDialogProvider : IDisposable
     {
         private DialogOptions _globalDialogOptions = new();
         private readonly List<IDialogReference> _dialogs = [];

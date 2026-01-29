@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
     [ExcludeFromCodeCoverage]

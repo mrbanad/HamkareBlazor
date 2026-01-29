@@ -1,6 +1,6 @@
-﻿@namespace MudBlazor.Charts
+﻿@namespace HamkareBlazor.Charts
 
-@inherits MudAxisLineChartBase<T, LineChartOptions>
+@inherits HamkareAxisLineChartBase<T, LineChartOptions>
 
 @typeparam T
 
@@ -15,7 +15,7 @@
                        Height="@Height"
                        ViewBoxWidth="_boundWidth"
                        ViewBoxHeight="_boundHeight"
-                       ChartClass="mud-chart-line"
+                       ChartClass="hamkare-chart-line"
                        ChartSeries="@ChartSeries"
                        ChartLabels="@ChartLabels"
                        ChartOptions="@ChartOptions"
@@ -60,7 +60,7 @@
             var showDataMarkers = ChartOptions?.ShowDataMarkers ?? false;
             var isHovered = HoveredDataPointPath?.Index == chartLine.Index;
             var overrideSettings = GetSeriesDisplayOverride(series);
-            var lineClass = isHovered ? "mud-chart-serie mud-chart-line mud-chart-serie-hovered" : "mud-chart-serie mud-chart-line";
+            var lineClass = isHovered ? "hamkare-chart-serie hamkare-chart-line hamkare-chart-serie-hovered" : "hamkare-chart-serie hamkare-chart-line";
 
             // Line path
             builder.OpenElement(seq++, "path");
@@ -93,7 +93,7 @@
                 if (showDataMarkers && !item.Equals(HoveredDataPointPath))
                 {
                     builder.OpenElement(seq++, "circle");
-                    builder.AddAttribute(seq++, "class", "mud-chart-serie mud-chart-point");
+                    builder.AddAttribute(seq++, "class", "hamkare-chart-serie hamkare-chart-point");
                     builder.AddAttribute(seq++, "onclick", EventCallback.Factory.Create(this, () => SetSelectedIndexAsync(chartLine.Index)));
                     builder.AddAttribute(seq++, "stroke", color);
                     builder.AddAttribute(seq++, "stroke-width", DataPointStroke);
@@ -105,7 +105,7 @@
 
                 // Hoverable point (invisible until hovered)
                 builder.OpenElement(seq++, "circle");
-                builder.AddAttribute(seq++, "class", "mud-chart-serie mud-chart-point");
+                builder.AddAttribute(seq++, "class", "hamkare-chart-serie hamkare-chart-point");
                 builder.AddAttribute(seq++, "onclick", EventCallback.Factory.Create(this, () => SetSelectedIndexAsync(chartLine.Index)));
                 builder.AddAttribute(seq++, "fill", item.Equals(HoveredDataPointPath) ? color : string.Empty);
                 builder.AddAttribute(seq++, "stroke", color);
@@ -140,7 +140,7 @@
         if (TooltipTemplate is not null)
         {
             builder.OpenElement(seq++, "g");
-            builder.AddAttribute(seq++, "class", "mud-chart-tooltip");
+            builder.AddAttribute(seq++, "class", "hamkare-chart-tooltip");
             builder.AddAttribute(seq++, "transform", $"translate({tooltipX.ToStr()},{tooltipY.ToStr()})");
             builder.AddContent(seq++, TooltipTemplate((HoveredDataPointPath, color)));
             builder.CloseElement();
@@ -167,7 +167,7 @@
         }
     };
 
-    private RenderFragment Chart =>@<g class="mud-charts-line-series">
+    private RenderFragment Chart =>@<g class="hamkare-charts-line-series">
                                         @RenderChartLines()
                                         @RenderTooltip()
                                     </g>;

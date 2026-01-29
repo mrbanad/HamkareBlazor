@@ -1,31 +1,31 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using Microsoft.AspNetCore.Components;
-using MudBlazor.Utilities;
-using MudBlazor.Utilities.Exceptions;
+using HamkareBlazor.Utilities;
+using HamkareBlazor.Utilities.Exceptions;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
 
     /// <summary>
-    /// A group of <see cref="MudRadio{T}"/> components.
+    /// A group of <see cref="HamkareRadio{T}"/> components.
     /// </summary>
     /// <typeparam name="T">The type of value being selected.</typeparam>
-    public partial class MudRadioGroup<T> : MudFormComponent<T, T>, IMudRadioGroup
+    public partial class HamkareRadioGroup<T> : HamkareFormComponent<T, T>, IHamkareRadioGroup
     {
-        private MudRadio<T>? _selectedRadio;
-        private readonly HashSet<MudRadio<T>> _radios = new();
+        private HamkareRadio<T>? _selectedRadio;
+        private readonly HashSet<HamkareRadio<T>> _radios = new();
 
         protected string Classname =>
-            new CssBuilder("mud-input-control-boolean-input")
+            new CssBuilder("hamkare-input-control-boolean-input")
                 .AddClass(Class)
                 .Build();
 
         private string GetInputClass() =>
-            new CssBuilder("mud-radio-group")
+            new CssBuilder("hamkare-radio-group")
                 .AddClass(InputClass)
                 .Build();
 
@@ -48,7 +48,7 @@ namespace MudBlazor
         /// <summary>
         /// The CSS styles for this button group.
         /// </summary>
-        [Obsolete("Prefer the InputClass property with CSS https://github.com/MudBlazor/MudBlazor/issues/12047")]
+        [Obsolete("Prefer the InputClass property with CSS https://github.com/HamkareBlazor/HamkareBlazor/issues/12047")]
         [Parameter]
         [Category(CategoryTypes.Radio.Appearance)]
         public string? InputStyle { get; set; }
@@ -57,7 +57,7 @@ namespace MudBlazor
         /// The content within this button group.
         /// </summary>
         /// <remarks>
-        /// Usually a set of <see cref="MudRadio{T}"/> components.
+        /// Usually a set of <see cref="HamkareRadio{T}"/> components.
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.Radio.Behavior)]
@@ -110,9 +110,9 @@ namespace MudBlazor
         [Parameter]
         public EventCallback<T> ValueChanged { get; set; }
 
-        internal bool GetDisabledState() => Disabled || ParentDisabled; //internal because the MudRadio reads this value directly
+        internal bool GetDisabledState() => Disabled || ParentDisabled; //internal because the HamkareRadio reads this value directly
 
-        internal bool GetReadOnlyState() => ReadOnly || ParentReadOnly; //internal because the MudRadio reads this value directly
+        internal bool GetReadOnlyState() => ReadOnly || ParentReadOnly; //internal because the HamkareRadio reads this value directly
 
         protected async Task SetSelectedOptionAsync(T? option, bool updateRadio, bool updateValue = true)
         {
@@ -144,17 +144,17 @@ namespace MudBlazor
             var itemT = selectItem.GetType().GenericTypeArguments[0];
             if (itemT != typeof(T))
             {
-                throw new GenericTypeMismatchException("MudRadioGroup", "MudRadio", typeof(T), itemT);
+                throw new GenericTypeMismatchException("HamkareRadioGroup", "HamkareRadio", typeof(T), itemT);
             }
         }
 
-        internal Task SetSelectedRadioAsync(MudRadio<T> radio)
+        internal Task SetSelectedRadioAsync(HamkareRadio<T> radio)
         {
             Touched = true;
             return SetSelectedRadioAsync(radio, true);
         }
 
-        protected async Task SetSelectedRadioAsync(MudRadio<T>? radio, bool updateOption)
+        protected async Task SetSelectedRadioAsync(HamkareRadio<T>? radio, bool updateOption)
         {
             if (_selectedRadio != radio)
             {
@@ -172,7 +172,7 @@ namespace MudBlazor
             }
         }
 
-        internal Task RegisterRadioAsync(MudRadio<T> radio)
+        internal Task RegisterRadioAsync(HamkareRadio<T> radio)
         {
             _radios.Add(radio);
 
@@ -186,7 +186,7 @@ namespace MudBlazor
             return Task.CompletedTask;
         }
 
-        internal void UnregisterRadio(MudRadio<T> radio)
+        internal void UnregisterRadio(HamkareRadio<T> radio)
         {
             _radios.Remove(radio);
 
@@ -210,7 +210,7 @@ namespace MudBlazor
         /// <inheritdoc />
         protected override IConverter<T?, T?> GetDefaultConverter() => EmptyConverter<T?>.Instance;
 
-        private static T? GetValueOrDefault(MudRadio<T>? radio)
+        private static T? GetValueOrDefault(HamkareRadio<T>? radio)
         {
             return radio is not null ? radio.ReadValue : default;
         }

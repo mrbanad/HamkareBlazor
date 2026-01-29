@@ -1,10 +1,10 @@
 ﻿using System.Globalization;
 using System.Numerics;
 using System.Text;
-using MudBlazor.Extensions;
+using HamkareBlazor.Extensions;
 
 #nullable enable
-namespace MudBlazor.Charts
+namespace HamkareBlazor.Charts
 {
     /// <summary>
     /// Represents a chart which displays values as a percentage of a circle.
@@ -14,7 +14,7 @@ namespace MudBlazor.Charts
     /// <seealso cref="Line{T}"/>
     /// <seealso cref="StackedBar{T}"/>
     /// <seealso cref="TimeSeries{T}"/>
-    partial class Pie<T> : MudRadialChartBase<T, PieChartOptions> where T : struct, INumber<T>, IMinMaxValue<T>, IFormattable
+    partial class Pie<T> : HamkareRadialChartBase<T, PieChartOptions> where T : struct, INumber<T>, IMinMaxValue<T>, IFormattable
     {
         protected override void OnInitialized()
         {

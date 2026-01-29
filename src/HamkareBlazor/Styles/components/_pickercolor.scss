@@ -1,50 +1,50 @@
-.mud-picker-container {
-  & + .mud-picker-color-toolbar {
+.hamkare-picker-container {
+  & + .hamkare-picker-color-toolbar {
     border-top-left-radius: inherit;
     border-top-right-radius: inherit;
   }
 
-  & + .mud-picker-color-content {
+  & + .hamkare-picker-color-content {
     border-top-left-radius: inherit;
     border-top-right-radius: inherit;
   }
 }
 
 
-.mud-picker-color-toolbar {
+.hamkare-picker-color-toolbar {
   height: 32px;
   padding-right: 2px;
   padding-left: 2px;
 }
 
-.mud-picker-color-content {
+.hamkare-picker-color-content {
   min-height: unset;
   position: relative;
 }
 
-.mud-picker-color-picker {
+.hamkare-picker-color-picker {
   width: 312px;
   height: 250px;
   position: relative;
   overflow: hidden;
   touch-action: pinch-zoom;
 
-  .mud-picker-color-overlay {
+  .hamkare-picker-color-overlay {
     width: 100%;
     height: 100%;
     /*Don't let the browser selection menu pop up from double clicking the svg*/
     user-select: none;
 
-    &.mud-picker-color-overlay-white {
+    &.hamkare-picker-color-overlay-white {
       background: linear-gradient(to right, white 0%, rgba(255, 255, 255, 0) 100%);
     }
 
-    &.mud-picker-color-overlay-black {
+    &.hamkare-picker-color-overlay-black {
       background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, black 100%);
     }
   }
 
-  .mud-picker-color-selector {
+  .hamkare-picker-color-selector {
     position: absolute;
     top: -13px;
     left: -13px;
@@ -52,11 +52,11 @@
     pointer-events: none;
   }
 
-  .mud-picker-color-grid {
+  .hamkare-picker-color-grid {
     display: flex;
     flex-wrap: wrap;
 
-    .mud-picker-color-dot {
+    .hamkare-picker-color-dot {
       height: 25px;
       min-width: 26px;
       max-width: 26px;
@@ -66,32 +66,32 @@
   }
 }
 
-.mud-picker-color-controls {
+.hamkare-picker-color-controls {
   width: 312px;
   padding: 16px;
   display: flex;
   flex-direction: column;
 
-  .mud-picker-color-controls-row {
+  .hamkare-picker-color-controls-row {
     display: flex;
     align-items: center;
 
-    & + .mud-picker-color-controls-row {
+    & + .hamkare-picker-color-controls-row {
       margin-top: 24px;
     }
 
-    .mud-picker-color-sliders {
+    .hamkare-picker-color-sliders {
       display: flex;
       flex: 1 0 auto;
       flex-direction: column;
 
-      .mud-picker-color-slider {
+      .hamkare-picker-color-slider {
         min-width: 224px;
-        border-radius: var(--mud-default-borderradius);
+        border-radius: var(--hamkare-default-borderradius);
 
-        & .mud-slider-input {
+        & .hamkare-slider-input {
           height: 10px;
-          border-radius: var(--mud-default-borderradius);
+          border-radius: var(--hamkare-default-borderradius);
 
           @include slider-track {
             background: initial;
@@ -110,7 +110,7 @@
 
           &:active {
             @include slider-thumb {
-              box-shadow: 0 0 0 2px var(--mud-palette-action-default-hover) !important;
+              box-shadow: 0 0 0 2px var(--hamkare-palette-action-default-hover) !important;
             }
           }
         }
@@ -119,21 +119,21 @@
           margin-top: 18px;
         }
 
-        &.hue .mud-slider-input {
+        &.hue .hamkare-slider-input {
           background: linear-gradient( 90deg, #FF0000, #ff0 16.66%, #0f0 33.33%,#0ff 50%, #00f 66.66%, #f0f 83.33%, #FF0000);
         }
 
-        &.alpha .mud-slider-input {
+        &.alpha .hamkare-slider-input {
           background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAGElEQVQYlWNgYGCQwoKxgqGgcJA5h3yFAAs8BRWVSwooAAAAAElFTkSuQmCC) repeat;
         }
       }
     }
 
-    .mud-picker-color-inputs {
+    .hamkare-picker-color-inputs {
       display: flex;
       flex: 1 1 auto;
 
-      .mud-picker-color-inputfield {
+      .hamkare-picker-color-inputfield {
         width: 100%;
         margin-right: 8px;
         margin-inline-end: 8px;
@@ -145,7 +145,7 @@
           margin-inline-start: unset;
         }
 
-        .mud-input {
+        .hamkare-input {
           input {
             padding: 6px;
             height: 1em;
@@ -154,7 +154,7 @@
           }
         }
 
-        .mud-input-helper-text {
+        .hamkare-input-helper-text {
           text-align: center;
 
           & div div {
@@ -164,31 +164,31 @@
       }
     }
 
-    .mud-picker-control-switch {
+    .hamkare-picker-control-switch {
       margin-left: 8px;
       margin-inline-start: 8px;
       margin-inline-end: unset;
       padding-bottom: 16px;
     }
 
-    .mud-picker-color-collection {
+    .hamkare-picker-color-collection {
       display: flex;
       min-width: 230px;
       justify-content: space-between;
 
-      .mud-picker-color-dot {
+      .hamkare-picker-color-dot {
         max-width: 38px;
       }
     }
   }
 }
 
-.mud-picker-color-dot {
+.hamkare-picker-color-dot {
   height: 38px;
   min-width: 38px;
   width: 100%;
   transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border-radius 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-  border-radius: var(--mud-default-borderradius);
+  border-radius: var(--hamkare-default-borderradius);
   box-shadow: 0 0 6px rgba(127, 130, 134, 0.18);
 
   @media(hover: hover) and (pointer: fine) {
@@ -198,43 +198,43 @@
     }
   }
 
-  &.mud-picker-color-dot-current {
+  &.hamkare-picker-color-dot-current {
     background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAGElEQVQYlWNgYGCQwoKxgqGgcJA5h3yFAAs8BRWVSwooAAAAAElFTkSuQmCC) repeat;
   }
 
-  .mud-picker-color-fill {
+  .hamkare-picker-color-fill {
     width: 100%;
     height: 100%;
     border-radius: inherit;
   }
 
-  & + .mud-picker-color-sliders {
+  & + .hamkare-picker-color-sliders {
     margin-left: 16px;
     margin-inline-start: 16px;
     margin-inline-end: unset;
   }
 
-  & + .mud-picker-color-collection {
+  & + .hamkare-picker-color-collection {
     margin-left: 10px;
     margin-inline-start: 10px;
     margin-inline-end: unset;
   }
 }
 
-.mud-picker-color-view {
+.hamkare-picker-color-view {
   position: absolute;
   width: 100%;
   height: 100%;
   overflow: auto;
   padding: 6px;
-  background-color: var(--mud-palette-surface);
+  background-color: var(--hamkare-palette-surface);
 
-  .mud-picker-color-view-collection {
+  .hamkare-picker-color-view-collection {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
 
-    .mud-picker-color-dot {
+    .hamkare-picker-color-dot {
       max-width: 38px;
       margin: 8px;
 

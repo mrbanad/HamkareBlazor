@@ -1,9 +1,9 @@
-﻿namespace MudBlazor;
+﻿namespace HamkareBlazor;
 
 #nullable enable
 
 /// <summary>
-/// Indicates the position of the edit button which starts inline edits for a <see cref="MudTable{T}"/>.
+/// Indicates the position of the edit button which starts inline edits for a <see cref="HamkareTable{T}"/>.
 /// </summary>
 public enum TableEditButtonPosition
 {

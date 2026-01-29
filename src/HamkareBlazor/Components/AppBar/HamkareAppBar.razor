@@ -1,7 +1,7 @@
 @using Microsoft.AspNetCore.Components.Sections;
 
-@namespace MudBlazor
-@inherits MudComponentBase
+@namespace HamkareBlazor
+@inherits HamkareComponentBase
 
 @if (Contextual)
 {
@@ -18,15 +18,15 @@ else
 @code {
     private RenderFragment Header =>
         @<header @attributes="@UserAttributes" class="@Classname" style="@Style">
-            <MudToolBar Dense="@Dense" Gutters="@Gutters" Class="@ToolBarClassname" WrapContent="@WrapContent">
+            <HamkareToolBar Dense="@Dense" Gutters="@Gutters" Class="@ToolBarClassname" WrapContent="@WrapContent">
                 @ChildContent
-            </MudToolBar>
+            </HamkareToolBar>
         </header>;
 
     private RenderFragment Footer =>
         @<footer @attributes="@UserAttributes" class="@Classname" style="@Style">
-            <MudToolBar Dense="@Dense" Gutters="@Gutters" Class="@ToolBarClassname" WrapContent="@WrapContent">
+            <HamkareToolBar Dense="@Dense" Gutters="@Gutters" Class="@ToolBarClassname" WrapContent="@WrapContent">
                 @ChildContent
-            </MudToolBar>
+            </HamkareToolBar>
         </footer>;
 }

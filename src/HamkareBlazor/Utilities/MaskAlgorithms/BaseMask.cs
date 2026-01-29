@@ -1,12 +1,12 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 #nullable enable
 /// <summary>
-/// A base class for designing input masks for the <see cref="MudMask"/>, <see cref="MudTextField{T}"/>, and <see cref="MudPicker{T}"/> components.
+/// A base class for designing input masks for the <see cref="HamkareMask"/>, <see cref="HamkareTextField{T}"/>, and <see cref="HamkarePicker{T}"/> components.
 /// </summary>
 public abstract class BaseMask : IMask
 {

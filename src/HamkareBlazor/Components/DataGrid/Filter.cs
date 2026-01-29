@@ -1,5 +1,5 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System;
@@ -7,12 +7,12 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
     internal class Filter<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)] T>
     {
-        private readonly MudDataGrid<T> _dataGrid;
+        private readonly HamkareDataGrid<T> _dataGrid;
         private readonly IFilterDefinition<T> _filterDefinition;
         private readonly Column<T>? _column;
 
@@ -28,7 +28,7 @@ namespace MudBlazor
         internal Column<T>? FilterColumn =>
             _column ?? (_dataGrid.RenderedColumns?.FirstOrDefault(c => c.PropertyName == _filterDefinition.Column?.PropertyName));
 
-        public Filter(MudDataGrid<T> dataGrid, IFilterDefinition<T> filterDefinition, Column<T>? column)
+        public Filter(HamkareDataGrid<T> dataGrid, IFilterDefinition<T> filterDefinition, Column<T>? column)
         {
             _dataGrid = dataGrid;
             _filterDefinition = filterDefinition;

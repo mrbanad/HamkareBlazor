@@ -1,21 +1,21 @@
 ﻿using Microsoft.AspNetCore.Components;
-using MudBlazor.Utilities;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
     /// <summary>
-    /// A container which manages <see cref="MudExpansionPanel"/> components such that when one panel is expanded the others are collapsed automatically.
+    /// A container which manages <see cref="HamkareExpansionPanel"/> components such that when one panel is expanded the others are collapsed automatically.
     /// </summary>
-    /// <seealso cref="MudExpansionPanel"/>
-    /// <seealso cref="MudCollapse"/>
-    public partial class MudExpansionPanels : MudComponentBase
+    /// <seealso cref="HamkareExpansionPanel"/>
+    /// <seealso cref="HamkareCollapse"/>
+    public partial class HamkareExpansionPanels : HamkareComponentBase
     {
-        private List<MudExpansionPanel> _panels = new();
+        private List<HamkareExpansionPanel> _panels = new();
 
         protected string Classname =>
-            new CssBuilder("mud-expansion-panels")
-                .AddClass("mud-expansion-panels-square", Square)
+            new CssBuilder("hamkare-expansion-panels")
+                .AddClass("hamkare-expansion-panels-square", Square)
                 .AddClass(Class)
                 .Build();
 
@@ -90,11 +90,11 @@ namespace MudBlazor
         /// A read-only list of the panels within this component. 
         /// </summary>
         /// <remarks>
-        /// Expansion panels are controlled by adding more <see cref="MudExpansionPanel"/> components in the Razor page.
+        /// Expansion panels are controlled by adding more <see cref="HamkareExpansionPanel"/> components in the Razor page.
         /// </remarks>
-        public IReadOnlyList<MudExpansionPanel> Panels => _panels;
+        public IReadOnlyList<HamkareExpansionPanel> Panels => _panels;
 
-        internal async Task AddPanelAsync(MudExpansionPanel panel)
+        internal async Task AddPanelAsync(HamkareExpansionPanel panel)
         {
             if (!MultiExpansion && _panels.Any(p => p._expandedState.Value))
             {
@@ -104,7 +104,7 @@ namespace MudBlazor
             _panels.Add(panel);
         }
 
-        internal void RemovePanel(MudExpansionPanel panel)
+        internal void RemovePanel(HamkareExpansionPanel panel)
         {
             _panels.Remove(panel);
             try
@@ -114,7 +114,7 @@ namespace MudBlazor
             catch (InvalidOperationException) { /* this happens on page reload, probably a Blazor bug */ }
         }
 
-        internal async Task NotifyPanelsChanged(MudExpansionPanel panel)
+        internal async Task NotifyPanelsChanged(HamkareExpansionPanel panel)
         {
             if (!MultiExpansion && panel._expandedState.Value)
             {
@@ -130,7 +130,7 @@ namespace MudBlazor
         /// </summary>
         public Task UpdateAllAsync()
         {
-            MudExpansionPanel? last = null;
+            HamkareExpansionPanel? last = null;
             foreach (var panel in _panels)
             {
                 if (last is not null)
@@ -149,7 +149,7 @@ namespace MudBlazor
         /// Collapses all panels except the given one.
         /// </summary>
         /// <param name="panel">The panel to keep expanded.</param>
-        public async Task CollapseAllExceptAsync(MudExpansionPanel panel)
+        public async Task CollapseAllExceptAsync(HamkareExpansionPanel panel)
         {
             foreach (var expansionPanel in _panels.Where(expansionPanel => expansionPanel != panel))
             {

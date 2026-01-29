@@ -1,28 +1,28 @@
 ﻿// License: MIT
 // Copyright (c) 2019 Blazored - See https://github.com/Blazored
-// Copyright (c) 2020 MudBlazor Contributors
+// Copyright (c) 2020 HamkareBlazor Contributors
 
 using System.Threading;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using MudBlazor.Interfaces;
-using MudBlazor.State;
-using MudBlazor.Utilities;
+using HamkareBlazor.Interfaces;
+using HamkareBlazor.State;
+using HamkareBlazor.Utilities;
 
 #nullable enable
-namespace MudBlazor
+namespace HamkareBlazor
 {
     /// <summary>
     /// Displays an overlay that prompts users to confirm an action or provide additional information.
     /// </summary>
-    /// <seealso cref="MudDialogContainer"/>
-    /// <seealso cref="MudDialogProvider"/>
+    /// <seealso cref="HamkareDialogContainer"/>
+    /// <seealso cref="HamkareDialogProvider"/>
     /// <seealso cref="DialogOptions"/>
     /// <seealso cref="DialogParameters{T}"/>
     /// <seealso cref="DialogReference"/>
-    /// <seealso cref="MudBlazor.DialogService"/>
-    /// <seealso cref="MudMessageBox" />
-    public partial class MudDialog : MudComponentBase
+    /// <seealso cref="HamkareBlazor.DialogService"/>
+    /// <seealso cref="HamkareMessageBox" />
+    public partial class HamkareDialog : HamkareComponentBase
     {
         private IDialogReference? _reference;
         private readonly ParameterState<bool> _visibleState;
@@ -31,7 +31,7 @@ namespace MudBlazor
         /// <summary>
         /// Creates a new instance.
         /// </summary>
-        public MudDialog()
+        public HamkareDialog()
         {
             using var registerScope = CreateRegisterScope();
             _visibleState = registerScope.RegisterParameter<bool>(nameof(Visible))
@@ -39,17 +39,17 @@ namespace MudBlazor
                 .WithEventCallback(() => VisibleChanged);
         }
 
-        protected string ContentClassname => new CssBuilder("mud-dialog-content")
-            .AddClass("mud-dialog-no-side-padding", !Gutters)
+        protected string ContentClassname => new CssBuilder("hamkare-dialog-content")
+            .AddClass("hamkare-dialog-no-side-padding", !Gutters)
             .AddClass(ContentClass)
             .Build();
 
-        protected string ActionsClassname => new CssBuilder("mud-dialog-actions")
+        protected string ActionsClassname => new CssBuilder("hamkare-dialog-actions")
             .AddClass(ActionsClass)
             .Build();
 
         [CascadingParameter]
-        private IMudDialogInstanceInternal? DialogInstance { get; set; }
+        private IHamkareDialogInstanceInternal? DialogInstance { get; set; }
 
         [CascadingParameter(Name = "IsNested")]
         private bool IsNested { get; set; }
@@ -64,7 +64,7 @@ namespace MudBlazor
         /// The custom content for this dialog's title.
         /// </summary>
         /// <remarks>
-        /// When <c>null</c>, the <see cref="MudDialogContainer.Title"/> will be used.
+        /// When <c>null</c>, the <see cref="HamkareDialogContainer.Title"/> will be used.
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.Dialog.Behavior)]
@@ -159,7 +159,7 @@ namespace MudBlazor
         /// <summary>
         /// The CSS styles applied to the main dialog content.
         /// </summary>
-        [Obsolete("Prefer the ContentClass property with CSS https://github.com/MudBlazor/MudBlazor/issues/12047")]
+        [Obsolete("Prefer the ContentClass property with CSS https://github.com/HamkareBlazor/HamkareBlazor/issues/12047")]
         [Parameter]
         [Category(CategoryTypes.Dialog.Appearance)]
         public string? ContentStyle { get; set; }
@@ -169,7 +169,7 @@ namespace MudBlazor
         /// </summary>
         /// <remarks>
         /// Defaults to <c>false</c>.<br />
-        /// This can be bound via <c>@bind-Visible</c> to show or hide inline dialogs.  For regular dialogs, use the <see cref="DialogService.ShowAsync(Type)"/> and <see cref="IMudDialogInstance.Close()"/> methods.
+        /// This can be bound via <c>@bind-Visible</c> to show or hide inline dialogs.  For regular dialogs, use the <see cref="DialogService.ShowAsync(Type)"/> and <see cref="IHamkareDialogInstance.Close()"/> methods.
         /// </remarks>
         [Parameter, ParameterState]
         [Category(CategoryTypes.Dialog.Behavior)]
@@ -185,7 +185,7 @@ namespace MudBlazor
         /// The element which will receive focus when this dialog is shown.
         /// </summary>
         /// <remarks>
-        /// Defaults to <c>null</c>, which will use the global default from <see cref="MudDialogProvider.DefaultFocus"/> if set, otherwise <see cref="DefaultFocus.Element"/>.
+        /// Defaults to <c>null</c>, which will use the global default from <see cref="HamkareDialogProvider.DefaultFocus"/> if set, otherwise <see cref="DefaultFocus.Element"/>.
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.Dialog.Behavior)]
@@ -232,7 +232,7 @@ namespace MudBlazor
                 };
 #pragma warning restore CS0618 // Type or member is obsolete
 
-                _reference = await DialogService.ShowAsync<MudDialog>(title, parameters, options ?? Options);
+                _reference = await DialogService.ShowAsync<HamkareDialog>(title, parameters, options ?? Options);
 
                 await _visibleState.SetValueAsync(true);
 
@@ -280,10 +280,10 @@ namespace MudBlazor
                     if (_visibleState.Value)
                     {
                         // Forward render update to instance
-                        (_reference.Dialog as IMudStateHasChanged)?.StateHasChanged();
+                        (_reference.Dialog as IHamkareStateHasChanged)?.StateHasChanged();
 
                         //forward render update to instance container
-                        if (_reference.Dialog is MudDialog { DialogInstance: not null } dialog)
+                        if (_reference.Dialog is HamkareDialog { DialogInstance: not null } dialog)
                             await InvokeAsync(dialog.DialogInstance!.StateHasChanged);
                     }
                     else

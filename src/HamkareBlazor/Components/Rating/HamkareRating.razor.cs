@@ -1,22 +1,22 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using MudBlazor.State;
-using MudBlazor.Utilities;
+using HamkareBlazor.State;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
 
     /// <summary>
     /// Ratings provide insight regarding other's opinions and experiences with a product. Collecting user feedback via ratings is a simple analytic that can provide a lot of feedback to your product or application.
     /// </summary>
-    /// <seealso cref="MudRatingItem"/>
-    public partial class MudRating : MudComponentBase
+    /// <seealso cref="HamkareRatingItem"/>
+    public partial class HamkareRating : HamkareComponentBase
     {
         private readonly ParameterState<int> _selectedValueState;
         private int? _hoveredValue = null;
 
-        public MudRating()
+        public HamkareRating()
         {
             using var registerScope = CreateRegisterScope();
             _selectedValueState = registerScope.RegisterParameter<int>(nameof(SelectedValue))
@@ -28,13 +28,13 @@ namespace MudBlazor
         /// The CSS classes applied to this component.
         /// </summary>
         protected string ClassName =>
-            new CssBuilder("mud-rating-root")
-                .AddClass("mud-disabled", Disabled)
+            new CssBuilder("hamkare-rating-root")
+                .AddClass("hamkare-disabled", Disabled)
                 .AddClass(Class)
                 .Build();
 
         /// <summary>
-        /// The CSS classes to apply to each <see cref="MudRatingItem"/>.
+        /// The CSS classes to apply to each <see cref="HamkareRatingItem"/>.
         /// </summary>
         /// <remarks>
         /// Defaults to <c>null</c>. Multiple classes must be separated by spaces.
@@ -44,12 +44,12 @@ namespace MudBlazor
         public string? RatingItemsClass { get; set; }
 
         /// <summary>
-        /// The CSS styles to apply to each <see cref="MudRatingItem"/>.
+        /// The CSS styles to apply to each <see cref="HamkareRatingItem"/>.
         /// </summary>
         /// <remarks>
         /// Defaults to <c>null</c>.
         /// </remarks>
-        [Obsolete("Prefer the RatingItemsClass property with CSS https://github.com/MudBlazor/MudBlazor/issues/12047")]
+        [Obsolete("Prefer the RatingItemsClass property with CSS https://github.com/HamkareBlazor/HamkareBlazor/issues/12047")]
         [Parameter]
         [Category(CategoryTypes.Rating.Appearance)]
         public string? RatingItemsStyle { get; set; }
@@ -65,7 +65,7 @@ namespace MudBlazor
         public string Name { get; set; } = Guid.NewGuid().ToString();
 
         /// <summary>
-        /// The number of <see cref="MudRatingItem"/> items to display.
+        /// The number of <see cref="HamkareRatingItem"/> items to display.
         /// </summary>
         /// <remarks>
         /// Defaults to <c>5</c>.

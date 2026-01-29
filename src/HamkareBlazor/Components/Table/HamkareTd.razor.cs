@@ -1,24 +1,24 @@
 ﻿using Microsoft.AspNetCore.Components;
-using MudBlazor.Utilities;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
 
     /// <summary>
-    /// A cell within a <see cref="MudTr" />, <see cref="MudTHeadRow"/>, or <see cref="MudTFootRow"/> row component.
+    /// A cell within a <see cref="HamkareTr" />, <see cref="HamkareTHeadRow"/>, or <see cref="HamkareTFootRow"/> row component.
     /// </summary>
-    public partial class MudTd : MudComponentBase
+    public partial class HamkareTd : HamkareComponentBase
     {
         protected string Classname =>
-            new CssBuilder("mud-table-cell")
+            new CssBuilder("hamkare-table-cell")
                 .AddClass(Context?.Table?.CellClass)
-                .AddClass("mud-table-cell-hide", HideSmall)
+                .AddClass("hamkare-table-cell-hide", HideSmall)
                 .AddClass(Class)
                 .Build();
 
         /// <summary>
-        /// The current state of the <see cref="MudTable{T}"/> containing this group.
+        /// The current state of the <see cref="HamkareTable{T}"/> containing this group.
         /// </summary>
         [CascadingParameter]
         public TableContext? Context { get; set; }
@@ -36,7 +36,7 @@ namespace MudBlazor
         public string? DataLabel { get; set; }
 
         /// <summary>
-        /// Hides this cell if the breakpoint is smaller than <see cref="MudTableBase.Breakpoint"/>.
+        /// Hides this cell if the breakpoint is smaller than <see cref="HamkareTableBase.Breakpoint"/>.
         /// </summary>
         /// <remarks>
         /// Defaults to <c>false</c>.

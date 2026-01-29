@@ -1,20 +1,20 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-namespace MudBlazor.Utilities;
+namespace HamkareBlazor.Utilities;
 
 #nullable enable
-public partial class MudColor
+public partial class HamkareColor
 {
     /// <summary>
-    /// Linearly interpolates between two <see cref="MudColor"/> instances.
+    /// Linearly interpolates between two <see cref="HamkareColor"/> instances.
     /// </summary>
-    /// <param name="colorStart">The starting <see cref="MudColor"/> instance.</param>
-    /// <param name="colorEnd">The ending <see cref="MudColor"/> instance.</param>
+    /// <param name="colorStart">The starting <see cref="HamkareColor"/> instance.</param>
+    /// <param name="colorEnd">The ending <see cref="HamkareColor"/> instance.</param>
     /// <param name="t">The interpolation factor (0.0 to 1.0).</param>
-    /// <returns>A new <see cref="MudColor"/> instance that is the result of the interpolation.</returns>
-    public static MudColor Lerp(MudColor colorStart, MudColor colorEnd, float t)
+    /// <returns>A new <see cref="HamkareColor"/> instance that is the result of the interpolation.</returns>
+    public static HamkareColor Lerp(HamkareColor colorStart, HamkareColor colorEnd, float t)
     {
         t = Math.Clamp(t, 0.0f, 1.0f);
         var r = InterpolateValue(colorStart.R, colorEnd.R);
@@ -23,9 +23,9 @@ public partial class MudColor
         var a = InterpolateValue(colorStart.A, colorEnd.A);
         var aPercentage = NormalizeAlpha(a, 3);
         // Using alpha as a percentage ensures more accurate alpha blending. 
-        // Creating a MudColor from an alpha byte or integer can result in fractional alpha values (e.g., 0.996078431372549), 
+        // Creating a HamkareColor from an alpha byte or integer can result in fractional alpha values (e.g., 0.996078431372549), 
         // which makes it difficult to compare two colors accurately in real-world scenarios.
-        return new MudColor(r, g, b, alpha: aPercentage);
+        return new HamkareColor(r, g, b, alpha: aPercentage);
 
         int InterpolateValue(byte start, byte end) => (int)(start * (1.0f - t) + end * t);
     }
@@ -36,9 +36,9 @@ public partial class MudColor
     /// <param name="startColor">The starting color of the gradient.</param>
     /// <param name="endColor">The ending color of the gradient.</param>
     /// <param name="numberOfColors">The total number of colors in the gradient palette.</param>
-    /// <returns>An enumerable collection of <see cref="MudColor"/> representing the gradient palette.</returns>
+    /// <returns>An enumerable collection of <see cref="HamkareColor"/> representing the gradient palette.</returns>
     /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="numberOfColors"/> is less than or equal to zero.</exception>
-    public static IEnumerable<MudColor> GenerateGradientPalette(MudColor startColor, MudColor endColor, int numberOfColors = 5)
+    public static IEnumerable<HamkareColor> GenerateGradientPalette(HamkareColor startColor, HamkareColor endColor, int numberOfColors = 5)
     {
         ArgumentOutOfRangeException.ThrowIfNegativeOrZero(numberOfColors);
 
@@ -61,10 +61,10 @@ public partial class MudColor
     /// </summary>
     /// <param name="colors">The list of colors to generate the multi-gradient palette from. Must contain at least two colors.</param>
     /// <param name="numberOfColors">The total number of colors in the multi-gradient palette.</param>
-    /// <returns>An enumerable collection of <see cref="MudColor"/> representing the multi-gradient palette.</returns>
+    /// <returns>An enumerable collection of <see cref="HamkareColor"/> representing the multi-gradient palette.</returns>
     /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="numberOfColors"/> is less than or equal to zero.</exception>
     /// <exception cref="ArgumentException">Thrown when the <paramref name="colors"/> collection contains fewer than two colors.</exception>
-    public static IEnumerable<MudColor> GenerateMultiGradientPalette(IReadOnlyList<MudColor> colors, int numberOfColors = 5)
+    public static IEnumerable<HamkareColor> GenerateMultiGradientPalette(IReadOnlyList<HamkareColor> colors, int numberOfColors = 5)
     {
         ArgumentOutOfRangeException.ThrowIfNegativeOrZero(numberOfColors);
         if (colors.Count < 2)
@@ -103,9 +103,9 @@ public partial class MudColor
     /// <param name="baseColor">The base color to generate the analogous palette from.</param>
     /// <param name="numberOfColors">The total number of colors in the analogous palette.</param>
     /// <param name="angle">The angle between each color in the analogous palette.</param>
-    /// <returns>An enumerable collection of <see cref="MudColor"/> representing the analogous palette.</returns>
+    /// <returns>An enumerable collection of <see cref="HamkareColor"/> representing the analogous palette.</returns>
     /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="numberOfColors"/> is less than or equal to zero.</exception>
-    public static IEnumerable<MudColor> GenerateAnalogousPalette(MudColor baseColor, int numberOfColors = 5, double angle = 30)
+    public static IEnumerable<HamkareColor> GenerateAnalogousPalette(HamkareColor baseColor, int numberOfColors = 5, double angle = 30)
     {
         ArgumentOutOfRangeException.ThrowIfNegativeOrZero(numberOfColors);
         yield return baseColor;
@@ -122,11 +122,11 @@ public partial class MudColor
     /// <param name="numberOfColors">The total number of colors in the palette.</param>
     /// <param name="tintStep">The step value for lightening the color. If <paramref name="tintStep"/> is <c>0</c>, no lighter colors will be added to the palette.</param>
     /// <param name="shadeStep">The step value for darkening the color. If <paramref name="shadeStep"/> is <c>0</c>, no darker colors will be added to the palette.</param>
-    /// <returns>A read-only list of <see cref="MudColor"/> representing the generated palette.</returns>
+    /// <returns>A read-only list of <see cref="HamkareColor"/> representing the generated palette.</returns>
     /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="numberOfColors"/> is less than or equal to zero.</exception>
     /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="tintStep"/> is negative.</exception>
     /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="shadeStep"/> is negative.</exception>
-    public static IEnumerable<MudColor> GenerateTintShadePalette(MudColor baseColor, int numberOfColors = 5, double tintStep = 0.075, double shadeStep = 0.075)
+    public static IEnumerable<HamkareColor> GenerateTintShadePalette(HamkareColor baseColor, int numberOfColors = 5, double tintStep = 0.075, double shadeStep = 0.075)
     {
         ArgumentOutOfRangeException.ThrowIfNegativeOrZero(numberOfColors);
         ArgumentOutOfRangeException.ThrowIfNegative(tintStep);

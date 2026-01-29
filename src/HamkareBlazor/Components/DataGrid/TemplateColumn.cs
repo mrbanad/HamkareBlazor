@@ -1,15 +1,15 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Components;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
     /// <summary>
-    /// Represents an additional column for a <see cref="MudDataGrid{T}"/> which isn't tied to data.
+    /// Represents an additional column for a <see cref="HamkareDataGrid{T}"/> which isn't tied to data.
     /// </summary>
     /// <typeparam name="T">The type of data represented by this column.</typeparam>
     public partial class TemplateColumn<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)] T> : Column<T>
@@ -33,7 +33,7 @@ namespace MudBlazor
         /// Allows filters to be used on this column.
         /// </summary>
         /// <remarks>
-        /// Defaults to <c>false</c>.  When set, this overrides the <see cref="MudDataGrid{T}.Filterable"/> property.
+        /// Defaults to <c>false</c>.  When set, this overrides the <see cref="HamkareDataGrid{T}.Filterable"/> property.
         /// </remarks>
         [Parameter]
         public override bool? Filterable { get; set; } = false;
@@ -42,7 +42,7 @@ namespace MudBlazor
         /// Sorts values in this column.
         /// </summary>
         /// <remarks>
-        /// Defaults to <c>false</c>.  When set, this overrides the <see cref="MudDataGrid{T}.SortMode"/> property.
+        /// Defaults to <c>false</c>.  When set, this overrides the <see cref="HamkareDataGrid{T}.SortMode"/> property.
         /// </remarks>
         [Parameter]
         public override bool? Sortable { get; set; } = false;
@@ -51,7 +51,7 @@ namespace MudBlazor
         /// Allows this column to be reordered via drag-and-drop operations.
         /// </summary>
         /// <remarks>
-        /// Defaults to <c>false</c>.  When set, this overrides the <see cref="MudDataGrid{T}.DragDropColumnReordering"/> property.
+        /// Defaults to <c>false</c>.  When set, this overrides the <see cref="HamkareDataGrid{T}.DragDropColumnReordering"/> property.
         /// </remarks>
         [Parameter]
         public override bool? DragAndDropEnabled { get; set; } = false;
@@ -66,7 +66,7 @@ namespace MudBlazor
         /// Shows options for this column.
         /// </summary>
         /// <remarks>
-        /// Defaults to <c>false</c>.  When set, this overrides the <see cref="MudDataGrid{T}.ShowColumnOptions"/> property.
+        /// Defaults to <c>false</c>.  When set, this overrides the <see cref="HamkareDataGrid{T}.ShowColumnOptions"/> property.
         /// </remarks>
         [Parameter]
         public override bool? ShowColumnOptions { get; set; } = false;

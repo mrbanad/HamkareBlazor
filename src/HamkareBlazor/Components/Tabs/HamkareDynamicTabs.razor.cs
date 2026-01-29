@@ -1,17 +1,17 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 
 #nullable enable
-namespace MudBlazor
+namespace HamkareBlazor
 {
     /// <summary>
     /// A tab component where the tabs are controlled dynamically, similar to browser tabs.
     /// </summary>
-    public partial class MudDynamicTabs : MudTabs
+    public partial class HamkareDynamicTabs : HamkareTabs
     {
         /// <summary>
         /// The icon for the add button.
@@ -41,7 +41,7 @@ namespace MudBlazor
         /// <summary>
         /// Occurs when a tab has been closed.
         /// </summary>
-        [Parameter] public EventCallback<MudTabPanel> CloseTab { get; set; }
+        [Parameter] public EventCallback<HamkareTabPanel> CloseTab { get; set; }
 
         /// <summary>
         /// The CSS classes applied to the "Add" button.
@@ -59,7 +59,7 @@ namespace MudBlazor
         /// <remarks>
         /// Defaults to <c>""</c>.
         /// </remarks>
-        [Obsolete("Prefer the AddIconClass property with CSS https://github.com/MudBlazor/MudBlazor/issues/12047")]
+        [Obsolete("Prefer the AddIconClass property with CSS https://github.com/HamkareBlazor/HamkareBlazor/issues/12047")]
         [Parameter]
         [Category(CategoryTypes.Tabs.Appearance)]
         public string AddIconStyle { get; set; } = string.Empty;
@@ -80,7 +80,7 @@ namespace MudBlazor
         /// <remarks>
         /// Defaults to <c>""</c>.
         /// </remarks>
-        [Obsolete("Prefer the CloseIconClass property with CSS https://github.com/MudBlazor/MudBlazor/issues/12047")]
+        [Obsolete("Prefer the CloseIconClass property with CSS https://github.com/HamkareBlazor/HamkareBlazor/issues/12047")]
         [Parameter]
         [Category(CategoryTypes.Tabs.Appearance)]
         public string CloseIconStyle { get; set; } = string.Empty;
@@ -105,9 +105,9 @@ namespace MudBlazor
         [Category(CategoryTypes.Tabs.Behavior)]
         public string CloseIconToolTip { get; set; } = string.Empty;
 
-        protected override string InternalClassName { get; } = "mud-dynamic-tabs";
+        protected override string InternalClassName { get; } = "hamkare-dynamic-tabs";
 
-        protected override async Task HandleTabKeyDownAsync(KeyboardEventArgs e, MudTabPanel panel)
+        protected override async Task HandleTabKeyDownAsync(KeyboardEventArgs e, HamkareTabPanel panel)
         {
             await base.HandleTabKeyDownAsync(e, panel);
 

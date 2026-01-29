@@ -1,7 +1,7 @@
 ﻿// Copyright (c) A//Copyright(c) Alessandro Ghidini.All rights reserved.
-//Changes and improvements Copyright (c) The MudBlazor Team.
+//Changes and improvements Copyright (c) The HamkareBlazor Team.
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 #nullable enable
 internal enum SnackbarState

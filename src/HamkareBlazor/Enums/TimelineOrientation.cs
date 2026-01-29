@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel;
 using NetEscapades.EnumGenerators;
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 /// <summary>
-/// Specifies the orientation of items in a <see cref="MudTimeline"/>
+/// Specifies the orientation of items in a <see cref="HamkareTimeline"/>
 /// </summary>
 [EnumExtensions]
 public enum TimelineOrientation

@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using MudBlazor.Services;
-using MudBlazor.State;
-using MudBlazor.Utilities;
+using HamkareBlazor.Services;
+using HamkareBlazor.State;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 #nullable enable
 
@@ -12,8 +12,8 @@ namespace MudBlazor;
 /// Compact elements used to enter information, select a choice, filter content, or trigger an action.
 /// </summary>
 /// <typeparam name="T">The type of item managed by this component.</typeparam>
-/// <seealso cref="MudChipSet{T}"/>
-public partial class MudChip<T> : MudComponentBase, IAsyncDisposable
+/// <seealso cref="HamkareChipSet{T}"/>
+public partial class HamkareChip<T> : HamkareComponentBase, IAsyncDisposable
 {
     [Inject]
     private IKeyInterceptorService KeyInterceptorService { get; set; } = null!;
@@ -22,7 +22,7 @@ public partial class MudChip<T> : MudComponentBase, IAsyncDisposable
 
     internal readonly ParameterState<bool> SelectedState;
 
-    public MudChip()
+    public HamkareChip()
     {
         using var registerScope = CreateRegisterScope();
         SelectedState = registerScope.RegisterParameter<bool>(nameof(Selected))
@@ -56,15 +56,15 @@ public partial class MudChip<T> : MudComponentBase, IAsyncDisposable
     [Inject]
     public IJsApiService? JsApiService { get; set; }
 
-    protected string Classname => new CssBuilder("mud-chip")
-        .AddClass($"mud-chip-{GetVariant().ToStringFast(true)}")
-        .AddClass($"mud-chip-size-{GetSize().ToStringFast(true)}")
-        .AddClass($"mud-chip-color-{GetColor().ToStringFast(true)}")
-        .AddClass("mud-clickable", IsButton || IsAnchor)
-        .AddClass("mud-ripple", IsButton && GetRipple())
-        .AddClass("mud-chip-label", GetLabel())
-        .AddClass("mud-disabled", GetDisabled())
-        .AddClass("mud-chip-selected", SelectedState.Value)
+    protected string Classname => new CssBuilder("hamkare-chip")
+        .AddClass($"hamkare-chip-{GetVariant().ToStringFast(true)}")
+        .AddClass($"hamkare-chip-size-{GetSize().ToStringFast(true)}")
+        .AddClass($"hamkare-chip-color-{GetColor().ToStringFast(true)}")
+        .AddClass("hamkare-clickable", IsButton || IsAnchor)
+        .AddClass("hamkare-ripple", IsButton && GetRipple())
+        .AddClass("hamkare-chip-label", GetLabel())
+        .AddClass("hamkare-disabled", GetDisabled())
+        .AddClass("hamkare-chip-selected", SelectedState.Value)
         .AddClass(Class)
         .Build();
 
@@ -132,32 +132,32 @@ public partial class MudChip<T> : MudComponentBase, IAsyncDisposable
 
     internal Variant GetVariant()
     {
-        var chipSetVariant = ChipSet?.Variant ?? MudBlazor.Variant.Filled;
+        var chipSetVariant = ChipSet?.Variant ?? HamkareBlazor.Variant.Filled;
         var variant = Variant ?? chipSetVariant;
         return variant switch
         {
-            MudBlazor.Variant.Text => SelectedState.Value ? MudBlazor.Variant.Filled : MudBlazor.Variant.Text,
-            MudBlazor.Variant.Filled => SelectedState.Value ? MudBlazor.Variant.Text : MudBlazor.Variant.Filled,
-            MudBlazor.Variant.Outlined => MudBlazor.Variant.Outlined,
-            _ => MudBlazor.Variant.Outlined
+            HamkareBlazor.Variant.Text => SelectedState.Value ? HamkareBlazor.Variant.Filled : HamkareBlazor.Variant.Text,
+            HamkareBlazor.Variant.Filled => SelectedState.Value ? HamkareBlazor.Variant.Text : HamkareBlazor.Variant.Filled,
+            HamkareBlazor.Variant.Outlined => HamkareBlazor.Variant.Outlined,
+            _ => HamkareBlazor.Variant.Outlined
         };
     }
 
     private Color GetColor()
     {
         var selectedColor = GetSelectedColor();
-        if (SelectedState.Value && selectedColor != MudBlazor.Color.Inherit)
+        if (SelectedState.Value && selectedColor != HamkareBlazor.Color.Inherit)
         {
             return selectedColor;
         }
-        return Color ?? ChipSet?.Color ?? MudBlazor.Color.Default;
+        return Color ?? ChipSet?.Color ?? HamkareBlazor.Color.Default;
     }
 
-    private Color GetSelectedColor() => SelectedColor ?? ChipSet?.SelectedColor ?? MudBlazor.Color.Inherit;
+    private Color GetSelectedColor() => SelectedColor ?? ChipSet?.SelectedColor ?? HamkareBlazor.Color.Inherit;
 
-    private Color GetIconColor() => IconColor ?? ChipSet?.IconColor ?? MudBlazor.Color.Inherit;
+    private Color GetIconColor() => IconColor ?? ChipSet?.IconColor ?? HamkareBlazor.Color.Inherit;
 
-    private Size GetSize() => Size ?? ChipSet?.Size ?? MudBlazor.Size.Medium;
+    private Size GetSize() => Size ?? ChipSet?.Size ?? HamkareBlazor.Size.Medium;
 
     private bool GetDisabled() => Disabled || (ChipSet?.Disabled ?? false);
 
@@ -174,7 +174,7 @@ public partial class MudChip<T> : MudComponentBase, IAsyncDisposable
     internal bool ShowCheckMark => SelectedState.Value && ChipSet?.CheckMark == true;
 
     [CascadingParameter]
-    private MudChipSet<T>? ChipSet { get; set; }
+    private HamkareChipSet<T>? ChipSet { get; set; }
 
     /// <summary>
     /// The color of this chip.
@@ -342,14 +342,14 @@ public partial class MudChip<T> : MudComponentBase, IAsyncDisposable
     /// The value applied when the chip is selected.
     /// </summary>
     /// <remarks>
-    /// When part of a <see cref="MudChipSet{T}"/>, the <see cref="MudChipSet{T}.SelectedValue"/> is set to this value when the chip is selected.  Once set, the value should not change.
+    /// When part of a <see cref="HamkareChipSet{T}"/>, the <see cref="HamkareChipSet{T}.SelectedValue"/> is set to this value when the chip is selected.  Once set, the value should not change.
     /// </remarks>
     [Parameter]
     [Category(CategoryTypes.Chip.Behavior)]
     public T? Value { get; set; }
 
     /// <summary>
-    /// Selects this chip by default when part of a <see cref="MudChipSet{T}"/>.
+    /// Selects this chip by default when part of a <see cref="HamkareChipSet{T}"/>.
     /// </summary>
     /// <remarks>
     /// Defaults to <c>null</c>.
@@ -374,7 +374,7 @@ public partial class MudChip<T> : MudComponentBase, IAsyncDisposable
     /// Subscribing to this event enables the close button, unless <see cref="Href"/> is also set.
     /// </remarks>
     [Parameter]
-    public EventCallback<MudChip<T>> OnClose { get; set; }
+    public EventCallback<HamkareChip<T>> OnClose { get; set; }
 
     /// <summary>
     /// Selects this chip.
@@ -418,7 +418,7 @@ public partial class MudChip<T> : MudComponentBase, IAsyncDisposable
         if (firstRender)
         {
             var options = new KeyInterceptorOptions(
-                "mud-chip",
+                "hamkare-chip",
                 [
                     new(" ", preventDown: "key+none", preventUp: "key+none"),
                     new("Backspace", preventDown: "key+none"),

@@ -3,7 +3,7 @@
 // See https://github.com/EdCharbeneau
 
 #nullable enable
-namespace MudBlazor.Utilities;
+namespace HamkareBlazor.Utilities;
 
 public class ValueBuilder
 {

@@ -1,23 +1,23 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using Microsoft.AspNetCore.Components;
-using MudBlazor.Utilities;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 #nullable enable
 /// <summary>
-/// Represents the main content area of the <see cref="MudLayout"/>.
+/// Represents the main content area of the <see cref="HamkareLayout"/>.
 /// </summary>
-public partial class MudMainContent : MudComponentBase
+public partial class HamkareMainContent : HamkareComponentBase
 {
     /// <summary>
     /// Gets the CSS class names for the component.
     /// </summary>
     protected string Classname =>
-        new CssBuilder("mud-main-content")
+        new CssBuilder("hamkare-main-content")
             .AddClass(Class)
             .Build();
 

@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using NetEscapades.EnumGenerators;
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 /// <summary>
 /// Typography controls the text throughout the theme, like font-family, size, and other settings.

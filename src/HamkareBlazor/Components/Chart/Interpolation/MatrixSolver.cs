@@ -5,7 +5,7 @@
  */
 
 #nullable enable
-namespace MudBlazor.Interpolation
+namespace HamkareBlazor.Interpolation
 {
     // Matrix equation solver using the Gaussian elimination algorithm
     internal class MatrixSolver

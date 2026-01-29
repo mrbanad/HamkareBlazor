@@ -1,11 +1,11 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Globalization;
-using MudBlazor.Utilities;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 #nullable enable
 /// <summary>
@@ -15,7 +15,7 @@ namespace MudBlazor;
 /// <remarks>
 /// The string representation is in the form <c>[{start};{end}]</c>. Empty or null ranges are represented as an empty string.
 /// This converter delegates element-level conversions to a <see cref="DefaultConverter{T}"/> instance and implements
-/// <see cref="ICultureAwareConverter"/> so components (for example via <c>MudFormComponent.Converter</c>) can inject
+/// <see cref="ICultureAwareConverter"/> so components (for example via <c>HamkareFormComponent.Converter</c>) can inject
 /// the <see cref="Culture"/> and <see cref="Format"/> providers automatically.
 /// </remarks>
 public sealed class RangeConverter<T> : IReversibleConverter<Range<T>?, string?>, ICultureAwareConverter

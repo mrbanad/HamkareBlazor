@@ -1,23 +1,23 @@
 ﻿using System.Globalization;
 using Microsoft.AspNetCore.Components;
-using MudBlazor.Extensions;
-using MudBlazor.State;
-using MudBlazor.Utilities;
+using HamkareBlazor.Extensions;
+using HamkareBlazor.State;
+using HamkareBlazor.Utilities;
 
 #nullable enable
-namespace MudBlazor
+namespace HamkareBlazor
 {
     /// <summary>
     /// Represents a base class for designing date picker components.
     /// </summary>
-    public abstract partial class MudBaseDatePicker : MudPicker<DateTime?>
+    public abstract partial class HamkareBaseDatePicker : HamkarePicker<DateTime?>
     {
-        private readonly string _mudPickerCalendarContentElementId;
+        private readonly string _hamkarePickerCalendarContentElementId;
         private readonly ParameterState<string?> _dateFormatState;
 
-        protected MudBaseDatePicker()
+        protected HamkareBaseDatePicker()
         {
-            _mudPickerCalendarContentElementId = Identifier.Create();
+            _hamkarePickerCalendarContentElementId = Identifier.Create();
             Culture = CultureInfo.CurrentCulture;
 
             using var registerScope = CreateRegisterScope();
@@ -664,15 +664,15 @@ namespace MudBlazor
             var culture = GetCulture();
             var calendar = culture.Calendar;
             if (year == calendar.GetYear(selectedYear))
-                return $"mud-picker-year-selected mud-{Color.ToStringFast(true)}-text";
+                return $"hamkare-picker-year-selected hamkare-{Color.ToStringFast(true)}-text";
             return null;
         }
 
         private string GetCalendarHeaderClasses(int month)
         {
-            return new CssBuilder("mud-picker-calendar-header")
-                .AddClass($"mud-picker-calendar-header-{month + 1}")
-                .AddClass($"mud-picker-calendar-header-last", month == DisplayMonths - 1)
+            return new CssBuilder("hamkare-picker-calendar-header")
+                .AddClass($"hamkare-picker-calendar-header-{month + 1}")
+                .AddClass($"hamkare-picker-calendar-header-last", month == DisplayMonths - 1)
                 .Build();
         }
 
@@ -728,7 +728,7 @@ namespace MudBlazor
                 return null;
 
             if (calendar.GetMonth(month) == calendar.GetMonth(selectedMonth) && !IsMonthDisabled(selectedMonth))
-                return $"mud-picker-month-selected mud-{Color.ToStringFast(true)}-text";
+                return $"hamkare-picker-month-selected hamkare-{Color.ToStringFast(true)}-text";
 
             return null;
         }
@@ -749,7 +749,7 @@ namespace MudBlazor
         protected override void OnInitialized()
         {
             base.OnInitialized();
-            AdornmentAriaLabel ??= Localizer[Resources.LanguageResource.MudBaseDatePicker_Open];
+            AdornmentAriaLabel ??= Localizer[Resources.LanguageResource.HamkareBaseDatePicker_Open];
             CurrentView = OpenTo;
 
             if (HighlightedDate is not null)
@@ -836,7 +836,7 @@ namespace MudBlazor
 
         private ValueTask HandleMouseoverOnPickerCalendarDayButton(int tempId)
         {
-            return JsApiService.UpdateStyleProperty(_mudPickerCalendarContentElementId, "--selected-day", tempId);
+            return JsApiService.UpdateStyleProperty(_hamkarePickerCalendarContentElementId, "--selected-day", tempId);
         }
     }
 }

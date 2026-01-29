@@ -1,16 +1,16 @@
 ﻿using System.ComponentModel;
 using NetEscapades.EnumGenerators;
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 /// <summary>
-/// The horizontal distribution of child items in a <see cref="MudStack"/> component.
+/// The horizontal distribution of child items in a <see cref="HamkareStack"/> component.
 /// </summary>
 [EnumExtensions]
 public enum Justify
 {
     /// <summary>
-    /// Items are aligned to the start of the <see cref="MudStack"/>.
+    /// Items are aligned to the start of the <see cref="HamkareStack"/>.
     /// </summary>
     [Description("start")]
     FlexStart,
@@ -22,7 +22,7 @@ public enum Justify
     Center,
 
     /// <summary>
-    /// Items are aligned to the end of the <see cref="MudStack"/>.
+    /// Items are aligned to the end of the <see cref="HamkareStack"/>.
     /// </summary>
     [Description("end")]
     FlexEnd,

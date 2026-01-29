@@ -1,8 +1,8 @@
-﻿@namespace MudBlazor
-@inherits MudComponentBase
+﻿@namespace HamkareBlazor
+@inherits HamkareComponentBase
 @typeparam T
 
-<MudButton role="checkbox"
+<HamkareButton role="checkbox"
            aria-checked="@(Selected.ToString().ToLower())"
            @attributes="UserAttributes"
            Class="@Classname"
@@ -15,14 +15,14 @@
            Ripple="AssertedParent.Ripple">
     @if (!string.IsNullOrWhiteSpace(GetCurrentIcon()))
     {
-        <MudIcon Class="@CheckMarkClassname"
+        <HamkareIcon Class="@CheckMarkClassname"
                  Disabled="Disabled"
                  Icon="@GetCurrentIcon()"
                  Size="AssertedParent.Size" />
     }
     @if (ChildContent is not null)
     {
-        <div class="mud-toggle-item-content">
+        <div class="hamkare-toggle-item-content">
             @ChildContent(Selected)
         </div>
     }
@@ -30,4 +30,4 @@
     {
         @(Text == null ? Value : Text)
     }
-</MudButton>
+</HamkareButton>

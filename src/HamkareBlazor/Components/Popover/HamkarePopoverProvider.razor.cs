@@ -1,24 +1,24 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using Microsoft.AspNetCore.Components;
-using MudBlazor.Interfaces;
+using HamkareBlazor.Interfaces;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
 
     /// <summary>
-    /// A required component which manages all MudBlazor popovers.
+    /// A required component which manages all HamkareBlazor popovers.
     /// </summary>
     /// <remarks>
-    /// This component is required for MudBlazor components to display popovers properly.  It is typically added to your main layout page.
+    /// This component is required for HamkareBlazor components to display popovers properly.  It is typically added to your main layout page.
     /// </remarks>
-    /// <seealso cref="MudThemeProvider"/>
-    /// <seealso cref="MudDialogProvider"/>
-    /// <seealso cref="MudSnackbarProvider"/>
-    public partial class MudPopoverProvider : IDisposable, IPopoverObserver
+    /// <seealso cref="HamkareThemeProvider"/>
+    /// <seealso cref="HamkareDialogProvider"/>
+    /// <seealso cref="HamkareSnackbarProvider"/>
+    public partial class HamkarePopoverProvider : IDisposable, IPopoverObserver
     {
         private bool _isConnectedToService = false;
 
@@ -30,7 +30,7 @@ namespace MudBlazor
         /// </summary>
         /// <remarks>
         /// Defaults to <c>true</c>.
-        /// If more than one <see cref="MudPopoverProvider"/> is detected, this property will be <c>false</c> to ensure only one instance is active.
+        /// If more than one <see cref="HamkarePopoverProvider"/> is detected, this property will be <c>false</c> to ensure only one instance is active.
         /// Can be overridden by setting a cascading parameter of <c>UsePopoverProvider</c> to <c>false</c>.
         /// </remarks>
         [CascadingParameter(Name = "UsePopoverProvider")]
@@ -84,7 +84,7 @@ namespace MudBlazor
             {
                 if (await PopoverService.GetProviderCountAsync() > 1)
                 {
-                    throw new InvalidOperationException("Duplicate MudPopoverProvider detected. Please ensure there is only one provider, or disable this warning with PopoverOptions.ThrowOnDuplicateProvider.");
+                    throw new InvalidOperationException("Duplicate HamkarePopoverProvider detected. Please ensure there is only one provider, or disable this warning with PopoverOptions.ThrowOnDuplicateProvider.");
                 }
             }
             await base.OnAfterRenderAsync(firstRender);
@@ -108,7 +108,7 @@ namespace MudBlazor
                                 return;
                             }
 
-                            if (holder.ElementReference is IMudStateHasChanged stateHasChanged)
+                            if (holder.ElementReference is IHamkareStateHasChanged stateHasChanged)
                             {
                                 await InvokeAsync(stateHasChanged.StateHasChanged);
                             }
@@ -116,7 +116,7 @@ namespace MudBlazor
 
                         break;
                     }
-                // Update whole MudPopoverProvider
+                // Update whole HamkarePopoverProvider
                 case PopoverHolderOperation.Create:
                 case PopoverHolderOperation.Remove:
                     await InvokeAsync(StateHasChanged);

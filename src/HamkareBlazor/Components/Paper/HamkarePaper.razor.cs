@@ -1,24 +1,24 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using Microsoft.AspNetCore.Components;
-using MudBlazor.Utilities;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 #nullable enable
 
 /// <summary>
 /// A surface for grouping other components, generally used for foregrounds and can be combined with Flex for layout.
 /// </summary>
-public partial class MudPaper : MudComponentBase
+public partial class HamkarePaper : HamkareComponentBase
 {
     protected string Classname =>
-        new CssBuilder("mud-paper")
-            .AddClass($"mud-paper-outlined", Outlined)
-            .AddClass($"mud-paper-square", Square)
-            .AddClass($"mud-elevation-{Elevation}", !Outlined)
+        new CssBuilder("hamkare-paper")
+            .AddClass($"hamkare-paper-outlined", Outlined)
+            .AddClass($"hamkare-paper-square", Square)
+            .AddClass($"hamkare-elevation-{Elevation}", !Outlined)
             .AddClass(Class)
             .Build();
 

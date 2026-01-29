@@ -1,17 +1,17 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Numerics;
 
-namespace MudBlazor.Charts;
+namespace HamkareBlazor.Charts;
 
 #nullable enable
 /// <summary>
 /// Represents a chart component.
 /// </summary>
 /// <typeparam name="T">The data type of the chart.</typeparam>
-public interface IMudChart<T> where T : struct, INumber<T>, IMinMaxValue<T>, IFormattable
+public interface IHamkareChart<T> where T : struct, INumber<T>, IMinMaxValue<T>, IFormattable
 {
     /// <summary>
     /// The series of data to be displayed in the chart.

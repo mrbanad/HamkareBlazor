@@ -1,10 +1,10 @@
-﻿@namespace MudBlazor
-@inherits MudComponentBase
+﻿@namespace HamkareBlazor
+@inherits HamkareComponentBase
 @typeparam T
-@using MudBlazor.Utilities
-@using MudBlazor.Extensions
-@using MudBlazor.Resources
-@inject InternalMudLocalizer Localizer
+@using HamkareBlazor.Utilities
+@using HamkareBlazor.Extensions
+@using HamkareBlazor.Resources
+@inject InternalHamkareLocalizer Localizer
 
 @{
 #nullable enable
@@ -19,29 +19,29 @@
         {
             @if (ToolBarContent != null)
             {
-                <MudToolBar Class="mud-table-toolbar" Style="@HeaderFooterStyle">
+                <HamkareToolBar Class="hamkare-table-toolbar" Style="@HeaderFooterStyle">
                     @ToolBarContent
                     @if (ShowMenuIcon)
                     {
                         @ToolbarMenu(this)
                     }
-                </MudToolBar>
+                </HamkareToolBar>
             }
             else
             {
                 @if (ShowMenuIcon)
                 {
                     @*Add the default toolbar.*@
-                    <MudToolBar Class="mud-table-toolbar" Style="@HeaderFooterStyle">
-                        <MudSpacer />
+                    <HamkareToolBar Class="hamkare-table-toolbar" Style="@HeaderFooterStyle">
+                        <HamkareSpacer />
                         @ToolbarMenu(this)
-                    </MudToolBar>
+                    </HamkareToolBar>
                 }
             }
             <div @ref=_gridElement class="@TableClass" style="@TableStyle">
-                <MudDropContainer @ref="_dropContainer" T="Column<T>" Items="@RenderedColumns" ItemsSelector="(item, dropzone) => RenderedColumnsItemsSelector(item, dropzone)" ItemDropped="ItemUpdatedAsync" CanDropClass="@DropAllowedClass" NoDropClass="@DropNotAllowedClass" ApplyDropClassesOnDragStarted="@ApplyDropClassesOnDragStarted">
+                <HamkareDropContainer @ref="_dropContainer" T="Column<T>" Items="@RenderedColumns" ItemsSelector="(item, dropzone) => RenderedColumnsItemsSelector(item, dropzone)" ItemDropped="ItemUpdatedAsync" CanDropClass="@DropAllowedClass" NoDropClass="@DropNotAllowedClass" ApplyDropClassesOnDragStarted="@ApplyDropClassesOnDragStarted">
                     <ChildContent>
-                        <table class="mud-table-root">
+                        <table class="hamkare-table-root">
                             @if (ColGroup != null)
                             {
                                 <colgroup>
@@ -52,7 +52,7 @@
                                 <CascadingValue Name="IsOnlyHeader" IsFixed="true" Value="true">
                                     @Header
                                 </CascadingValue>
-                                <tr class="mud-table-row">
+                                <tr class="hamkare-table-row">
                                     @foreach (var column in RenderedColumns)
                                     {
                                         <HeaderCell SortDirection="@(GetColumnSortDirection(column.PropertyName))" T="T" Column="@column"></HeaderCell>
@@ -60,134 +60,134 @@
                                 </tr>
                                 @if (_filtersMenuVisible && FilterMode == DataGridFilterMode.Simple)
                                 {
-                                    <MudOverlay @bind-Visible="@_filtersMenuVisible" AutoClose OnClosed="@CloseFilters"></MudOverlay>
-                                    <tr class="mud-table-row" style="visibility: collapse; opacity: 0;overflow: hidden;">
-                                        <th colspan="@RenderedColumns.Count" class="mud-table-cell mud-filter-panel-cell">
-                                            <MudPopover UserAttributes="@PositionAttributes" Open="@_filtersMenuVisible" Paper="true" Class="filters-panel pa-2 mud-popover-position-override" OverflowBehavior="OverflowBehavior.FlipAlways" AnchorOrigin="Origin.TopLeft"
+                                    <HamkareOverlay @bind-Visible="@_filtersMenuVisible" AutoClose OnClosed="@CloseFilters"></HamkareOverlay>
+                                    <tr class="hamkare-table-row" style="visibility: collapse; opacity: 0;overflow: hidden;">
+                                        <th colspan="@RenderedColumns.Count" class="hamkare-table-cell hamkare-filter-panel-cell">
+                                            <HamkarePopover UserAttributes="@PositionAttributes" Open="@_filtersMenuVisible" Paper="true" Class="filters-panel pa-2 hamkare-popover-position-override" OverflowBehavior="OverflowBehavior.FlipAlways" AnchorOrigin="Origin.TopLeft"
                                                         TransformOrigin="Origin.TopLeft" Elevation="4" Style="width:700px;max-width:700px;" MaxHeight="400">
                                                 @if (FilterTemplate == null)
                                                 {
-                                                    <MudStack>
+                                                    <HamkareStack>
                                                         @foreach (var f in FilterDefinitions)
                                                         {
                                                             @Filter(f, null)
                                                         }
-                                                    </MudStack>
-                                                    <MudButton Class="mt-2" StartIcon="@Icons.Material.Filled.Add" OnClick="@AddFilter" Color="@Color.Primary">@Localizer[LanguageResource.MudDataGrid_AddFilter]</MudButton>
+                                                    </HamkareStack>
+                                                    <HamkareButton Class="mt-2" StartIcon="@Icons.Material.Filled.Add" OnClick="@AddFilter" Color="@Color.Primary">@Localizer[LanguageResource.HamkareDataGrid_AddFilter]</HamkareButton>
                                                     @if (HasServerData)
                                                     {
-                                                        <MudButton Class="mt-2" StartIcon="@Icons.Material.Filled.Add" OnClick="@ApplyFiltersAsync" Color="@Color.Primary">@Localizer[LanguageResource.MudDataGrid_Apply]</MudButton>
+                                                        <HamkareButton Class="mt-2" StartIcon="@Icons.Material.Filled.Add" OnClick="@ApplyFiltersAsync" Color="@Color.Primary">@Localizer[LanguageResource.HamkareDataGrid_Apply]</HamkareButton>
                                                     }
-                                                    <MudButton Class="mt-2" StartIcon="@Icons.Material.Filled.Remove" OnClick="@ClearFiltersAsync" Color="@Color.Primary">@Localizer[LanguageResource.MudDataGrid_Clear]</MudButton>
+                                                    <HamkareButton Class="mt-2" StartIcon="@Icons.Material.Filled.Remove" OnClick="@ClearFiltersAsync" Color="@Color.Primary">@Localizer[LanguageResource.HamkareDataGrid_Clear]</HamkareButton>
                                                 }
                                                 else
                                                 {
                                                     @FilterTemplate(this)
                                                 }
-                                            </MudPopover>
+                                            </HamkarePopover>
                                         </th>
                                     </tr>
                                 }
                                 @if (_columnsPanelVisible)
                                 {
-                                    <MudOverlay @bind-Visible="_columnsPanelVisible" AutoClose></MudOverlay>
-                                    <tr class="mud-table-row" style="visibility: collapse; opacity: 0; overflow: hidden;">
-                                        <th colspan="@RenderedColumns.Count" class="mud-table-cell mud-filter-panel-cell">
-                                            <MudPopover UserAttributes="@PositionAttributes" Open="@_columnsPanelVisible" Paper="true" Class="mud-data-grid-columns-panel px-2 mud-popover-position-override" OverflowBehavior="OverflowBehavior.FlipAlways"
+                                    <HamkareOverlay @bind-Visible="_columnsPanelVisible" AutoClose></HamkareOverlay>
+                                    <tr class="hamkare-table-row" style="visibility: collapse; opacity: 0; overflow: hidden;">
+                                        <th colspan="@RenderedColumns.Count" class="hamkare-table-cell hamkare-filter-panel-cell">
+                                            <HamkarePopover UserAttributes="@PositionAttributes" Open="@_columnsPanelVisible" Paper="true" Class="hamkare-data-grid-columns-panel px-2 hamkare-popover-position-override" OverflowBehavior="OverflowBehavior.FlipAlways"
                                                         AnchorOrigin="Origin.TopLeft"
                                                         TransformOrigin="Origin.TopLeft" Elevation="4"
                                                         Style="max-width:700px;" MaxHeight="400">
-                                                <MudStack Row="true" Justify="Justify.FlexEnd">
+                                                <HamkareStack Row="true" Justify="Justify.FlexEnd">
                                                     <div style="min-width:250px">
-                                                        <MudTextField DebounceInterval="500" @bind-Value="@_columnsPanelSearch" OnDebounceIntervalElapsed="@(() => _columnsPanelDropContainer?.Refresh())"
+                                                        <HamkareTextField DebounceInterval="500" @bind-Value="@_columnsPanelSearch" OnDebounceIntervalElapsed="@(() => _columnsPanelDropContainer?.Refresh())"
                                                         Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Search" Margin="Margin.Dense" FullWidth="true" />
                                                     </div>
-                                                </MudStack>
+                                                </HamkareStack>
 
-                                                <MudDropContainer @ref="_columnsPanelDropContainer" T="Column<T>" Items="@RenderedColumns" ItemsSelector="(item, dropzone) => true"
+                                                <HamkareDropContainer @ref="_columnsPanelDropContainer" T="Column<T>" Items="@RenderedColumns" ItemsSelector="(item, dropzone) => true"
                                                 ItemDisabled="@((item) => !this.ColumnsPanelReordering)" ItemDropped="ColumnOrderUpdated">
                                                     <ChildContent>
-                                                        <MudDropZone T="Column<T>" Class="flex-grow-1" AllowReorder=this.ColumnsPanelReordering />
+                                                        <HamkareDropZone T="Column<T>" Class="flex-grow-1" AllowReorder=this.ColumnsPanelReordering />
                                                     </ChildContent>
                                                     <ItemRenderer>
                                                         @if (string.IsNullOrEmpty(_columnsPanelSearch) || context.Title?.Contains(_columnsPanelSearch, StringComparison.InvariantCultureIgnoreCase) == true)
                                                         {
-                                                            <MudStack Row="true" Spacing="2" AlignItems="AlignItems.Center" Style="border-bottom: 1px solid var(--mud-palette-table-lines);">
+                                                            <HamkareStack Row="true" Spacing="2" AlignItems="AlignItems.Center" Style="border-bottom: 1px solid var(--hamkare-palette-table-lines);">
                                                                 @if (ColumnsPanelReordering)
                                                                 {
-                                                                    <MudStack Spacing="0">
+                                                                    <HamkareStack Spacing="0">
                                                                         @if (RenderedColumns.IndexOf(context) != 0)
                                                                         {
-                                                                            <MudIconButton Ripple="false" Icon="@Icons.Material.Filled.ArrowDropUp" Size="@Size.Small" title=@Localizer[LanguageResource.MudDataGrid_MoveUp] Disabled="@(RenderedColumns.IndexOf(context) == 0)" OnClick="@(e => ColumnUp(context))"></MudIconButton>
+                                                                            <HamkareIconButton Ripple="false" Icon="@Icons.Material.Filled.ArrowDropUp" Size="@Size.Small" title=@Localizer[LanguageResource.HamkareDataGrid_MoveUp] Disabled="@(RenderedColumns.IndexOf(context) == 0)" OnClick="@(e => ColumnUp(context))"></HamkareIconButton>
                                                                         }
                                                                         @if (RenderedColumns.IndexOf(context) != RenderedColumns.Count - 1)
                                                                         {
-                                                                            <MudIconButton Ripple="false" Icon="@Icons.Material.Filled.ArrowDropDown" Size="@Size.Small" title=@Localizer[LanguageResource.MudDataGrid_MoveDown] Disabled="@(RenderedColumns.IndexOf(context) == RenderedColumns.Count - 1)" OnClick="@(e => ColumnDown(context))"></MudIconButton>
+                                                                            <HamkareIconButton Ripple="false" Icon="@Icons.Material.Filled.ArrowDropDown" Size="@Size.Small" title=@Localizer[LanguageResource.HamkareDataGrid_MoveDown] Disabled="@(RenderedColumns.IndexOf(context) == RenderedColumns.Count - 1)" OnClick="@(e => ColumnDown(context))"></HamkareIconButton>
                                                                         }
-                                                                    </MudStack>
+                                                                    </HamkareStack>
                                                                 }
 
                                                                 @if (context.GroupingState.Value)
                                                                 {
-                                                                    <MudIconButton Ripple="false" Icon="@Icons.Material.Filled.AccountTree" Size="@Size.Small" title=@Localizer[LanguageResource.MudDataGrid_Ungroup] Disabled="!context.groupable" OnClick="@(e => context.HeaderCell.UngroupColumnAsync())"></MudIconButton>
+                                                                    <HamkareIconButton Ripple="false" Icon="@Icons.Material.Filled.AccountTree" Size="@Size.Small" title=@Localizer[LanguageResource.HamkareDataGrid_Ungroup] Disabled="!context.groupable" OnClick="@(e => context.HeaderCell.UngroupColumnAsync())"></HamkareIconButton>
                                                                 }
                                                                 else
                                                                 {
-                                                                    <MudIconButton Ripple="false" Icon="@Icons.Material.Filled.TableRows" Size="@Size.Small" title=@Localizer[LanguageResource.MudDataGrid_Group] Disabled="!context.groupable" OnClick="@(e => context.HeaderCell.GroupColumnAsync())"></MudIconButton>
+                                                                    <HamkareIconButton Ripple="false" Icon="@Icons.Material.Filled.TableRows" Size="@Size.Small" title=@Localizer[LanguageResource.HamkareDataGrid_Group] Disabled="!context.groupable" OnClick="@(e => context.HeaderCell.GroupColumnAsync())"></HamkareIconButton>
                                                                 }
-                                                                <MudSwitch T="bool" Ripple="false" Class="flex-grow-1" Color="Color.Primary" Disabled="@(!context.hideable)" Value="@context.HiddenState.Value" ValueChanged="@context.ToggleAsync" Converter="_oppositeBoolConverter" Label="@context.Title" />
-                                                                <MudSpacer />
+                                                                <HamkareSwitch T="bool" Ripple="false" Class="flex-grow-1" Color="Color.Primary" Disabled="@(!context.hideable)" Value="@context.HiddenState.Value" ValueChanged="@context.ToggleAsync" Converter="_oppositeBoolConverter" Label="@context.Title" />
+                                                                <HamkareSpacer />
 
                                                                 <div>
-                                                                    <MudIconButton Ripple="false" Icon="@context.SortIcon" Class="@context.HeaderCell.sortIconClass" Size="@Size.Small" title=@Localizer[LanguageResource.MudDataGrid_Sort] Disabled="!context.sortable" OnClick="@(e => context.HeaderCell.SortChangedAsync(e))"></MudIconButton>
+                                                                    <HamkareIconButton Ripple="false" Icon="@context.SortIcon" Class="@context.HeaderCell.sortIconClass" Size="@Size.Small" title=@Localizer[LanguageResource.HamkareDataGrid_Sort] Disabled="!context.sortable" OnClick="@(e => context.HeaderCell.SortChangedAsync(e))"></HamkareIconButton>
                                                                     @if (context.DataGrid.SortMode == SortMode.Multiple)
                                                                     {
                                                                         if (context.SortIndex < 0)
                                                                         {
-                                                                            <span class="mud-sort-index mud-text-disabled invisible">@(context.SortIndex + 1)</span>
+                                                                            <span class="hamkare-sort-index hamkare-text-disabled invisible">@(context.SortIndex + 1)</span>
                                                                         }
                                                                         else
                                                                         {
-                                                                            <span class="mud-sort-index mud-text-disabled">@(context.SortIndex + 1)</span>
+                                                                            <span class="hamkare-sort-index hamkare-text-disabled">@(context.SortIndex + 1)</span>
                                                                         }
                                                                     }
                                                                 </div>
 
                                                                 @if (context.HeaderCell.hasFilter)
                                                                 {
-                                                                    <MudIconButton Ripple="false" Class="filter-button filtered" Icon="@context.DataGrid.FilterIconFilled" Size="@Size.Small" title=@Localizer[LanguageResource.MudDataGrid_Filter] Disabled="!context.filterable" OnClick="@context.HeaderCell.OpenFilters"></MudIconButton>
+                                                                    <HamkareIconButton Ripple="false" Class="filter-button filtered" Icon="@context.DataGrid.FilterIconFilled" Size="@Size.Small" title=@Localizer[LanguageResource.HamkareDataGrid_Filter] Disabled="!context.filterable" OnClick="@context.HeaderCell.OpenFilters"></HamkareIconButton>
                                                                 }
                                                                 else
                                                                 {
-                                                                    <MudIconButton Ripple="false" Class="filter-button" Icon="@context.DataGrid.FilterIconEmpty" Size="@Size.Small" title=@Localizer[LanguageResource.MudDataGrid_Filter] Disabled="!context.filterable" OnClick="@context.HeaderCell.AddFilter"></MudIconButton>
+                                                                    <HamkareIconButton Ripple="false" Class="filter-button" Icon="@context.DataGrid.FilterIconEmpty" Size="@Size.Small" title=@Localizer[LanguageResource.HamkareDataGrid_Filter] Disabled="!context.filterable" OnClick="@context.HeaderCell.AddFilter"></HamkareIconButton>
                                                                 }
 
                                                                 @if (ColumnsPanelReordering)
                                                                 {
-                                                                    <MudIconButton Ripple="false" Icon="@context.DataGrid.DragIndicatorIcon" Size="@Size.Small" Class="drag-icon-options"></MudIconButton>
+                                                                    <HamkareIconButton Ripple="false" Icon="@context.DataGrid.DragIndicatorIcon" Size="@Size.Small" Class="drag-icon-options"></HamkareIconButton>
                                                                 }
-                                                            </MudStack>
+                                                            </HamkareStack>
                                                         }
                                                     </ItemRenderer>
-                                                </MudDropContainer>
-                                                <MudStack Row="true">
+                                                </HamkareDropContainer>
+                                                <HamkareStack Row="true">
                                                     @if (Groupable)
                                                     {
-                                                        <MudButton OnClick="@CollapseAllGroupsAsync" Color="@Color.Primary">@Localizer[LanguageResource.MudDataGrid_CollapseAllGroups]</MudButton>
-                                                        <MudButton OnClick="@ExpandAllGroupsAsync" Color="@Color.Primary">@Localizer[LanguageResource.MudDataGrid_ExpandAllGroups]</MudButton>
+                                                        <HamkareButton OnClick="@CollapseAllGroupsAsync" Color="@Color.Primary">@Localizer[LanguageResource.HamkareDataGrid_CollapseAllGroups]</HamkareButton>
+                                                        <HamkareButton OnClick="@ExpandAllGroupsAsync" Color="@Color.Primary">@Localizer[LanguageResource.HamkareDataGrid_ExpandAllGroups]</HamkareButton>
                                                     }
-                                                    <MudSpacer />
+                                                    <HamkareSpacer />
 
-                                                    <MudButton OnClick="@HideAllColumnsAsync" Color="@Color.Primary">@Localizer[LanguageResource.MudDataGrid_HideAll]</MudButton>
-                                                    <MudButton OnClick="@ShowAllColumnsAsync" Color="@Color.Primary">@Localizer[LanguageResource.MudDataGrid_ShowAll]</MudButton>
-                                                </MudStack>
-                                            </MudPopover>
+                                                    <HamkareButton OnClick="@HideAllColumnsAsync" Color="@Color.Primary">@Localizer[LanguageResource.HamkareDataGrid_HideAll]</HamkareButton>
+                                                    <HamkareButton OnClick="@ShowAllColumnsAsync" Color="@Color.Primary">@Localizer[LanguageResource.HamkareDataGrid_ShowAll]</HamkareButton>
+                                                </HamkareStack>
+                                            </HamkarePopover>
                                         </th>
                                     </tr>
                                 }
                                 @if (Filterable && FilterMode == DataGridFilterMode.ColumnFilterRow)
                                 {
-                                    <tr class="mud-table-row">
+                                    <tr class="hamkare-table-row">
                                         @foreach (var column in RenderedColumns)
                                         {
                                             <FilterHeaderCell T="T" Column="@column" />
@@ -197,13 +197,13 @@
                                 @if (Loading)
                                 {
                                     <tr>
-                                        <th colspan="1000" class="mud-table-loading">
-                                            <MudProgressLinear Color="@LoadingProgressColor" Class="mud-table-loading-progress" Indeterminate="true" />
+                                        <th colspan="1000" class="hamkare-table-loading">
+                                            <HamkareProgressLinear Color="@LoadingProgressColor" Class="hamkare-table-loading-progress" Indeterminate="true" />
                                         </th>
                                     </tr>
                                 }
                             </thead>
-                            <tbody class="mud-table-body">
+                            <tbody class="hamkare-table-body">
                                 @if (Virtualize || CurrentPageItems.Count() > 0)
                                 {
                                     if (IsGrouped)
@@ -213,7 +213,7 @@
                                         if (!groupItemsPage.Any())
                                         {
                                             <tr>
-                                                <th colspan="1000" class="mud-table-empty-row">
+                                                <th colspan="1000" class="hamkare-table-empty-row">
                                                     <div Class="my-3">
                                                         @NoRecordsContent
                                                     </div>
@@ -243,7 +243,7 @@
                                 else if (Loading ? LoadingContent != null : NoRecordsContent != null)
                                 {
                                     <tr>
-                                        <th colspan="1000" class="mud-table-empty-row">
+                                        <th colspan="1000" class="hamkare-table-empty-row">
                                             <div Class="my-3">
                                                 @if (Loading)
                                                 {
@@ -259,7 +259,7 @@
                                 }
                             </tbody>
                             <tfoot class="@FootClassname">
-                                <tr class="mud-table-row">
+                                <tr class="hamkare-table-row">
                                     @FooterCells(CurrentPageItems)
                                 </tr>
                             </tfoot>
@@ -268,20 +268,20 @@
                     <ItemRenderer>
                         @context.HeaderCell.TableHeader()
                     </ItemRenderer>
-                </MudDropContainer>
+                </HamkareDropContainer>
             </div>
             @if (PagerContent != null)
             {
-                <div class="mud-table-pagination" style="@HeaderFooterStyle">
+                <div class="hamkare-table-pagination" style="@HeaderFooterStyle">
                     @PagerContent
                 </div>
             }
         }
     </div>
     <CascadingValue Value="true" IsFixed Name="IsNested">
-        <MudDialog Options="EditDialogOptions" @bind-Visible="_isEditFormOpen" DefaultFocus="DefaultFocus.FirstChild">
+        <HamkareDialog Options="EditDialogOptions" @bind-Visible="_isEditFormOpen" DefaultFocus="DefaultFocus.FirstChild">
             <DialogContent>
-                <MudForm @ref="_editForm" FieldChanged="FormFieldChanged">
+                <HamkareForm @ref="_editForm" FieldChanged="FormFieldChanged">
                     @foreach (var column in RenderedColumns)
                     {
                         var cell = new Cell<T>(this, column, _editingItem!);
@@ -296,47 +296,47 @@
 
                             if (propertyType == typeof(string))
                             {
-                                <MudTextField T="string" Label="@column.Title" Value="@cell._valueString" ValueChanged="@cell.StringValueChangedAsync" Margin="@Margin.Dense"
+                                <HamkareTextField T="string" Label="@column.Title" Value="@cell._valueString" ValueChanged="@cell.StringValueChangedAsync" Margin="@Margin.Dense"
                                 Required="@column.Required" Variant="@Variant.Outlined" Disabled="@(!column.Editable || ReadOnly)" Class="mt-4" Culture="@column.Culture" />
                             }
                             else if (TypeIdentifier.IsNumber(propertyType))
                             {
-                                <MudNumericField T="double?" Label="@column.Title" Value="@cell._valueNumber" ValueChanged="@cell.NumberValueChangedAsync" Margin="@Margin.Dense"
+                                <HamkareNumericField T="double?" Label="@column.Title" Value="@cell._valueNumber" ValueChanged="@cell.NumberValueChangedAsync" Margin="@Margin.Dense"
                                 Required="@column.Required" Variant="@Variant.Outlined" Disabled="@(!column.Editable || ReadOnly)" Class="mt-4" Culture="@column.Culture" />
                             }
                         }
                     }
-                </MudForm>
+                </HamkareForm>
             </DialogContent>
             <DialogActions>
-                <MudButton Variant="Variant.Filled" Color="Color.Default" OnClick="@CancelEditingItemAsync" Class="px-10">@Localizer[LanguageResource.MudDataGrid_Cancel]</MudButton>
-                <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@CommitItemChangesAsync" Class="px-10">@Localizer[LanguageResource.MudDataGrid_Save]</MudButton>
+                <HamkareButton Variant="Variant.Filled" Color="Color.Default" OnClick="@CancelEditingItemAsync" Class="px-10">@Localizer[LanguageResource.HamkareDataGrid_Cancel]</HamkareButton>
+                <HamkareButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@CommitItemChangesAsync" Class="px-10">@Localizer[LanguageResource.HamkareDataGrid_Save]</HamkareButton>
             </DialogActions>
-        </MudDialog>
+        </HamkareDialog>
     </CascadingValue>
 </CascadingValue>
 
 @code {
 
-    internal RenderFragment ToolbarMenu(MudDataGrid<T> dataGrid) =>
+    internal RenderFragment ToolbarMenu(HamkareDataGrid<T> dataGrid) =>
     @<text>
-        <MudMenu Icon="@Icons.Material.Outlined.Settings" Size="Size.Small" Dense="true">
-            <MudMenuItem OnClick="@dataGrid.ShowColumnsPanel">@Localizer[LanguageResource.MudDataGrid_Columns]</MudMenuItem>
+        <HamkareMenu Icon="@Icons.Material.Outlined.Settings" Size="Size.Small" Dense="true">
+            <HamkareMenuItem OnClick="@dataGrid.ShowColumnsPanel">@Localizer[LanguageResource.HamkareDataGrid_Columns]</HamkareMenuItem>
                 @if (dataGrid.IsGrouped)
                 {
-                    <MudMenuItem OnClick="@dataGrid.ExpandAllGroupsAsync">@Localizer[LanguageResource.MudDataGrid_ExpandAllGroups]</MudMenuItem>
-                    <MudMenuItem OnClick="@dataGrid.CollapseAllGroupsAsync">@Localizer[LanguageResource.MudDataGrid_CollapseAllGroups]</MudMenuItem>
+                    <HamkareMenuItem OnClick="@dataGrid.ExpandAllGroupsAsync">@Localizer[LanguageResource.HamkareDataGrid_ExpandAllGroups]</HamkareMenuItem>
+                    <HamkareMenuItem OnClick="@dataGrid.CollapseAllGroupsAsync">@Localizer[LanguageResource.HamkareDataGrid_CollapseAllGroups]</HamkareMenuItem>
                 }
                 @if (dataGrid.HasHierarchyColumn)
                 {
-                    <MudMenuItem OnClick="@dataGrid.ExpandAllHierarchy">@Localizer[LanguageResource.MudDataGrid_ExpandAllGroups]</MudMenuItem>
-                    <MudMenuItem OnClick="@dataGrid.CollapseAllHierarchy">@Localizer[LanguageResource.MudDataGrid_CollapseAllGroups]</MudMenuItem>
+                    <HamkareMenuItem OnClick="@dataGrid.ExpandAllHierarchy">@Localizer[LanguageResource.HamkareDataGrid_ExpandAllGroups]</HamkareMenuItem>
+                    <HamkareMenuItem OnClick="@dataGrid.CollapseAllHierarchy">@Localizer[LanguageResource.HamkareDataGrid_CollapseAllGroups]</HamkareMenuItem>
                 }
                 @if (dataGrid.HasServerData)
                 {
-                    <MudMenuItem OnClick="@dataGrid.InvokeServerLoadFunc">@Localizer[LanguageResource.MudDataGrid_RefreshData]</MudMenuItem>
+                    <HamkareMenuItem OnClick="@dataGrid.InvokeServerLoadFunc">@Localizer[LanguageResource.HamkareDataGrid_RefreshData]</HamkareMenuItem>
                 }
-            </MudMenu>
+            </HamkareMenu>
          </text>
     ;
 
@@ -376,7 +376,7 @@
                      {
                          if (column.PropertyType == typeof(string))
                          {
-                             <MudTextField T="string"
+                             <HamkareTextField T="string"
                                            Value="@cell._valueString"
                                            ValueChanged="@cell.StringValueChangedAsync"
                                            Margin="@Margin.Dense" Style="margin-top:0"
@@ -385,7 +385,7 @@
                          }
                          else if (column.isNumber)
                          {
-                             <MudNumericField T="double?"
+                             <HamkareNumericField T="double?"
                                               Value="@cell._valueNumber"
                                               ValueChanged="@cell.NumberValueChangedAsync"
                                               Margin="@Margin.Dense" Style="margin-top:0"
@@ -435,147 +435,147 @@
             }
             @if (column is null)
             {
-                <MudGrid Spacing="0">
-                    <MudItem xs="1" Class="d-flex">
-                        <MudIconButton Class="remove-filter-button" Icon="@Icons.Material.Filled.Close" OnClick="@filter.RemoveFilterAsync" Size="@Size.Small" Style="align-self: flex-end" aria-label="@Localizer[LanguageResource.MudDataGrid_RemoveFilter]"></MudIconButton>
-                    </MudItem>
-                    <MudItem xs="4">
-                        <MudSelect T="Column<T>" Value="@filterDefinition.Column" ValueChanged="@filter.FieldChanged" FullWidth="true" Label="@Localizer[LanguageResource.MudDataGrid_Column]" Dense="true" Margin="@Margin.Dense"
+                <HamkareGrid Spacing="0">
+                    <HamkareItem xs="1" Class="d-flex">
+                        <HamkareIconButton Class="remove-filter-button" Icon="@Icons.Material.Filled.Close" OnClick="@filter.RemoveFilterAsync" Size="@Size.Small" Style="align-self: flex-end" aria-label="@Localizer[LanguageResource.HamkareDataGrid_RemoveFilter]"></HamkareIconButton>
+                    </HamkareItem>
+                    <HamkareItem xs="4">
+                        <HamkareSelect T="Column<T>" Value="@filterDefinition.Column" ValueChanged="@filter.FieldChanged" FullWidth="true" Label="@Localizer[LanguageResource.HamkareDataGrid_Column]" Dense="true" Margin="@Margin.Dense"
                                    Class="filter-field">
                             @foreach (var renderColumn in RenderedColumns.Where(x => x.Filterable != false) ?? Enumerable.Empty<Column<T>>())
                             {
-                                <MudSelectItem T="Column<T>" Value="@renderColumn">@renderColumn.Title</MudSelectItem>
+                                <HamkareSelectItem T="Column<T>" Value="@renderColumn">@renderColumn.Title</HamkareSelectItem>
                             }
-                        </MudSelect>
-                    </MudItem>
-                    <MudItem xs="3">
-                        <MudSelect @bind-Value="filterDefinition.Operator" FullWidth="true" Label="@Localizer[LanguageResource.MudDataGrid_Operator]" Dense="true" Margin="@Margin.Dense"
+                        </HamkareSelect>
+                    </HamkareItem>
+                    <HamkareItem xs="3">
+                        <HamkareSelect @bind-Value="filterDefinition.Operator" FullWidth="true" Label="@Localizer[LanguageResource.HamkareDataGrid_Operator]" Dense="true" Margin="@Margin.Dense"
                                    Class="filter-operator">
                             @foreach (var fieldOperator in filterDefinition.Column!.GetFilterOperators(fieldType))
                             {
-                                <MudSelectItem Value="@fieldOperator">@Localizer[FilterOperator.GetTranslationKeyByOperatorName(fieldOperator)]</MudSelectItem>
+                                <HamkareSelectItem Value="@fieldOperator">@Localizer[FilterOperator.GetTranslationKeyByOperatorName(fieldOperator)]</HamkareSelectItem>
                             }
-                        </MudSelect>
-                    </MudItem>
-                    <MudItem xs="4">
+                        </HamkareSelect>
+                    </HamkareItem>
+                    <HamkareItem xs="4">
                         @if (fieldType.IsString && !(filterDefinition.Operator ?? "").EndsWith("empty"))
                         {
-                            <MudTextField T="string" Value="@filter._valueString" ValueChanged="@filter.StringValueChanged" FullWidth="true" Label="@Localizer[LanguageResource.MudDataGrid_Value]" Placeholder="@Localizer[LanguageResource.MudDataGrid_FilterValue]" Margin="@Margin.Dense"
+                            <HamkareTextField T="string" Value="@filter._valueString" ValueChanged="@filter.StringValueChanged" FullWidth="true" Label="@Localizer[LanguageResource.HamkareDataGrid_Value]" Placeholder="@Localizer[LanguageResource.HamkareDataGrid_FilterValue]" Margin="@Margin.Dense"
                                           Immediate="true" Class="filter-input" />
                         }
                         else if (fieldType.IsNumber && !(filterDefinition.Operator ?? "").EndsWith("empty"))
                         {
-                            <MudNumericField T="double?" Value="@filter._valueNumber" ValueChanged="@filter.NumberValueChanged" FullWidth="true" Label="@Localizer[LanguageResource.MudDataGrid_Value]" Placeholder="@Localizer[LanguageResource.MudDataGrid_FilterValue]" Margin="@Margin.Dense"
+                            <HamkareNumericField T="double?" Value="@filter._valueNumber" ValueChanged="@filter.NumberValueChanged" FullWidth="true" Label="@Localizer[LanguageResource.HamkareDataGrid_Value]" Placeholder="@Localizer[LanguageResource.HamkareDataGrid_FilterValue]" Margin="@Margin.Dense"
                                              Immediate="true" Class="filter-input" Culture="@filter.FilterColumn?.Culture"/>
                         }
                         else if (fieldType.IsEnum)
                         {
-                            <MudSelect T="Enum" Value="@filter._valueEnum" ValueChanged="@filter.EnumValueChanged" FullWidth="true" Label="@Localizer[LanguageResource.MudDataGrid_Value]" Placeholder="@Localizer[LanguageResource.MudDataGrid_FilterValue]" Dense="true" Margin="@Margin.Dense"
+                            <HamkareSelect T="Enum" Value="@filter._valueEnum" ValueChanged="@filter.EnumValueChanged" FullWidth="true" Label="@Localizer[LanguageResource.HamkareDataGrid_Value]" Placeholder="@Localizer[LanguageResource.HamkareDataGrid_FilterValue]" Dense="true" Margin="@Margin.Dense"
                                        Class="filter-input">
-                                <MudSelectItem T="Enum" Value="@(null)"></MudSelectItem>
+                                <HamkareSelectItem T="Enum" Value="@(null)"></HamkareSelectItem>
                                 @foreach (var item in EnumExtensions.GetSafeEnumValues(fieldType.InnerType))
                                 {
-                                    <MudSelectItem T="Enum" Value="@item">@Localizer[item]</MudSelectItem>
+                                    <HamkareSelectItem T="Enum" Value="@item">@Localizer[item]</HamkareSelectItem>
                                 }
-                            </MudSelect>
+                            </HamkareSelect>
                         }
                         else if (fieldType.IsBoolean)
                         {
-                            <MudSelect T="bool?" Value="@filter._valueBool" ValueChanged="@filter.BoolValueChanged" FullWidth="true" Label="@Localizer[LanguageResource.MudDataGrid_Value]" Placeholder="@Localizer[LanguageResource.MudDataGrid_FilterValue]" Dense="true" Margin="@Margin.Dense"
+                            <HamkareSelect T="bool?" Value="@filter._valueBool" ValueChanged="@filter.BoolValueChanged" FullWidth="true" Label="@Localizer[LanguageResource.HamkareDataGrid_Value]" Placeholder="@Localizer[LanguageResource.HamkareDataGrid_FilterValue]" Dense="true" Margin="@Margin.Dense"
                                        Class="filter-input">
-                                <MudSelectItem T="bool?" Value="@(null)"></MudSelectItem>
-                                <MudSelectItem T="bool?" Value="@(true)">@Localizer[LanguageResource.MudDataGrid_True]</MudSelectItem>
-                                <MudSelectItem T="bool?" Value="@(false)">@Localizer[LanguageResource.MudDataGrid_False]</MudSelectItem>
-                            </MudSelect>
+                                <HamkareSelectItem T="bool?" Value="@(null)"></HamkareSelectItem>
+                                <HamkareSelectItem T="bool?" Value="@(true)">@Localizer[LanguageResource.HamkareDataGrid_True]</HamkareSelectItem>
+                                <HamkareSelectItem T="bool?" Value="@(false)">@Localizer[LanguageResource.HamkareDataGrid_False]</HamkareSelectItem>
+                            </HamkareSelect>
                         }
                         else if (fieldType.IsDateOnly && !(filterDefinition.Operator ?? "").EndsWith("empty"))
                         {
-                            <MudDatePicker Date="@filter._valueDateOnlyForPicker" DateChanged="@filter.DateOnlyValueChanged" Label="@Localizer[LanguageResource.MudDataGrid_Value]" Placeholder="@Localizer[LanguageResource.MudDataGrid_FilterValue]" Margin="@Margin.Dense" Class="filter-input-date"/>
+                            <HamkareDatePicker Date="@filter._valueDateOnlyForPicker" DateChanged="@filter.DateOnlyValueChanged" Label="@Localizer[LanguageResource.HamkareDataGrid_Value]" Placeholder="@Localizer[LanguageResource.HamkareDataGrid_FilterValue]" Margin="@Margin.Dense" Class="filter-input-date"/>
                         }
                         else if (fieldType.IsDateTime && !(filterDefinition.Operator ?? "").EndsWith("empty"))
                         {
-                            <MudGrid Spacing="0">
-                                <MudItem xs="7">
-                                    <MudDatePicker Date="@filter._valueDateTimeForPicker" DateChanged="@filter.DateValueChanged" Label="@Localizer[LanguageResource.MudDataGrid_Value]" Placeholder="@Localizer[LanguageResource.MudDataGrid_FilterValue]" Margin="@Margin.Dense" Class="filter-input-date"/>
-                                </MudItem>
-                                <MudItem xs="5">
-                                    <MudTimePicker Time="@filter._valueTime" TimeChanged="@filter.TimeValueChanged" Label="@Localizer[LanguageResource.MudDataGrid_Value]" Placeholder="@Localizer[LanguageResource.MudDataGrid_FilterValue]" Margin="@Margin.Dense" Class="filter-input-time" />
-                                </MudItem>
-                            </MudGrid>
+                            <HamkareGrid Spacing="0">
+                                <HamkareItem xs="7">
+                                    <HamkareDatePicker Date="@filter._valueDateTimeForPicker" DateChanged="@filter.DateValueChanged" Label="@Localizer[LanguageResource.HamkareDataGrid_Value]" Placeholder="@Localizer[LanguageResource.HamkareDataGrid_FilterValue]" Margin="@Margin.Dense" Class="filter-input-date"/>
+                                </HamkareItem>
+                                <HamkareItem xs="5">
+                                    <HamkareTimePicker Time="@filter._valueTime" TimeChanged="@filter.TimeValueChanged" Label="@Localizer[LanguageResource.HamkareDataGrid_Value]" Placeholder="@Localizer[LanguageResource.HamkareDataGrid_FilterValue]" Margin="@Margin.Dense" Class="filter-input-time" />
+                                </HamkareItem>
+                            </HamkareGrid>
                         }
                         else if (fieldType.IsGuid)
                         {
-                            <MudTextField T="Guid?" Value="@filter._valueGuid" ValueChanged="@filter.GuidValueChanged" FullWidth="true" Label="@Localizer[LanguageResource.MudDataGrid_Value]" Placeholder="@Localizer[LanguageResource.MudDataGrid_FilterValue]" Margin="@Margin.Dense"
+                            <HamkareTextField T="Guid?" Value="@filter._valueGuid" ValueChanged="@filter.GuidValueChanged" FullWidth="true" Label="@Localizer[LanguageResource.HamkareDataGrid_Value]" Placeholder="@Localizer[LanguageResource.HamkareDataGrid_FilterValue]" Margin="@Margin.Dense"
                                           Immediate="true" Class="filter-input"/>
                         }
-                    </MudItem>
-                </MudGrid>
+                    </HamkareItem>
+                </HamkareGrid>
             }
             else
             {
-                <MudGrid Spacing="0">
-                    <MudItem xs="12">
-                        <MudSelect @bind-Value="filterDefinition.Operator" FullWidth="true" Dense="true" Margin="@Margin.Dense"
+                <HamkareGrid Spacing="0">
+                    <HamkareItem xs="12">
+                        <HamkareSelect @bind-Value="filterDefinition.Operator" FullWidth="true" Dense="true" Margin="@Margin.Dense"
                                    Class="filter-operator">
                             @foreach (var o in column.GetFilterOperators(fieldType))
                             {
-                                <MudSelectItem Value="@o">@Localizer[FilterOperator.GetTranslationKeyByOperatorName(o)]</MudSelectItem>
+                                <HamkareSelectItem Value="@o">@Localizer[FilterOperator.GetTranslationKeyByOperatorName(o)]</HamkareSelectItem>
                             }
-                        </MudSelect>
-                    </MudItem>
-                    <MudItem xs="12">
+                        </HamkareSelect>
+                    </HamkareItem>
+                    <HamkareItem xs="12">
                         @if (fieldType.IsString && !(filterDefinition.Operator ?? "").EndsWith("empty"))
                         {
-                            <MudTextField T="string" Value="@filter._valueString" ValueChanged="@filter.StringValueChanged" FullWidth="true" Placeholder="@Localizer[LanguageResource.MudDataGrid_FilterValue]" Margin="@Margin.Dense"
+                            <HamkareTextField T="string" Value="@filter._valueString" ValueChanged="@filter.StringValueChanged" FullWidth="true" Placeholder="@Localizer[LanguageResource.HamkareDataGrid_FilterValue]" Margin="@Margin.Dense"
                                           Immediate="true" Class="filter-input"/>
                         }
                         else if (fieldType.IsNumber && !(filterDefinition.Operator ?? "").EndsWith("empty"))
                         {
-                            <MudNumericField T="double?" Value="@filter._valueNumber" ValueChanged="@filter.NumberValueChanged" FullWidth="true" Placeholder="@Localizer[LanguageResource.MudDataGrid_FilterValue]" Margin="@Margin.Dense"
+                            <HamkareNumericField T="double?" Value="@filter._valueNumber" ValueChanged="@filter.NumberValueChanged" FullWidth="true" Placeholder="@Localizer[LanguageResource.HamkareDataGrid_FilterValue]" Margin="@Margin.Dense"
                                              Immediate="true" Class="filter-input" Culture="@filter.FilterColumn?.Culture"/>
                         }
                         else if (fieldType.IsEnum)
                         {
-                            <MudSelect T="Enum" Value="@filter._valueEnum" ValueChanged="@filter.EnumValueChanged" FullWidth="true" Placeholder="@Localizer[LanguageResource.MudDataGrid_FilterValue]" Dense="true" Margin="@Margin.Dense"
+                            <HamkareSelect T="Enum" Value="@filter._valueEnum" ValueChanged="@filter.EnumValueChanged" FullWidth="true" Placeholder="@Localizer[LanguageResource.HamkareDataGrid_FilterValue]" Dense="true" Margin="@Margin.Dense"
                                        Class="filter-input">
-                                <MudSelectItem T="Enum" Value="@(null)"></MudSelectItem>
+                                <HamkareSelectItem T="Enum" Value="@(null)"></HamkareSelectItem>
                                 @foreach (var item in EnumExtensions.GetSafeEnumValues(fieldType.InnerType))
                                 {
-                                    <MudSelectItem T="Enum" Value="@item">@Localizer[item]</MudSelectItem>
+                                    <HamkareSelectItem T="Enum" Value="@item">@Localizer[item]</HamkareSelectItem>
                                 }
-                            </MudSelect>
+                            </HamkareSelect>
                         }
                         else if (fieldType.IsBoolean)
                         {
-                            <MudSelect T="bool?" Value="@filter._valueBool" ValueChanged="@filter.BoolValueChanged" FullWidth="true" Placeholder="@Localizer[LanguageResource.MudDataGrid_FilterValue]" Dense="true" Margin="@Margin.Dense"
+                            <HamkareSelect T="bool?" Value="@filter._valueBool" ValueChanged="@filter.BoolValueChanged" FullWidth="true" Placeholder="@Localizer[LanguageResource.HamkareDataGrid_FilterValue]" Dense="true" Margin="@Margin.Dense"
                                        Class="filter-input">
-                                <MudSelectItem T="bool?" Value="@(null)"></MudSelectItem>
-                                <MudSelectItem T="bool?" Value="@(true)">@Localizer[LanguageResource.MudDataGrid_True]</MudSelectItem>
-                                <MudSelectItem T="bool?" Value="@(false)">@Localizer[LanguageResource.MudDataGrid_False]</MudSelectItem>
-                            </MudSelect>
+                                <HamkareSelectItem T="bool?" Value="@(null)"></HamkareSelectItem>
+                                <HamkareSelectItem T="bool?" Value="@(true)">@Localizer[LanguageResource.HamkareDataGrid_True]</HamkareSelectItem>
+                                <HamkareSelectItem T="bool?" Value="@(false)">@Localizer[LanguageResource.HamkareDataGrid_False]</HamkareSelectItem>
+                            </HamkareSelect>
                         }
                         else if (fieldType.IsDateOnly && !(filterDefinition.Operator ?? "").EndsWith("empty"))
                         {
-                            <MudDatePicker Date="@filter._valueDateOnlyForPicker" DateChanged="@filter.DateOnlyValueChanged" Placeholder="@Localizer[LanguageResource.MudDataGrid_FilterValue]" Margin="@Margin.Dense" Class="filter-input-date"/>
+                            <HamkareDatePicker Date="@filter._valueDateOnlyForPicker" DateChanged="@filter.DateOnlyValueChanged" Placeholder="@Localizer[LanguageResource.HamkareDataGrid_FilterValue]" Margin="@Margin.Dense" Class="filter-input-date"/>
                         }
                         else if (fieldType.IsDateTime && !(filterDefinition.Operator ?? "").EndsWith("empty"))
                         {
-                            <MudGrid Spacing="0">
-                                <MudItem xs="7">
-                                    <MudDatePicker Date="@filter._valueDateTimeForPicker" DateChanged="@filter.DateValueChanged" Placeholder="@Localizer[LanguageResource.MudDataGrid_FilterValue]" Margin="@Margin.Dense" Class="filter-input-date"/>
-                                </MudItem>
-                                <MudItem xs="5">
-                                    <MudTimePicker Time="@filter._valueTime" TimeChanged="@filter.TimeValueChanged" Placeholder="@Localizer[LanguageResource.MudDataGrid_FilterValue]" Margin="@Margin.Dense" Class="filter-input-time"/>
-                                </MudItem>
-                            </MudGrid>
+                            <HamkareGrid Spacing="0">
+                                <HamkareItem xs="7">
+                                    <HamkareDatePicker Date="@filter._valueDateTimeForPicker" DateChanged="@filter.DateValueChanged" Placeholder="@Localizer[LanguageResource.HamkareDataGrid_FilterValue]" Margin="@Margin.Dense" Class="filter-input-date"/>
+                                </HamkareItem>
+                                <HamkareItem xs="5">
+                                    <HamkareTimePicker Time="@filter._valueTime" TimeChanged="@filter.TimeValueChanged" Placeholder="@Localizer[LanguageResource.HamkareDataGrid_FilterValue]" Margin="@Margin.Dense" Class="filter-input-time"/>
+                                </HamkareItem>
+                            </HamkareGrid>
                         }
                         else if (fieldType.IsGuid)
                         {
-                            <MudTextField T="Guid?" Value="@filter._valueGuid" ValueChanged="@filter.GuidValueChanged" FullWidth="true" Placeholder="@Localizer[LanguageResource.MudDataGrid_FilterValue]" Margin="@Margin.Dense"
+                            <HamkareTextField T="Guid?" Value="@filter._valueGuid" ValueChanged="@filter.GuidValueChanged" FullWidth="true" Placeholder="@Localizer[LanguageResource.HamkareDataGrid_FilterValue]" Margin="@Margin.Dense"
                                           Immediate="true" Class="filter-input"/>
                         }
-                    </MudItem>
-                </MudGrid>
+                    </HamkareItem>
+                </HamkareGrid>
             }
          </text>;
 }

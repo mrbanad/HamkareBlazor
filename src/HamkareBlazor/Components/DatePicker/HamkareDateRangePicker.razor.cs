@@ -1,16 +1,16 @@
 ﻿using Microsoft.AspNetCore.Components;
-using MudBlazor.Extensions;
-using MudBlazor.State;
-using MudBlazor.Utilities;
+using HamkareBlazor.Extensions;
+using HamkareBlazor.State;
+using HamkareBlazor.Utilities;
 
 #nullable enable
-namespace MudBlazor
+namespace HamkareBlazor
 {
     /// <summary>
     /// Represents a picker for a range of dates.
     /// </summary>
-    /// <seealso cref="MudDatePicker"/>
-    public partial class MudDateRangePicker : MudBaseDatePicker
+    /// <seealso cref="HamkareDatePicker"/>
+    public partial class HamkareDateRangePicker : HamkareBaseDatePicker
     {
         private readonly ParameterState<bool> _allowDisabledDatesInCountState;
         private DateTime? _firstDate, _secondDate, _minValidDate, _maxValidDate;
@@ -20,7 +20,7 @@ namespace MudBlazor
         /// <summary>
         /// Creates a new instance.
         /// </summary>
-        public MudDateRangePicker()
+        public HamkareDateRangePicker()
         {
             using var registerScope = CreateRegisterScope();
             _allowDisabledDatesInCountState = registerScope.RegisterParameter<bool>(nameof(AllowDisabledDatesInCount))
@@ -112,7 +112,7 @@ namespace MudBlazor
         /// Enables capture for disabled dates within the selected date range.
         /// </summary>
         /// <remarks>
-        /// By default, it will always ignore disabled dates. This parameter will take effect when <see cref="MudBaseDatePicker.IsDateDisabledFunc"/> is set.
+        /// By default, it will always ignore disabled dates. This parameter will take effect when <see cref="HamkareBaseDatePicker.IsDateDisabledFunc"/> is set.
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.FormComponent.Validation)]
@@ -181,7 +181,7 @@ namespace MudBlazor
             }
         }
 
-        private MudRangeInput<string> _rangeInput = null!;
+        private HamkareRangeInput<string> _rangeInput = null!;
 
         /// <summary>
         /// Focuses the start input.
@@ -354,11 +354,11 @@ namespace MudBlazor
 
         protected override string GetDayClasses(int month, DateTime day)
         {
-            var b = new CssBuilder("mud-day");
+            var b = new CssBuilder("hamkare-day");
             b.AddClass(AdditionalDateClassesFunc?.Invoke(day) ?? string.Empty);
             if (day < GetMonthStart(month) || day > GetMonthEnd(month))
             {
-                return b.AddClass("mud-hidden").Build();
+                return b.AddClass("hamkare-hidden").Build();
             }
 
             static bool isLessThan(DateTime date1, DateTime date2) => date1 < date2;
@@ -369,57 +369,57 @@ namespace MudBlazor
             if ((_firstDate?.Date < day && _secondDate?.Date > day) || CheckDateRange(day, compareStart: isLessThan, compareEnd: isGreaterThan))
             {
                 return b
-                    .AddClass("mud-range")
-                    .AddClass("mud-range-between")
-                    .AddClass($"mud-current mud-{Color.ToStringFast(true)}-text mud-button-outlined mud-button-outlined-{Color.ToStringFast(true)}", day == DateTime.Today)
+                    .AddClass("hamkare-range")
+                    .AddClass("hamkare-range-between")
+                    .AddClass($"hamkare-current hamkare-{Color.ToStringFast(true)}-text hamkare-button-outlined hamkare-button-outlined-{Color.ToStringFast(true)}", day == DateTime.Today)
                     .Build();
             }
 
             if (_firstDate?.Date == day && _secondDate?.Date == day)
             {
-                return b.AddClass("mud-selected")
-                    .AddClass($"mud-theme-{Color.ToStringFast(true)}")
+                return b.AddClass("hamkare-selected")
+                    .AddClass($"hamkare-theme-{Color.ToStringFast(true)}")
                     .Build();
             }
 
             if (_firstDate?.Date == day || CheckDateRange(day, compareStart: isEqualTo, compareEnd: isNotEqualTo))
             {
-                return b.AddClass("mud-selected")
-                    .AddClass("mud-range")
-                    .AddClass("mud-range-start-selected")
-                    .AddClass("mud-range-selection", _firstDate != null)
-                    .AddClass($"mud-theme-{Color.ToStringFast(true)}")
+                return b.AddClass("hamkare-selected")
+                    .AddClass("hamkare-range")
+                    .AddClass("hamkare-range-start-selected")
+                    .AddClass("hamkare-range-selection", _firstDate != null)
+                    .AddClass($"hamkare-theme-{Color.ToStringFast(true)}")
                     .Build();
             }
 
             if ((_firstDate is { } && _secondDate?.Date == day) || CheckDateRange(day, compareStart: isNotEqualTo, compareEnd: isEqualTo))
             {
-                return b.AddClass("mud-selected")
-                    .AddClass("mud-range")
-                    .AddClass("mud-range-end-selected")
-                    .AddClass($"mud-theme-{Color.ToStringFast(true)}")
+                return b.AddClass("hamkare-selected")
+                    .AddClass("hamkare-range")
+                    .AddClass("hamkare-range-end-selected")
+                    .AddClass($"hamkare-theme-{Color.ToStringFast(true)}")
                     .Build();
             }
 
             if (CheckDateRange(day, compareStart: isEqualTo, compareEnd: isEqualTo))
             {
-                return b.AddClass("mud-selected").AddClass($"mud-theme-{Color.ToStringFast(true)}").Build();
+                return b.AddClass("hamkare-selected").AddClass($"hamkare-theme-{Color.ToStringFast(true)}").Build();
             }
 
             if (_firstDate?.Date < day)
             {
-                return b.AddClass("mud-range", _secondDate is null && day != DateTime.Today)
-                    .AddClass("mud-range-selection")
-                    .AddClass($"mud-range-selection-{Color.ToStringFast(true)}", _firstDate is not null)
-                    .AddClass($"mud-current mud-{Color.ToStringFast(true)}-text mud-button-outlined mud-button-outlined-{Color.ToStringFast(true)}", day == DateTime.Today)
+                return b.AddClass("hamkare-range", _secondDate is null && day != DateTime.Today)
+                    .AddClass("hamkare-range-selection")
+                    .AddClass($"hamkare-range-selection-{Color.ToStringFast(true)}", _firstDate is not null)
+                    .AddClass($"hamkare-current hamkare-{Color.ToStringFast(true)}-text hamkare-button-outlined hamkare-button-outlined-{Color.ToStringFast(true)}", day == DateTime.Today)
                     .Build();
             }
 
             if (day == DateTime.Today)
             {
-                return b.AddClass("mud-current")
-                    .AddClass($"mud-button-outlined mud-button-outlined-{Color.ToStringFast(true)}")
-                    .AddClass($"mud-{Color.ToStringFast(true)}-text")
+                return b.AddClass("hamkare-current")
+                    .AddClass($"hamkare-button-outlined hamkare-button-outlined-{Color.ToStringFast(true)}")
+                    .AddClass($"hamkare-{Color.ToStringFast(true)}-text")
                     .Build();
             }
 

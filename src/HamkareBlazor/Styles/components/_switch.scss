@@ -1,29 +1,29 @@
-.mud-switch {
+.hamkare-switch {
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   vertical-align: middle;
   -webkit-tap-highlight-color: transparent;
 
-  &.mud-disabled {
-    color: var(--mud-palette-text-disabled) !important;
+  &.hamkare-disabled {
+    color: var(--hamkare-palette-text-disabled) !important;
     cursor: default;
   }
 
-  &.mud-readonly {
+  &.hamkare-readonly {
     cursor: default;
     background-color: transparent !important;
   }
 
   @media(hover: hover) and (pointer: fine) {
-    .mud-readonly:hover {
+    .hamkare-readonly:hover {
       cursor: default;
       background-color: transparent !important;
     }
   }
 }
 
-.mud-switch-span {
+.hamkare-switch-span {
   width: 58px;
   height: 38px;
   display: inline-flex;
@@ -35,18 +35,18 @@
   flex-shrink: 0;
   vertical-align: middle;
 
-  & .mud-switch-track {
+  & .hamkare-switch-track {
     width: 100%;
     height: 100%;
     opacity: 0.48;
     z-index: -1;
     transition: opacity 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
     border-radius: 9px;
-    background-color: var(--mud-palette-action-default);
+    background-color: var(--hamkare-palette-action-default);
   }
 }
 
-.mud-switch-base {
+.hamkare-switch-base {
   padding: 9px;
   top: 0;
   left: 0;
@@ -55,24 +55,24 @@
   position: absolute;
   transition: left 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,transform 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
 
-  &.mud-checked {
+  &.hamkare-checked {
     transform: translateX(20px);
 
-    & + .mud-switch-track {
+    & + .hamkare-switch-track {
       opacity: 0.5;
     }
   }
 
   @media(hover: hover) and (pointer: fine) {
     &:hover {
-      background-color: var(--mud-palette-action-default-hover);
+      background-color: var(--hamkare-palette-action-default-hover);
     }
   }
 
-  &.mud-switch-disabled {
-    color: var(--mud-palette-gray-default) !important;
+  &.hamkare-switch-disabled {
+    color: var(--hamkare-palette-gray-default) !important;
 
-    & + .mud-switch-track {
+    & + .hamkare-switch-track {
       opacity: 0.12 !important;
     }
 
@@ -90,12 +90,12 @@
   }
 }
 
-.mud-switch-button {
+.hamkare-switch-button {
   display: flex;
   align-items: inherit;
   justify-content: inherit;
 
-  & .mud-switch-input {
+  & .hamkare-switch-input {
     top: 0;
     left: 0;
     width: 100%;
@@ -108,7 +108,7 @@
     position: absolute;
   }
 
-  & .mud-switch-thumb-small {
+  & .hamkare-switch-thumb-small {
     width: 14px;
     height: 14px;
     box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12);
@@ -116,7 +116,7 @@
     background-color: currentColor;
   }
 
-  & .mud-switch-thumb-medium {
+  & .hamkare-switch-thumb-medium {
     width: 20px;
     height: 20px;
     box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12);
@@ -124,7 +124,7 @@
     background-color: currentColor;
   }
 
-  & .mud-switch-thumb-large {
+  & .hamkare-switch-thumb-large {
     width: 26px;
     height: 26px;
     box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12);
@@ -133,43 +133,43 @@
   }
 }
 
-.mud-switch-base-small {
-  &.mud-switch-base {
+.hamkare-switch-base-small {
+  &.hamkare-switch-base {
     padding: 5px;
   }
 }
 
-.mud-switch-base-medium {
-  &.mud-switch-base {
+.hamkare-switch-base-medium {
+  &.hamkare-switch-base {
     padding: 9px;
   }
 }
 
-.mud-switch-base-large {
-  &.mud-switch-base {
+.hamkare-switch-base-large {
+  &.hamkare-switch-base {
     padding: 13px;
   }
 }
 
 
-.mud-switch-span-small {
-  &.mud-switch-span {
+.hamkare-switch-span-small {
+  &.hamkare-switch-span {
     padding: 7px;
     width: 44px;
     height: 24px;
   }
 }
 
-.mud-switch-span-medium {
-  &.mud-switch-span {
+.hamkare-switch-span-medium {
+  &.hamkare-switch-span {
     padding: 12px;
     width: 58px;
     height: 38px;
   }
 }
 
-.mud-switch-span-large {
-  &.mud-switch-span {
+.hamkare-switch-span-large {
+  &.hamkare-switch-span {
     padding: 17px;
     width: 72px;
     height: 52px;

@@ -1,5 +1,5 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 window.getTabbableElements = (element) => {
@@ -88,8 +88,8 @@ function serializeParameter(data, spec) {
 
 window.serializeParameter = serializeParameter;
 
-// mudGetSvgBBox is a helper function to get the size of an svgElement
-window.mudGetSvgBBox = (svgElement) => {
+// hamkareGetSvgBBox is a helper function to get the size of an svgElement
+window.hamkareGetSvgBBox = (svgElement) => {
     if (svgElement == null) return null;
 
     const bbox = svgElement.getBBox();
@@ -101,10 +101,10 @@ window.mudGetSvgBBox = (svgElement) => {
     };
 };
 
-// mudObserveElementSize is a helper function to observe the size of an element and notify a .NET reference.
+// hamkareObserveElementSize is a helper function to observe the size of an element and notify a .NET reference.
 // It will automatically unobserve when the element is removed from the DOM.
 // The notification will be throttled to at most once every debounceMillis (defaults to 200ms).
-window.mudObserveElementSize = (dotNetReference, element, functionName = 'OnElementSizeChanged', debounceMillis = 200) => {
+window.hamkareObserveElementSize = (dotNetReference, element, functionName = 'OnElementSizeChanged', debounceMillis = 200) => {
     if (!element) return;
 
     let lastNotifiedTime = 0;
@@ -122,7 +122,7 @@ window.mudObserveElementSize = (dotNetReference, element, functionName = 'OnElem
             }
             catch (error) {
                 if (typeof window.logger === "function") {
-                    window.logger("[MudBlazor] Error in mudObserveElementSize:", { error });
+                    window.logger("[HamkareBlazor] Error in hamkareObserveElementSize:", { error });
                 }
             }
         } else {
@@ -138,7 +138,7 @@ window.mudObserveElementSize = (dotNetReference, element, functionName = 'OnElem
                 }
                 catch (error) {
                     if (typeof window.logger === "function") {
-                        window.logger("[MudBlazor] Error in mudObserveElementSize:", { error });
+                        window.logger("[HamkareBlazor] Error in hamkareObserveElementSize:", { error });
                     }
                 }
             }, debounceMillis - timeSinceLast);

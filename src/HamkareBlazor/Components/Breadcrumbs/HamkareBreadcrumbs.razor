@@ -1,6 +1,6 @@
-﻿@namespace MudBlazor
-@using MudBlazor.Utilities
-@inherits MudComponentBase
+﻿@namespace HamkareBlazor
+@using HamkareBlazor.Utilities
+@inherits HamkareComponentBase
 
 @if (Items is null || Items.Count == 0)
 {
@@ -14,8 +14,8 @@
             {
                 <BreadcrumbLink Item="Items[0]"></BreadcrumbLink>
                 <BreadcrumbSeparator></BreadcrumbSeparator>
-                <li class="mud-breadcrumbs-expander" @onclick="Expand">
-                    <MudIcon Icon="@ExpanderIcon" Size="Size.Small"></MudIcon>
+                <li class="hamkare-breadcrumbs-expander" @onclick="Expand">
+                    <HamkareIcon Icon="@ExpanderIcon" Size="Size.Small"></HamkareIcon>
                 </li>
                 <BreadcrumbSeparator></BreadcrumbSeparator>
                 <BreadcrumbLink Item="Items[^1]"></BreadcrumbLink>

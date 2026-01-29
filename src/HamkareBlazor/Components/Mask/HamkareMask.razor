@@ -1,13 +1,13 @@
-﻿@namespace MudBlazor
-@using MudBlazor.Internal
-@using MudBlazor.Resources
-@inherits MudBaseInput<string>
-@inject InternalMudLocalizer Localizer
+﻿@namespace HamkareBlazor
+@using HamkareBlazor.Internal
+@using HamkareBlazor.Resources
+@inherits HamkareBaseInput<string>
+@inject InternalHamkareLocalizer Localizer
 
 <div id="@_elementId" class="@Classname" style="@Style">
     @if (Adornment == Adornment.Start)
     {
-        <MudInputAdornment Class="@AdornmentClassname"
+        <HamkareInputAdornment Class="@AdornmentClassname"
                            Icon="@AdornmentIcon"
                            Color="@AdornmentColor"
                            Size="@IconSize"
@@ -91,19 +91,19 @@
 
     @if (ShowClearButton())
     {
-        <MudIconButton Class="@ClearButtonClassname"
+        <HamkareIconButton Class="@ClearButtonClassname"
                        Color="@Color.Default"
                        Icon="@ClearIcon"
                        Size="@Size.Small"
                        OnClick="@HandleClearButtonAsync"
-                       aria-label="@Localizer[LanguageResource.MudInput_Clear]"
+                       aria-label="@Localizer[LanguageResource.HamkareInput_Clear]"
                        tabindex="-1"
                        @onmousedown:stopPropagation />
     }
 
     @if (Adornment == Adornment.End)
     {
-        <MudInputAdornment Class="@AdornmentClassname"
+        <HamkareInputAdornment Class="@AdornmentClassname"
                            Icon="@AdornmentIcon"
                            Color="@AdornmentColor"
                            Size="@IconSize"
@@ -115,7 +115,7 @@
 
     @if (Variant == Variant.Outlined)
     {
-        <fieldset class="mud-input-outlined-border">
+        <fieldset class="hamkare-input-outlined-border">
             @if (!string.IsNullOrEmpty(Label))
             {
                 <legend>@Label</legend>

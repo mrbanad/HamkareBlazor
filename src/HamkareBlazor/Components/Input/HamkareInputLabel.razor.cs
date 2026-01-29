@@ -1,21 +1,21 @@
 ﻿using Microsoft.AspNetCore.Components;
-using MudBlazor.Utilities;
+using HamkareBlazor.Utilities;
 
 #nullable enable
-namespace MudBlazor
+namespace HamkareBlazor
 {
     /// <summary>
-    /// A label which describes a <see cref="MudInput{T}"/> component.
+    /// A label which describes a <see cref="HamkareInput{T}"/> component.
     /// </summary>
-    public partial class MudInputLabel : MudComponentBase
+    public partial class HamkareInputLabel : HamkareComponentBase
     {
         protected string Classname => new CssBuilder()
-            .AddClass("mud-input-label")
-            .AddClass("mud-input-label-animated")
-            .AddClass($"mud-input-label-{Variant.ToStringFast(true)}")
-            .AddClass($"mud-input-label-margin-{Margin.ToStringFast(true)}", when: () => Margin != Margin.None)
-            .AddClass("mud-disabled", Disabled)
-            .AddClass("mud-input-error", Error)
+            .AddClass("hamkare-input-label")
+            .AddClass("hamkare-input-label-animated")
+            .AddClass($"hamkare-input-label-{Variant.ToStringFast(true)}")
+            .AddClass($"hamkare-input-label-margin-{Margin.ToStringFast(true)}", when: () => Margin != Margin.None)
+            .AddClass("hamkare-disabled", Disabled)
+            .AddClass("hamkare-input-error", Error)
             .AddClass(Class)
             .Build();
 

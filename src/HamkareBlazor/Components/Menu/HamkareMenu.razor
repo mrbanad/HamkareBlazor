@@ -1,5 +1,5 @@
-﻿@namespace MudBlazor
-@inherits MudComponentBase
+﻿@namespace HamkareBlazor
+@inherits HamkareComponentBase
 
 <div @attributes="UserAttributes"
      class="@Classname"
@@ -30,8 +30,8 @@
         }
         else
         {
-            <MudMenuItem @ref="_menuItemActivator"
-                         Class="mud-menu-sub-menu-activator"
+            <HamkareMenuItem @ref="_menuItemActivator"
+                         Class="hamkare-menu-sub-menu-activator"
                          Disabled="@Disabled"
                          OnClick="OpenSubMenuAsync"
                          AutoClose="false"
@@ -40,15 +40,15 @@
                          aria-expanded="@_openState.Value"
                          aria-label="@AriaLabel">
                 @ActivatorContent(_menuContext)
-            </MudMenuItem>
+            </HamkareMenuItem>
         }
     }
     else if (string.IsNullOrEmpty(Icon))
     {
         if (ParentMenu is null)
         {
-            <MudButton @ref="_buttonActivator"
-                       Class="mud-menu-button-activator"
+            <HamkareButton @ref="_buttonActivator"
+                       Class="hamkare-menu-button-activator"
                        StartIcon="@StartIcon"
                        EndIcon="@EndIcon"
                        IconColor="@IconColor"
@@ -61,12 +61,12 @@
                        OnClick="@ToggleMenuAsync"
                        aria-label="@AriaLabel">
                 @Label
-            </MudButton>
+            </HamkareButton>
         }
         else
         {
-            <MudMenuItem @ref="_menuItemActivator"
-                         Class="mud-menu-sub-menu-activator"
+            <HamkareMenuItem @ref="_menuItemActivator"
+                         Class="hamkare-menu-sub-menu-activator"
                          Icon="@StartIcon"
                          IconColor="@IconColor"
                          Disabled="@Disabled"
@@ -75,13 +75,13 @@
                          Label="@Label"
                          aria-label="@AriaLabel">
                 @Label
-            </MudMenuItem>
+            </HamkareMenuItem>
         }
     }
     else
     {
-        <MudIconButton @ref="_iconButtonActivator"
-                       Class="mud-menu-icon-button-activator"
+        <HamkareIconButton @ref="_iconButtonActivator"
+                       Class="hamkare-menu-icon-button-activator"
                        Variant="@Variant"
                        Icon="@Icon"
                        Color="@Color"
@@ -94,7 +94,7 @@
     }
 
     @* The portal has to include the cascading values inside because it's not able to teletransport the cascade *@
-    <MudPopover Open="@_openState.Value"
+    <HamkarePopover Open="@_openState.Value"
                 Class="@PopoverClassname"
                 UserAttributes="@PositionAttributes"
                 MaxHeight="@MaxHeight"
@@ -111,17 +111,17 @@
                  @onkeydown="HandleKeyDownAsync"
                  @onpointerenter="@PointerEnterAsync"
                  @onpointerleave="@PointerLeaveAsync">
-                <MudList T="object"
+                <HamkareList T="object"
                          Class="@ListClassname"
                          Dense="@Dense">
                     @ChildContent
-                </MudList>
+                </HamkareList>
             </div>
         </CascadingValue>
-    </MudPopover>
+    </HamkarePopover>
     @if (ParentMenu is null)
     {
-        <MudOverlay Visible="_openState.Value && !_isTransient"
+        <HamkareOverlay Visible="_openState.Value && !_isTransient"
                     AutoClose
                     OnClosed="CloseMenuAsync"
                     LockScroll="LockScroll"

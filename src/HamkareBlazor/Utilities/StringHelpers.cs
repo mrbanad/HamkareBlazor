@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 
-namespace MudBlazor.Utilities;
+namespace HamkareBlazor.Utilities;
 
 #nullable enable
 internal static partial class StringHelpers

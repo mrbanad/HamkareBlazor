@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using NetEscapades.EnumGenerators;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
     /// <summary>
     /// Indicates the behavior performed when a button is clicked.

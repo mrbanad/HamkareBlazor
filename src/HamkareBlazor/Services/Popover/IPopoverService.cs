@@ -1,8 +1,8 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 #nullable enable
 /// <summary>
@@ -18,7 +18,7 @@ public interface IPopoverService : IAsyncDisposable
     /// <summary>
     /// Gets the collection of active popovers that were created via <see cref="CreatePopoverAsync"/>. Disappears from collection after calling <see cref="DestroyPopoverAsync"/>.
     /// </summary>
-    IEnumerable<IMudPopoverHolder> ActivePopovers { get; }
+    IEnumerable<IHamkarePopoverHolder> ActivePopovers { get; }
 
     /// <summary>
     /// Gets a value indicating whether the <see cref="IPopoverService"/> is initialized.

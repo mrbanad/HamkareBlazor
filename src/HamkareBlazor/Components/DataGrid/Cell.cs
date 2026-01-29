@@ -1,17 +1,17 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
-using MudBlazor.Utilities;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
     internal class Cell<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)] T>
     {
-        private readonly MudDataGrid<T> _dataGrid;
+        private readonly HamkareDataGrid<T> _dataGrid;
         private readonly Column<T> _column;
         internal T _item;
         internal string? _valueString;
@@ -32,8 +32,8 @@ namespace MudBlazor
         internal string ComputedClass =>
             new CssBuilder(_column.CellClassFunc?.Invoke(_item))
                 .AddClass(_column.CellClass)
-                .AddClass("mud-table-cell")
-                .AddClass("mud-table-cell-hide", _column.HideSmall)
+                .AddClass("hamkare-table-cell")
+                .AddClass("hamkare-table-cell-hide", _column.HideSmall)
                 .AddClass("sticky-left", _column.StickyLeft)
                 .AddClass("sticky-right", _column.StickyRight)
                 .AddClass($"edit-mode-cell", _dataGrid.EditMode == DataGridEditMode.Cell && _column.Editable)
@@ -47,7 +47,7 @@ namespace MudBlazor
 
         #endregion
 
-        public Cell(MudDataGrid<T> dataGrid, Column<T> column, T item)
+        public Cell(HamkareDataGrid<T> dataGrid, Column<T> column, T item)
         {
             _dataGrid = dataGrid;
             _column = column;

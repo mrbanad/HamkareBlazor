@@ -1,32 +1,32 @@
-.mud-select {
+.hamkare-select {
   display: flex;
   flex-grow: 1;
   position: relative;
 
-  &.mud-autocomplete {
+  &.hamkare-autocomplete {
     display: block;
 
-    & .mud-select-input {
+    & .hamkare-select-input {
       cursor: text;
     }
 
-    & .mud-input-adornment {
+    & .hamkare-input-adornment {
       cursor: pointer;
     }
   }
 
-  &.mud-autocomplete--with-progress {
-    & .mud-select-input input {
+  &.hamkare-autocomplete--with-progress {
+    & .hamkare-select-input input {
       padding-right: 3.5rem !important;
     }
 
-    & .mud-input-adorned-end input {
+    & .hamkare-input-adorned-end input {
       padding-right: 4.5rem !important;
     }
 
-    // hide only when the wrapper does NOT contain mud-input-adornment-start
+    // hide only when the wrapper does NOT contain hamkare-input-adornment-start
     // AND DOES contain .progress-indicator-circular somewhere inside
-    &:not(:has(.mud-input-adornment-start)):has(.progress-indicator-circular) .mud-select-input .mud-icon-button {
+    &:not(:has(.hamkare-input-adornment-start)):has(.progress-indicator-circular) .hamkare-select-input .hamkare-icon-button {
       display: none !important;
     }
 
@@ -43,23 +43,23 @@
       padding-right: 1rem;
     }
 
-    & .mud-progress-linear {
+    & .hamkare-progress-linear {
       position: absolute;
       bottom: -1px;
       height: 2px;
     }
   }
 
-  .mud-select-input {
+  .hamkare-select-input {
     cursor: pointer;
 
-    & .mud-input-slot {
+    & .hamkare-input-slot {
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
     }
 
-    & .mud-input-adornment-end {
+    & .hamkare-input-adornment-end {
       margin-left: 0;
     }
 
@@ -68,42 +68,42 @@
     }
   }
 
-  .mud-disabled {
-    .mud-select-input {
+  .hamkare-disabled {
+    .hamkare-select-input {
       cursor: default;
     }
   }
 }
 
 // Adds spacing to right/left depending on the direction of the application layout
-.mud-rtl-provider {
-  & .mud-select .progress-indicator-circular--with-adornment {
+.hamkare-rtl-provider {
+  & .hamkare-select .progress-indicator-circular--with-adornment {
     padding-right: 1rem;
   }
 
-  &.mud-application-layout-rtl {
-    & .mud-select .progress-indicator-circular--with-adornment {
+  &.hamkare-application-layout-rtl {
+    & .hamkare-select .progress-indicator-circular--with-adornment {
       padding-right: 0rem !important;
       padding-left: 1rem !important;
     }
   }
 }
 
-.mud-select > .mud-form-helpertext {
+.hamkare-select > .hamkare-form-helpertext {
   margin-top: -21px;
 }
 
-.mud-select-all {
+.hamkare-select-all {
   margin-top: 10px;
   border-bottom: 1px solid lightgray;
   padding-bottom: 18px;
 }
 
-.mud-select-filler {
+.hamkare-select-filler {
   white-space: nowrap;
   height: 0px;
 }
 
-.mud-width-content {
+.hamkare-width-content {
     max-width: min-content;
 }

@@ -1,5 +1,5 @@
-﻿@namespace MudBlazor
-@inherits MudFormComponent<T, string>
+﻿@namespace HamkareBlazor
+@inherits HamkareFormComponent<T, string>
 @typeparam T
 
 @code
@@ -7,7 +7,7 @@
 #nullable enable
     protected virtual RenderFragment? InputContent =>
         // note: Mask needs to remain before Text!
-        @<MudTextField T="string"
+        @<HamkareTextField T="string"
                        @ref="_inputReference"
                        @attributes="UserAttributes"
                        Style="@Style"
@@ -64,9 +64,9 @@
                 }
                 @if (PickerVariant == PickerVariant.Inline)
                 {
-                    <MudPopover Class="@PopoverClassname" Open="@Open" Fixed="true" AnchorOrigin="@(AnchorOrigin)" TransformOrigin="@(TransformOrigin)" RelativeWidth="@(RelativeWidth)" Paper="false">
+                    <HamkarePopover Class="@PopoverClassname" Open="@Open" Fixed="true" AnchorOrigin="@(AnchorOrigin)" TransformOrigin="@(TransformOrigin)" RelativeWidth="@(RelativeWidth)" Paper="false">
                         <div @ref="_pickerInlineRef" class="@PickerInlineClassname">
-                            <MudPaper @attributes="UserAttributes" Class="@PickerPaperClassname" Style="@PickerPaperStylename" Square="@_pickerSquare">
+                            <HamkarePaper @attributes="UserAttributes" Class="@PickerPaperClassname" Style="@PickerPaperStylename" Square="@_pickerSquare">
                                 <div class="@PickerContainerClassname">
                                     @if (PickerContent != null)
                                     {
@@ -79,13 +79,13 @@
                                         @PickerActions(this)
                                     </div>
                                 }
-                            </MudPaper>
+                            </HamkarePaper>
                         </div>
-                    </MudPopover>
+                    </HamkarePopover>
                 }
                 else if (PickerVariant == PickerVariant.Static)
                 {
-                    <MudPaper @attributes="UserAttributes" Class="@PickerPaperClassname" Style="@PickerPaperStylename" Square="@_pickerSquare">
+                    <HamkarePaper @attributes="UserAttributes" Class="@PickerPaperClassname" Style="@PickerPaperStylename" Square="@_pickerSquare">
                         <div class="@PickerContainerClassname">
                             @if (PickerContent != null)
                             {
@@ -98,12 +98,12 @@
                                 @PickerActions(this)
                             </div>
                         }
-                    </MudPaper>
+                    </HamkarePaper>
                 }
                 else if (Open && PickerVariant == PickerVariant.Dialog)
                 {
-                    <MudOverlay Visible="@Open" OnClick="CloseOverlayAsync" DarkBackground="true" Class="mud-overlay-dialog">
-                        <MudPaper @attributes="UserAttributes" Class="@PickerPaperClassname" Style="@PickerPaperStylename" Square="@_pickerSquare">
+                    <HamkareOverlay Visible="@Open" OnClick="CloseOverlayAsync" DarkBackground="true" Class="hamkare-overlay-dialog">
+                        <HamkarePaper @attributes="UserAttributes" Class="@PickerPaperClassname" Style="@PickerPaperStylename" Square="@_pickerSquare">
                             <div class="@PickerContainerClassname">
                                 @if (PickerContent != null)
                                 {
@@ -116,13 +116,13 @@
                                     @PickerActions(this)
                                 </div>
                             }
-                        </MudPaper>
-                    </MudOverlay>
+                        </HamkarePaper>
+                    </HamkareOverlay>
                 }
             </div>
             @if (PickerVariant == PickerVariant.Inline)
             {
-                <MudOverlay Visible="@Open"
+                <HamkareOverlay Visible="@Open"
                             AutoClose
                             Modal="@GetModal()"
                             OnClosed="CloseOverlayAsync"

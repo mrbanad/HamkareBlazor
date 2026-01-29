@@ -1,15 +1,15 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using MudBlazor.Utilities;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
 
     /// <summary>
     /// Detects and responds to swipe gestures for navigation or actions.
     /// </summary>
-    public partial class MudSwipeArea : MudComponentBase
+    public partial class HamkareSwipeArea : HamkareComponentBase
     {
         private static readonly string[] _preventDefaultEventNames = ["onpointerdown", "onpointerup", "onpointercancel", "onpointermove", "onpointerleave"];
 
@@ -77,7 +77,7 @@ namespace MudBlazor
         public bool PreventDefault { get; set; }
 
         protected string Classname =>
-            new CssBuilder("mud-swipearea")
+            new CssBuilder("hamkare-swipearea")
                 .AddClass(Class)
                 .Build();
 

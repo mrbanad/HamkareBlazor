@@ -3,34 +3,34 @@ using System.Globalization;
 using System.Text;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
-using MudBlazor.State;
-using MudBlazor.Utilities;
+using HamkareBlazor.State;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 #nullable enable
 
 /// <summary>
 /// Provides a standard set of colors, shapes, sizes and shadows to a layout.
 /// </summary>
-/// <seealso cref="MudTheme"/>
-partial class MudThemeProvider : ComponentBaseWithState, IAsyncDisposable
+/// <seealso cref="HamkareTheme"/>
+partial class HamkareThemeProvider : ComponentBaseWithState, IAsyncDisposable
 {
-    // private const string Breakpoint = "mud-breakpoint";
+    // private const string Breakpoint = "hamkare-breakpoint";
     private bool _disposed;
     private bool _observing;
-    private const string Palette = "mud-palette";
-    private const string Ripple = "mud-ripple";
-    private const string Elevation = "mud-elevation";
-    private const string Typography = "mud-typography";
-    private const string LayoutProperties = "mud";
-    private const string Zindex = "mud-zindex";
+    private const string Palette = "hamkare-palette";
+    private const string Ripple = "hamkare-ripple";
+    private const string Elevation = "hamkare-elevation";
+    private const string Typography = "hamkare-typography";
+    private const string LayoutProperties = "hamkare";
+    private const string Zindex = "hamkare-zindex";
 
-    private MudTheme? _theme;
+    private HamkareTheme? _theme;
     private readonly ParameterState<bool> _isDarkModeState;
     private readonly ParameterState<Palette?> _currentPaletteState;
     private readonly ParameterState<bool> _observeSystemDarkModeChangeState;
-    private readonly Lazy<DotNetObjectReference<MudThemeProvider>> _lazyDotNetRef;
+    private readonly Lazy<DotNetObjectReference<HamkareThemeProvider>> _lazyDotNetRef;
 
     private event Func<bool, Task>? DarkModeChanged;
 
@@ -41,10 +41,10 @@ partial class MudThemeProvider : ComponentBaseWithState, IAsyncDisposable
     /// The theme used by the application.
     /// </summary>
     [Parameter]
-    public MudTheme? Theme { get; set; }
+    public HamkareTheme? Theme { get; set; }
 
     /// <summary>
-    /// Uses the browser default scrollbar instead of the MudBlazor scrollbar. 
+    /// Uses the browser default scrollbar instead of the HamkareBlazor scrollbar. 
     /// </summary>
     /// <remarks>
     /// Defaults to <c>false</c>.
@@ -63,7 +63,7 @@ partial class MudThemeProvider : ComponentBaseWithState, IAsyncDisposable
     public bool ObserveSystemDarkModeChange { get; set; } = true;
 
     /// <summary>
-    /// Uses darker colors for all MudBlazor components.
+    /// Uses darker colors for all HamkareBlazor components.
     /// </summary>
     /// <remarks>
     /// Defaults to <c>false</c>.
@@ -82,7 +82,7 @@ partial class MudThemeProvider : ComponentBaseWithState, IAsyncDisposable
     /// Gets the currently active palette based on the <see cref="IsDarkMode"/> setting.
     /// </summary>
     /// <remarks>
-    /// Returns <see cref="MudTheme.PaletteDark"/> when <see cref="IsDarkMode"/> is <c>true</c>; otherwise, returns <see cref="MudTheme.PaletteLight"/>.
+    /// Returns <see cref="HamkareTheme.PaletteDark"/> when <see cref="IsDarkMode"/> is <c>true</c>; otherwise, returns <see cref="HamkareTheme.PaletteLight"/>.
     /// When this value changes, <see cref="CurrentPaletteChanged"/> occurs.
     /// </remarks>
     [Parameter, ParameterState]
@@ -95,7 +95,7 @@ partial class MudThemeProvider : ComponentBaseWithState, IAsyncDisposable
     public EventCallback<Palette?> CurrentPaletteChanged { get; set; }
 
     [DynamicDependency(nameof(SystemDarkModeChangedAsync))]
-    public MudThemeProvider()
+    public HamkareThemeProvider()
     {
         using var registerScope = CreateRegisterScope();
         _isDarkModeState = registerScope.RegisterParameter<bool>(nameof(IsDarkMode))
@@ -107,7 +107,7 @@ partial class MudThemeProvider : ComponentBaseWithState, IAsyncDisposable
         _currentPaletteState = registerScope.RegisterParameter<Palette?>(nameof(CurrentPalette))
             .WithParameter(() => CurrentPalette)
             .WithEventCallback(() => CurrentPaletteChanged);
-        _lazyDotNetRef = new Lazy<DotNetObjectReference<MudThemeProvider>>(CreateDotNetObjectReference);
+        _lazyDotNetRef = new Lazy<DotNetObjectReference<HamkareThemeProvider>>(CreateDotNetObjectReference);
     }
 
     /// <summary>
@@ -118,7 +118,7 @@ partial class MudThemeProvider : ComponentBaseWithState, IAsyncDisposable
     /// </returns>
     public async Task<bool> GetSystemDarkModeAsync()
     {
-        var (_, value) = await JsRuntime.InvokeAsyncWithErrorHandling(false, "mudThemeProvider.isDarkMode");
+        var (_, value) = await JsRuntime.InvokeAsyncWithErrorHandling(false, "hamkareThemeProvider.isDarkMode");
         return value;
     }
 
@@ -168,7 +168,7 @@ partial class MudThemeProvider : ComponentBaseWithState, IAsyncDisposable
     // <inheritdoc />
     protected override void OnInitialized()
     {
-        _theme = Theme ?? new MudTheme();
+        _theme = Theme ?? new HamkareTheme();
         base.OnInitialized();
     }
 
@@ -194,9 +194,9 @@ partial class MudThemeProvider : ComponentBaseWithState, IAsyncDisposable
     /// <returns>A <c>style</c> HTML element containing this theme's styles.</returns>
     protected string BuildTheme()
     {
-        _theme = Theme ?? new MudTheme();
+        _theme = Theme ?? new HamkareTheme();
         var theme = new StringBuilder();
-        theme.AppendLine("<style class='mud-theme-provider'>");
+        theme.AppendLine("<style class='hamkare-theme-provider'>");
         theme.Append(_theme.PseudoCss.Scope);
         theme.AppendLine("{");
         GenerateTheme(theme);
@@ -210,7 +210,7 @@ partial class MudThemeProvider : ComponentBaseWithState, IAsyncDisposable
     /// Gets the CSS styles for the browser scrollbar.
     /// </summary>
     /// <returns>A <c>style</c> HTML element containing the scrollbar's styles.</returns>
-    protected static string BuildMudBlazorScrollbar()
+    protected static string BuildHamkareBlazorScrollbar()
     {
         var scrollbar = new StringBuilder();
 
@@ -249,88 +249,88 @@ partial class MudThemeProvider : ComponentBaseWithState, IAsyncDisposable
 
         theme.AppendLine($"--{Palette}-primary: {palette.Primary};");
         theme.AppendLine(
-            $"--{Palette}-primary-rgb: {palette.Primary.ToString(MudColorOutputFormats.ColorElements)};");
+            $"--{Palette}-primary-rgb: {palette.Primary.ToString(HamkareColorOutputFormats.ColorElements)};");
         theme.AppendLine($"--{Palette}-primary-text: {palette.PrimaryContrastText};");
         theme.AppendLine($"--{Palette}-primary-darken: {palette.PrimaryDarken};");
         theme.AppendLine($"--{Palette}-primary-lighten: {palette.PrimaryLighten};");
         theme.AppendLine(
-            $"--{Palette}-primary-hover: {palette.Primary.SetAlpha(palette.HoverOpacity).ToString(MudColorOutputFormats.RGBA)};");
+            $"--{Palette}-primary-hover: {palette.Primary.SetAlpha(palette.HoverOpacity).ToString(HamkareColorOutputFormats.RGBA)};");
         theme.AppendLine($"--{Palette}-secondary: {palette.Secondary};");
         theme.AppendLine(
-            $"--{Palette}-secondary-rgb: {palette.Secondary.ToString(MudColorOutputFormats.ColorElements)};");
+            $"--{Palette}-secondary-rgb: {palette.Secondary.ToString(HamkareColorOutputFormats.ColorElements)};");
         theme.AppendLine($"--{Palette}-secondary-text: {palette.SecondaryContrastText};");
         theme.AppendLine($"--{Palette}-secondary-darken: {palette.SecondaryDarken};");
         theme.AppendLine($"--{Palette}-secondary-lighten: {palette.SecondaryLighten};");
         theme.AppendLine(
-            $"--{Palette}-secondary-hover: {palette.Secondary.SetAlpha(palette.HoverOpacity).ToString(MudColorOutputFormats.RGBA)};");
+            $"--{Palette}-secondary-hover: {palette.Secondary.SetAlpha(palette.HoverOpacity).ToString(HamkareColorOutputFormats.RGBA)};");
         theme.AppendLine($"--{Palette}-tertiary: {palette.Tertiary};");
         theme.AppendLine(
-            $"--{Palette}-tertiary-rgb: {palette.Tertiary.ToString(MudColorOutputFormats.ColorElements)};");
+            $"--{Palette}-tertiary-rgb: {palette.Tertiary.ToString(HamkareColorOutputFormats.ColorElements)};");
         theme.AppendLine($"--{Palette}-tertiary-text: {palette.TertiaryContrastText};");
         theme.AppendLine($"--{Palette}-tertiary-darken: {palette.TertiaryDarken};");
         theme.AppendLine($"--{Palette}-tertiary-lighten: {palette.TertiaryLighten};");
         theme.AppendLine(
-            $"--{Palette}-tertiary-hover: {palette.Tertiary.SetAlpha(palette.HoverOpacity).ToString(MudColorOutputFormats.RGBA)};");
+            $"--{Palette}-tertiary-hover: {palette.Tertiary.SetAlpha(palette.HoverOpacity).ToString(HamkareColorOutputFormats.RGBA)};");
         theme.AppendLine($"--{Palette}-info: {palette.Info};");
         theme.AppendLine(
-            $"--{Palette}-info-rgb: {palette.Info.ToString(MudColorOutputFormats.ColorElements)};");
+            $"--{Palette}-info-rgb: {palette.Info.ToString(HamkareColorOutputFormats.ColorElements)};");
         theme.AppendLine($"--{Palette}-info-text: {palette.InfoContrastText};");
         theme.AppendLine($"--{Palette}-info-darken: {palette.InfoDarken};");
         theme.AppendLine($"--{Palette}-info-lighten: {palette.InfoLighten};");
         theme.AppendLine(
-            $"--{Palette}-info-hover: {palette.Info.SetAlpha(palette.HoverOpacity).ToString(MudColorOutputFormats.RGBA)};");
+            $"--{Palette}-info-hover: {palette.Info.SetAlpha(palette.HoverOpacity).ToString(HamkareColorOutputFormats.RGBA)};");
         theme.AppendLine($"--{Palette}-success: {palette.Success};");
         theme.AppendLine(
-            $"--{Palette}-success-rgb: {palette.Success.ToString(MudColorOutputFormats.ColorElements)};");
+            $"--{Palette}-success-rgb: {palette.Success.ToString(HamkareColorOutputFormats.ColorElements)};");
         theme.AppendLine($"--{Palette}-success-text: {palette.SuccessContrastText};");
         theme.AppendLine($"--{Palette}-success-darken: {palette.SuccessDarken};");
         theme.AppendLine($"--{Palette}-success-lighten: {palette.SuccessLighten};");
         theme.AppendLine(
-            $"--{Palette}-success-hover: {palette.Success.SetAlpha(palette.HoverOpacity).ToString(MudColorOutputFormats.RGBA)};");
+            $"--{Palette}-success-hover: {palette.Success.SetAlpha(palette.HoverOpacity).ToString(HamkareColorOutputFormats.RGBA)};");
         theme.AppendLine($"--{Palette}-warning: {palette.Warning};");
         theme.AppendLine(
-            $"--{Palette}-warning-rgb: {palette.Warning.ToString(MudColorOutputFormats.ColorElements)};");
+            $"--{Palette}-warning-rgb: {palette.Warning.ToString(HamkareColorOutputFormats.ColorElements)};");
         theme.AppendLine($"--{Palette}-warning-text: {palette.WarningContrastText};");
         theme.AppendLine($"--{Palette}-warning-darken: {palette.WarningDarken};");
         theme.AppendLine($"--{Palette}-warning-lighten: {palette.WarningLighten};");
         theme.AppendLine(
-            $"--{Palette}-warning-hover: {palette.Warning.SetAlpha(palette.HoverOpacity).ToString(MudColorOutputFormats.RGBA)};");
+            $"--{Palette}-warning-hover: {palette.Warning.SetAlpha(palette.HoverOpacity).ToString(HamkareColorOutputFormats.RGBA)};");
         theme.AppendLine($"--{Palette}-error: {palette.Error};");
         theme.AppendLine(
-            $"--{Palette}-error-rgb: {palette.Error.ToString(MudColorOutputFormats.ColorElements)};");
+            $"--{Palette}-error-rgb: {palette.Error.ToString(HamkareColorOutputFormats.ColorElements)};");
         theme.AppendLine($"--{Palette}-error-text: {palette.ErrorContrastText};");
         theme.AppendLine($"--{Palette}-error-darken: {palette.ErrorDarken};");
         theme.AppendLine($"--{Palette}-error-lighten: {palette.ErrorLighten};");
         theme.AppendLine(
-            $"--{Palette}-error-hover: {palette.Error.SetAlpha(palette.HoverOpacity).ToString(MudColorOutputFormats.RGBA)};");
+            $"--{Palette}-error-hover: {palette.Error.SetAlpha(palette.HoverOpacity).ToString(HamkareColorOutputFormats.RGBA)};");
         theme.AppendLine($"--{Palette}-dark: {palette.Dark};");
         theme.AppendLine(
-            $"--{Palette}-dark-rgb: {palette.Dark.ToString(MudColorOutputFormats.ColorElements)};");
+            $"--{Palette}-dark-rgb: {palette.Dark.ToString(HamkareColorOutputFormats.ColorElements)};");
         theme.AppendLine($"--{Palette}-dark-text: {palette.DarkContrastText};");
         theme.AppendLine($"--{Palette}-dark-darken: {palette.DarkDarken};");
         theme.AppendLine($"--{Palette}-dark-lighten: {palette.DarkLighten};");
         theme.AppendLine(
-            $"--{Palette}-dark-hover: {palette.Dark.SetAlpha(palette.HoverOpacity).ToString(MudColorOutputFormats.RGBA)};");
+            $"--{Palette}-dark-hover: {palette.Dark.SetAlpha(palette.HoverOpacity).ToString(HamkareColorOutputFormats.RGBA)};");
 
         theme.AppendLine($"--{Palette}-text-primary: {palette.TextPrimary};");
         theme.AppendLine(
-            $"--{Palette}-text-primary-rgb: {palette.TextPrimary.ToString(MudColorOutputFormats.ColorElements)};");
+            $"--{Palette}-text-primary-rgb: {palette.TextPrimary.ToString(HamkareColorOutputFormats.ColorElements)};");
         theme.AppendLine($"--{Palette}-text-secondary: {palette.TextSecondary};");
         theme.AppendLine(
-            $"--{Palette}-text-secondary-rgb: {palette.TextSecondary.ToString(MudColorOutputFormats.ColorElements)};");
+            $"--{Palette}-text-secondary-rgb: {palette.TextSecondary.ToString(HamkareColorOutputFormats.ColorElements)};");
         theme.AppendLine($"--{Palette}-text-disabled: {palette.TextDisabled};");
         theme.AppendLine(
-            $"--{Palette}-text-disabled-rgb: {palette.TextDisabled.ToString(MudColorOutputFormats.ColorElements)};");
+            $"--{Palette}-text-disabled-rgb: {palette.TextDisabled.ToString(HamkareColorOutputFormats.ColorElements)};");
 
         theme.AppendLine($"--{Palette}-action-default: {palette.ActionDefault};");
         theme.AppendLine(
-            $"--{Palette}-action-default-hover: {palette.ActionDefault.SetAlpha(palette.HoverOpacity).ToString(MudColorOutputFormats.RGBA)};");
+            $"--{Palette}-action-default-hover: {palette.ActionDefault.SetAlpha(palette.HoverOpacity).ToString(HamkareColorOutputFormats.RGBA)};");
         theme.AppendLine($"--{Palette}-action-disabled: {palette.ActionDisabled};");
         theme.AppendLine(
             $"--{Palette}-action-disabled-background: {palette.ActionDisabledBackground};");
 
         theme.AppendLine($"--{Palette}-surface: {palette.Surface};");
-        theme.AppendLine($"--{Palette}-surface-rgb: {palette.Surface.ToString(MudColorOutputFormats.ColorElements)};");
+        theme.AppendLine($"--{Palette}-surface-rgb: {palette.Surface.ToString(HamkareColorOutputFormats.ColorElements)};");
         theme.AppendLine($"--{Palette}-background: {palette.Background};");
         theme.AppendLine($"--{Palette}-background-gray: {palette.BackgroundGray};");
         theme.AppendLine($"--{Palette}-drawer-background: {palette.DrawerBackground};");
@@ -348,7 +348,7 @@ partial class MudThemeProvider : ComponentBaseWithState, IAsyncDisposable
 
         theme.AppendLine($"--{Palette}-divider: {palette.Divider};");
         theme.AppendLine(
-            $"--{Palette}-divider-rgb: {palette.Divider.ToString(MudColorOutputFormats.ColorElements)};");
+            $"--{Palette}-divider-rgb: {palette.Divider.ToString(HamkareColorOutputFormats.ColorElements)};");
         theme.AppendLine($"--{Palette}-divider-light: {palette.DividerLight};");
 
         theme.AppendLine($"--{Palette}-skeleton: {palette.Skeleton};");
@@ -552,7 +552,7 @@ partial class MudThemeProvider : ComponentBaseWithState, IAsyncDisposable
         theme.AppendLine($"--{Zindex}-tooltip: {_theme.ZIndex.Tooltip};");
 
         // Native HTML control light/dark mode
-        theme.AppendLine($"--mud-native-html-color-scheme: {(_isDarkModeState.Value ? "dark" : "light")};");
+        theme.AppendLine($"--hamkare-native-html-color-scheme: {(_isDarkModeState.Value ? "dark" : "light")};");
     }
 
     /// <inheritdoc />
@@ -597,7 +597,7 @@ partial class MudThemeProvider : ComponentBaseWithState, IAsyncDisposable
     {
         // The _observing flag prevents attempting to stop observation when it hasn't been started.
         // For example, ObserveSystemDarkModeChange is true by default, and if it's set to false in the initial component setup 
-        // like <MudThemeProvider ObserveSystemDarkModeChange="false" />, the ChangeHandler of ParameterState will be invoked.
+        // like <HamkareThemeProvider ObserveSystemDarkModeChange="false" />, the ChangeHandler of ParameterState will be invoked.
         // Therefore, it's not desirable to stop an observation that hasn't been started.
         if (arg.Value)
         {
@@ -617,11 +617,11 @@ partial class MudThemeProvider : ComponentBaseWithState, IAsyncDisposable
         }
     }
 
-    private ValueTask WatchDarkMode() => JsRuntime.InvokeVoidAsyncIgnoreErrors("mudThemeProvider.watchDarkMode", _lazyDotNetRef.Value);
+    private ValueTask WatchDarkMode() => JsRuntime.InvokeVoidAsyncIgnoreErrors("hamkareThemeProvider.watchDarkMode", _lazyDotNetRef.Value);
 
-    private ValueTask StopWatchingDarkMode() => JsRuntime.InvokeVoidAsyncIgnoreErrors("mudThemeProvider.stopWatchingDarkMode");
+    private ValueTask StopWatchingDarkMode() => JsRuntime.InvokeVoidAsyncIgnoreErrors("hamkareThemeProvider.stopWatchingDarkMode");
 
-    private DotNetObjectReference<MudThemeProvider> CreateDotNetObjectReference() => DotNetObjectReference.Create(this);
+    private DotNetObjectReference<HamkareThemeProvider> CreateDotNetObjectReference() => DotNetObjectReference.Create(this);
 
     private static string FormatFontFamily(string[] fontFamilies)
     {

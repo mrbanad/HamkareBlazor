@@ -42,7 +42,7 @@
   }
 
   //--------------------------- rtl styles ---------------------------
-  .mud-application-layout-rtl {
+  .hamkare-application-layout-rtl {
     .rounded-s-#{$size} {
       border-top-right-radius: $value !important;
       border-bottom-right-radius: $value !important;
@@ -81,78 +81,78 @@
 }
 
 .rounded {
-  border-radius: var(--mud-default-borderradius) !important;
+  border-radius: var(--hamkare-default-borderradius) !important;
 }
 
 .rounded-t {
-  border-top-left-radius: var(--mud-default-borderradius) !important;
-  border-top-right-radius: var(--mud-default-borderradius) !important;
+  border-top-left-radius: var(--hamkare-default-borderradius) !important;
+  border-top-right-radius: var(--hamkare-default-borderradius) !important;
 }
 
 .rounded-r, .rounded-e {
-  border-top-right-radius: var(--mud-default-borderradius) !important;
-  border-bottom-right-radius: var(--mud-default-borderradius) !important;
+  border-top-right-radius: var(--hamkare-default-borderradius) !important;
+  border-bottom-right-radius: var(--hamkare-default-borderradius) !important;
 }
 
 .rounded-b {
-  border-bottom-right-radius: var(--mud-default-borderradius) !important;
-  border-bottom-left-radius: var(--mud-default-borderradius) !important;
+  border-bottom-right-radius: var(--hamkare-default-borderradius) !important;
+  border-bottom-left-radius: var(--hamkare-default-borderradius) !important;
 }
 
 .rounded-l, .rounded-s {
-  border-top-left-radius: var(--mud-default-borderradius) !important;
-  border-bottom-left-radius: var(--mud-default-borderradius) !important;
+  border-top-left-radius: var(--hamkare-default-borderradius) !important;
+  border-bottom-left-radius: var(--hamkare-default-borderradius) !important;
 }
 
 .rounded-tl, .rounded-ts {
-  border-top-left-radius: var(--mud-default-borderradius) !important;
+  border-top-left-radius: var(--hamkare-default-borderradius) !important;
 }
 
 .rounded-tr, .rounded-te {
-  border-top-right-radius: var(--mud-default-borderradius) !important;
+  border-top-right-radius: var(--hamkare-default-borderradius) !important;
 }
 
 .rounded-br, .rounded-be {
-  border-bottom-right-radius: var(--mud-default-borderradius) !important;
+  border-bottom-right-radius: var(--hamkare-default-borderradius) !important;
 }
 
 .rounded-bl, .rounded-bs {
-  border-bottom-left-radius: var(--mud-default-borderradius) !important;
+  border-bottom-left-radius: var(--hamkare-default-borderradius) !important;
 }
 
 //--------------------------- rtl styles ---------------------------
-.mud-application-layout-rtl {
+.hamkare-application-layout-rtl {
   .rounded-s {
-    border-top-right-radius: var(--mud-default-borderradius) !important;
-    border-bottom-right-radius: var(--mud-default-borderradius) !important;
+    border-top-right-radius: var(--hamkare-default-borderradius) !important;
+    border-bottom-right-radius: var(--hamkare-default-borderradius) !important;
     border-top-left-radius: 0 !important;
     border-bottom-left-radius: 0 !important;
   }
 
   .rounded-e {
-    border-top-left-radius: var(--mud-default-borderradius) !important;
-    border-bottom-left-radius: var(--mud-default-borderradius) !important;
+    border-top-left-radius: var(--hamkare-default-borderradius) !important;
+    border-bottom-left-radius: var(--hamkare-default-borderradius) !important;
     border-top-right-radius: 0 !important;
     border-bottom-right-radius: 0 !important;
   }
 
   .rounded-ts {
-    border-top-right-radius: var(--mud-default-borderradius) !important;
+    border-top-right-radius: var(--hamkare-default-borderradius) !important;
     border-top-left-radius: 0 !important;
   }
 
   .rounded-te {
-    border-top-left-radius: var(--mud-default-borderradius) !important;
+    border-top-left-radius: var(--hamkare-default-borderradius) !important;
     border-top-right-radius: 0 !important;
   }
 
   .rounded-bs {
-    border-bottom-right-radius: var(--mud-default-borderradius) !important;
+    border-bottom-right-radius: var(--hamkare-default-borderradius) !important;
     border-bottom-left-radius: 0 !important;
   }
 
   .rounded-be {
-    border-bottom-left-radius: var(--mud-default-borderradius) !important;
+    border-bottom-left-radius: var(--hamkare-default-borderradius) !important;
     border-bottom-right-radius: 0 !important;
   }
 }

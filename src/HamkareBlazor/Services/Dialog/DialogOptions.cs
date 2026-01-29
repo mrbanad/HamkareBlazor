@@ -1,17 +1,17 @@
 ﻿// Copyright (c) 2019 Blazored
 // License: MIT
 // See https://github.com/Blazored
-// Copyright (c) 2020 Adapted by MudBlazor
+// Copyright (c) 2020 Adapted by HamkareBlazor
 
 #nullable enable
-namespace MudBlazor
+namespace HamkareBlazor
 {
     /// <summary>
-    /// The customization options for a <see cref="MudDialog"/>.
+    /// The customization options for a <see cref="HamkareDialog"/>.
     /// </summary>
-    /// <seealso cref="MudDialogContainer"/>
-    /// <seealso cref="MudDialogProvider"/>
-    /// <seealso cref="MudDialog"/>
+    /// <seealso cref="HamkareDialogContainer"/>
+    /// <seealso cref="HamkareDialogProvider"/>
+    /// <seealso cref="HamkareDialog"/>
     /// <seealso cref="DialogParameters{T}"/>
     /// <seealso cref="DialogReference"/>
     /// <seealso cref="DialogService"/>

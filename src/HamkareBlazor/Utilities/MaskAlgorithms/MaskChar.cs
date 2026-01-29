@@ -1,12 +1,12 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 #nullable enable
 /// <summary>
-/// A character which represents a set of allowed values in a <see cref="MudMask"/>.
+/// A character which represents a set of allowed values in a <see cref="HamkareMask"/>.
 /// </summary>
 /// <remarks>
 /// Masks are built from mask characters, which each represent a regular expression for that character.<br />

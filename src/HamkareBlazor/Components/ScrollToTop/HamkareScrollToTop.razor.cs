@@ -1,15 +1,15 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using MudBlazor.Utilities;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
 
     /// <summary>
     /// A button to quickly return to the top of the page.
     /// </summary>
-    public partial class MudScrollToTop : IAsyncDisposable
+    public partial class HamkareScrollToTop : IAsyncDisposable
     {
         private IScrollListener? _scrollListener;
 
@@ -17,7 +17,7 @@ namespace MudBlazor
         /// The CSS classes applied to this component.
         /// </summary>
         protected string Classname =>
-            new CssBuilder("mud-scroll-to-top")
+            new CssBuilder("hamkare-scroll-to-top")
                 .AddClass("visible", Visible && string.IsNullOrWhiteSpace(VisibleCssClass))
                 .AddClass("hidden", !Visible && string.IsNullOrWhiteSpace(HiddenCssClass))
                 .AddClass(VisibleCssClass, Visible && !string.IsNullOrWhiteSpace(VisibleCssClass))

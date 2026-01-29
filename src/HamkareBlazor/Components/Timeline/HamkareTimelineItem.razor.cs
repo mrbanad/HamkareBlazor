@@ -1,40 +1,40 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using Microsoft.AspNetCore.Components;
-using MudBlazor.Utilities;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
 
     /// <summary>
-    /// A chronological item displayed as part of a <see cref="MudTimeline"/>
+    /// A chronological item displayed as part of a <see cref="HamkareTimeline"/>
     /// </summary>
-    /// <seealso cref="MudTimeline"/>
-    public partial class MudTimelineItem : MudComponentBase, IDisposable
+    /// <seealso cref="HamkareTimeline"/>
+    public partial class HamkareTimelineItem : HamkareComponentBase, IDisposable
     {
         protected string Classnames =>
-            new CssBuilder("mud-timeline-item")
-                .AddClass($"mud-timeline-item-{TimelineAlign.ToStringFast(true)}")
+            new CssBuilder("hamkare-timeline-item")
+                .AddClass($"hamkare-timeline-item-{TimelineAlign.ToStringFast(true)}")
                 .AddClass(Class)
                 .Build();
 
         protected string DotClassnames =>
-            new CssBuilder("mud-timeline-item-dot")
-                .AddClass($"mud-timeline-dot-size-{Size.ToStringFast(true)}")
-                .AddClass($"mud-elevation-{Elevation}")
+            new CssBuilder("hamkare-timeline-item-dot")
+                .AddClass($"hamkare-timeline-dot-size-{Size.ToStringFast(true)}")
+                .AddClass($"hamkare-elevation-{Elevation}")
                 .Build();
 
         protected string DotInnerClassnames =>
-            new CssBuilder("mud-timeline-item-dot-inner")
-                .AddClass($"mud-timeline-dot-fill", Variant == Variant.Filled)
-                .AddClass($"mud-timeline-dot-{Color.ToStringFast(true)}")
+            new CssBuilder("hamkare-timeline-item-dot-inner")
+                .AddClass($"hamkare-timeline-dot-fill", Variant == Variant.Filled)
+                .AddClass($"hamkare-timeline-dot-{Color.ToStringFast(true)}")
                 .Build();
 
         [CascadingParameter]
-        protected internal MudBaseItemsControl<MudTimelineItem>? Parent { get; set; }
+        protected internal HamkareBaseItemsControl<HamkareTimelineItem>? Parent { get; set; }
 
         /// <summary>
         /// The icon displayed for the dot.
@@ -94,7 +94,7 @@ namespace MudBlazor
         public int Elevation { set; get; } = 1;
 
         /// <summary>
-        /// Overrides <see cref="MudTimeline.TimelineAlign"/> with a custom value.
+        /// Overrides <see cref="HamkareTimeline.TimelineAlign"/> with a custom value.
         /// </summary>
         /// <remarks>
         /// Defaults to <see cref="TimelineAlign.Default"/>.

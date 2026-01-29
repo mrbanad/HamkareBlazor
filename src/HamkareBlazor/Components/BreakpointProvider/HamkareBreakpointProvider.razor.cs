@@ -1,18 +1,18 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
     /// <summary>
     /// Exposes the current breakpoint (xs, sm, md, lg, xl) to child components via a cascading parameter.
     /// </summary>
-    public partial class MudBreakpointProvider : IBrowserViewportObserver, IAsyncDisposable
+    public partial class HamkareBreakpointProvider : IBrowserViewportObserver, IAsyncDisposable
     {
         /// <summary>
         /// The current breakpoint.

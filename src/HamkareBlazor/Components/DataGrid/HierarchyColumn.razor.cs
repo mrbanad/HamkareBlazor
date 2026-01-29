@@ -1,20 +1,20 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Components;
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 #nullable enable
 /// <summary>
-/// Represents a column in a <see cref="MudDataGrid{T}"/> which can be expanded to show additional information.
+/// Represents a column in a <see cref="HamkareDataGrid{T}"/> which can be expanded to show additional information.
 /// </summary>
 /// <typeparam name="T">The kind of item managed by the column.</typeparam>
 /// <seealso cref="Column{T}"/>
-/// <seealso cref="MudDataGrid{T}"/>
-public partial class HierarchyColumn<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)] T> : MudComponentBase
+/// <seealso cref="HamkareDataGrid{T}"/>
+public partial class HierarchyColumn<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)] T> : HamkareComponentBase
 {
     /// <summary>
     /// Displays the content right-to-left.
@@ -56,7 +56,7 @@ public partial class HierarchyColumn<[DynamicallyAccessedMembers(DynamicallyAcce
     /// Allows this column to be reordered via drag-and-drop operations.
     /// </summary>
     /// <remarks>
-    /// Defaults to <c>null</c>. When set, this overrides the <see cref="MudDataGrid{T}.DragDropColumnReordering"/> property.
+    /// Defaults to <c>null</c>. When set, this overrides the <see cref="HamkareDataGrid{T}.DragDropColumnReordering"/> property.
     /// </remarks>
     [Parameter]
     public bool? DragAndDropEnabled { get; set; } = false;
@@ -65,7 +65,7 @@ public partial class HierarchyColumn<[DynamicallyAccessedMembers(DynamicallyAcce
     /// Allows this column to be hidden.
     /// </summary>
     /// <remarks>
-    /// Defaults to <c>null</c>.  When set, this overrides the <see cref="MudDataGrid{T}.Hideable"/> property.
+    /// Defaults to <c>null</c>.  When set, this overrides the <see cref="HamkareDataGrid{T}.Hideable"/> property.
     /// </remarks>
     [Parameter]
     public bool? Hideable { get; set; }

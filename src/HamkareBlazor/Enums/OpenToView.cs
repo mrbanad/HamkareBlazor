@@ -1,5 +1,5 @@
 ﻿
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 /// <summary>
 /// Indicates the initial view of a date or time picker component.

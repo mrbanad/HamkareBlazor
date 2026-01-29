@@ -1,10 +1,10 @@
-﻿@namespace MudBlazor
-@inherits MudComponentBase
+﻿@namespace HamkareBlazor
+@inherits HamkareComponentBase
 @typeparam T
 @attribute [CascadingTypeParameter(nameof(T))]
 
 <ul @attributes="UserAttributes" class="@Classname" style="@Stylename">
-    <CascadingValue Value="@MudTreeRoot" IsFixed="true">
+    <CascadingValue Value="@HamkareTreeRoot" IsFixed="true">
         @if (ItemTemplate != null && Items != null)
         {
             @foreach (var item in Items)

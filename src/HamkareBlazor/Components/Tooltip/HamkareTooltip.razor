@@ -1,11 +1,11 @@
-﻿@namespace MudBlazor
-@inherits MudComponentBase
+﻿@namespace HamkareBlazor
+@inherits HamkareComponentBase
 
 <div @attributes="UserAttributes" class="@ContainerClass" style="@RootStyle" @onpointerenter="@HandlePointerEnterAsync" @onpointerleave="@HandlePointerLeaveAsync" @onpointerup="@HandlePointerUpAsync" @onfocusin="@HandleFocusInAsync" @onfocusout="@HandleFocusOutAsync">
     @ChildContent
     @if (ShowToolTip())
     {
-        <MudPopover Open="@_visibleState.Value" Duration="@Duration" Delay="@Delay" AnchorOrigin="@_anchorOrigin" TransformOrigin="@_transformOrigin" Class="@Classname" Style="@Style" Paper="false">
+        <HamkarePopover Open="@_visibleState.Value" Duration="@Duration" Delay="@Delay" AnchorOrigin="@_anchorOrigin" TransformOrigin="@_transformOrigin" Class="@Classname" Style="@Style" Paper="false">
             @if (TooltipContent is not null)
             {
                 <div class="d-block">
@@ -16,6 +16,6 @@
             {
                 @Text
             }
-        </MudPopover>
+        </HamkarePopover>
     }
 </div>

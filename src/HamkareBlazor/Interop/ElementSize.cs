@@ -1,4 +1,4 @@
-﻿namespace MudBlazor.Interop;
+﻿namespace HamkareBlazor.Interop;
 
 #nullable enable
 /// <summary>

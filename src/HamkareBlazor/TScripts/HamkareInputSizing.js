@@ -1,8 +1,8 @@
-// Copyright (c) MudBlazor 2023
-// MudBlazor licenses this file to you under the MIT license.
+// Copyright (c) HamkareBlazor 2023
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-window.mudInputSizing = {
+window.hamkareInputSizing = {
     init: (elem, maxLines) => {
         const compStyle = getComputedStyle(elem);
         const lineHeight = parseFloat(compStyle.getPropertyValue('line-height'));
@@ -22,7 +22,7 @@ window.mudInputSizing = {
 
         // Capture min and max height in closure to trigger height adjustment on element in the input.
         elem.adjustSizingHeight = function (didReflow = false) {
-            // Save scroll positions https://github.com/MudBlazor/MudBlazor/issues/8152.
+            // Save scroll positions https://github.com/HamkareBlazor/HamkareBlazor/issues/8152.
             const scrollTops = [];
             let curElem = elem;
             while (curElem && curElem.parentNode && curElem.parentNode instanceof Element) {
@@ -61,7 +61,7 @@ window.mudInputSizing = {
                 node.style.scrollBehavior = null;
             });
 
-            // Force another adjustment after the scrollbar is hidden to avoid an empty line https://github.com/MudBlazor/MudBlazor/pull/8385.
+            // Force another adjustment after the scrollbar is hidden to avoid an empty line https://github.com/HamkareBlazor/HamkareBlazor/pull/8385.
             if (!didReflow && initialOverflowY !== elem.style.overflowY && elem.style.overflowY === 'hidden') {
                 elem.style.textAlign = 'end'; // Change to something other than the default.
                 elem.adjustSizingHeight(true);

@@ -1,10 +1,10 @@
 ﻿//Copyright(c) Alessandro Ghidini.All rights reserved.
-//Changes and improvements Copyright (c) The MudBlazor Team.
+//Changes and improvements Copyright (c) The HamkareBlazor Team.
 
 using System.Diagnostics;
 using static System.String;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
     internal class SnackBarMessageState
@@ -69,14 +69,14 @@ namespace MudBlazor
         {
             get
             {
-                var baseTypeClass = $"mud-alert-{Options.SnackbarVariant.ToStringFast(true)}-{Options.Severity.ToStringFast(true)}";
+                var baseTypeClass = $"hamkare-alert-{Options.SnackbarVariant.ToStringFast(true)}-{Options.Severity.ToStringFast(true)}";
 
                 if (Options.SnackbarVariant != Variant.Filled)
                 {
-                    baseTypeClass += Options.BackgroundBlurred ? " mud-snackbar-blurred" : " mud-snackbar-surface";
+                    baseTypeClass += Options.BackgroundBlurred ? " hamkare-snackbar-blurred" : " hamkare-snackbar-surface";
                 }
 
-                var result = $"mud-snackbar {baseTypeClass} {Options.SnackbarTypeClass}";
+                var result = $"hamkare-snackbar {baseTypeClass} {Options.SnackbarTypeClass}";
 
                 if (Options.OnClick != null && !ShowActionButton)
                     result += " force-cursor";

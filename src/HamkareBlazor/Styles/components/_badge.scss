@@ -1,9 +1,9 @@
 
-.mud-badge-root {
+.hamkare-badge-root {
   position: relative;
   display: inline-block;
 
-  .mud-badge-wrapper {
+  .hamkare-badge-wrapper {
     top: 0;
     left: 0;
     flex: 0 1;
@@ -13,7 +13,7 @@
     pointer-events: none;
     position: absolute;
 
-    &.mud-badge {
+    &.hamkare-badge {
 
       &-top {
         align-items: flex-start;
@@ -66,7 +66,7 @@
   }
 }
 
-.mud-badge {
+.hamkare-badge {
   border-radius: 10px;
   font-size: 12px;
   height: 20px;
@@ -82,33 +82,33 @@
   transition: .3s cubic-bezier(.25,.8,.5,1);
   white-space: nowrap;
 
-  &.mud-badge-default {
-    color: var(--mud-palette-text-primary);
-    background-color: var(--mud-palette-gray-light);
+  &.hamkare-badge-default {
+    color: var(--hamkare-palette-text-primary);
+    background-color: var(--hamkare-palette-gray-light);
   }
 
-  &.mud-badge-bordered {
-    border-color: var(--mud-palette-surface);
+  &.hamkare-badge-bordered {
+    border-color: var(--hamkare-palette-surface);
     border-style: solid;
     border-width: 2px;
     padding: 3px 4px;
 
-    &.mud-badge-icon {
+    &.hamkare-badge-icon {
       padding: 4px 6px;
     }
   }
 
-  &.mud-badge-icon {
+  &.hamkare-badge-icon {
     width: 20px;
     height: 20px;
 
-    & .mud-icon-badge {
+    & .hamkare-icon-badge {
       color: inherit;
       font-size: 12px;
     }
   }
 
-  &.mud-badge-dot {
+  &.hamkare-badge-dot {
     border-radius: 50%;
     height: 9px;
     min-width: 0;
@@ -116,7 +116,7 @@
     width: 9px;
   }
 
-  &.mud-badge {
+  &.hamkare-badge {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -125,7 +125,7 @@
       &.left {
         inset: auto calc(100% - 4px) calc(100% - 4px) auto;
 
-        &.mud-badge-overlap {
+        &.hamkare-badge-overlap {
           inset: auto calc(100% - 12px) calc(100% - 12px) auto;
         }
       }
@@ -133,7 +133,7 @@
       &.center {
         bottom: calc(100% - 4px);
 
-        &.mud-badge-overlap {
+        &.hamkare-badge-overlap {
           bottom: calc(100% - 12px);
         }
       }
@@ -141,7 +141,7 @@
       &.right {
         inset: auto auto calc(100% - 4px) calc(100% - 4px);
 
-        &.mud-badge-overlap {
+        &.hamkare-badge-overlap {
           inset: auto auto calc(100% - 12px) calc(100% - 12px);
         }
       }
@@ -151,7 +151,7 @@
       &.left {
         right: calc(100% - 4px);
 
-        &.mud-badge-overlap {
+        &.hamkare-badge-overlap {
           right: calc(100% - 12px);
         }
       }
@@ -159,7 +159,7 @@
       &.right {
         left: calc(100% - 4px);
 
-        &.mud-badge-overlap {
+        &.hamkare-badge-overlap {
           left: calc(100% - 12px);
         }
       }
@@ -169,7 +169,7 @@
       &.left {
         inset: calc(100% - 4px) calc(100% - 4px) auto auto;
 
-        &.mud-badge-overlap {
+        &.hamkare-badge-overlap {
           inset: calc(100% - 12px) calc(100% - 12px) auto auto;
         }
       }
@@ -177,7 +177,7 @@
       &.center {
         top: calc(100% - 4px);
 
-        &.mud-badge-overlap {
+        &.hamkare-badge-overlap {
           top: calc(100% - 12px);
         }
       }
@@ -185,7 +185,7 @@
       &.right {
         inset: calc(100% - 4px) auto auto calc(100% - 4px);
 
-        &.mud-badge-overlap {
+        &.hamkare-badge-overlap {
           inset: calc(100% - 12px) auto auto calc(100% - 12px);
         }
       }

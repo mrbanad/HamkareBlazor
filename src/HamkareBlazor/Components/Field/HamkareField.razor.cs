@@ -1,53 +1,53 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using MudBlazor.Utilities;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
-    // TODO: Maybe can inherit from MudBaseInput?
+    // TODO: Maybe can inherit from HamkareBaseInput?
     /// <summary>
-    /// A component similar to <see cref="MudTextField{T}"/> which supports custom content.
+    /// A component similar to <see cref="HamkareTextField{T}"/> which supports custom content.
     /// </summary>
-    /// <seealso cref="MudTextField{T}"/>
-    public partial class MudField : MudComponentBase
+    /// <seealso cref="HamkareTextField{T}"/>
+    public partial class HamkareField : HamkareComponentBase
     {
         protected string Classname =>
-            new CssBuilder("mud-input")
-                .AddClass($"mud-input-{Variant.ToStringFast(true)}")
-                .AddClass($"mud-input-{Variant.ToStringFast(true)}-with-label", !string.IsNullOrEmpty(Label))
-                .AddClass($"mud-input-adorned-{Adornment.ToStringFast(true)}", Adornment != Adornment.None)
-                .AddClass($"mud-input-margin-{Margin.ToStringFast(true)}", () => Margin != Margin.None)
-                .AddClass("mud-input-underline", () => Underline && Variant != Variant.Outlined)
-                // Without the mud-shrink class, the label will become a placeholder
-                // Apply "mud-shrink" only if ShrinkLabel is false AND
+            new CssBuilder("hamkare-input")
+                .AddClass($"hamkare-input-{Variant.ToStringFast(true)}")
+                .AddClass($"hamkare-input-{Variant.ToStringFast(true)}-with-label", !string.IsNullOrEmpty(Label))
+                .AddClass($"hamkare-input-adorned-{Adornment.ToStringFast(true)}", Adornment != Adornment.None)
+                .AddClass($"hamkare-input-margin-{Margin.ToStringFast(true)}", () => Margin != Margin.None)
+                .AddClass("hamkare-input-underline", () => Underline && Variant != Variant.Outlined)
+                // Without the hamkare-shrink class, the label will become a placeholder
+                // Apply "hamkare-shrink" only if ShrinkLabel is false AND
                 // (there is content OR the adornment is at the start)
-                .AddClass("mud-shrink",
+                .AddClass("hamkare-shrink",
                     !ShrinkLabel &&
                          (ChildContent != null || Adornment == Adornment.Start))
-                .AddClass("mud-disabled", Disabled)
-                .AddClass("mud-input-error", Error && !string.IsNullOrEmpty(ErrorText))
-                .AddClass($"mud-typography-{Typo.ToStringFast(true)}")
+                .AddClass("hamkare-disabled", Disabled)
+                .AddClass("hamkare-input-error", Error && !string.IsNullOrEmpty(ErrorText))
+                .AddClass($"hamkare-typography-{Typo.ToStringFast(true)}")
                 .Build();
 
         protected string InnerClassname =>
-            new CssBuilder("mud-input-slot")
-                .AddClass("mud-input-root")
-                .AddClass("mud-input-slot-nopadding", () => InnerPadding == false)
-                .AddClass($"mud-input-root-{Variant.ToStringFast(true)}")
-                .AddClass($"mud-input-adorned-{Adornment.ToStringFast(true)}", Adornment != Adornment.None)
-                .AddClass($"mud-input-root-margin-{Margin.ToStringFast(true)}", () => Margin != Margin.None)
+            new CssBuilder("hamkare-input-slot")
+                .AddClass("hamkare-input-root")
+                .AddClass("hamkare-input-slot-nopadding", () => InnerPadding == false)
+                .AddClass($"hamkare-input-root-{Variant.ToStringFast(true)}")
+                .AddClass($"hamkare-input-adorned-{Adornment.ToStringFast(true)}", Adornment != Adornment.None)
+                .AddClass($"hamkare-input-root-margin-{Margin.ToStringFast(true)}", () => Margin != Margin.None)
                 .Build();
 
         protected string AdornmentClassname =>
             new CssBuilder()
-                .AddClass($"mud-input-adornment-{Adornment.ToStringFast(true)}", Adornment != Adornment.None)
-                .AddClass($"mud-text", !string.IsNullOrEmpty(AdornmentText))
-                .AddClass($"mud-input-root-filled-shrink", Variant == Variant.Filled)
+                .AddClass($"hamkare-input-adornment-{Adornment.ToStringFast(true)}", Adornment != Adornment.None)
+                .AddClass($"hamkare-text", !string.IsNullOrEmpty(AdornmentText))
+                .AddClass($"hamkare-input-root-filled-shrink", Variant == Variant.Filled)
                 .Build();
 
         protected string InputControlClassname =>
-            new CssBuilder("mud-field")
+            new CssBuilder("hamkare-field")
                 .AddClass(Class)
                 .Build();
 

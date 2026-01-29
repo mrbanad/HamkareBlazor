@@ -1,9 +1,9 @@
-﻿@namespace MudBlazor
+﻿@namespace HamkareBlazor
 @typeparam T
-@inherits MudDebouncedInput<T>
+@inherits HamkareDebouncedInput<T>
 
 <CascadingValue Name="SubscribeToParentForm" Value="@SubscribeToParentForm" IsFixed="true">
-    <MudInputControl id="@_elementId"
+    <HamkareInputControl id="@_elementId"
                      Label="@Label"
                      Variant="@Variant"
                      HelperId="@GetHelperId()"
@@ -21,7 +21,7 @@
                      ForId="@InputElementId">
         <InputContent>
             <CascadingValue Name="SubscribeToParentForm" Value="false" IsFixed="true">
-                <MudInput T="string"
+                <HamkareInput T="string"
                           @ref="@_elementReference"
                           @attributes="@UserAttributes"
                           InputType="@(!IsFormatted && IsNumberMode ? InputType.Number : InputType.Text)"
@@ -68,5 +68,5 @@
                           Required="@Required" />
             </CascadingValue>
         </InputContent>
-    </MudInputControl>
+    </HamkareInputControl>
 </CascadingValue>

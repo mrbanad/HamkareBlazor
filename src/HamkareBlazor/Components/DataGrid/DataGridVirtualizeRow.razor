@@ -1,9 +1,9 @@
-﻿@namespace MudBlazor
-@inherits MudComponentBase
+﻿@namespace HamkareBlazor
+@inherits HamkareComponentBase
 @typeparam T
-@using MudBlazor.Utilities
-@using MudBlazor.Resources
-@inject InternalMudLocalizer Localizer
+@using HamkareBlazor.Utilities
+@using HamkareBlazor.Resources
+@inject InternalHamkareLocalizer Localizer
 
 @{
 #nullable enable
@@ -26,7 +26,7 @@
     }
 }
 
-<MudVirtualize @ref="DataGrid._mudVirtualize"
+<HamkareVirtualize @ref="DataGrid._hamkareVirtualize"
                ItemsProvider="@DataGrid.VirtualItemsProvider"
                Enabled="@DataGrid.Virtualize"
                Items="@resolvedItems"
@@ -40,9 +40,9 @@
         }
         else
         {
-            <tr class="mud-table-row">
-                <td class="mud-table-cell" colspan="1000">
-                    @Localizer[LanguageResource.MudDataGrid_Loading]
+            <tr class="hamkare-table-row">
+                <td class="hamkare-table-cell" colspan="1000">
+                    @Localizer[LanguageResource.HamkareDataGrid_Loading]
                 </td>
             </tr>
         }
@@ -53,7 +53,7 @@
             var rowClass = new CssBuilder(DataGrid.RowClass).AddClass(DataGrid.RowClassFunc?.Invoke(itemBag.Item, itemBag.Index)).Build();
             var rowStyle = new StyleBuilder().AddStyle(DataGrid.RowStyle).AddStyle(DataGrid.RowStyleFunc?.Invoke(itemBag.Item, itemBag.Index)).Build();
         }
-        <tr class="mud-table-row @rowClass" Style="@rowStyle" @key="itemBag.Item"
+        <tr class="hamkare-table-row @rowClass" Style="@rowStyle" @key="itemBag.Item"
             @onclick="@((args) => RowClick.InvokeAsync((args, itemBag.Item, itemBag.Index)))"
             @oncontextmenu="@((args) => ContextRowClick.InvokeAsync((args, itemBag.Item, itemBag.Index)))"
             @oncontextmenu:preventDefault="@(DataGrid.RowContextMenuClick.HasDelegate ? true : false)">
@@ -75,8 +75,8 @@
             }
             @if (DataGrid.ChildRowContent != null)
             {
-                <tr class="mud-table-row">
-                    <td class="mud-table-cell mud-table-child-content" colspan="1000">
+                <tr class="hamkare-table-row">
+                    <td class="hamkare-table-cell hamkare-table-child-content" colspan="1000">
                         @DataGrid.ChildRowContent(new CellContext<T>(DataGrid, itemBag.Item))
                     </td>
                 </tr>
@@ -85,11 +85,11 @@
     </ChildContent>
     <NoRecordsContent>
         <tr>
-            <th colspan="1000" class="mud-table-empty-row">
+            <th colspan="1000" class="hamkare-table-empty-row">
                 <div Class="my-3">
                     @DataGrid.NoRecordsContent
                 </div>
             </th>
         </tr>
     </NoRecordsContent>
-</MudVirtualize>
+</HamkareVirtualize>

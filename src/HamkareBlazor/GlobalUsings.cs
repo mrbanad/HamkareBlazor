@@ -1,1 +1,1 @@
-﻿global using static MudBlazor.Utilities.StringHelpers;
+﻿global using static HamkareBlazor.Utilities.StringHelpers;

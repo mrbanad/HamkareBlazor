@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
 #pragma warning disable IDE1006 // must being with upper case

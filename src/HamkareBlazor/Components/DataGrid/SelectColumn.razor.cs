@@ -1,18 +1,18 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Components;
 
 #nullable enable
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 /// <summary>
-/// Represents a checkbox column used to select rows in a <see cref="MudDataGrid{T}"/>.
+/// Represents a checkbox column used to select rows in a <see cref="HamkareDataGrid{T}"/>.
 /// </summary>
 /// <typeparam name="T">The type of item to select.</typeparam>
-/// <seealso cref="MudDataGrid{T}"/>
+/// <seealso cref="HamkareDataGrid{T}"/>
 public partial class SelectColumn<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)] T> : TemplateColumn<T>
 {
     /// <summary>

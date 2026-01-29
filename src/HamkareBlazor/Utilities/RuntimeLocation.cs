@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 
 #nullable enable
-namespace MudBlazor.Utilities
+namespace HamkareBlazor.Utilities
 {
     [ExcludeFromCodeCoverage]
     public class RuntimeLocation

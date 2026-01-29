@@ -1,13 +1,13 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using MudBlazor.State;
+using HamkareBlazor.State;
 
-namespace MudBlazor.Extensions;
+namespace HamkareBlazor.Extensions;
 
 #nullable enable
 /// <summary>
@@ -18,9 +18,9 @@ public static class ComponentBaseWithStateExtensions
     /// <summary>
     /// Gets the read-only parameter state of a specified property in the component.
     /// </summary>
-    /// <typeparam name="TComponent">The type of the MudBlazor component.</typeparam>
+    /// <typeparam name="TComponent">The type of the HamkareBlazor component.</typeparam>
     /// <typeparam name="T">The type of the parameter.</typeparam>
-    /// <param name="component">The MudBlazor component instance.</param>
+    /// <param name="component">The HamkareBlazor component instance.</param>
     /// <param name="propertyExpression">An expression representing the property whose parameter state needs to be accessed.</param>
     /// <param name="propertyNameCallerArgumentExpression">The property name. Do not set this value as it's set at compile-time through <see cref="CallerArgumentExpressionAttribute"/>.</param>
     /// <returns>The <see cref="ParameterState{T}.Value"/> of the specified property.</returns>
@@ -39,7 +39,7 @@ public static class ComponentBaseWithStateExtensions
     /// Gets the read-only parameter state of a specified property in the component.
     /// </summary>
     /// <typeparam name="T">The type of the parameter.</typeparam>
-    /// <param name="component">The MudBlazor component instance.</param>
+    /// <param name="component">The HamkareBlazor component instance.</param>
     /// <param name="propertyName">The name of the property whose parameter state needs to be accessed. Use nameof(...) to get the property name.</param>
     /// <returns>The <see cref="ParameterState{T}.Value"/> of the specified property.</returns>
     /// <exception cref="KeyNotFoundException">Thrown when the parameter state with <paramref name="propertyName"/> is not found.</exception>

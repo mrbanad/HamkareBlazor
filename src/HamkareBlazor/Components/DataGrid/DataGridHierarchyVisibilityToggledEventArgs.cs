@@ -1,14 +1,14 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-namespace MudBlazor.Utilities
+namespace HamkareBlazor.Utilities
 {
 #nullable enable
     /// <summary>
-    /// Represents the information related to a <see cref="MudDataGrid{T}.HierarchyVisibilityToggled"/> event.
+    /// Represents the information related to a <see cref="HamkareDataGrid{T}.HierarchyVisibilityToggled"/> event.
     /// </summary>
-    /// <typeparam name="T">The item managed by the <see cref="MudDataGrid{T}"/>.</typeparam>
+    /// <typeparam name="T">The item managed by the <see cref="HamkareDataGrid{T}"/>.</typeparam>
     public class DataGridHierarchyVisibilityToggledEventArgs<T>
     {
         /// <summary>

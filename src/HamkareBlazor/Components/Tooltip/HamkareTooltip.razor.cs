@@ -1,20 +1,20 @@
 ﻿using Microsoft.AspNetCore.Components;
-using MudBlazor.State;
-using MudBlazor.Utilities;
+using HamkareBlazor.State;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
 
     /// <summary>
     /// Displays additional context when users hover over or focus on an element.
     /// </summary>
-    public partial class MudTooltip : MudComponentBase
+    public partial class HamkareTooltip : HamkareComponentBase
     {
         private readonly ParameterState<bool> _visibleState;
         private Origin _anchorOrigin;
         private Origin _transformOrigin;
-        public MudTooltip()
+        public HamkareTooltip()
         {
             using var registerScope = CreateRegisterScope();
             _visibleState = registerScope.RegisterParameter<bool>(nameof(Visible))
@@ -22,18 +22,18 @@ namespace MudBlazor
                 .WithEventCallback(() => VisibleChanged);
         }
 
-        protected string ContainerClass => new CssBuilder("mud-tooltip-root")
-            .AddClass("mud-tooltip-inline", Inline)
+        protected string ContainerClass => new CssBuilder("hamkare-tooltip-root")
+            .AddClass("hamkare-tooltip-inline", Inline)
             .AddClass(RootClass)
             .Build();
 
-        protected string Classname => new CssBuilder("mud-tooltip")
+        protected string Classname => new CssBuilder("hamkare-tooltip")
             .AddClass("d-flex")
-            .AddClass("mud-tooltip-default", Color == Color.Default)
-            .AddClass($"mud-tooltip-{ConvertPlacement().ToStringFast(true)}")
-            .AddClass("mud-tooltip-arrow", Arrow)
-            .AddClass($"mud-border-{Color.ToStringFast(true)}", Arrow && Color != Color.Default)
-            .AddClass($"mud-theme-{Color.ToStringFast(true)}", Color != Color.Default)
+            .AddClass("hamkare-tooltip-default", Color == Color.Default)
+            .AddClass($"hamkare-tooltip-{ConvertPlacement().ToStringFast(true)}")
+            .AddClass("hamkare-tooltip-arrow", Arrow)
+            .AddClass($"hamkare-border-{Color.ToStringFast(true)}", Arrow && Color != Color.Default)
+            .AddClass($"hamkare-theme-{Color.ToStringFast(true)}", Color != Color.Default)
             .AddClass(Class)
             .Build();
 
@@ -74,21 +74,21 @@ namespace MudBlazor
         /// The length of time to animate the opening transition.
         /// </summary>
         /// <remarks>
-        /// Defaults to 251ms in <see cref="MudGlobal.TooltipDefaults.Duration"/>.
+        /// Defaults to 251ms in <see cref="HamkareGlobal.TooltipDefaults.Duration"/>.
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.Tooltip.Appearance)]
-        public double Duration { get; set; } = MudGlobal.TooltipDefaults.Duration.TotalMilliseconds;
+        public double Duration { get; set; } = HamkareGlobal.TooltipDefaults.Duration.TotalMilliseconds;
 
         /// <summary>
         /// The amount of time, in milliseconds, to wait from opening the popover before performing the transition. 
         /// </summary>
         /// <remarks>
-        /// Defaults to 0ms in <see cref="MudGlobal.TooltipDefaults.Delay"/>.
+        /// Defaults to 0ms in <see cref="HamkareGlobal.TooltipDefaults.Delay"/>.
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.Tooltip.Appearance)]
-        public double Delay { get; set; } = MudGlobal.TooltipDefaults.Delay.TotalMilliseconds;
+        public double Delay { get; set; } = HamkareGlobal.TooltipDefaults.Delay.TotalMilliseconds;
 
         /// <summary>
         /// The location of the tooltip relative to its content.

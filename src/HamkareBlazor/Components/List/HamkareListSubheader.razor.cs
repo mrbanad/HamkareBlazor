@@ -1,24 +1,24 @@
 ﻿using Microsoft.AspNetCore.Components;
-using MudBlazor.Utilities;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 #nullable enable
 
 /// <summary>
-/// A header displayed as part of a <see cref="MudList{T}"/>.
+/// A header displayed as part of a <see cref="HamkareList{T}"/>.
 /// </summary>
 /// <remarks>
 /// Typically used to describe a list.
 /// </remarks>
-/// <seealso cref="MudList{T}"/>
-/// <seealso cref="MudListItem{T}"/>
-public partial class MudListSubheader : MudComponentBase
+/// <seealso cref="HamkareList{T}"/>
+/// <seealso cref="HamkareListItem{T}"/>
+public partial class HamkareListSubheader : HamkareComponentBase
 {
     protected string Classname =>
-        new CssBuilder("mud-list-subheader")
-            .AddClass("mud-list-subheader-gutters", Gutters)
-            .AddClass("mud-list-subheader-inset", Inset)
+        new CssBuilder("hamkare-list-subheader")
+            .AddClass("hamkare-list-subheader-gutters", Gutters)
+            .AddClass("hamkare-list-subheader-inset", Inset)
             .AddClass(Class)
             .Build();
 

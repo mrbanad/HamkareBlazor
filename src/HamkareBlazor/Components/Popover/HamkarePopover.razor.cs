@@ -1,30 +1,30 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using Microsoft.AspNetCore.Components;
-using MudBlazor.Utilities;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
 
     /// <summary>
     /// Displays content as a window over other content.
     /// </summary>
-    public partial class MudPopover : MudPopoverBase
+    public partial class HamkarePopover : HamkarePopoverBase
     {
         protected internal override string PopoverClass =>
-            new CssBuilder("mud-popover")
-                .AddClass($"mud-popover-fixed", Fixed)
-                .AddClass($"mud-popover-open", Open)
-                .AddClass($"mud-popover-{TransformOrigin.ToStringFast(true)}")
-                .AddClass($"mud-popover-anchor-{AnchorOrigin.ToStringFast(true)}")
-                .AddClass($"mud-popover-overflow-{GetOverflowBehavior().ToStringFast(true)}")
-                .AddClass($"mud-popover-{RelativeWidth.ToStringFast(true)}-width", RelativeWidth != DropdownWidth.Ignore)
-                .AddClass($"mud-paper", Paper)
-                .AddClass($"mud-paper-square", Paper && Square)
-                .AddClass($"mud-elevation-{Elevation}", Paper && DropShadow)
+            new CssBuilder("hamkare-popover")
+                .AddClass($"hamkare-popover-fixed", Fixed)
+                .AddClass($"hamkare-popover-open", Open)
+                .AddClass($"hamkare-popover-{TransformOrigin.ToStringFast(true)}")
+                .AddClass($"hamkare-popover-anchor-{AnchorOrigin.ToStringFast(true)}")
+                .AddClass($"hamkare-popover-overflow-{GetOverflowBehavior().ToStringFast(true)}")
+                .AddClass($"hamkare-popover-{RelativeWidth.ToStringFast(true)}-width", RelativeWidth != DropdownWidth.Ignore)
+                .AddClass($"hamkare-paper", Paper)
+                .AddClass($"hamkare-paper-square", Paper && Square)
+                .AddClass($"hamkare-elevation-{Elevation}", Paper && DropShadow)
                 .AddClass($"overflow-y-auto", MaxHeight != null)
                 .AddClass(Class)
                 .Build();
@@ -51,7 +51,7 @@ namespace MudBlazor
         /// Displays text Right-to-Left.
         /// </summary>
         /// <remarks>
-        /// Defaults to <c>false</c>.  This property is set via the <see cref="MudRTLProvider"/>.
+        /// Defaults to <c>false</c>.  This property is set via the <see cref="HamkareRTLProvider"/>.
         /// </remarks>
         [CascadingParameter(Name = "RightToLeft")]
         public bool RightToLeft { get; set; }
@@ -64,7 +64,7 @@ namespace MudBlazor
         public int? MaxHeight { get; set; } = null;
 
         /// <summary>
-        /// Displays content within a <see cref="MudPaper"/>.
+        /// Displays content within a <see cref="HamkarePaper"/>.
         /// </summary>
         /// <remarks>
         /// Defaults to <c>true</c>.

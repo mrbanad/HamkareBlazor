@@ -1,12 +1,12 @@
 ﻿using System;
 using Microsoft.AspNetCore.Components.Web;
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 #nullable enable
 
 /// <summary>
-/// The information passed during a <see cref="MudTable{T}"/> row click event.
+/// The information passed during a <see cref="HamkareTable{T}"/> row click event.
 /// </summary>
 /// <typeparam name="T">The type of data displayed in the table.</typeparam>
 public class TableRowClickEventArgs<T> : EventArgs
@@ -19,7 +19,7 @@ public class TableRowClickEventArgs<T> : EventArgs
     /// <summary>
     /// The row which was clicked.
     /// </summary>
-    public MudTr Row { get; }
+    public HamkareTr Row { get; }
 
     /// <summary>
     /// The data related to the row which was clicked.
@@ -32,7 +32,7 @@ public class TableRowClickEventArgs<T> : EventArgs
     /// <param name="mouseEventArgs">The coordinates of the click.</param>
     /// <param name="row">The row which was clicked.</param>
     /// <param name="item">The data related to the row which was clicked.</param>
-    public TableRowClickEventArgs(MouseEventArgs mouseEventArgs, MudTr row, T? item)
+    public TableRowClickEventArgs(MouseEventArgs mouseEventArgs, HamkareTr row, T? item)
     {
         MouseEventArgs = mouseEventArgs;
         Row = row;

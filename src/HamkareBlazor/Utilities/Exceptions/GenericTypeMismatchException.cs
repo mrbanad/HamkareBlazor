@@ -2,7 +2,7 @@
 using System.Diagnostics.CodeAnalysis;
 
 #nullable enable
-namespace MudBlazor.Utilities.Exceptions
+namespace HamkareBlazor.Utilities.Exceptions
 {
     [ExcludeFromCodeCoverage]
     public class GenericTypeMismatchException : Exception

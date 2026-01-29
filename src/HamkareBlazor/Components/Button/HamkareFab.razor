@@ -1,7 +1,7 @@
-﻿@namespace MudBlazor
-@inherits MudBaseButton
+﻿@namespace HamkareBlazor
+@inherits HamkareBaseButton
 
-<MudElement @bind-Ref="@_elementReference"
+<HamkareElement @bind-Ref="@_elementReference"
             HtmlTag="@HtmlTag"
             Class="@Classname"
             Style="@Style"
@@ -13,15 +13,15 @@
             rel="@GetRel()"
             disabled="@GetDisabledState()"
             ClickPropagation="@GetClickPropagation()">
-    <span class="mud-fab-label">
+    <span class="hamkare-fab-label">
         @if (!string.IsNullOrWhiteSpace(StartIcon))
         {
-            <MudIcon Disabled="@Disabled" Icon="@StartIcon" Color="@IconColor" Size="@IconSize" />
+            <HamkareIcon Disabled="@Disabled" Icon="@StartIcon" Color="@IconColor" Size="@IconSize" />
         }
         @Label
         @if (!string.IsNullOrWhiteSpace(EndIcon))
         {
-            <MudIcon Disabled="@Disabled" Icon="@EndIcon" Color="@IconColor" Size="@IconSize" />
+            <HamkareIcon Disabled="@Disabled" Icon="@EndIcon" Color="@IconColor" Size="@IconSize" />
         }
     </span>
-</MudElement>
+</HamkareElement>

@@ -1,25 +1,25 @@
 ﻿using Microsoft.AspNetCore.Components;
-using MudBlazor.Utilities;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
     /// <summary>
-    /// Represents the top portion of a <see cref="MudCard"/>.
+    /// Represents the top portion of a <see cref="HamkareCard"/>.
     /// </summary>
-    /// <seealso cref="MudCard" />
-    /// <seealso cref="MudCardActions" />
-    /// <seealso cref="MudCardContent" />
-    /// <seealso cref="MudCardMedia" />
-    public partial class MudCardHeader : MudComponentBase
+    /// <seealso cref="HamkareCard" />
+    /// <seealso cref="HamkareCardActions" />
+    /// <seealso cref="HamkareCardContent" />
+    /// <seealso cref="HamkareCardMedia" />
+    public partial class HamkareCardHeader : HamkareComponentBase
     {
-        protected string Classname => new CssBuilder("mud-card-header")
-            .AddClass("mud-card-header-padding", ParentCard?.ContentPadding ?? true)
+        protected string Classname => new CssBuilder("hamkare-card-header")
+            .AddClass("hamkare-card-header-padding", ParentCard?.ContentPadding ?? true)
             .AddClass(Class)
             .Build();
 
         [CascadingParameter]
-        private MudCard? ParentCard { get; set; }
+        private HamkareCard? ParentCard { get; set; }
 
         /// <summary>
         /// The avatar to display within this header.

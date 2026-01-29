@@ -1,6 +1,6 @@
-﻿@namespace MudBlazor
-@using MudBlazor.Extensions
-@inherits MudComponentBase
+﻿@namespace HamkareBlazor
+@using HamkareBlazor.Extensions
+@inherits HamkareComponentBase
 
 <div role="progressbar"
      aria-valuenow="@_valueState.Value.ToInvariantString()"
@@ -10,27 +10,27 @@
      class="@Classname" 
      style="@Style" 
      @attributes="UserAttributes">
-    <div class="mud-progress-linear-bars">
+    <div class="hamkare-progress-linear-bars">
         @if (Indeterminate)
         {
-            <div class="mud-progress-linear-bar"></div>
-            <div class="mud-progress-linear-bar"></div>
+            <div class="hamkare-progress-linear-bar"></div>
+            <div class="hamkare-progress-linear-bar"></div>
         }
         else if (Buffer)
         {
-            <div class="mud-progress-linear-bar"></div>
-            <div class="mud-progress-linear-bar" style="@GetStyledBar1Transform()"></div>
-            <div class="mud-progress-linear-bar last" style="@GetStyledBar2Transform()"></div>
+            <div class="hamkare-progress-linear-bar"></div>
+            <div class="hamkare-progress-linear-bar" style="@GetStyledBar1Transform()"></div>
+            <div class="hamkare-progress-linear-bar last" style="@GetStyledBar2Transform()"></div>
         }
         else
         {
-            <div class="mud-progress-linear-bar" style="@GetStyledBar1Transform()"></div>
+            <div class="hamkare-progress-linear-bar" style="@GetStyledBar1Transform()"></div>
         }
     </div>
 
     @if (ChildContent is not null)
     {
-        <div class="mud-progress-linear-content">
+        <div class="hamkare-progress-linear-content">
             @ChildContent
         </div>
     }

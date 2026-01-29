@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using MudBlazor.Interfaces;
+using HamkareBlazor.Interfaces;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
 
     /// <summary>
-    /// A validator for rows within a <see cref="MudTable{T}"/>.
+    /// A validator for rows within a <see cref="HamkareTable{T}"/>.
     /// </summary>
     public class TableRowValidator : IForm
     {

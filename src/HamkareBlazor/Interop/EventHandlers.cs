@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.AspNetCore.Components;
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 #nullable enable
-// used in MudCollapse
+// used in HamkareCollapse
 [EventHandler("ontransitionend", typeof(EventArgs), enableStopPropagation: true, enablePreventDefault: false)]
 public static class EventHandlers;

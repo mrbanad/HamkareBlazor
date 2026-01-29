@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel;
 using NetEscapades.EnumGenerators;
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 /// <summary>
-/// Indicates the behavior of a <see cref="MudDrawer"/>.
+/// Indicates the behavior of a <see cref="HamkareDrawer"/>.
 /// </summary>
 [EnumExtensions]
 public enum DrawerVariant

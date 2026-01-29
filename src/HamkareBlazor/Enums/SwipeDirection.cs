@@ -1,7 +1,7 @@
-﻿namespace MudBlazor;
+﻿namespace HamkareBlazor;
 
 /// <summary>
-/// The direction of a swipe event for a <see cref="MudSwipeArea"/> component.
+/// The direction of a swipe event for a <see cref="HamkareSwipeArea"/> component.
 /// </summary>
 public enum SwipeDirection
 {

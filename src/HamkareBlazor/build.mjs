@@ -1,5 +1,5 @@
 /**
- * Build script for MudBlazor JS and SCSS assets.
+ * Build script for HamkareBlazor JS and SCSS assets.
  *
  * Usage:
  *   bun run build.mjs
@@ -21,10 +21,10 @@ const scriptFilename = fileURLToPath(import.meta.url);
 const scriptDirectory = path.dirname(scriptFilename);
 const jsDirectory = path.join(scriptDirectory, "TScripts");
 const jsEntrypoint = path.join(scriptDirectory, "TScripts/entrypoint.js");
-const jsOutputFile = path.join(scriptDirectory, "wwwroot/MudBlazor.min.js");
-const scssInput = path.join(scriptDirectory, "Styles/MudBlazor.scss");
+const jsOutputFile = path.join(scriptDirectory, "wwwroot/HamkareBlazor.min.js");
+const scssInput = path.join(scriptDirectory, "Styles/HamkareBlazor.scss");
 const scssInputDir = path.dirname(scssInput);
-const scssOutput = path.join(scriptDirectory, "wwwroot/MudBlazor.min.css");
+const scssOutput = path.join(scriptDirectory, "wwwroot/HamkareBlazor.min.css");
 
 const timings = [];
 function startTimer(label) {

@@ -1,33 +1,33 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using MudBlazor.Extensions;
-using MudBlazor.Interfaces;
-using MudBlazor.State;
-using MudBlazor.Utilities;
-using MudBlazor.Utilities.Converter;
+using HamkareBlazor.Extensions;
+using HamkareBlazor.Interfaces;
+using HamkareBlazor.State;
+using HamkareBlazor.Utilities;
+using HamkareBlazor.Utilities.Converter;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
     /// <summary>
-    /// An expandable branch of a <see cref="MudTreeView{T}"/>.
+    /// An expandable branch of a <see cref="HamkareTreeView{T}"/>.
     /// </summary>
     /// <typeparam name="T">The type of the selectable value held by the item.</typeparam>
     /// <remarks>
     /// Used as the data model of the tree.
     /// </remarks>
-    /// <seealso cref="MudTreeView{T}"/>
-    /// <seealso cref="MudTreeViewItemToggleButton"/>
-    public partial class MudTreeViewItem<T> : MudComponentBase, IDisposable
+    /// <seealso cref="HamkareTreeView{T}"/>
+    /// <seealso cref="HamkareTreeViewItemToggleButton"/>
+    public partial class HamkareTreeViewItem<T> : HamkareComponentBase, IDisposable
     {
         private bool _isServerLoaded;
         private readonly ParameterState<bool> _selectedState;
         private readonly ParameterState<bool> _expandedState;
         private readonly ParameterState<IReadOnlyCollection<ITreeItemData<T>>?> _itemsState;
         private readonly IConverter<T?, string?> _converter = new DefaultConverter<T?>();
-        private readonly HashSet<MudTreeViewItem<T>> _childItems = new();
+        private readonly HashSet<HamkareTreeViewItem<T>> _childItems = new();
 
-        public MudTreeViewItem()
+        public HamkareTreeViewItem()
         {
             using var registerScope = CreateRegisterScope();
             _expandedState = registerScope.RegisterParameter<bool>(nameof(Expanded))
@@ -43,31 +43,31 @@ namespace MudBlazor
         }
 
         protected string Classname =>
-            new CssBuilder("mud-treeview-item")
-                .AddClass("mud-treeview-select-none", GetExpandOnDoubleClick)
-                .AddClass("mud-treeview-item-disabled", GetDisabled())
+            new CssBuilder("hamkare-treeview-item")
+                .AddClass("hamkare-treeview-select-none", GetExpandOnDoubleClick)
+                .AddClass("hamkare-treeview-item-disabled", GetDisabled())
                 .AddClass(Class)
                 .Build();
 
         protected string ContentClassname =>
-            new CssBuilder("mud-treeview-item-content")
+            new CssBuilder("hamkare-treeview-item-content")
                 .AddClass("cursor-pointer", !GetDisabled() && (!GetReadOnly() || GetExpandOnClick() && HasChildren()))
-                .AddClass("mud-ripple", GetRipple() && !GetDisabled() && !GetExpandOnDoubleClick() && (!GetReadOnly() || GetExpandOnClick() && HasChildren()))
-                .AddClass("mud-treeview-item-selected", !GetDisabled() && !MultiSelection && _selectedState)
+                .AddClass("hamkare-ripple", GetRipple() && !GetDisabled() && !GetExpandOnDoubleClick() && (!GetReadOnly() || GetExpandOnClick() && HasChildren()))
+                .AddClass("hamkare-treeview-item-selected", !GetDisabled() && !MultiSelection && _selectedState)
                 .Build();
 
         public string TextClassname =>
-            new CssBuilder("mud-treeview-item-label")
+            new CssBuilder("hamkare-treeview-item-label")
                 .AddClass(TextClass)
                 .Build();
 
-        private bool MultiSelection => MudTreeRoot?.MultiSelection == true;
+        private bool MultiSelection => HamkareTreeRoot?.MultiSelection == true;
 
         [CascadingParameter]
-        private MudTreeView<T>? MudTreeRoot { get; set; }
+        private HamkareTreeView<T>? HamkareTreeRoot { get; set; }
 
         [CascadingParameter]
-        internal MudTreeViewItem<T>? Parent { get; set; }
+        internal HamkareTreeViewItem<T>? Parent { get; set; }
 
         /// <summary>
         /// The value associated with this item.
@@ -174,7 +174,7 @@ namespace MudBlazor
         /// Allows this item to expand to display children.
         /// </summary>
         /// <remarks>
-        /// Defaults to <c>true</c>. A value of <c>false</c> is typically used for lazy-loaded items via <see cref="MudTreeView{T}.ServerData" />.
+        /// Defaults to <c>true</c>. A value of <c>false</c> is typically used for lazy-loaded items via <see cref="HamkareTreeView{T}.ServerData" />.
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.TreeView.Behavior)]
@@ -184,7 +184,7 @@ namespace MudBlazor
         /// The child items within this item.
         /// </summary>
         /// <remarks>
-        /// Must be one or more <see cref="MudTreeViewItem{T}"/> components. Only applies when <see cref="Content"/> is not set.
+        /// Must be one or more <see cref="HamkareTreeViewItem{T}"/> components. Only applies when <see cref="Content"/> is not set.
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.TreeView.Data)]
@@ -194,7 +194,7 @@ namespace MudBlazor
         /// The custom content within this item.
         /// </summary>
         /// <remarks>
-        /// When set, completely controls the rendering of child items. For <see cref="MudTreeViewItem{T}"/> children, use <see cref="Items"/> or <see cref="ChildContent"/>.
+        /// When set, completely controls the rendering of child items. For <see cref="HamkareTreeViewItem{T}"/> children, use <see cref="Items"/> or <see cref="ChildContent"/>.
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.TreeView.Behavior)]
@@ -208,7 +208,7 @@ namespace MudBlazor
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.TreeView.Behavior)]
-        public RenderFragment<MudTreeViewItem<T?>>? BodyContent { get; set; }
+        public RenderFragment<HamkareTreeViewItem<T?>>? BodyContent { get; set; }
 
         /// <summary>
         /// The child items underneath this item.
@@ -243,7 +243,7 @@ namespace MudBlazor
         /// Selects this item.
         /// </summary>
         /// <remarks>
-        /// Defaults to <c>false</c>. Can be set alongside other items if <see cref="MudTreeView{T}.SelectionMode"/> is <see cref="SelectionMode.MultiSelection"/> or <see cref="SelectionMode.ToggleSelection"/>.
+        /// Defaults to <c>false</c>. Can be set alongside other items if <see cref="HamkareTreeView{T}.SelectionMode"/> is <see cref="SelectionMode.MultiSelection"/> or <see cref="SelectionMode.ToggleSelection"/>.
         /// </remarks>
         [Parameter, ParameterState]
         [Category(CategoryTypes.TreeView.Selecting)]
@@ -357,19 +357,19 @@ namespace MudBlazor
         [Parameter]
         public EventCallback<MouseEventArgs> OnDoubleClick { get; set; }
 
-        private string CheckedIcon => MudTreeRoot?.CheckedIcon ?? Icons.Material.Filled.CheckBox;
+        private string CheckedIcon => HamkareTreeRoot?.CheckedIcon ?? Icons.Material.Filled.CheckBox;
 
-        private string UncheckedIcon => MudTreeRoot?.UncheckedIcon ?? Icons.Material.Filled.CheckBoxOutlineBlank;
+        private string UncheckedIcon => HamkareTreeRoot?.UncheckedIcon ?? Icons.Material.Filled.CheckBoxOutlineBlank;
 
-        private string IndeterminateIcon => MudTreeRoot?.IndeterminateIcon ?? Icons.Material.Filled.IndeterminateCheckBox;
+        private string IndeterminateIcon => HamkareTreeRoot?.IndeterminateIcon ?? Icons.Material.Filled.IndeterminateCheckBox;
 
         private bool _loading;
 
         private bool HasChildren()
         {
             return ChildContent != null
-                || (MudTreeRoot != null && GetItems().Count != 0)
-                || (MudTreeRoot?.ServerData != null && CanExpand && !_isServerLoaded && GetItems().Count == 0);
+                || (HamkareTreeRoot != null && GetItems().Count != 0)
+                || (HamkareTreeRoot?.ServerData != null && CanExpand && !_isServerLoaded && GetItems().Count == 0);
         }
 
         private bool AreChildrenVisible() => _itemsState.Value is null || _itemsState.Value.Any(i => i.Visible);
@@ -392,7 +392,7 @@ namespace MudBlazor
 
         private string? GetText() => string.IsNullOrEmpty(Text) ? _converter.Convert(Value) : Text;
 
-        private bool GetDisabled() => Disabled || MudTreeRoot?.Disabled == true;
+        private bool GetDisabled() => Disabled || HamkareTreeRoot?.Disabled == true;
 
         private bool? GetCheckBoxStateTriState()
         {
@@ -446,18 +446,18 @@ namespace MudBlazor
         {
             base.OnParametersSet();
 
-            if (Text == null && Value == null && MudTreeRoot?.ServerData != null)
+            if (Text == null && Value == null && HamkareTreeRoot?.ServerData != null)
                 throw new InvalidOperationException(
-                    $"'{nameof(MudTreeView<T>)}.{nameof(MudTreeRoot.ServerData)}' requires '{nameof(MudTreeRoot.ItemTemplate)}.{nameof(MudTreeViewItem<T>)}.{nameof(Value)}' to be supplied.");
+                    $"'{nameof(HamkareTreeView<T>)}.{nameof(HamkareTreeRoot.ServerData)}' requires '{nameof(HamkareTreeRoot.ItemTemplate)}.{nameof(HamkareTreeViewItem<T>)}.{nameof(Value)}' to be supplied.");
         }
 
         private async Task OnCheckboxChangedAsync()
         {
-            if (MudTreeRoot == null)
+            if (HamkareTreeRoot == null)
             {
                 return;
             }
-            await MudTreeRoot.OnItemClickAsync(this);
+            await HamkareTreeRoot.OnItemClickAsync(this);
         }
 
         protected override async Task OnInitializedAsync()
@@ -468,9 +468,9 @@ namespace MudBlazor
             }
             else
             {
-                if (MudTreeRoot is not null)
+                if (HamkareTreeRoot is not null)
                 {
-                    await MudTreeRoot.AddChildAsync(this);
+                    await HamkareTreeRoot.AddChildAsync(this);
                 }
             }
             await base.OnInitializedAsync();
@@ -478,7 +478,7 @@ namespace MudBlazor
 
         private Task OnSelectedParameterChangedAsync(ParameterChangedEventArgs<bool> arg)
         {
-            if (MudTreeRoot is null)
+            if (HamkareTreeRoot is null)
             {
                 return Task.CompletedTask;
             }
@@ -490,20 +490,20 @@ namespace MudBlazor
             var selected = arg.Value;
             if (selected)
             {
-                return MudTreeRoot.SelectAsync(value);
+                return HamkareTreeRoot.SelectAsync(value);
             }
-            return MudTreeRoot.UnselectAsync(value);
+            return HamkareTreeRoot.UnselectAsync(value);
         }
 
-        private bool GetReadOnly() => ReadOnly || MudTreeRoot?.ReadOnly == true;
+        private bool GetReadOnly() => ReadOnly || HamkareTreeRoot?.ReadOnly == true;
 
-        private bool GetExpandOnClick() => MudTreeRoot?.ExpandOnClick == true;
+        private bool GetExpandOnClick() => HamkareTreeRoot?.ExpandOnClick == true;
 
-        private bool GetExpandOnDoubleClick() => MudTreeRoot?.ExpandOnDoubleClick == true;
+        private bool GetExpandOnDoubleClick() => HamkareTreeRoot?.ExpandOnDoubleClick == true;
 
-        private bool GetRipple() => MudTreeRoot?.Ripple == true;
+        private bool GetRipple() => HamkareTreeRoot?.Ripple == true;
 
-        private bool GetAutoExpand() => MudTreeRoot?.AutoExpand == true;
+        private bool GetAutoExpand() => HamkareTreeRoot?.AutoExpand == true;
 
         private async Task OnItemClickedAsync(MouseEventArgs ev)
         {
@@ -519,9 +519,9 @@ namespace MudBlazor
             }
             if (!GetReadOnly())
             {
-                if (MudTreeRoot is not null)
+                if (HamkareTreeRoot is not null)
                 {
-                    await MudTreeRoot.OnItemClickAsync(this);
+                    await HamkareTreeRoot.OnItemClickAsync(this);
                 }
             }
             await OnClick.InvokeAsync(ev);
@@ -540,9 +540,9 @@ namespace MudBlazor
             }
             if (!GetReadOnly())
             {
-                if (MudTreeRoot is not null)
+                if (HamkareTreeRoot is not null)
                 {
-                    await MudTreeRoot.OnItemClickAsync(this);
+                    await HamkareTreeRoot.OnItemClickAsync(this);
                 }
             }
             await OnDoubleClick.InvokeAsync(ev);
@@ -572,23 +572,23 @@ namespace MudBlazor
             {
                 Parent.StateHasChanged();
             }
-            else if (MudTreeRoot is not null)
+            else if (HamkareTreeRoot is not null)
             {
-                ((IMudStateHasChanged)MudTreeRoot).StateHasChanged();
+                ((IHamkareStateHasChanged)HamkareTreeRoot).StateHasChanged();
             }
         }
 
-        private void AddChild(MudTreeViewItem<T> item) => _childItems.Add(item);
+        private void AddChild(HamkareTreeViewItem<T> item) => _childItems.Add(item);
 
-        private void RemoveChild(MudTreeViewItem<T> item) => _childItems.Remove(item);
+        private void RemoveChild(HamkareTreeViewItem<T> item) => _childItems.Remove(item);
 
-        internal List<MudTreeViewItem<T>> ChildItems => _childItems.ToList();
+        internal List<HamkareTreeViewItem<T>> ChildItems => _childItems.ToList();
 
         private bool HasIcon => _expandedState && (!string.IsNullOrWhiteSpace(IconExpanded) || !string.IsNullOrWhiteSpace(Icon)) || !_expandedState && !string.IsNullOrWhiteSpace(Icon);
 
         private string? GetIcon() => _expandedState && !string.IsNullOrWhiteSpace(IconExpanded) ? IconExpanded : Icon;
 
-        internal IEnumerable<MudTreeViewItem<T>> GetSelectedItems()
+        internal IEnumerable<HamkareTreeViewItem<T>> GetSelectedItems()
         {
             if (_selectedState)
             {
@@ -606,13 +606,13 @@ namespace MudBlazor
 
         internal async Task TryInvokeServerLoadFunc()
         {
-            if (GetItems().Count != 0 || !CanExpand || MudTreeRoot?.ServerData == null)
+            if (GetItems().Count != 0 || !CanExpand || HamkareTreeRoot?.ServerData == null)
                 return;
             _loading = true;
             StateHasChanged();
             try
             {
-                var items = await MudTreeRoot.ServerData(GetValue());
+                var items = await HamkareTreeRoot.ServerData(GetValue());
                 await _itemsState.SetValueAsync(items);
             }
             finally
@@ -631,7 +631,7 @@ namespace MudBlazor
         /// <returns>True if the item or any sub-item changed from non-selected to selected.</returns>
         internal async Task<bool> UpdateSelectionStateAsync(HashSet<T> selectedValues)
         {
-            if (MudTreeRoot == null)
+            if (HamkareTreeRoot == null)
             {
                 return false;
             }
@@ -659,13 +659,13 @@ namespace MudBlazor
         /// </summary>
         public void Dispose()
         {
-            MudTreeRoot?.RemoveChild(this);
+            HamkareTreeRoot?.RemoveChild(this);
             Parent?.RemoveChild(this);
         }
 
-        internal List<MudTreeViewItem<T?>> GetChildItemsRecursive(List<MudTreeViewItem<T?>>? list = null)
+        internal List<HamkareTreeViewItem<T?>> GetChildItemsRecursive(List<HamkareTreeViewItem<T?>>? list = null)
         {
-            list ??= new List<MudTreeViewItem<T?>>();
+            list ??= new List<HamkareTreeViewItem<T?>>();
             foreach (var child in _childItems)
             {
                 list.Add(child!);
@@ -676,7 +676,7 @@ namespace MudBlazor
 
         private string GetIndeterminateIcon()
         {
-            if (MudTreeRoot?.TriState == true)
+            if (HamkareTreeRoot?.TriState == true)
             {
                 return IndeterminateIcon;
             }

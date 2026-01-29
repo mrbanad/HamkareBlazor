@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
-using MudBlazor.Utilities;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
     /// <summary>
@@ -12,29 +12,29 @@ namespace MudBlazor
     /// or <see href="https://developer.mozilla.org/docs/Web/HTML/Element/a">anchor</see> if <c>Href</c> is set.<br/>
     /// You can directly add attributes like <c>title</c> or <c>aria-label</c>.
     /// </remarks>
-    /// <seealso cref="MudButtonGroup" />
-    /// <seealso cref="MudFab" />
-    /// <seealso cref="MudIconButton" />
-    /// <seealso cref="MudToggleIconButton" />
-    public partial class MudButton : MudBaseButton, IDisposable
+    /// <seealso cref="HamkareButtonGroup" />
+    /// <seealso cref="HamkareFab" />
+    /// <seealso cref="HamkareIconButton" />
+    /// <seealso cref="HamkareToggleIconButton" />
+    public partial class HamkareButton : HamkareBaseButton, IDisposable
     {
-        protected string Classname => new CssBuilder("mud-button-root mud-button")
-            .AddClass($"mud-button-{Variant.ToStringFast(true)}")
-            .AddClass($"mud-button-{Variant.ToStringFast(true)}-{Color.ToStringFast(true)}")
-            .AddClass($"mud-button-{Variant.ToStringFast(true)}-size-{Size.ToStringFast(true)}")
-            .AddClass($"mud-width-full", GetRealFullWith())
-            .AddClass($"mud-ripple", Ripple)
-            .AddClass($"mud-button-disable-elevation", !DropShadow)
+        protected string Classname => new CssBuilder("hamkare-button-root hamkare-button")
+            .AddClass($"hamkare-button-{Variant.ToStringFast(true)}")
+            .AddClass($"hamkare-button-{Variant.ToStringFast(true)}-{Color.ToStringFast(true)}")
+            .AddClass($"hamkare-button-{Variant.ToStringFast(true)}-size-{Size.ToStringFast(true)}")
+            .AddClass($"hamkare-width-full", GetRealFullWith())
+            .AddClass($"hamkare-ripple", Ripple)
+            .AddClass($"hamkare-button-disable-elevation", !DropShadow)
             .AddClass(Class)
             .Build();
 
-        protected string StartIconClass => new CssBuilder("mud-button-icon-start")
-            .AddClass($"mud-button-icon-size-{(IconSize ?? Size).ToStringFast(true)}")
+        protected string StartIconClass => new CssBuilder("hamkare-button-icon-start")
+            .AddClass($"hamkare-button-icon-size-{(IconSize ?? Size).ToStringFast(true)}")
             .AddClass(IconClass)
             .Build();
 
-        protected string EndIconClass => new CssBuilder("mud-button-icon-end")
-            .AddClass($"mud-button-icon-size-{(IconSize ?? Size).ToStringFast(true)}")
+        protected string EndIconClass => new CssBuilder("hamkare-button-icon-end")
+            .AddClass($"hamkare-button-icon-size-{(IconSize ?? Size).ToStringFast(true)}")
             .AddClass(IconClass)
             .Build();
 
@@ -42,7 +42,7 @@ namespace MudBlazor
         /// The button group which owns this button.
         /// </summary>
         [CascadingParameter]
-        private MudButtonGroup? ButtonGroup { get; set; }
+        private HamkareButtonGroup? ButtonGroup { get; set; }
 
         /// <summary>
         /// The icon displayed before the text.
@@ -174,7 +174,7 @@ namespace MudBlazor
             }
             // If the button is in a group, the group is stretched and none button is explicitly stretched,
             // then the button need to be stretched
-            // See https://github.com/MudBlazor/MudBlazor/issues/9710
+            // See https://github.com/HamkareBlazor/HamkareBlazor/issues/9710
             return ButtonGroup != null && ButtonGroup.FullWidth && ButtonGroup.NoneButtonIsStreched();
         }
     }

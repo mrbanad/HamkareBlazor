@@ -1,44 +1,44 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-class MudKeyInterceptorFactory {
+class HamkareKeyInterceptorFactory {
 
     connect(dotNetRef, elementId, options) {
-        //console.log('[MudBlazor | MudKeyInterceptorFactory] connect ', { dotNetRef, element, options });
+        //console.log('[HamkareBlazor | HamkareKeyInterceptorFactory] connect ', { dotNetRef, element, options });
         if (!elementId)
             throw "elementId: expected element id!";
         const element = document.getElementById(elementId);
         if (!element)
             throw "no element found for id: " + elementId;
-        if (!element.mudKeyInterceptor)
-            element.mudKeyInterceptor = new MudKeyInterceptor(dotNetRef, options);
-        element.mudKeyInterceptor.connect(element);
+        if (!element.hamkareKeyInterceptor)
+            element.hamkareKeyInterceptor = new HamkareKeyInterceptor(dotNetRef, options);
+        element.hamkareKeyInterceptor.connect(element);
     }
 
     updatekey(elementId, option) {
         const element = document.getElementById(elementId);
-        if (!element || !element.mudKeyInterceptor)
+        if (!element || !element.hamkareKeyInterceptor)
             return;
-        element.mudKeyInterceptor.updatekey(option);
+        element.hamkareKeyInterceptor.updatekey(option);
     }
 
     disconnect(elementId) {
         const element = document.getElementById(elementId);
-        if (!element || !element.mudKeyInterceptor)
+        if (!element || !element.hamkareKeyInterceptor)
             return;
-        element.mudKeyInterceptor.disconnect();
+        element.hamkareKeyInterceptor.disconnect();
     }
 }
-window.mudKeyInterceptor = new MudKeyInterceptorFactory();
+window.hamkareKeyInterceptor = new HamkareKeyInterceptorFactory();
 
-class MudKeyInterceptor {
+class HamkareKeyInterceptor {
 
     constructor(dotNetRef, options) {
         this._dotNetRef = dotNetRef;
         this._options = options;
         this.logger = options.enableLogging ? console.log : () => { };
-        this.logger('[MudBlazor | KeyInterceptor] Interceptor initialized', { options });
+        this.logger('[HamkareBlazor | KeyInterceptor] Interceptor initialized', { options });
     }
 
     connect(element) {
@@ -55,9 +55,9 @@ class MudKeyInterceptor {
         const targetClass = this._options.targetClass;
         // changes to the DOM subtree only require observation when targeting child elements for target class
         if (targetClass) {
-            this.logger('[MudBlazor | KeyInterceptor] Start observing DOM of element for changes to child with class ', { element, targetClass });
+            this.logger('[HamkareBlazor | KeyInterceptor] Start observing DOM of element for changes to child with class ', { element, targetClass });
             this._observer = new MutationObserver(this.onDomChanged);
-            this._observer.mudKeyInterceptor = this;
+            this._observer.hamkareKeyInterceptor = this;
             this._observer.observe(this._element, { attributes: false, childList: true, subtree: true });
         }
         this._observedChildren = [];
@@ -66,14 +66,14 @@ class MudKeyInterceptor {
         this._regexOptions = [];
         for (const keyOption of this._options.keys) {
             if (!keyOption || !keyOption.key) {
-                this.logger('[MudBlazor | KeyInterceptor] got invalid key options: ', keyOption);
+                this.logger('[HamkareBlazor | KeyInterceptor] got invalid key options: ', keyOption);
                 continue;
             }
             this.setKeyOption(keyOption);
         }
-        this.logger('[MudBlazor | KeyInterceptor] key options: ', this._keyOptions);
+        this.logger('[HamkareBlazor | KeyInterceptor] key options: ', this._keyOptions);
         if (this._regexOptions.size > 0)
-            this.logger('[MudBlazor | KeyInterceptor] regex options: ', this._regexOptions);
+            this.logger('[HamkareBlazor | KeyInterceptor] regex options: ', this._regexOptions);
         // register handlers
         if (targetClass) {
             for (const child of this._element.getElementsByClassName(targetClass)) {
@@ -102,16 +102,16 @@ class MudKeyInterceptor {
 
     updatekey(updatedOption) {
         const option = this._keyOptions[updatedOption.key.toLowerCase()];
-        option || this.logger('[MudBlazor | KeyInterceptor] updating option failed: key not registered');
+        option || this.logger('[HamkareBlazor | KeyInterceptor] updating option failed: key not registered');
         this.setKeyOption(updatedOption);
-        this.logger('[MudBlazor | KeyInterceptor] updated option ', { option, updatedOption });
+        this.logger('[HamkareBlazor | KeyInterceptor] updated option ', { option, updatedOption });
     }
 
     disconnect() {
         if (!this._isConnected)
             return;
         if (this._observer) {
-            this.logger('[MudBlazor | KeyInterceptor] disconnect mutation observer and event handlers');
+            this.logger('[HamkareBlazor | KeyInterceptor] disconnect mutation observer and event handlers');
             this._observer.disconnect();
             this._observer = null;
         }
@@ -121,30 +121,30 @@ class MudKeyInterceptor {
     }
 
     attachHandlers(child) {
-        this.logger('[MudBlazor | KeyInterceptor] attaching handlers ', { child });
+        this.logger('[HamkareBlazor | KeyInterceptor] attaching handlers ', { child });
         if (this._observedChildren.indexOf(child) > -1) {
             //console.log("... already attached");
             return;
         }
-        child.mudKeyInterceptor = this;
+        child.hamkareKeyInterceptor = this;
         child.addEventListener('keydown', this.onKeyDown);
         child.addEventListener('keyup', this.onKeyUp);
         this._observedChildren.push(child);
     }
 
     detachHandlers(child) {
-        this.logger('[MudBlazor | KeyInterceptor] detaching handlers ', { child });
+        this.logger('[HamkareBlazor | KeyInterceptor] detaching handlers ', { child });
         child.removeEventListener('keydown', this.onKeyDown);
         child.removeEventListener('keyup', this.onKeyUp);
         this._observedChildren = this._observedChildren.filter(x=>x!==child);
     }
 
     onDomChanged(mutationsList, _) {
-        const self = this.mudKeyInterceptor; // func is invoked with this == _observer
-        //self.logger('[MudBlazor | KeyInterceptor] onDomChanged: ', { self });
+        const self = this.hamkareKeyInterceptor; // func is invoked with this == _observer
+        //self.logger('[HamkareBlazor | KeyInterceptor] onDomChanged: ', { self });
         const targetClass = self._options.targetClass;
         for (const mutation of mutationsList) {
-            //self.logger('[MudBlazor | KeyInterceptor] Subtree mutation: ', { mutation });
+            //self.logger('[HamkareBlazor | KeyInterceptor] Subtree mutation: ', { mutation });
             for (const element of mutation.addedNodes) {
                 if (element.classList && element.classList.contains(targetClass))
                     self.attachHandlers(element);
@@ -177,25 +177,25 @@ class MudKeyInterceptor {
     }
 
     onKeyDown(args) {
-        const self = this.mudKeyInterceptor; // func is invoked with this == child
+        const self = this.hamkareKeyInterceptor; // func is invoked with this == child
         if (!args.key) {
-            self.logger('[MudBlazor | KeyInterceptor] key is undefined', args);
+            self.logger('[HamkareBlazor | KeyInterceptor] key is undefined', args);
             return;
         }
 
         const key = args.key.toLowerCase();
-        self.logger('[MudBlazor | KeyInterceptor] down "' + key + '"', args);
+        self.logger('[HamkareBlazor | KeyInterceptor] down "' + key + '"', args);
         let invoke = false;
         if (self._keyOptions.hasOwnProperty(key)) {
             const keyOptions = self._keyOptions[key];
-            self.logger('[MudBlazor | KeyInterceptor] options for "' + key + '"', keyOptions);
+            self.logger('[HamkareBlazor | KeyInterceptor] options for "' + key + '"', keyOptions);
             self.processKeyDown(args, keyOptions);
             if (self.shouldInvokeKeyDown(args, keyOptions))
                 invoke = true;
         }
         for (const keyOptions of self._regexOptions) {
             if (keyOptions.regex.test(key)) {
-                self.logger('[MudBlazor | KeyInterceptor] regex options for "' + key + '"', keyOptions);
+                self.logger('[HamkareBlazor | KeyInterceptor] regex options for "' + key + '"', keyOptions);
                 self.processKeyDown(args, keyOptions);
                 if (self.shouldInvokeKeyDown(args, keyOptions))
                     invoke = true;
@@ -220,14 +220,14 @@ class MudKeyInterceptor {
     }
 
     onKeyUp(args) {
-        const self = this.mudKeyInterceptor; // func is invoked with this == child
+        const self = this.hamkareKeyInterceptor; // func is invoked with this == child
         if (!args.key) {
-            self.logger('[MudBlazor | KeyInterceptor] key is undefined', args);
+            self.logger('[HamkareBlazor | KeyInterceptor] key is undefined', args);
             return;
         }
 
         const key = args.key.toLowerCase();
-        self.logger('[MudBlazor | KeyInterceptor] up "' + key + '"', args);
+        self.logger('[HamkareBlazor | KeyInterceptor] up "' + key + '"', args);
         let invoke = false;
         if (self._keyOptions.hasOwnProperty(key)) {
             const keyOptions = self._keyOptions[key];

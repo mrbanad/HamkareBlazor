@@ -1,18 +1,18 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using Microsoft.AspNetCore.Components;
-using MudBlazor.Utilities;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 #nullable enable
 
 /// <summary>
 /// Represents a segment in a list of breadcrumbs.
 /// </summary>
-/// <seealso cref="MudBreadcrumbs" />
+/// <seealso cref="HamkareBreadcrumbs" />
 /// <seealso cref="BreadcrumbItem" />
 /// <seealso cref="BreadcrumbSeparator" />
 public partial class BreadcrumbLink
@@ -27,9 +27,9 @@ public partial class BreadcrumbLink
     /// The parent breadcrumb component.
     /// </summary>
     [CascadingParameter]
-    public MudBreadcrumbs? Parent { get; set; }
+    public HamkareBreadcrumbs? Parent { get; set; }
 
-    private string Classname => new CssBuilder("mud-breadcrumb-item")
-        .AddClass("mud-disabled", Item?.Disabled)
+    private string Classname => new CssBuilder("hamkare-breadcrumb-item")
+        .AddClass("hamkare-disabled", Item?.Disabled)
         .Build();
 }

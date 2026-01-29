@@ -1,5 +1,5 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System;
@@ -7,26 +7,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
-using MudBlazor.Utilities;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 
 #nullable enable
 
     /// <summary>
-    /// A container of <see cref="MudDropZone{T}"/> components for drag-and-drop operations.
+    /// A container of <see cref="HamkareDropZone{T}"/> components for drag-and-drop operations.
     /// </summary>
     /// <typeparam name="T">The type of item dragged and dropped within this container.</typeparam>
-    /// <seealso cref="MudDropZone{T}"/>
-    /// <seealso cref="MudDynamicDropItem{T}"/>
-    public partial class MudDropContainer<T> : MudComponentBase where T : notnull
+    /// <seealso cref="HamkareDropZone{T}"/>
+    /// <seealso cref="HamkareDynamicDropItem{T}"/>
+    public partial class HamkareDropContainer<T> : HamkareComponentBase where T : notnull
     {
-        private MudDragAndDropItemTransaction<T>? _transaction;
-        private Dictionary<string, MudDropZone<T>> _mudDropZones = new();
+        private HamkareDragAndDropItemTransaction<T>? _transaction;
+        private Dictionary<string, HamkareDropZone<T>> _hamkareDropZones = new();
 
         protected string Classname =>
-            new CssBuilder("mud-drop-container")
+            new CssBuilder("hamkare-drop-container")
                 .AddClass(Class)
                 .Build();
 
@@ -34,7 +34,7 @@ namespace MudBlazor
         /// The content within this container.
         /// </summary>
         /// <remarks>
-        /// The content should include at least two <see cref="MudDropZone{T}"/> components.
+        /// The content should include at least two <see cref="HamkareDropZone{T}"/> components.
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.DropZone.Appearance)]
@@ -55,29 +55,29 @@ namespace MudBlazor
         public RenderFragment<T>? ItemRenderer { get; set; }
 
         /// <summary>
-        /// The function which determines whether an item is within a <see cref="MudDropZone{T}"/>.
+        /// The function which determines whether an item is within a <see cref="HamkareDropZone{T}"/>.
         /// </summary>
-        /// <remarks>Can be overridden by child <see cref="MudDropZone{T}"/>'s with their owm implementation of <see cref="MudDropZone{T}.ItemsSelector"/> </remarks>
+        /// <remarks>Can be overridden by child <see cref="HamkareDropZone{T}"/>'s with their owm implementation of <see cref="HamkareDropZone{T}.ItemsSelector"/> </remarks>
         [Parameter]
         [Category(CategoryTypes.DropZone.Items)]
         public Func<T, string, bool>? ItemsSelector { get; set; }
 
         /// <summary>
-        /// Occurs when an item has been dropped into a <see cref="MudDropZone{T}"/>.
+        /// Occurs when an item has been dropped into a <see cref="HamkareDropZone{T}"/>.
         /// </summary>
         [Parameter]
         [Category(CategoryTypes.DropZone.Items)]
-        public EventCallback<MudItemDropInfo<T>> ItemDropped { get; set; }
+        public EventCallback<HamkareItemDropInfo<T>> ItemDropped { get; set; }
 
         /// <summary>
         /// Occurs when an item starts being dragged.
         /// </summary>
         /// <remarks>
-        /// A new <see cref="MudDragAndDropItemTransaction{T}"/> is started which tracks the drag-and-drop operation until it is completed or canceled.
+        /// A new <see cref="HamkareDragAndDropItemTransaction{T}"/> is started which tracks the drag-and-drop operation until it is completed or canceled.
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.DropZone.Items)]
-        public EventCallback<MudDragAndDropItemTransaction<T>> ItemPicked { get; set; }
+        public EventCallback<HamkareDragAndDropItemTransaction<T>> ItemPicked { get; set; }
 
         /// <summary>
         /// The function which determines whether an item can be dropped within a drop zone.
@@ -169,17 +169,17 @@ namespace MudBlazor
         /// <summary>
         /// Occurs when a new drag-and-drop operation has started.
         /// </summary>
-        public event EventHandler<MudDragAndDropItemTransaction<T>>? TransactionStarted;
+        public event EventHandler<HamkareDragAndDropItemTransaction<T>>? TransactionStarted;
 
         /// <summary>
         /// Occurs when an ongoing drop-and-drop has changed destinations.
         /// </summary>
-        public event EventHandler<MudDragAndDropIndexChangedEventArgs>? TransactionIndexChanged;
+        public event EventHandler<HamkareDragAndDropIndexChangedEventArgs>? TransactionIndexChanged;
 
         /// <summary>
         /// Occurs when a drag-and-drop operation has completed or canceled.
         /// </summary>
-        public event EventHandler<MudDragAndDropTransactionFinishedEventArgs<T>>? TransactionEnded;
+        public event EventHandler<HamkareDragAndDropTransactionFinishedEventArgs<T>>? TransactionEnded;
 
         /// <summary>
         /// Occurs when a refresh for this component has been requested.
@@ -196,7 +196,7 @@ namespace MudBlazor
         /// <param name="cancelCallback">Occurs when the drag-and-drop operation has been canceled.</param>
         public void StartTransaction(T? item, string identifier, int index, Func<Task> commitCallback, Func<Task> cancelCallback)
         {
-            var createTransaction = new MudDragAndDropItemTransaction<T>(item, identifier, index, commitCallback, cancelCallback);
+            var createTransaction = new HamkareDragAndDropItemTransaction<T>(item, identifier, index, commitCallback, cancelCallback);
             _transaction = createTransaction;
             TransactionStarted?.Invoke(this, createTransaction);
             ItemPicked.InvokeAsync(createTransaction);
@@ -310,7 +310,7 @@ namespace MudBlazor
 
             //We need to capture this variable because there is race condition when the value can turn null in the middle of transaction
             //There are multiple methods that can manipulate _transaction variable at same time
-            //https://github.com/MudBlazor/MudBlazor/issues/6551
+            //https://github.com/HamkareBlazor/HamkareBlazor/issues/6551
             var capturedTransaction = _transaction;
             await capturedTransaction.Commit();
             var index = -1;
@@ -323,8 +323,8 @@ namespace MudBlazor
                 }
             }
 
-            await ItemDropped.InvokeAsync(new MudItemDropInfo<T>(capturedTransaction.Item, dropZoneIdentifier, index));
-            var transactionFinishedEventArgs = new MudDragAndDropTransactionFinishedEventArgs<T>(dropZoneIdentifier, true, capturedTransaction);
+            await ItemDropped.InvokeAsync(new HamkareItemDropInfo<T>(capturedTransaction.Item, dropZoneIdentifier, index));
+            var transactionFinishedEventArgs = new HamkareDragAndDropTransactionFinishedEventArgs<T>(dropZoneIdentifier, true, capturedTransaction);
             _transaction = null;
             TransactionEnded?.Invoke(this, transactionFinishedEventArgs);
         }
@@ -341,7 +341,7 @@ namespace MudBlazor
 
             var capturedTransaction = _transaction;
             await capturedTransaction.Cancel();
-            var transactionFinishedEventArgs = new MudDragAndDropTransactionFinishedEventArgs<T>(capturedTransaction);
+            var transactionFinishedEventArgs = new HamkareDragAndDropTransactionFinishedEventArgs<T>(capturedTransaction);
             _transaction = null;
             TransactionEnded?.Invoke(this, transactionFinishedEventArgs);
         }
@@ -361,7 +361,7 @@ namespace MudBlazor
             var changed = _transaction.UpdateIndex(index);
             if (changed)
             {
-                TransactionIndexChanged?.Invoke(this, new MudDragAndDropIndexChangedEventArgs(capturedTransaction.CurrentZone, capturedTransaction.CurrentZone, capturedTransaction.Index));
+                TransactionIndexChanged?.Invoke(this, new HamkareDragAndDropIndexChangedEventArgs(capturedTransaction.CurrentZone, capturedTransaction.CurrentZone, capturedTransaction.Index));
             }
         }
 
@@ -377,21 +377,21 @@ namespace MudBlazor
             var changed = capturedTransaction.UpdateZone(identifier);
             if (changed)
             {
-                TransactionIndexChanged?.Invoke(this, new MudDragAndDropIndexChangedEventArgs(capturedTransaction.CurrentZone, oldValue, capturedTransaction.Index));
+                TransactionIndexChanged?.Invoke(this, new HamkareDragAndDropIndexChangedEventArgs(capturedTransaction.CurrentZone, oldValue, capturedTransaction.Index));
             }
         }
 
-        internal bool RegisterDropZone(MudDropZone<T> dropZone)
+        internal bool RegisterDropZone(HamkareDropZone<T> dropZone)
         {
-            return _mudDropZones.TryAdd(dropZone.Identifier, dropZone);
+            return _hamkareDropZones.TryAdd(dropZone.Identifier, dropZone);
         }
         internal void RemoveDropZone(string identifier)
         {
-            _mudDropZones.Remove(identifier);
+            _hamkareDropZones.Remove(identifier);
         }
-        internal MudDropZone<T>? GetDropZone(string identifier)
+        internal HamkareDropZone<T>? GetDropZone(string identifier)
         {
-            return _mudDropZones.TryGetValue(identifier, out var dropZone) ? dropZone : null;
+            return _hamkareDropZones.TryGetValue(identifier, out var dropZone) ? dropZone : null;
         }
 
         /// <summary>

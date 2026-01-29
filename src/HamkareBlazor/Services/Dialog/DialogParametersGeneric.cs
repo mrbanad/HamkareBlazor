@@ -1,18 +1,18 @@
 ﻿// Copyright (c) 2019 - Blazored
 // Copyright (c) 2023 - Adaptations by Simon Schulze
-// Copyright (c) 2024 - Adaptations by MudBlazor
+// Copyright (c) 2024 - Adaptations by HamkareBlazor
 
 using System.Linq.Expressions;
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 #nullable enable
 /// <summary>
-/// The parameters passed into a <see cref="MudDialog"/> instance.
+/// The parameters passed into a <see cref="HamkareDialog"/> instance.
 /// </summary>
-/// <seealso cref="MudDialogContainer"/>
-/// <seealso cref="MudDialogProvider"/>
-/// <seealso cref="MudDialog"/>
+/// <seealso cref="HamkareDialogContainer"/>
+/// <seealso cref="HamkareDialogProvider"/>
+/// <seealso cref="HamkareDialog"/>
 /// <seealso cref="DialogOptions"/>
 /// <seealso cref="DialogReference"/>
 /// <seealso cref="DialogService"/>

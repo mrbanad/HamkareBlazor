@@ -1,5 +1,5 @@
-﻿// Copyright (c) MudBlazor 2022
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2022
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Collections;
@@ -7,17 +7,17 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using MudBlazor.Services;
-using MudBlazor.Utilities;
+using HamkareBlazor.Services;
+using HamkareBlazor.Utilities;
 
 #nullable enable
-namespace MudBlazor
+namespace HamkareBlazor
 {
     /// <summary>
     /// A field for numeric values from users. 
     /// </summary>
     /// <typeparam name="T">The type of number being collected.</typeparam>
-    public partial class MudNumericField<T> : MudDebouncedInput<T>
+    public partial class HamkareNumericField<T> : HamkareDebouncedInput<T>
     {
         private T? _step;
         private T? _max;
@@ -28,7 +28,7 @@ namespace MudBlazor
         private bool _maxHasValue = false;
         private bool _minHasValue = false;
         private bool _stepHasValue = false;
-        private MudInput<string> _elementReference = null!;
+        private HamkareInput<string> _elementReference = null!;
         private readonly string _elementId = Identifier.Create("numericField");
 
         private readonly Comparer _comparer = new(CultureInfo.InvariantCulture);
@@ -36,7 +36,7 @@ namespace MudBlazor
         [Inject]
         private IKeyInterceptorService KeyInterceptorService { get; set; } = null!;
 
-        public MudNumericField()
+        public HamkareNumericField()
         {
             Validation = new Func<T, Task<bool>>(ValidateInput);
             #region parameters default depending on T
@@ -126,20 +126,20 @@ namespace MudBlazor
         }
 
         protected string Classname =>
-            new CssBuilder("mud-input-input-control mud-input-number-control")
-                .AddClass(HideSpinButtons ? "mud-input-nospin" : "mud-input-showspin")
+            new CssBuilder("hamkare-input-input-control hamkare-input-number-control")
+                .AddClass(HideSpinButtons ? "hamkare-input-nospin" : "hamkare-input-showspin")
                 .AddClass(Class)
                 .Build();
 
         private bool IsNumberMode => InputMode == InputMode.numeric || InputMode == InputMode.@decimal;
 
         // Defensive null check with object pattern: GetCulture() is annotated as non-null, but DataGrid may return null in certain cases.
-        // In typical scenarios it is not null, as MudFormComponent sets a default culture and other components do not override it with null.
+        // In typical scenarios it is not null, as HamkareFormComponent sets a default culture and other components do not override it with null.
         // The annotation could be changed in the future, but doing so would introduce unnecessary null checks in other components.
         private bool IsFormatted =>
             Pattern is not null ||
             GetFormat() is not null ||
-            // Edgy way to check if the MudComponentForm.Culture is provided explicitly and is a different one than the default CurrentUICulture && InvariantCulture.
+            // Edgy way to check if the HamkareComponentForm.Culture is provided explicitly and is a different one than the default CurrentUICulture && InvariantCulture.
             // If not, then we override to InvariantCulture to avoid issues with <input type="number">.
             GetCulture() is { } culture && !culture.Equals(CultureInfo.CurrentUICulture) && !culture.Equals(CultureInfo.InvariantCulture);
 
@@ -306,7 +306,7 @@ namespace MudBlazor
                     keyOptions.Add(new($"/^(?!{Pattern.TrimEnd('*')}).$/", preventDown: "key+none|key+shift|key+alt"));
                 }
 
-                var options = new KeyInterceptorOptions("mud-input-slot", keyOptions.ToArray());
+                var options = new KeyInterceptorOptions("hamkare-input-slot", keyOptions.ToArray());
 
                 await KeyInterceptorService.SubscribeAsync(_elementId, options, KeyObserver.KeyDownIgnore(), KeyObserver.KeyUpIgnore());
             }

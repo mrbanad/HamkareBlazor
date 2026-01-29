@@ -1,8 +1,8 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-class MudResizeListener {
+class HamkareResizeListener {
 
     constructor(id) {
         this.logger = function () { };
@@ -23,7 +23,7 @@ class MudResizeListener {
         this.options = options;
         this.dotnet = dotnetRef;
         this.logger = options.enableLogging ? console.log : () => { };
-        this.logger(`[MudBlazor] Reporting resize events at rate of: ${this.options.reportRate}ms`);
+        this.logger(`[HamkareBlazor] Reporting resize events at rate of: ${this.options.reportRate}ms`);
         window.addEventListener("resize", this.handleResize, false);
         if (!this.options.suppressInitEvent) {
             this.resizeHandler();
@@ -68,7 +68,7 @@ class MudResizeListener {
             }
 
         } catch (error) {
-            this.logger("[MudBlazor] Error in resizeHandler:", { error });
+            this.logger("[HamkareBlazor] Error in resizeHandler:", { error });
         }
     }
 
@@ -105,22 +105,22 @@ class MudResizeListener {
     }
 };
 
-window.mudResizeListener = new MudResizeListener();
-window.mudResizeListenerFactory = {
+window.hamkareResizeListener = new HamkareResizeListener();
+window.hamkareResizeListenerFactory = {
     mapping: {},
     listenForResize: (dotnetRef, options, id) => {
-        const map = window.mudResizeListenerFactory.mapping;
+        const map = window.hamkareResizeListenerFactory.mapping;
         if (map[id]) {
             return;
         }
 
-        const listener = new MudResizeListener(id);
+        const listener = new HamkareResizeListener(id);
         listener.listenForResize(dotnetRef, options);
         map[id] = listener;
     },
 
     cancelListener: (id) => {
-        const map = window.mudResizeListenerFactory.mapping;
+        const map = window.hamkareResizeListenerFactory.mapping;
 
         if (!map[id]) {
             return;
@@ -133,14 +133,14 @@ window.mudResizeListenerFactory = {
 
     cancelListeners: (ids) => {
         for (let i = 0; i < ids.length; i++) {
-            window.mudResizeListenerFactory.cancelListener(ids[i]);
+            window.hamkareResizeListenerFactory.cancelListener(ids[i]);
         }
     },
 
     dispose() {
-        const map = window.mudResizeListenerFactory.mapping;
+        const map = window.hamkareResizeListenerFactory.mapping;
         for (const id in map) {
-            window.mudResizeListenerFactory.cancelListener(id);
+            window.hamkareResizeListenerFactory.cancelListener(id);
         }
     }
 };

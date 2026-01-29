@@ -1,26 +1,26 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using Microsoft.AspNetCore.Components;
-using MudBlazor.State;
-using MudBlazor.Utilities;
+using HamkareBlazor.State;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
 
     /// <summary>
-    /// A deeper level of navigation links as part of a <see cref="MudNavMenu"/>.
+    /// A deeper level of navigation links as part of a <see cref="HamkareNavMenu"/>.
     /// </summary>
-    /// <seealso cref="MudNavLink"/>
-    /// <seealso cref="MudNavMenu"/>
-    public partial class MudNavGroup : MudComponentBase
+    /// <seealso cref="HamkareNavLink"/>
+    /// <seealso cref="HamkareNavMenu"/>
+    public partial class HamkareNavGroup : HamkareComponentBase
     {
         private readonly ParameterState<bool> _expandedState;
         private NavigationContext _navigationContext = new(false, true);
 
-        public MudNavGroup()
+        public HamkareNavGroup()
         {
             using var registerScope = CreateRegisterScope();
             _expandedState = registerScope.RegisterParameter<bool>(nameof(Expanded))
@@ -42,27 +42,27 @@ namespace MudBlazor
         }
 
         protected string Classname =>
-            new CssBuilder("mud-nav-group")
+            new CssBuilder("hamkare-nav-group")
                 .AddClass(Class)
-                .AddClass("mud-nav-group-disabled", Disabled)
+                .AddClass("hamkare-nav-group-disabled", Disabled)
                 .Build();
 
         protected string ButtonClassname =>
-            new CssBuilder("mud-nav-link")
-                .AddClass($"mud-ripple", Ripple)
-                .AddClass("mud-expanded", _expandedState.Value)
+            new CssBuilder("hamkare-nav-link")
+                .AddClass($"hamkare-ripple", Ripple)
+                .AddClass("hamkare-expanded", _expandedState.Value)
                 .AddClass(HeaderClass)
                 .Build();
 
         protected string IconClassname =>
-            new CssBuilder("mud-nav-link-icon")
-                .AddClass("mud-nav-link-icon-default", IconColor == Color.Default)
+            new CssBuilder("hamkare-nav-link-icon")
+                .AddClass("hamkare-nav-link-icon-default", IconColor == Color.Default)
                 .Build();
 
         protected string ExpandIconClassname =>
-            new CssBuilder("mud-nav-link-expand-icon")
-                .AddClass("mud-transform", _expandedState.Value && !Disabled)
-                .AddClass("mud-transform-disabled", _expandedState.Value && Disabled)
+            new CssBuilder("hamkare-nav-link-expand-icon")
+                .AddClass("hamkare-transform", _expandedState.Value && !Disabled)
+                .AddClass("hamkare-transform-disabled", _expandedState.Value && Disabled)
                 .Build();
 
         protected int ButtonTabIndex => Disabled || ParentNavigationContext is { Disabled: true } or { Expanded: false } ? -1 : 0;
@@ -181,7 +181,7 @@ namespace MudBlazor
         /// The content within this group.
         /// </summary>
         /// <remarks>
-        /// Typically contains <see cref="MudNavGroup"/> and <see cref="MudNavLink"/> components.
+        /// Typically contains <see cref="HamkareNavGroup"/> and <see cref="HamkareNavLink"/> components.
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.NavMenu.Behavior)]

@@ -1,12 +1,12 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 #nullable enable
 using System.Numerics;
-using MudBlazor.Charts;
+using HamkareBlazor.Charts;
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 /// <summary>
 /// Represents the data point in a chart series, with optional X value and required Y value.

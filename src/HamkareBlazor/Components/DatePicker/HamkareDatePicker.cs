@@ -1,16 +1,16 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using MudBlazor.Extensions;
-using MudBlazor.Utilities;
+using HamkareBlazor.Extensions;
+using HamkareBlazor.Utilities;
 
 #nullable enable
-namespace MudBlazor
+namespace HamkareBlazor
 {
     /// <summary>
     /// Represents a picker for dates.
     /// </summary>
-    /// <seealso cref="MudDateRangePicker"/>
-    public class MudDatePicker : MudBaseDatePicker
+    /// <seealso cref="HamkareDateRangePicker"/>
+    public class HamkareDatePicker : HamkareBaseDatePicker
     {
         private DateTime? _selectedDate;
 
@@ -104,16 +104,16 @@ namespace MudBlazor
 
         protected override string GetDayClasses(int month, DateTime day)
         {
-            var b = new CssBuilder("mud-day");
+            var b = new CssBuilder("hamkare-day");
             b.AddClass(AdditionalDateClassesFunc?.Invoke(day) ?? string.Empty);
             if (day < GetMonthStart(month) || day > GetMonthEnd(month))
-                return b.AddClass("mud-hidden").Build();
+                return b.AddClass("hamkare-hidden").Build();
             if ((Date?.Date == day && _selectedDate == null) || _selectedDate?.Date == day)
-                return b.AddClass("mud-selected").AddClass($"mud-theme-{Color.ToStringFast(true)}").Build();
+                return b.AddClass("hamkare-selected").AddClass($"hamkare-theme-{Color.ToStringFast(true)}").Build();
             if (day == TimeProvider.GetLocalNow().Date)
-                return b.AddClass("mud-current mud-button-outlined")
+                return b.AddClass("hamkare-current hamkare-button-outlined")
                         .AddClass(
-                            $"mud-button-outlined-{Color.ToStringFast(true)} mud-{Color.ToStringFast(true)}-text")
+                            $"hamkare-button-outlined-{Color.ToStringFast(true)} hamkare-{Color.ToStringFast(true)}-text")
                         .Build();
             return b.Build();
         }

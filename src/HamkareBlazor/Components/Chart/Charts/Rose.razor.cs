@@ -1,16 +1,16 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Globalization;
 using System.Numerics;
 using System.Text;
-using MudBlazor.Extensions;
+using HamkareBlazor.Extensions;
 
 #nullable enable
-namespace MudBlazor.Charts;
+namespace HamkareBlazor.Charts;
 
-public partial class Rose<T> : MudRadialChartBase<T, RoseChartOptions> where T : struct, INumber<T>, IMinMaxValue<T>, IFormattable
+public partial class Rose<T> : HamkareRadialChartBase<T, RoseChartOptions> where T : struct, INumber<T>, IMinMaxValue<T>, IFormattable
 {
     protected override void OnInitialized()
     {

@@ -1,15 +1,15 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System;
-using MudBlazor.Resources;
+using HamkareBlazor.Resources;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
     /// <summary>
-    /// Represents comparison operations which execute a filter in a <see cref="MudDataGrid{T}"/>.
+    /// Represents comparison operations which execute a filter in a <see cref="HamkareDataGrid{T}"/>.
     /// </summary>
     public static class FilterOperator
     {
@@ -17,7 +17,7 @@ namespace MudBlazor
         /// Represents filters which are available for <c>string</c> values.
         /// </summary>
         /// <remarks>
-        /// You can control case sensitivity of filters by setting the <see cref="MudDataGrid{T}.FilterCaseSensitivity"/> property.
+        /// You can control case sensitivity of filters by setting the <see cref="HamkareDataGrid{T}.FilterCaseSensitivity"/> property.
         /// </remarks>
         public static class String
         {
@@ -341,35 +341,35 @@ namespace MudBlazor
         {
             // All these operator constants should be refactored to be enums, this is a temporary solution.
             // The commented lines are duplicate constants.
-            String.Contains => LanguageResource.MudDataGrid_Contains,
-            String.NotContains => LanguageResource.MudDataGrid_NotContains,
-            String.Equal => LanguageResource.MudDataGrid_Equals,
-            String.NotEqual => LanguageResource.MudDataGrid_NotEquals,
-            String.StartsWith => LanguageResource.MudDataGrid_StartsWith,
-            String.EndsWith => LanguageResource.MudDataGrid_EndsWith,
-            String.Empty => LanguageResource.MudDataGrid_IsEmpty,
-            String.NotEmpty => LanguageResource.MudDataGrid_IsNotEmpty,
-            Number.Equal => LanguageResource.MudDataGrid_EqualSign,
-            Number.NotEqual => LanguageResource.MudDataGrid_NotEqualSign,
-            Number.GreaterThan => LanguageResource.MudDataGrid_GreaterThanSign,
-            Number.GreaterThanOrEqual => LanguageResource.MudDataGrid_GreaterThanOrEqualSign,
-            Number.LessThan => LanguageResource.MudDataGrid_LessThanSign,
-            Number.LessThanOrEqual => LanguageResource.MudDataGrid_LessThanOrEqualSign,
-            //Number.Empty => LanguageResource.MudDataGrid_IsEmpty,
-            //Number.NotEmpty => LanguageResource.MudDataGrid_IsNotEmpty,
-            Enum.Is => LanguageResource.MudDataGrid_Is,
-            Enum.IsNot => LanguageResource.MudDataGrid_IsNot,
-            //Boolean.Is => LanguageResource.MudDataGrid_Is,
-            //DateTime.Is => LanguageResource.MudDataGrid_Is,
-            //DateTime.IsNot => LanguageResource.MudDataGrid_IsNot,
-            DateTime.After => LanguageResource.MudDataGrid_IsAfter,
-            DateTime.OnOrAfter => LanguageResource.MudDataGrid_IsOnOrAfter,
-            DateTime.Before => LanguageResource.MudDataGrid_IsBefore,
-            DateTime.OnOrBefore => LanguageResource.MudDataGrid_IsOnOrBefore,
-            //DateTime.Empty => LanguageResource.MudDataGrid_IsEmpty,
-            //DateTime.NotEmpty => LanguageResource.MudDataGrid_IsNotEmpty,
-            //Guid.Equal => LanguageResource.MudDataGrid_Equals,
-            //Guid.NotEqual => LanguageResource.MudDataGrid_NotEquals,
+            String.Contains => LanguageResource.HamkareDataGrid_Contains,
+            String.NotContains => LanguageResource.HamkareDataGrid_NotContains,
+            String.Equal => LanguageResource.HamkareDataGrid_Equals,
+            String.NotEqual => LanguageResource.HamkareDataGrid_NotEquals,
+            String.StartsWith => LanguageResource.HamkareDataGrid_StartsWith,
+            String.EndsWith => LanguageResource.HamkareDataGrid_EndsWith,
+            String.Empty => LanguageResource.HamkareDataGrid_IsEmpty,
+            String.NotEmpty => LanguageResource.HamkareDataGrid_IsNotEmpty,
+            Number.Equal => LanguageResource.HamkareDataGrid_EqualSign,
+            Number.NotEqual => LanguageResource.HamkareDataGrid_NotEqualSign,
+            Number.GreaterThan => LanguageResource.HamkareDataGrid_GreaterThanSign,
+            Number.GreaterThanOrEqual => LanguageResource.HamkareDataGrid_GreaterThanOrEqualSign,
+            Number.LessThan => LanguageResource.HamkareDataGrid_LessThanSign,
+            Number.LessThanOrEqual => LanguageResource.HamkareDataGrid_LessThanOrEqualSign,
+            //Number.Empty => LanguageResource.HamkareDataGrid_IsEmpty,
+            //Number.NotEmpty => LanguageResource.HamkareDataGrid_IsNotEmpty,
+            Enum.Is => LanguageResource.HamkareDataGrid_Is,
+            Enum.IsNot => LanguageResource.HamkareDataGrid_IsNot,
+            //Boolean.Is => LanguageResource.HamkareDataGrid_Is,
+            //DateTime.Is => LanguageResource.HamkareDataGrid_Is,
+            //DateTime.IsNot => LanguageResource.HamkareDataGrid_IsNot,
+            DateTime.After => LanguageResource.HamkareDataGrid_IsAfter,
+            DateTime.OnOrAfter => LanguageResource.HamkareDataGrid_IsOnOrAfter,
+            DateTime.Before => LanguageResource.HamkareDataGrid_IsBefore,
+            DateTime.OnOrBefore => LanguageResource.HamkareDataGrid_IsOnOrBefore,
+            //DateTime.Empty => LanguageResource.HamkareDataGrid_IsEmpty,
+            //DateTime.NotEmpty => LanguageResource.HamkareDataGrid_IsNotEmpty,
+            //Guid.Equal => LanguageResource.HamkareDataGrid_Equals,
+            //Guid.NotEqual => LanguageResource.HamkareDataGrid_NotEquals,
             _ => throw new ArgumentOutOfRangeException(nameof(operatorName), operatorName, "Unknown operator name.")
         };
     }

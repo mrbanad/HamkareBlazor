@@ -1,4 +1,4 @@
-.mud-overlay {
+.hamkare-overlay {
   top: 0;
   left: 0;
   right: 0;
@@ -12,11 +12,11 @@
   transition: .3s cubic-bezier(.25,.8,.5,1),z-index 1ms;
   z-index: 5;
 
-  &.mud-overlay-absolute {
+  &.hamkare-overlay-absolute {
     position: absolute;
   }
 
-  & .mud-overlay-scrim {
+  & .hamkare-overlay-scrim {
     top: 0;
     left: 0;
     right: 0;
@@ -27,19 +27,19 @@
     width: 100%;
     border-color: transparent;
     background-color: transparent;
-    animation: mud-animation-fadein ease 0.15s;
-    -webkit-animation: mud-animation-fadein ease 0.15s;
-    -moz-animation: mud-animation-fadein ease 0.15s;
-    -o-animation: mud-animation-fadein ease 0.15s;
+    animation: hamkare-animation-fadein ease 0.15s;
+    -webkit-animation: hamkare-animation-fadein ease 0.15s;
+    -moz-animation: hamkare-animation-fadein ease 0.15s;
+    -o-animation: hamkare-animation-fadein ease 0.15s;
 
-    &.mud-overlay-dark {
-      border-color: var(--mud-palette-overlay-dark);
-      background-color: var(--mud-palette-overlay-dark);
+    &.hamkare-overlay-dark {
+      border-color: var(--hamkare-palette-overlay-dark);
+      background-color: var(--hamkare-palette-overlay-dark);
     }
 
-    &.mud-overlay-light {
-      border-color: var(--mud-palette-overlay-light);
-      background-color: var(--mud-palette-overlay-light);
+    &.hamkare-overlay-light {
+      border-color: var(--hamkare-palette-overlay-light);
+      background-color: var(--hamkare-palette-overlay-light);
     }
 
     &:hover {
@@ -47,19 +47,19 @@
     }
   }
 
-  & .mud-overlay-content {
+  & .hamkare-overlay-content {
     position: relative;
   }
 
-  &.mud-overlay-popover {
-    z-index: var(--mud-zindex-popover);
+  &.hamkare-overlay-popover {
+    z-index: var(--hamkare-zindex-popover);
   }
 
-  &.mud-overlay-dialog {
-    z-index: calc(var(--mud-zindex-dialog) + 1);
+  &.hamkare-overlay-dialog {
+    z-index: calc(var(--hamkare-zindex-dialog) + 1);
   }
 
-  &.mud-overlay-drawer {
-    z-index: calc(var(--mud-zindex-appbar) + 1); //<-- Yes this is correct we want to display it on top of the Appbar
+  &.hamkare-overlay-drawer {
+    z-index: calc(var(--hamkare-zindex-appbar) + 1); //<-- Yes this is correct we want to display it on top of the Appbar
   }
 }

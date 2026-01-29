@@ -1,28 +1,28 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using Microsoft.AspNetCore.Components;
-using MudBlazor.Utilities;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
 
     /// <summary>
     /// A list of navigation links with support for groups.
     /// </summary>
-    /// <seealso cref="MudNavGroup"/>
-    /// <seealso cref="MudNavLink"/>
-    public partial class MudNavMenu : MudComponentBase
+    /// <seealso cref="HamkareNavGroup"/>
+    /// <seealso cref="HamkareNavLink"/>
+    public partial class HamkareNavMenu : HamkareComponentBase
     {
         protected string Classname =>
-            new CssBuilder("mud-navmenu")
-                .AddClass($"mud-navmenu-{Color.ToStringFast(true)}")
-                .AddClass($"mud-navmenu-margin-{Margin.ToStringFast(true)}")
-                .AddClass("mud-navmenu-dense", Dense)
-                .AddClass("mud-navmenu-rounded", Rounded)
-                .AddClass($"mud-navmenu-bordered mud-border-{Color.ToStringFast(true)}", Bordered)
+            new CssBuilder("hamkare-navmenu")
+                .AddClass($"hamkare-navmenu-{Color.ToStringFast(true)}")
+                .AddClass($"hamkare-navmenu-margin-{Margin.ToStringFast(true)}")
+                .AddClass("hamkare-navmenu-dense", Dense)
+                .AddClass("hamkare-navmenu-rounded", Rounded)
+                .AddClass($"hamkare-navmenu-bordered hamkare-border-{Color.ToStringFast(true)}", Bordered)
                 .AddClass(Class)
                 .Build();
 
@@ -30,7 +30,7 @@ namespace MudBlazor
         private NavigationContext? NavigationContext { get; set; }
 
         /// <summary>
-        /// The color of the active <see cref="MudNavLink" />.
+        /// The color of the active <see cref="HamkareNavLink" />.
         /// </summary>
         /// <remarks>
         /// Defaults to <see cref="Color.Default"/>.
@@ -40,7 +40,7 @@ namespace MudBlazor
         public Color Color { get; set; } = Color.Default;
 
         /// <summary>
-        /// Shows a border on the active <see cref="MudNavLink"/>.
+        /// Shows a border on the active <see cref="HamkareNavLink"/>.
         /// </summary>
         /// <remarks>
         /// Defaults to <c>false</c>.
@@ -50,7 +50,7 @@ namespace MudBlazor
         public bool Bordered { get; set; }
 
         /// <summary>
-        /// Shows a rounded border for all <see cref="MudNavLink" /> items.
+        /// Shows a rounded border for all <see cref="HamkareNavLink" /> items.
         /// </summary>
         /// <remarks>
         /// Defaults to <c>false</c>.
@@ -62,7 +62,7 @@ namespace MudBlazor
         public bool Rounded { get; set; }
 
         /// <summary>
-        /// The vertical spacing between <see cref="MudNavLink" /> items.
+        /// The vertical spacing between <see cref="HamkareNavLink" /> items.
         /// </summary>
         /// <remarks>
         /// Defaults to <see cref="Margin.None"/>.
@@ -72,7 +72,7 @@ namespace MudBlazor
         public Margin Margin { get; set; } = Margin.None;
 
         /// <summary>
-        /// Uses compact vertical padding to all <see cref="MudNavLink"/> items.
+        /// Uses compact vertical padding to all <see cref="HamkareNavLink"/> items.
         /// </summary>
         /// <remarks>
         /// Defaults to <c>false</c>.  
@@ -86,7 +86,7 @@ namespace MudBlazor
         /// The content within this menu.
         /// </summary>
         /// <remarks>
-        /// Typically contains <see cref="MudNavLink" />, <see cref="MudNavGroup"/>, <see cref="MudText"/>, and <see cref="MudDivider"/> components.
+        /// Typically contains <see cref="HamkareNavLink" />, <see cref="HamkareNavGroup"/>, <see cref="HamkareText"/>, and <see cref="HamkareDivider"/> components.
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.NavMenu.Behavior)]

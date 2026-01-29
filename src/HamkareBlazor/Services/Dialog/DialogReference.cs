@@ -1,21 +1,21 @@
 ﻿// Copyright (c) 2019 Blazored (https://github.com/Blazored)
 // See https://github.com/Blazored
 // License: MIT
-// Copyright (c) 2020 Adapted by MudBlazor
+// Copyright (c) 2020 Adapted by HamkareBlazor
 
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Components;
 
 #nullable enable
-namespace MudBlazor
+namespace HamkareBlazor
 {
     /// <summary>
-    /// An instance of a <see cref="MudDialog"/>.
+    /// An instance of a <see cref="HamkareDialog"/>.
     /// </summary>
-    /// <seealso cref="MudDialog"/>
-    /// <seealso cref="MudDialogContainer"/>
-    /// <seealso cref="MudDialogProvider"/>
+    /// <seealso cref="HamkareDialog"/>
+    /// <seealso cref="HamkareDialogContainer"/>
+    /// <seealso cref="HamkareDialogProvider"/>
     /// <seealso cref="DialogOptions"/>
     /// <seealso cref="DialogParameters{T}"/>
     /// <seealso cref="DialogService"/>

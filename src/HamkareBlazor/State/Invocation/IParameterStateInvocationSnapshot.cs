@@ -1,9 +1,9 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 #nullable enable
-namespace MudBlazor.State.Invocation;
+namespace HamkareBlazor.State.Invocation;
 
 /// <summary>
 /// Represents a read-only, immutable snapshot of a parameter's invocation state.
@@ -31,7 +31,7 @@ internal interface IParameterStateInvocationSnapshot
     /// </summary>
     /// <remarks>
     /// <para>
-    /// This method is intended for internal use and is controlled by the <see cref="MudComponentBase"/> and <see cref="ParameterScopeContainer"/>.
+    /// This method is intended for internal use and is controlled by the <see cref="HamkareComponentBase"/> and <see cref="ParameterScopeContainer"/>.
     /// It should only be invoked after <see cref="IParameterComponentLifeCycle.HasParameterChanged"/> has been called.
     /// </para>
     /// <para>

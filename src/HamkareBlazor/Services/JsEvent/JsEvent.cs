@@ -1,12 +1,12 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.JSInterop;
 
 #nullable enable
-namespace MudBlazor.Services
+namespace HamkareBlazor.Services
 {
     /// <summary>
     /// Subscribes to JavaScript events of any HTML element by its ID.
@@ -46,7 +46,7 @@ namespace MudBlazor.Services
             }
 
             _elementId = elementId;
-            _isObserving = await _jsRuntime.InvokeVoidAsyncWithErrorHandling("mudJsEvent.connect", _dotNetRef, elementId, options);
+            _isObserving = await _jsRuntime.InvokeVoidAsyncWithErrorHandling("hamkareJsEvent.connect", _dotNetRef, elementId, options);
         }
 
         /// <inheritdoc />
@@ -58,7 +58,7 @@ namespace MudBlazor.Services
             }
 
             await UnsubscribeAll();
-            await _jsRuntime.InvokeVoidAsyncWithErrorHandling("mudJsEvent.disconnect", _elementId);
+            await _jsRuntime.InvokeVoidAsyncWithErrorHandling("hamkareJsEvent.disconnect", _elementId);
 
             _isObserving = false;
         }
@@ -79,7 +79,7 @@ namespace MudBlazor.Services
                 return;
             }
 
-            _jsRuntime.InvokeVoidAsyncWithErrorHandling("mudJsEvent.subscribe", _elementId, eventName).CatchAndLog();
+            _jsRuntime.InvokeVoidAsyncWithErrorHandling("hamkareJsEvent.subscribe", _elementId, eventName).CatchAndLog();
             _subscribedEvents.Add(eventName);
         }
 
@@ -94,7 +94,7 @@ namespace MudBlazor.Services
                 return;
             }
 
-            await _jsRuntime.InvokeVoidAsyncWithErrorHandling("mudJsEvent.unsubscribe", _elementId, eventName);
+            await _jsRuntime.InvokeVoidAsyncWithErrorHandling("hamkareJsEvent.unsubscribe", _elementId, eventName);
             _subscribedEvents.Remove(eventName);
         }
 
@@ -110,7 +110,7 @@ namespace MudBlazor.Services
 
             foreach (var eventName in _subscribedEvents)
             {
-                await _jsRuntime.InvokeVoidAsyncWithErrorHandling("mudJsEvent.unsubscribe", _elementId, eventName);
+                await _jsRuntime.InvokeVoidAsyncWithErrorHandling("hamkareJsEvent.unsubscribe", _elementId, eventName);
             }
 
             _subscribedEvents.Clear();

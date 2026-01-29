@@ -1,19 +1,19 @@
 ﻿using Microsoft.AspNetCore.Components;
-using MudBlazor.Utilities;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
     /// <summary>
     /// Cards contain actions, text, or media like images or graphics. Keeping a card to a single subject keeps the design clean.
     /// </summary>
-    /// <seealso cref="MudCardActions" />
-    /// <seealso cref="MudCardContent" />
-    /// <seealso cref="MudCardHeader" />
-    /// <seealso cref="MudCardMedia" />
-    public partial class MudCard : MudComponentBase
+    /// <seealso cref="HamkareCardActions" />
+    /// <seealso cref="HamkareCardContent" />
+    /// <seealso cref="HamkareCardHeader" />
+    /// <seealso cref="HamkareCardMedia" />
+    public partial class HamkareCard : HamkareComponentBase
     {
-        protected string Classname => new CssBuilder("mud-card")
+        protected string Classname => new CssBuilder("hamkare-card")
             .AddClass(Class)
             .Build();
 
@@ -48,7 +48,7 @@ namespace MudBlazor
         public bool Outlined { get; set; }
 
         /// <summary>
-        /// Adds visual padding to the content (<see cref="MudCardHeader"/>, <see cref="MudCardContent"/> or <see cref="MudCardActions"/>).
+        /// Adds visual padding to the content (<see cref="HamkareCardHeader"/>, <see cref="HamkareCardContent"/> or <see cref="HamkareCardActions"/>).
         /// </summary>
         /// <remarks>
         /// Defaults to <c>true</c>.

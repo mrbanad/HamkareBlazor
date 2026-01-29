@@ -1,8 +1,8 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-window.mudTimePicker = {
+window.hamkareTimePicker = {
     initPointerEvents: (clock, dotNetHelper) => {
         let isPointerDown = false;
 
@@ -18,7 +18,7 @@ window.mudTimePicker = {
             event.target.releasePointerCapture(event.pointerId);
 
             // Set the selected value to the stick that the pointer went down on.
-            if (event.target.classList.contains('mud-hour') || event.target.classList.contains('mud-minute')) {
+            if (event.target.classList.contains('hamkare-hour') || event.target.classList.contains('hamkare-minute')) {
                 const attributeValue = event.target.getAttribute('data-stick-value');
                 const stickValue = attributeValue ? parseInt(attributeValue) : -1; // Ensure an integer.
 
@@ -36,7 +36,7 @@ window.mudTimePicker = {
 
             isPointerDown = false;
 
-            if (event.target.classList.contains('mud-hour') || event.target.classList.contains('mud-minute')) {
+            if (event.target.classList.contains('hamkare-hour') || event.target.classList.contains('hamkare-minute')) {
                 const attributeValue = event.target.getAttribute('data-stick-value');
                 const stickValue = attributeValue ? parseInt(attributeValue) : -1; // Ensure an integer.
 
@@ -47,7 +47,7 @@ window.mudTimePicker = {
         };
 
         const moveHandler = (event) => {
-            if (!isPointerDown || (!event.target.classList.contains('mud-hour') && !event.target.classList.contains('mud-minute'))) {
+            if (!isPointerDown || (!event.target.classList.contains('hamkare-hour') && !event.target.classList.contains('hamkare-minute'))) {
                 // Only update time from the stick if the pointer is down.
                 return;
             }

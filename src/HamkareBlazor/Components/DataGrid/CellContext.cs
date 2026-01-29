@@ -1,14 +1,14 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Diagnostics.CodeAnalysis;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
     /// <summary>
-    /// Represents the current state of a cell in a <see cref="MudDataGrid{T}"/>.
+    /// Represents the current state of a cell in a <see cref="HamkareDataGrid{T}"/>.
     /// </summary>
     /// <typeparam name="T">The type of item displayed in the cell.</typeparam>
     public class CellContext<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)] T>
@@ -42,7 +42,7 @@ namespace MudBlazor
         /// </summary>
         /// <param name="dataGrid">The data grid which owns this context.</param>
         /// <param name="item">The item displayed in the cell.</param>
-        public CellContext(MudDataGrid<T> dataGrid, T item)
+        public CellContext(HamkareDataGrid<T> dataGrid, T item)
         {
             _selection = dataGrid.Selection;
             OpenHierarchies = dataGrid._openHierarchies;

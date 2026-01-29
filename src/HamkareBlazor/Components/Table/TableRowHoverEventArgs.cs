@@ -1,12 +1,12 @@
 ﻿using System;
 using Microsoft.AspNetCore.Components.Web;
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 #nullable enable
 
 /// <summary>
-/// The information passed when entering a row for a <see cref="MudTable{T}"/>.
+/// The information passed when entering a row for a <see cref="HamkareTable{T}"/>.
 /// </summary>
 /// <typeparam name="T">The type of data displayed in the table.</typeparam>
 public class TableRowHoverEventArgs<T> : EventArgs
@@ -19,7 +19,7 @@ public class TableRowHoverEventArgs<T> : EventArgs
     /// <summary>
     /// The row being hovered over.
     /// </summary>
-    public MudTr Row { get; }
+    public HamkareTr Row { get; }
 
     /// <summary>
     /// The data related to the row being hovered over.
@@ -32,7 +32,7 @@ public class TableRowHoverEventArgs<T> : EventArgs
     /// <param name="pointerEventArgs">The coordinates of the hover.</param>
     /// <param name="row">The row being hovered over.</param>
     /// <param name="item">The data related to the row being hovered over.</param>
-    public TableRowHoverEventArgs(PointerEventArgs pointerEventArgs, MudTr row, T? item)
+    public TableRowHoverEventArgs(PointerEventArgs pointerEventArgs, HamkareTr row, T? item)
     {
         PointerEventArgs = pointerEventArgs;
         Row = row;

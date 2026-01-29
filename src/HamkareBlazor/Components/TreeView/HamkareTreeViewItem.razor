@@ -1,5 +1,5 @@
-@namespace MudBlazor
-@inherits MudComponentBase
+@namespace HamkareBlazor
+@inherits HamkareComponentBase
 @typeparam T
 
 @if (Visible)
@@ -12,18 +12,18 @@
             }
             else
             {
-                <MudTreeViewItemToggleButton Disabled="@GetDisabled()" Loading="_loading" Expanded="_expandedState.Value" ExpandedChanged="OnItemExpanded" Visible="@(HasChildren() && AreChildrenVisible())" ExpandedIcon="@ExpandButtonIcon" ExpandedIconColor="@ExpandButtonIconColor" LoadingIcon="@LoadingIcon" LoadingIconColor="LoadingIconColor"></MudTreeViewItemToggleButton>
+                <HamkareTreeViewItemToggleButton Disabled="@GetDisabled()" Loading="_loading" Expanded="_expandedState.Value" ExpandedChanged="OnItemExpanded" Visible="@(HasChildren() && AreChildrenVisible())" ExpandedIcon="@ExpandButtonIcon" ExpandedIconColor="@ExpandButtonIconColor" LoadingIcon="@LoadingIcon" LoadingIconColor="LoadingIconColor"></HamkareTreeViewItemToggleButton>
 
                 @if (MultiSelection)
                 {
-                    <MudCheckBox T="bool?" TriState Class="mud-treeview-item-checkbox" CheckedIcon="@CheckedIcon" UncheckedIcon="@UncheckedIcon" IndeterminateIcon="@GetIndeterminateIcon()"
-                                 @bind-Value:get="GetCheckBoxStateTriState()" @bind-Value:set="@(x=>OnCheckboxChangedAsync())" Disabled="@Disabled"></MudCheckBox>
+                    <HamkareCheckBox T="bool?" TriState Class="hamkare-treeview-item-checkbox" CheckedIcon="@CheckedIcon" UncheckedIcon="@UncheckedIcon" IndeterminateIcon="@GetIndeterminateIcon()"
+                                 @bind-Value:get="GetCheckBoxStateTriState()" @bind-Value:set="@(x=>OnCheckboxChangedAsync())" Disabled="@Disabled"></HamkareCheckBox>
                 }
 
                 @if (HasIcon)
                 {
-                    <div class="mud-treeview-item-icon">
-                        <MudIcon Disabled="@GetDisabled()" Icon="@GetIcon()" Color="@IconColor" />
+                    <div class="hamkare-treeview-item-icon">
+                        <HamkareIcon Disabled="@GetDisabled()" Icon="@GetIcon()" Color="@IconColor" />
                     </div>
                 }
 
@@ -33,21 +33,21 @@
                 }
                 else
                 {
-                    <MudText Typo="@TextTypo" Class="@TextClassname">
+                    <HamkareText Typo="@TextTypo" Class="@TextClassname">
                         @GetText()
-                    </MudText>
+                    </HamkareText>
 
                     @if (!string.IsNullOrEmpty(EndText))
                     {
-                        <MudText Typo="@EndTextTypo" Class="@EndTextClass">
+                        <HamkareText Typo="@EndTextTypo" Class="@EndTextClass">
                             @EndText
-                        </MudText>
+                        </HamkareText>
                     }
 
                     @if (!string.IsNullOrEmpty(EndIcon))
                     {
-                        <div class="mud-treeview-item-icon">
-                            <MudIcon Disabled="@Disabled" Icon="@EndIcon" Color="@EndIconColor" />
+                        <div class="hamkare-treeview-item-icon">
+                            <HamkareIcon Disabled="@Disabled" Icon="@EndIcon" Color="@EndIconColor" />
                         </div>
                     }
                 }
@@ -55,15 +55,15 @@
         </div>
         @if (HasChildren())
         {
-            <MudCollapse Expanded="@_expandedState.Value">
-                <CascadingValue Value="@MudTreeRoot" IsFixed="true">
+            <HamkareCollapse Expanded="@_expandedState.Value">
+                <CascadingValue Value="@HamkareTreeRoot" IsFixed="true">
                     <CascadingValue Value="this" IsFixed="true">
-                        <MudTreeView Items="@_itemsState.Value" ItemTemplate="MudTreeRoot?.ItemTemplate" Class="mud-treeview-group">
+                        <HamkareTreeView Items="@_itemsState.Value" ItemTemplate="HamkareTreeRoot?.ItemTemplate" Class="hamkare-treeview-group">
                             @ChildContent
-                        </MudTreeView>
+                        </HamkareTreeView>
                     </CascadingValue>
                 </CascadingValue>
-            </MudCollapse>
+            </HamkareCollapse>
         }
     </li>
 }

@@ -1,5 +1,5 @@
-﻿@namespace MudBlazor
-@inherits MudComponentBase
+﻿@namespace HamkareBlazor
+@inherits HamkareComponentBase
 @typeparam T
 
 
@@ -40,18 +40,18 @@
                 {
                     <div class="@PlaceholderClassname"></div>
                 }
-                <MudDynamicDropItem @key="_id" T="T"
+                <HamkareDynamicDropItem @key="_id" T="T"
                         Item="default"
                         ZoneIdentifier="@Identifier"
                         Disabled="true" HideContent="false"
-                        Class="mud-drop-item-preview-start" />
+                        Class="hamkare-drop-item-preview-start" />
             }
         }
         @foreach (var item in items)
         {
             var indexCopy = index;
 
-            <MudDynamicDropItem @key="@(item.GetHashCode())" T="T" DraggingClass="@GetItemDraggingClass()"
+            <HamkareDynamicDropItem @key="@(item.GetHashCode())" T="T" DraggingClass="@GetItemDraggingClass()"
                         Item="item"
                         OnDragStarted="DragOperationStarted"
                         OnDragEnded="FinishedDragOperation"
@@ -69,7 +69,7 @@
                     @renderer(item)
                 }
 
-            </MudDynamicDropItem>
+            </HamkareDynamicDropItem>
 
 
             if (transactionIndex == indexCopy && !IsOrigin(indexCopy))

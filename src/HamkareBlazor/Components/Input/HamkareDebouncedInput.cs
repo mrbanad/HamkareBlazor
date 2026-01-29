@@ -1,19 +1,19 @@
 ﻿using Microsoft.AspNetCore.Components;
-using MudBlazor.State;
-using MudBlazor.Utilities.Debounce;
+using HamkareBlazor.State;
+using HamkareBlazor.Utilities.Debounce;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
     /// <summary>
     /// A base class for designing input components which update after a delay.
     /// </summary>
     /// <typeparam name="T">The type of object managed by this input.</typeparam>
-    public abstract class MudDebouncedInput<T> : MudBaseInput<T>
+    public abstract class HamkareDebouncedInput<T> : HamkareBaseInput<T>
     {
         private DebounceDispatcher? _debouncer;
 
-        protected MudDebouncedInput()
+        protected HamkareDebouncedInput()
         {
             using var registerScope = CreateRegisterScope();
             registerScope.RegisterParameter<double>(nameof(DebounceInterval))
@@ -26,7 +26,7 @@ namespace MudBlazor
         private TimeProvider TimeProvider { get; set; } = null!;
 
         /// <summary>
-        /// The number of milliseconds to wait before updating the <see cref="MudBaseInput{T}.Text"/> value.
+        /// The number of milliseconds to wait before updating the <see cref="HamkareBaseInput{T}.Text"/> value.
         /// </summary>
         [Parameter, ParameterState(ParameterUsage = ParameterUsageOptions.None)]
         [Category(CategoryTypes.FormComponent.Behavior)]
@@ -36,7 +36,7 @@ namespace MudBlazor
         /// Occurs when the <see cref="DebounceInterval"/> has elapsed.
         /// </summary>
         /// <remarks>
-        /// The value in <see cref="MudBaseInput{T}.Text"/> is included in this event.
+        /// The value in <see cref="HamkareBaseInput{T}.Text"/> is included in this event.
         /// </remarks>
         [Parameter]
         public EventCallback<string> OnDebounceIntervalElapsed { get; set; }

@@ -1,19 +1,19 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System;
 using System.Threading.Tasks;
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 #nullable enable
 
 /// <summary>
-/// The information related to a <see cref="MudDropZone{T}"/> drag-and-drop transaction.
+/// The information related to a <see cref="HamkareDropZone{T}"/> drag-and-drop transaction.
 /// </summary>
 /// <typeparam name="T">The type of item being dragged and dropped.</typeparam>
-public class MudDragAndDropItemTransaction<T>
+public class HamkareDragAndDropItemTransaction<T>
 {
     private readonly Func<Task> _commitCallback;
     private readonly Func<Task> _cancelCallback;
@@ -51,7 +51,7 @@ public class MudDragAndDropItemTransaction<T>
     /// <param name="index">The index of the item when the transaction started.</param>
     /// <param name="commitCallback">Occurs when the item was successfully dropped.</param>
     /// <param name="cancelCallback">Occurs when the drag-and-drop operation was canceled.</param>
-    public MudDragAndDropItemTransaction(T? item, string identifier, int index, Func<Task> commitCallback, Func<Task> cancelCallback)
+    public HamkareDragAndDropItemTransaction(T? item, string identifier, int index, Func<Task> commitCallback, Func<Task> cancelCallback)
     {
         Item = item;
         SourceZoneIdentifier = identifier;

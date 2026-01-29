@@ -1,16 +1,16 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using MudBlazor.Services;
-using MudBlazor.State;
-using MudBlazor.Utilities;
-using MudBlazor.Utilities.Comparer;
-using MudBlazor.Utilities.Exceptions;
+using HamkareBlazor.Services;
+using HamkareBlazor.State;
+using HamkareBlazor.Utilities;
+using HamkareBlazor.Utilities.Comparer;
+using HamkareBlazor.Utilities.Exceptions;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
 
@@ -18,26 +18,26 @@ namespace MudBlazor
     /// A dropdown input for selecting an item from a list of options.
     /// </summary>
     /// <typeparam name="T">The kind of object being selected.</typeparam>
-    /// <seealso cref="MudSelectItem{T}"/>
-    /// <seealso cref="MudAutocomplete{T}"/>
-    public partial class MudSelect<T> : MudBaseInput<T>, IMudSelect, IMudShadowSelect
+    /// <seealso cref="HamkareSelectItem{T}"/>
+    /// <seealso cref="HamkareAutocomplete{T}"/>
+    public partial class HamkareSelect<T> : HamkareBaseInput<T>, IHamkareSelect, IHamkareShadowSelect
     {
         private string? _activeItemId;
         private bool? _selectAllChecked;
         private string? _multiSelectionText;
         private int _longestItemLength;
-        private MudSelectItem<T>? _longestItem;
+        private HamkareSelectItem<T>? _longestItem;
         private bool _needsHighlightAfterRender;
-        private MudInput<string> _elementReference = null!;
+        private HamkareInput<string> _elementReference = null!;
         private HashSet<T?> _selectedValues = new HashSet<T?>();
-        protected internal List<MudSelectItem<T>> _items = new();
+        protected internal List<HamkareSelectItem<T>> _items = new();
         private readonly string _elementId = Identifier.Create("select");
         private string _searchText = string.Empty;
         private string? _lastSelectedId = string.Empty;
         private DateTime _lastSearchTime = DateTime.MinValue;
         private readonly ParameterState<IEnumerable<T?>?> _selectedValuesState;
 
-        public MudSelect()
+        public HamkareSelect()
         {
             Adornment = Adornment.End;
             IconSize = Size.Medium;
@@ -58,24 +58,24 @@ namespace MudBlazor
         }
 
         protected string OuterClassname =>
-            new CssBuilder("mud-select")
-                .AddClass("mud-width-full", FullWidth)
-                .AddClass("mud-width-content", FitContent && !FullWidth)
+            new CssBuilder("hamkare-select")
+                .AddClass("hamkare-width-full", FullWidth)
+                .AddClass("hamkare-width-content", FitContent && !FullWidth)
                 .AddClass(OuterClass)
                 .Build();
 
         protected string Classname =>
-            new CssBuilder("mud-select")
+            new CssBuilder("hamkare-select")
                 .AddClass(Class)
                 .Build();
 
         protected string InputClassname =>
-            new CssBuilder("mud-select-input")
+            new CssBuilder("hamkare-select-input")
                 .AddClass(InputClass)
                 .Build();
 
         protected string FillerClassname =>
-            new CssBuilder("mud-select-filler")
+            new CssBuilder("hamkare-select-filler")
                 .AddClass("d-inline-block")
                 .AddClass("invisible")
                 .AddClass("mx-2", Variant == Variant.Text)
@@ -102,7 +102,7 @@ namespace MudBlazor
             var index = _items.FindIndex(x => x.ItemId == _activeItemId);
             if (direction < 0 && index < 0)
                 index = 0;
-            MudSelectItem<T>? item = null;
+            HamkareSelectItem<T>? item = null;
             // the loop allows us to jump over disabled items until we reach the next non-disabled one
             for (var i = 0; i < _items.Count; i++)
             {
@@ -137,7 +137,7 @@ namespace MudBlazor
             await _elementReference.SetText(ReadText);
             await ScrollToItemAsync(item);
         }
-        private ValueTask ScrollToItemAsync(MudSelectItem<T>? item)
+        private ValueTask ScrollToItemAsync(HamkareSelectItem<T>? item)
             => item != null ? ScrollManager.ScrollToListItemAsync(item.ItemId) : ValueTask.CompletedTask;
 
         private async Task SelectFirstItem(string? startChar = null)
@@ -171,7 +171,7 @@ namespace MudBlazor
             await SelectAndHighlightItemAsync(firstItem);
         }
 
-        private MudSelectItem<T>? SelectItemBySearch(IEnumerable<MudSelectItem<T>> items, string inputChar)
+        private HamkareSelectItem<T>? SelectItemBySearch(IEnumerable<HamkareSelectItem<T>> items, string inputChar)
         {
             var now = DateTime.UtcNow;
 
@@ -187,27 +187,27 @@ namespace MudBlazor
 
             _lastSearchTime = now;
 
-            var mudSelectItems = items as MudSelectItem<T>[] ?? items.ToArray();
+            var hamkareSelectItems = items as HamkareSelectItem<T>[] ?? items.ToArray();
 
-            var matchingItems = mudSelectItems
+            var matchingItems = hamkareSelectItems
                 .Where(x => !x.Disabled && ConvertSet(x.Value)?.StartsWith(_searchText, StringComparison.InvariantCultureIgnoreCase) == true)
                 .ToList();
 
             if (matchingItems.Count == 0)
-                return mudSelectItems.FirstOrDefault(x => x.ItemId == _activeItemId);
+                return hamkareSelectItems.FirstOrDefault(x => x.ItemId == _activeItemId);
 
-            var currentItem = mudSelectItems.FirstOrDefault(x => x.ItemId == _activeItemId);
+            var currentItem = hamkareSelectItems.FirstOrDefault(x => x.ItemId == _activeItemId);
             if (currentItem == null)
                 return matchingItems[0];
 
-            var previousItem = mudSelectItems.First(x => x.ItemId == _lastSelectedId);
+            var previousItem = hamkareSelectItems.First(x => x.ItemId == _lastSelectedId);
             var currentIndex = matchingItems.IndexOf(previousItem);
             var nextIndex = (currentIndex + 1) % matchingItems.Count;
 
             return matchingItems[nextIndex];
         }
 
-        private async Task SelectAndHighlightItemAsync(MudSelectItem<T> item)
+        private async Task SelectAndHighlightItemAsync(HamkareSelectItem<T> item)
         {
             if (!MultiSelection)
             {
@@ -327,7 +327,7 @@ namespace MudBlazor
         protected bool GetModal() => Modal ?? PopoverService.PopoverOptions.ModalOverlay;
 
         /// <summary>
-        /// The content within this component, typically a list of <see cref="MudSelectItem{T}"/> components.
+        /// The content within this component, typically a list of <see cref="HamkareSelectItem{T}"/> components.
         /// </summary>
         [Parameter]
         [Category(CategoryTypes.FormComponent.ListBehavior)]
@@ -584,14 +584,14 @@ namespace MudBlazor
         /// The list of choices the user can select.
         /// </summary>
         /// <remarks>
-        /// Use <see cref="MudSelectItem{T}"/> components to provide more items.
+        /// Use <see cref="HamkareSelectItem{T}"/> components to provide more items.
         /// </remarks>
-        public IReadOnlyList<MudSelectItem<T>> Items => _items;
+        public IReadOnlyList<HamkareSelectItem<T>> Items => _items;
 
-        protected Dictionary<NullableObject<T?>, MudSelectItem<T>> _valueLookup = new();
-        protected Dictionary<NullableObject<T?>, MudSelectItem<T>> _shadowLookup = new();
+        protected Dictionary<NullableObject<T?>, HamkareSelectItem<T>> _valueLookup = new();
+        protected Dictionary<NullableObject<T?>, HamkareSelectItem<T>> _shadowLookup = new();
 
-        internal bool Add(MudSelectItem<T>? item)
+        internal bool Add(HamkareSelectItem<T>? item)
         {
             if (item == null)
                 return false;
@@ -612,7 +612,7 @@ namespace MudBlazor
             return result == true;
         }
 
-        internal void Remove(MudSelectItem<T> item)
+        internal void Remove(HamkareSelectItem<T> item)
         {
             _items.Remove(item);
             _valueLookup.Remove(item.Value);
@@ -649,7 +649,7 @@ namespace MudBlazor
         public Origin TransformOrigin { get; set; } = Origin.TopLeft;
 
         /// <summary>
-        /// Restricts the selected values to the ones defined in <see cref="MudSelectItem{T}"/> items.
+        /// Restricts the selected values to the ones defined in <see cref="HamkareSelectItem{T}"/> items.
         /// </summary>
         /// <remarks>
         /// Defaults to <c>false</c>.  When <c>true</c>, any values not defined will not be displayed.
@@ -805,7 +805,7 @@ namespace MudBlazor
             return HighlightItemAsync(item);
         }
 
-        private Task HighlightItemAsync(MudSelectItem<T>? item)
+        private Task HighlightItemAsync(HamkareSelectItem<T>? item)
         {
             _activeItemId = item?.ItemId;
             return InvokeAsync(StateHasChanged);
@@ -931,7 +931,7 @@ namespace MudBlazor
             if (firstRender)
             {
                 var options = new KeyInterceptorOptions(
-                    "mud-input-control",
+                    "hamkare-input-control",
                     [
                         // prevent scrolling page, toggle open/close
                         new(" ", preventDown: "key+none"),
@@ -997,7 +997,7 @@ namespace MudBlazor
         }
 
         /// <summary>
-        /// Internal method for MudSelectItem to access the converted string value.
+        /// Internal method for HamkareSelectItem to access the converted string value.
         /// </summary>
         internal string? ConvertValueToString(T? value) => ConvertSet(value);
 
@@ -1009,7 +1009,7 @@ namespace MudBlazor
         {
             var itemT = selectItem.GetType().GenericTypeArguments[0];
             if (itemT != typeof(T))
-                throw new GenericTypeMismatchException("MudSelect", "MudSelectItem", typeof(T), itemT);
+                throw new GenericTypeMismatchException("HamkareSelect", "HamkareSelectItem", typeof(T), itemT);
         }
 
         /// <summary>
@@ -1306,7 +1306,7 @@ namespace MudBlazor
         /// Links a selection item to this component.
         /// </summary>
         /// <param name="item">The item to add.</param>
-        public void RegisterShadowItem(MudSelectItem<T>? item)
+        public void RegisterShadowItem(HamkareSelectItem<T>? item)
         {
             if (item == null)
                 return;
@@ -1330,7 +1330,7 @@ namespace MudBlazor
         /// Unregisters a selection item to this component.
         /// </summary>
         /// <param name="item">The item to remove.</param>
-        public void UnregisterShadowItem(MudSelectItem<T>? item)
+        public void UnregisterShadowItem(HamkareSelectItem<T>? item)
         {
             if (item == null)
                 return;

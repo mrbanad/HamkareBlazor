@@ -1,12 +1,12 @@
 @import '../abstracts/variables';
 
-.mud-toggle-group {
+.hamkare-toggle-group {
   display: grid;
   overflow: hidden;
   box-sizing: border-box;
-  border-radius: var(--mud-default-borderradius);
+  border-radius: var(--hamkare-default-borderradius);
 
-  & > .mud-toggle-item {
+  & > .hamkare-toggle-item {
     box-shadow: none;
     border-width: inherit;
     border-color: inherit;
@@ -14,20 +14,20 @@
   }
 }
 
-.mud-toggle-group-outlined {
+.hamkare-toggle-group-outlined {
   border-width: 1px;
-  border-color: rgba(var(--mud-palette-text-primary-rgb), var(--mud-palette-border-opacity));
+  border-color: rgba(var(--hamkare-palette-text-primary-rgb), var(--hamkare-palette-border-opacity));
 
-  @each $color in $mud-palette-colors {
-    &.mud-toggle-group-#{$color} {
-      border-color: rgba(var(--mud-palette-#{$color}-rgb), var(--mud-palette-border-opacity));
+  @each $color in $hamkare-palette-colors {
+    &.hamkare-toggle-group-#{$color} {
+      border-color: rgba(var(--hamkare-palette-#{$color}-rgb), var(--hamkare-palette-border-opacity));
     }
   }
 
-  &.mud-toggle-group-horizontal {
-    &:not(.mud-toggle-group-rtl) {
-      > .mud-toggle-item:not(:first-child), > :not(:first-child) .mud-toggle-item {
-        &.mud-toggle-item-delimiter {
+  &.hamkare-toggle-group-horizontal {
+    &:not(.hamkare-toggle-group-rtl) {
+      > .hamkare-toggle-item:not(:first-child), > :not(:first-child) .hamkare-toggle-item {
+        &.hamkare-toggle-item-delimiter {
           border-left-style: solid !important;
         }
 
@@ -35,9 +35,9 @@
       }
     }
 
-    &.mud-toggle-group-rtl {
-      > .mud-toggle-item:not(:last-child), > :not(:last-child) .mud-toggle-item {
-        &.mud-toggle-item-delimiter {
+    &.hamkare-toggle-group-rtl {
+      > .hamkare-toggle-item:not(:last-child), > :not(:last-child) .hamkare-toggle-item {
+        &.hamkare-toggle-item-delimiter {
           border-left-style: solid !important;
         }
 
@@ -46,9 +46,9 @@
     }
   }
 
-  &.mud-toggle-group-vertical {
-    > .mud-toggle-item:not(:first-child), > :not(:first-child) .mud-toggle-item {
-      &.mud-toggle-item-delimiter {
+  &.hamkare-toggle-group-vertical {
+    > .hamkare-toggle-item:not(:first-child), > :not(:first-child) .hamkare-toggle-item {
+      &.hamkare-toggle-item-delimiter {
         border-top-style: solid !important;
       }
 
@@ -57,50 +57,50 @@
   }
 }
 
-.mud-toggle-item {
+.hamkare-toggle-item {
   padding: 6px;
   min-width: auto;
   border-style: none !important;
   display: flex;
   justify-content: center;
 
-  & > .mud-button-label {
+  & > .hamkare-button-label {
     min-height: 20px;
   }
 
-  .mud-toggle-item-check-icon {
+  .hamkare-toggle-item-check-icon {
     margin: 0 6px;
     font-size: 20px;
   }
 }
 
-.mud-toggle-item-size-small {
+.hamkare-toggle-item-size-small {
   padding: 4px;
 
-  .mud-toggle-item-check-icon {
+  .hamkare-toggle-item-check-icon {
     margin: 0 4px;
     font-size: 18px;
   }
 }
 
-.mud-toggle-item-size-large {
+.hamkare-toggle-item-size-large {
   padding: 8px;
 
-  .mud-toggle-item-check-icon {
+  .hamkare-toggle-item-check-icon {
     margin: 0 8px;
     font-size: 22px;
   }
 }
 
-.mud-toggle-item-fixed > .mud-button-label:has(>.mud-toggle-item-check-icon) {
+.hamkare-toggle-item-fixed > .hamkare-button-label:has(>.hamkare-toggle-item-check-icon) {
   display: grid;
   grid-template-columns: 1fr repeat(3, auto) 1fr;
 }
 
-.mud-toggle-item-check-icon {
+.hamkare-toggle-item-check-icon {
   justify-self: start;
 }
 
-.mud-toggle-item-content {
+.hamkare-toggle-item-content {
   display: contents;
 }

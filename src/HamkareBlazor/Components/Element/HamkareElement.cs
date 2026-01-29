@@ -2,13 +2,13 @@
 using Microsoft.AspNetCore.Components.Rendering;
 using Microsoft.AspNetCore.Components.Web;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
     /// <summary>
     /// A primitive component which allows dynamically changing the HTML element rendered under the hood.
     /// </summary>
-    public class MudElement : MudComponentBase
+    public class HamkareElement : HamkareComponentBase
     {
         /// <summary>
         /// The content within this element.

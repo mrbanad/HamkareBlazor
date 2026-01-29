@@ -1,25 +1,25 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using MudBlazor.Utilities;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
 
     /// <summary>
-    /// A footer row displayed at the bottom of a <see cref="MudTable{T}"/> and each group.
+    /// A footer row displayed at the bottom of a <see cref="HamkareTable{T}"/> and each group.
     /// </summary>
-    public partial class MudTFootRow : MudComponentBase
+    public partial class HamkareTFootRow : HamkareComponentBase
     {
         private bool? _checked = false;
 
-        protected string Classname => new CssBuilder("mud-table-row")
+        protected string Classname => new CssBuilder("hamkare-table-row")
             .AddClass(Class)
             .Build();
 
         /// <summary>
-        /// The current state of the <see cref="MudTable{T}"/> containing this footer.
+        /// The current state of the <see cref="HamkareTable{T}"/> containing this footer.
         /// </summary>
         [CascadingParameter]
         public TableContext? Context { get; set; }
@@ -49,7 +49,7 @@ namespace MudBlazor
         public bool SelectionChangeable { get; set; } = true;
 
         /// <summary>
-        /// Hides the extra column displayed when <see cref="MudTableBase.MultiSelection"/> is <c>true</c>.
+        /// Hides the extra column displayed when <see cref="HamkareTableBase.MultiSelection"/> is <c>true</c>.
         /// </summary>
         /// <remarks>
         /// Defaults to <c>false</c>.
@@ -58,7 +58,7 @@ namespace MudBlazor
         public bool IgnoreCheckbox { get; set; }
 
         /// <summary>
-        /// Hides the extra column displayed when <see cref="MudTableBase.Editable"/> is <c>true</c>.
+        /// Hides the extra column displayed when <see cref="HamkareTableBase.Editable"/> is <c>true</c>.
         /// </summary>
         /// <remarks>
         /// Defaults to <c>false</c>.
@@ -118,7 +118,7 @@ namespace MudBlazor
         /// Sets <see cref="Checked"/> to the specified value.
         /// </summary>
         /// <param name="checkedState">The new checked state.</param>
-        /// <param name="notify">When <c>true</c>, the table's <see cref="MudTable{T}.OnHeaderCheckboxClicked(bool)"/> event occurs.</param>
+        /// <param name="notify">When <c>true</c>, the table's <see cref="HamkareTable{T}.OnHeaderCheckboxClicked(bool)"/> event occurs.</param>
         public void SetChecked(bool? checkedState, bool notify)
         {
             if (_checked != checkedState)

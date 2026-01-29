@@ -1,16 +1,16 @@
 ﻿using Microsoft.AspNetCore.Components;
-using MudBlazor.State;
-using MudBlazor.Utilities;
+using HamkareBlazor.State;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
     /// <summary>
     /// A container for content which can be collapsed and expanded.
     /// </summary>
-    /// <seealso cref="MudExpansionPanels"/>
-    /// <seealso cref="MudExpansionPanel"/>
-    public partial class MudCollapse : MudComponentBase
+    /// <seealso cref="HamkareExpansionPanels"/>
+    /// <seealso cref="HamkareExpansionPanel"/>
+    public partial class HamkareCollapse : HamkareComponentBase
     {
         private enum CollapseState
         {
@@ -20,10 +20,10 @@ namespace MudBlazor
         private readonly ParameterState<bool> _expandedState;
         private CollapseState _state = CollapseState.Exited;
 
-        protected string Classname => new CssBuilder("mud-collapse-container")
-            .AddClass("mud-collapse-entering", _state == CollapseState.Entering)
-            .AddClass("mud-collapse-entered", _state == CollapseState.Entered)
-            .AddClass("mud-collapse-exiting", _state == CollapseState.Exiting)
+        protected string Classname => new CssBuilder("hamkare-collapse-container")
+            .AddClass("hamkare-collapse-entering", _state == CollapseState.Entering)
+            .AddClass("hamkare-collapse-entered", _state == CollapseState.Entered)
+            .AddClass("hamkare-collapse-exiting", _state == CollapseState.Exiting)
             .AddClass("invisible", _state == CollapseState.Exited)
             .AddClass(Class)
             .Build();
@@ -69,7 +69,7 @@ namespace MudBlazor
         [Parameter]
         public EventCallback<bool> ExpandedChanged { get; set; }
 
-        public MudCollapse()
+        public HamkareCollapse()
         {
             using var register = CreateRegisterScope();
             _expandedState = register.RegisterParameter<bool>(nameof(Expanded))

@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel;
 using NetEscapades.EnumGenerators;
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 /// <summary>
-/// Indicates how a <see cref="MudLink"/> is decorated.
+/// Indicates how a <see cref="HamkareLink"/> is decorated.
 /// </summary>
 [EnumExtensions]
 public enum Underline

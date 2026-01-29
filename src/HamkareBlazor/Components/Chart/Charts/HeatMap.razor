@@ -1,18 +1,18 @@
 ﻿@using System.Globalization
 
-@namespace MudBlazor.Charts
+@namespace HamkareBlazor.Charts
 
-@inherits MudChartBase<T, HeatMapChartOptions>
+@inherits HamkareChartBase<T, HeatMapChartOptions>
 
 @typeparam T
 
-@inject InternalMudLocalizer Localizer
+@inject InternalHamkareLocalizer Localizer
 
 @{
     var series = _series.Where(x => x.Visible).ToList();
 }
 
-<svg @ref="_elementReference" @attributes="UserAttributes" class="mud-chart-heat mud-ltr" width="@Width" height="@Height" viewBox="0 0 @_boundWidth.ToStr() @_boundHeight.ToStr()" style="@HoveredStylename">
+<svg @ref="_elementReference" @attributes="UserAttributes" class="hamkare-chart-heat hamkare-ltr" width="@Width" height="@Height" viewBox="0 0 @_boundWidth.ToStr() @_boundHeight.ToStr()" style="@HoveredStylename">
     @if (_options is { EnableSmoothGradient: true })
     {
         <defs>
@@ -100,14 +100,14 @@
             }
 
 
-            <g class="mud-chart-cell">
+            <g class="hamkare-chart-cell">
                 <!-- Group containing both the rectangle and the text -->
                 <g>
                     @{
 
                         var cellColor = _options is { EnableSmoothGradient: true }
                                 ? "transparent"
-                                : cell?.MudColor?.ToString(Utilities.MudColorOutputFormats.RGBA) ?? GetColorForValue(cell?.Value);
+                                : cell?.HamkareColor?.ToString(Utilities.HamkareColorOutputFormats.RGBA) ?? GetColorForValue(cell?.Value);
                     }
                     <rect x="@x.ToStr()"
                           y="@y.ToStr()"
@@ -173,13 +173,13 @@
             @if (row == 0 && _options?.XAxisLabelPosition == XAxisLabelPosition.Top && col < xAxisLabels.Length)
             {
                 <g transform="translate(@((x + _cellDimension.Width / 2).ToStr()), @((y - CellPadding).ToStr()))">
-                    <text class="mud-charts-xaxis" x="0" y="0" text-anchor="middle" font-size="@_dynamicFontSize.ToStr()">@xAxisLabels[col]</text>
+                    <text class="hamkare-charts-xaxis" x="0" y="0" text-anchor="middle" font-size="@_dynamicFontSize.ToStr()">@xAxisLabels[col]</text>
                 </g>
             }
             else if (row == RowCount - 1 && _options?.XAxisLabelPosition == XAxisLabelPosition.Bottom && col < xAxisLabels.Length)
             {
                 <g transform="translate(@((x + _cellDimension.Width / 2).ToStr()), @((y + _cellDimension.Height + _dynamicFontSize).ToStr()))">
-                    <text class="mud-charts-xaxis" x="0" y="0" text-anchor="middle" fill="black" font-size="@_dynamicFontSize.ToStr()">@xAxisLabels[col]</text>
+                    <text class="hamkare-charts-xaxis" x="0" y="0" text-anchor="middle" fill="black" font-size="@_dynamicFontSize.ToStr()">@xAxisLabels[col]</text>
                 </g>
             }
         }
@@ -188,13 +188,13 @@
         @if (_options?.YAxisLabelPosition == YAxisLabelPosition.Left)
         {
             <g transform="translate(@((_horizontalStartSpace - CellPadding).ToStr()), @((y + _cellDimension.Height / 2).ToStr()))">
-                @((MarkupString)$"<text class='mud-charts-yaxis' x='0' y='0' dominant-baseline='middle' text-anchor='end' font-size='{_dynamicFontSize.ToStr()}'>{rowLabel}</text>")
+                @((MarkupString)$"<text class='hamkare-charts-yaxis' x='0' y='0' dominant-baseline='middle' text-anchor='end' font-size='{_dynamicFontSize.ToStr()}'>{rowLabel}</text>")
             </g>
         }
         else if (_options?.YAxisLabelPosition == YAxisLabelPosition.Right)
         {
             <g transform="translate(@((_horizontalStartSpace + HeatmapWidth + CellPadding).ToStr()), @((y + _cellDimension.Height / 2).ToStr()))">
-                @((MarkupString)$"<text class='mud-charts-yaxis' x='0' y='0' dominant-baseline='middle' text-anchor='start' font-size='{_dynamicFontSize.ToStr()}'>{rowLabel}</text>")
+                @((MarkupString)$"<text class='hamkare-charts-yaxis' x='0' y='0' dominant-baseline='middle' text-anchor='start' font-size='{_dynamicFontSize.ToStr()}'>{rowLabel}</text>")
             </g>
         }
     }
@@ -216,7 +216,7 @@
 
                     <g transform="translate(@((legendX + offsetX).ToStr()), @(legendY.ToStr()))">
                         <!-- "Less" label -->
-                        <text class="mud-charts-xaxis" 
+                        <text class="hamkare-charts-xaxis" 
                         x="0"
                         y="0"
                         dominant-baseline="middle"
@@ -229,7 +229,7 @@
                             var x = (textWidth / 2) + (i * (LegendBox + legendPadding));
                             var tooltipX = legendX + offsetX + x + (LegendBox / 2);
 
-                            <g transform="translate(@x.ToStr(), 0)" class="mud-chart-heatmap-legend">
+                            <g transform="translate(@x.ToStr(), 0)" class="hamkare-chart-heatmap-legend">
                                 <rect @onmouseover="(e) => OnLegendMouseOver(e, _legends[index], new((float)tooltipX , (float)legendY))"
                                 @onmouseout="OnLegendMouseOut"
                                 x="0" 
@@ -257,7 +257,7 @@
                         }
 
                         <!-- "More" label -->
-                        <text class="mud-charts-xaxis"
+                        <text class="hamkare-charts-xaxis"
                         x="@(((textWidth / 2) + (_legends.Count * (LegendBox + legendPadding))).ToStr())"
                         y="0"
                         dominant-baseline="middle"
@@ -279,7 +279,7 @@
 
                     <g transform="translate(@legendX.ToStr(), @((legendY + offsetY).ToStr()))">
                         <!-- "Less" label -->
-                        <text class="mud-charts-xaxis" 
+                        <text class="hamkare-charts-xaxis" 
                         x="@offsetX.ToStr()" 
                         y="@(((textHeight / 2) - CellPadding - LegendBox).ToStr())" 
                         dominant-baseline="middle" 
@@ -293,7 +293,7 @@
                             var y = (textHeight / 2) + (i * (LegendBox + CellPadding));
                             var tooltipY = legendY + offsetY + y;
 
-                            <g transform="translate(0, @y.ToStr())" class="mud-chart-heatmap-legend">
+                            <g transform="translate(0, @y.ToStr())" class="hamkare-chart-heatmap-legend">
                                 <rect @onmouseover="(e) => OnLegendMouseOver(e, _legends[index], new((float)(legendX + (LegendBox / 2)) , (float)tooltipY))"
                                 @onmouseout="OnLegendMouseOut"
                                 x="0" 
@@ -320,7 +320,7 @@
                         }
 
                         <!-- "More" label -->
-                        <text class="mud-charts-xaxis"
+                        <text class="hamkare-charts-xaxis"
                         x="@offsetX.ToStr()"
                         y="@(((textHeight / 2) + ((_legends.Count) * (LegendBox + CellPadding))).ToStr())" 
                         dominant-baseline="middle" 
@@ -357,7 +357,7 @@
 
         if (TooltipTemplate is not null)
         {
-            <g class="mud-chart-tooltip" transform="translate(@tooltipX.ToStr(), @tooltipY.ToStr())">
+            <g class="hamkare-chart-tooltip" transform="translate(@tooltipX.ToStr(), @tooltipY.ToStr())">
                 @TooltipTemplate((path, color))
             </g>
         }

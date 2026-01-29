@@ -1,16 +1,16 @@
 ﻿#nullable enable
 using Microsoft.AspNetCore.Components;
-using MudBlazor.Utilities;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 /// <summary>
-/// Represents an item for the <see cref="MudFabMenu"/>.
+/// Represents an item for the <see cref="HamkareFabMenu"/>.
 /// </summary>
-public partial class MudFabMenuItem : MudFab
+public partial class HamkareFabMenuItem : HamkareFab
 {
     private new string Classname => new CssBuilder(base.Classname)
-        .AddClass("mud-fab-menu-item")
+        .AddClass("hamkare-fab-menu-item")
         .AddClass(Class)
         .Build();
 

@@ -1,23 +1,23 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using MudBlazor.Utilities;
+using HamkareBlazor.Utilities;
 
 #nullable enable
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
-    public partial class DataGridGroupRow<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)] T> : MudComponentBase
+    public partial class DataGridGroupRow<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)] T> : HamkareComponentBase
     {
         internal bool _expanded;
 
-        protected string GroupClassname => new CssBuilder("mud-table-cell")
-            .AddClass("mud-datagrid-group")
-            .AddClass($"mud-row-group-indented-{(GroupDefinition.Indentation ? Math.Min(GroupDefinition.Level, 5) : 0)}")
+        protected string GroupClassname => new CssBuilder("hamkare-table-cell")
+            .AddClass("hamkare-datagrid-group")
+            .AddClass($"hamkare-row-group-indented-{(GroupDefinition.Indentation ? Math.Min(GroupDefinition.Level, 5) : 0)}")
             .AddClass(GroupClassFunc?.Invoke(GroupDefinition))
             .AddClass(GroupClass)
             .Build();
@@ -29,7 +29,7 @@ namespace MudBlazor
 
         [Parameter, EditorRequired]
         [Category(CategoryTypes.DataGrid.Grouping)]
-        public MudDataGrid<T> DataGrid { get; set; } = null!;
+        public HamkareDataGrid<T> DataGrid { get; set; } = null!;
 
         [Parameter]
         [Category(CategoryTypes.DataGrid.Selecting)]

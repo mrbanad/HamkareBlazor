@@ -1,6 +1,6 @@
 // noinspection JSUnusedGlobalSymbols
 
-class MudFileUpload {
+class HamkareFileUpload {
     openFilePicker (id) {
         const element = document.getElementById(id);
 
@@ -25,4 +25,4 @@ class MudFileUpload {
     }
 }
 
-window.mudFileUpload = new MudFileUpload();
+window.hamkareFileUpload = new HamkareFileUpload();

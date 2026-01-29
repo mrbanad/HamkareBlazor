@@ -2,9 +2,9 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Options;
 using Microsoft.JSInterop;
-using MudBlazor.Interop;
+using HamkareBlazor.Interop;
 
-namespace MudBlazor.Services;
+namespace HamkareBlazor.Services;
 #nullable enable
 
 /// <summary>
@@ -59,7 +59,7 @@ internal sealed class ResizeObserver : IResizeObserver
             _cachedValueIds.Add(id, item);
         }
 
-        var boundingRect = await _jsRuntime.InvokeAsyncWithErrorHandling<BoundingClientRect[]?>([], "mudResizeObserver.connect", _id, _dotNetRef, filteredElements, elementIds, _options);
+        var boundingRect = await _jsRuntime.InvokeAsyncWithErrorHandling<BoundingClientRect[]?>([], "hamkareResizeObserver.connect", _id, _dotNetRef, filteredElements, elementIds, _options);
         var result = boundingRect.value ?? [];
         var counter = 0;
         foreach (var item in result)
@@ -80,7 +80,7 @@ internal sealed class ResizeObserver : IResizeObserver
             return;
         }
 
-        await _jsRuntime.InvokeVoidAsyncWithErrorHandling("mudResizeObserver.disconnect", _id, elementId);
+        await _jsRuntime.InvokeVoidAsyncWithErrorHandling("hamkareResizeObserver.disconnect", _id, elementId);
 
         _cachedValueIds.Remove(elementId);
         _cachedValues.Remove(element);
@@ -125,7 +125,7 @@ internal sealed class ResizeObserver : IResizeObserver
         {
             _disposed = true;
 
-            await _jsRuntime.InvokeVoidAsyncWithErrorHandling("mudResizeObserver.cancelListener", _id);
+            await _jsRuntime.InvokeVoidAsyncWithErrorHandling("hamkareResizeObserver.cancelListener", _id);
 
             _dotNetRef.Dispose();
             _cachedValueIds.Clear();

@@ -1,5 +1,5 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Diagnostics.CodeAnalysis;
@@ -7,19 +7,19 @@ using System.Numerics;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
-using MudBlazor.Extensions;
-using MudBlazor.Interop;
-using MudBlazor.Utilities.Debounce;
+using HamkareBlazor.Extensions;
+using HamkareBlazor.Interop;
+using HamkareBlazor.Utilities.Debounce;
 
 #nullable enable
-namespace MudBlazor.Charts;
+namespace HamkareBlazor.Charts;
 
 /// <summary>
 /// Represents a base class for radial charts.
 /// </summary>
 /// <typeparam name="T">The data type of the chart.</typeparam>
 /// <typeparam name="TOptions">The type of options for the chart.</typeparam>
-public abstract class MudRadialChartBase<T, TOptions> : MudChartBase<T, TOptions>, IDisposable
+public abstract class HamkareRadialChartBase<T, TOptions> : HamkareChartBase<T, TOptions>, IDisposable
     where T : struct, INumber<T>, IMinMaxValue<T>, IFormattable
     where TOptions : IRadialChartOptions
 {
@@ -30,13 +30,13 @@ public abstract class MudRadialChartBase<T, TOptions> : MudChartBase<T, TOptions
     /// The chart, if any, containing this component.
     /// </summary>
     [CascadingParameter]
-    public MudChart<T>? MudChartParent { get; set; }
+    public HamkareChart<T>? HamkareChartParent { get; set; }
 
     private const double BoundWidthDefault = 280;
     private const double BoundHeightDefault = 280;
     private const int DebounceIntervalMs = 200;
 
-    private readonly DotNetObjectReference<MudRadialChartBase<T, TOptions>> _dotNetObjectReference;
+    private readonly DotNetObjectReference<HamkareRadialChartBase<T, TOptions>> _dotNetObjectReference;
     private readonly DebounceDispatcher _debouncer = new(DebounceIntervalMs, leading: true);
 
     private ElementSize? _elementSize;
@@ -77,11 +77,11 @@ public abstract class MudRadialChartBase<T, TOptions> : MudChartBase<T, TOptions
     protected double Radius => Math.Round(Math.Min(_boundWidth, _boundHeight) / 2);
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="MudRadialChartBase{T, TOptions}"/> class.
+    /// Initializes a new instance of the <see cref="HamkareRadialChartBase{T, TOptions}"/> class.
     /// </summary>
     [DynamicDependency(nameof(OnElementSizeChanged))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(ElementSize))]
-    protected MudRadialChartBase()
+    protected HamkareRadialChartBase()
     {
         _dotNetObjectReference = DotNetObjectReference.Create(this);
     }
@@ -113,7 +113,7 @@ public abstract class MudRadialChartBase<T, TOptions> : MudChartBase<T, TOptions
     /// <returns>A task representing the asynchronous operation.</returns>
     protected async Task SetElementReference(ElementReference elementRef)
     {
-        var elementSize = await JsRuntime.InvokeAsync<ElementSize>("mudObserveElementSize", _dotNetObjectReference, elementRef);
+        var elementSize = await JsRuntime.InvokeAsync<ElementSize>("hamkareObserveElementSize", _dotNetObjectReference, elementRef);
 
         OnElementSizeChanged(elementSize);
     }

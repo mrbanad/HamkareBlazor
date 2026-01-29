@@ -1,13 +1,13 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 #nullable enable
 
 /// <summary>
-/// Indicates the behavior which begins inline editing for a <see cref="MudTable{T}"/>.
+/// Indicates the behavior which begins inline editing for a <see cref="HamkareTable{T}"/>.
 /// </summary>
 public enum TableEditTrigger
 {

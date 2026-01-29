@@ -1,26 +1,26 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Components;
-using MudBlazor.Utilities;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
     /// <summary>
     /// Represents a cell displayed at the bottom of a column.
     /// </summary>
     /// <typeparam name="T">The kind of data managed by this footer.</typeparam>
-    public partial class FooterCell<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)] T> : MudComponentBase
+    public partial class FooterCell<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)] T> : HamkareComponentBase
     {
         /// <summary>
-        /// The <see cref="MudDataGrid{T}"/> which contains this footer cell.
+        /// The <see cref="HamkareDataGrid{T}"/> which contains this footer cell.
         /// </summary>
         [CascadingParameter]
-        public MudDataGrid<T>? DataGrid { get; set; }
+        public HamkareDataGrid<T>? DataGrid { get; set; }
 
         /// <summary>
         /// The column related to this footer cell.

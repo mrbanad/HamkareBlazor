@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel;
 using NetEscapades.EnumGenerators;
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 /// <summary>
-/// Indicates the shape of a <see cref="MudSkeleton"/> component.
+/// Indicates the shape of a <see cref="HamkareSkeleton"/> component.
 /// </summary>
 [EnumExtensions]
 public enum SkeletonType
@@ -13,7 +13,7 @@ public enum SkeletonType
     /// The skeleton is a placeholder for text.
     /// </summary>
     /// <remarks>
-    /// Use the <see cref="MudSkeleton.Width"/> and <see cref="MudSkeleton.Height"/> parameters to control its size.
+    /// Use the <see cref="HamkareSkeleton.Width"/> and <see cref="HamkareSkeleton.Height"/> parameters to control its size.
     /// </remarks>
     [Description("text")]
     Text,
@@ -22,7 +22,7 @@ public enum SkeletonType
     /// The skeleton displays a circle shape.
     /// </summary>
     /// <remarks>
-    /// Use the <see cref="MudSkeleton.Width"/> and <see cref="MudSkeleton.Height"/> parameters to control its size.
+    /// Use the <see cref="HamkareSkeleton.Width"/> and <see cref="HamkareSkeleton.Height"/> parameters to control its size.
     /// </remarks>
     [Description("circle")]
     Circle,
@@ -31,7 +31,7 @@ public enum SkeletonType
     /// The skeleton displays a rectangle shape.
     /// </summary>
     /// <remarks>
-    /// Use the <see cref="MudSkeleton.Width"/> and <see cref="MudSkeleton.Height"/> parameters to control its size.
+    /// Use the <see cref="HamkareSkeleton.Width"/> and <see cref="HamkareSkeleton.Height"/> parameters to control its size.
     /// </remarks>
     [Description("rectangle")]
     Rectangle

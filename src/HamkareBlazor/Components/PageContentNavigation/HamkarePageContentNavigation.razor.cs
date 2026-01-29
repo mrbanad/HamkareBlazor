@@ -1,35 +1,35 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using Microsoft.AspNetCore.Components;
-using MudBlazor.Interfaces;
-using MudBlazor.Utilities;
+using HamkareBlazor.Interfaces;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
 
     /// <summary>
     /// A drawer used to navigate sections on a page.
     /// </summary>
-    public partial class MudPageContentNavigation : IAsyncDisposable, IMudStateHasChanged
+    public partial class HamkarePageContentNavigation : IAsyncDisposable, IHamkareStateHasChanged
     {
-        private List<MudPageContentSection> _sections = new();
+        private List<HamkarePageContentSection> _sections = new();
         private IScrollSpy? _scrollSpy;
 
         [Inject]
         private IScrollSpyFactory ScrollSpyFactory { get; set; } = null!;
 
         /// <summary>
-        /// The displayed section within the MudPageContentNavigation
+        /// The displayed section within the HamkarePageContentNavigation
         /// </summary>
-        public IEnumerable<MudPageContentSection> Sections => _sections.AsEnumerable();
+        public IEnumerable<HamkarePageContentSection> Sections => _sections.AsEnumerable();
 
         /// <summary>
         /// The currently active session. null if there is no section selected
         /// </summary>
-        public MudPageContentSection? ActiveSection => _sections.FirstOrDefault(x => x.Active);
+        public HamkarePageContentSection? ActiveSection => _sections.FirstOrDefault(x => x.Active);
 
         /// <summary>
         /// The text displayed about the section links. Defaults to "Contents"
@@ -96,7 +96,7 @@ namespace MudBlazor
             StateHasChanged();
         }
 
-        private string GetNavLinkClass(MudPageContentSection section) =>
+        private string GetNavLinkClass(HamkarePageContentSection section) =>
             new CssBuilder("page-content-navigation-navlink")
                 .AddClass("active", section.Active)
                 .AddClass($"navigation-level-{section.Level}")
@@ -122,16 +122,16 @@ namespace MudBlazor
         /// <param name="sectionName">name of the section will be displayed in the navigation</param>
         /// <param name="sectionId">id of the section. It will be appending to the current url, if the section becomes active</param>
         /// <param name="forceUpdate">If true, StateHasChanged is called, forcing a re-render of the component</param>
-        public void AddSection(string sectionName, string sectionId, bool forceUpdate) => AddSection(new MudPageContentSection(sectionName, sectionId), forceUpdate);
+        public void AddSection(string sectionName, string sectionId, bool forceUpdate) => AddSection(new HamkarePageContentSection(sectionName, sectionId), forceUpdate);
 
-        private Dictionary<MudPageContentSection, MudPageContentSection> _parentMapper = new();
+        private Dictionary<HamkarePageContentSection, HamkarePageContentSection> _parentMapper = new();
 
         /// <summary>
         /// Add a section to the content navigation
         /// </summary>
         /// <param name="section">The section that needs to be added</param>
         /// <param name="forceUpdate">If true, StateHasChanged is called, forcing a re-render of the component</param>
-        public void AddSection(MudPageContentSection section, bool forceUpdate)
+        public void AddSection(HamkarePageContentSection section, bool forceUpdate)
         {
             _sections.Add(section);
 
@@ -159,7 +159,7 @@ namespace MudBlazor
             }
         }
 
-        void IMudStateHasChanged.StateHasChanged() => StateHasChanged();
+        void IHamkareStateHasChanged.StateHasChanged() => StateHasChanged();
 
         protected override void OnInitialized()
         {

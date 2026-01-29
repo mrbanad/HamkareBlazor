@@ -1,33 +1,33 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.JSInterop;
-using MudBlazor.Interop;
-using MudBlazor.Utilities.Background.Batch;
-using MudBlazor.Utilities.ObserverManager;
+using HamkareBlazor.Interop;
+using HamkareBlazor.Utilities.Background.Batch;
+using HamkareBlazor.Utilities.ObserverManager;
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 #nullable enable
 /// <summary>
 /// Represents a service for managing popovers.
 /// </summary>
-internal class PopoverService : IPopoverService, IBatchTimerHandler<MudPopoverHolder>
+internal class PopoverService : IPopoverService, IBatchTimerHandler<HamkarePopoverHolder>
 {
     private bool _disposed;
     private bool _isInitializing;
     private readonly PopoverJsInterop _popoverJsInterop;
     private readonly CancellationToken _cancellationToken;
-    private readonly Dictionary<Guid, MudPopoverHolder> _holders;
+    private readonly Dictionary<Guid, HamkarePopoverHolder> _holders;
     private readonly CancellationTokenSource _cancellationTokenSource;
-    private readonly BatchPeriodicQueue<MudPopoverHolder> _batchExecutor;
+    private readonly BatchPeriodicQueue<HamkarePopoverHolder> _batchExecutor;
     private readonly ObserverManager<Guid, IPopoverObserver> _observerManager;
 
     /// <inheritdoc />
-    public IEnumerable<IMudPopoverHolder> ActivePopovers => _holders.Values;
+    public IEnumerable<IHamkarePopoverHolder> ActivePopovers => _holders.Values;
 
     /// <inheritdoc />
     public bool IsInitialized { get; private set; }
@@ -60,12 +60,12 @@ internal class PopoverService : IPopoverService, IBatchTimerHandler<MudPopoverHo
     public PopoverService(ILogger<PopoverService> logger, IJSRuntime jsInterop, IOptions<PopoverOptions>? options = null)
     {
         PopoverOptions = options?.Value ?? new PopoverOptions();
-        _holders = new Dictionary<Guid, MudPopoverHolder>();
+        _holders = new Dictionary<Guid, HamkarePopoverHolder>();
         _cancellationTokenSource = new CancellationTokenSource();
         // Cache the token to avoid passing the CancellationTokenSource itself because it will throw once you access it after it's disposed
         _cancellationToken = _cancellationTokenSource.Token;
         _popoverJsInterop = new PopoverJsInterop(jsInterop);
-        _batchExecutor = new BatchPeriodicQueue<MudPopoverHolder>(this, PopoverOptions.QueueDelay);
+        _batchExecutor = new BatchPeriodicQueue<HamkarePopoverHolder>(this, PopoverOptions.QueueDelay);
         _observerManager = new ObserverManager<Guid, IPopoverObserver>(logger);
     }
 
@@ -105,11 +105,11 @@ internal class PopoverService : IPopoverService, IBatchTimerHandler<MudPopoverHo
         {
             if (ObserversCount == 0)
             {
-                throw new InvalidOperationException($"Missing <{nameof(MudPopoverProvider)} />, please add it to your layout. See https://mudblazor.com/getting-started/installation#manual-install-add-components");
+                throw new InvalidOperationException($"Missing <{nameof(HamkarePopoverProvider)} />, please add it to your layout. See https://hamkareblazor.com/getting-started/installation#manual-install-add-components");
             }
         }
 
-        var holder = new MudPopoverHolder(popover.Id)
+        var holder = new HamkarePopoverHolder(popover.Id)
             .SetFragment(popover.ChildContent)
             .SetClass(popover.PopoverClass)
             .SetStyle(popover.PopoverStyles)
@@ -190,10 +190,10 @@ internal class PopoverService : IPopoverService, IBatchTimerHandler<MudPopoverHo
     }
 
     /// <inheritdoc />
-    public virtual Task OnBatchTimerElapsedAsync(IReadOnlyCollection<MudPopoverHolder> items, CancellationToken stoppingToken)
+    public virtual Task OnBatchTimerElapsedAsync(IReadOnlyCollection<HamkarePopoverHolder> items, CancellationToken stoppingToken)
     {
         // In our case we do not care if the cancellation token in requested, we should not interrupt the process and just detach to clean-up resources.
-        // In the future, there might be a requirement to split the jobs and introduce a change where instead of using IReadOnlyCollection<MudPopoverHolder>,
+        // In the future, there might be a requirement to split the jobs and introduce a change where instead of using IReadOnlyCollection<HamkarePopoverHolder>,
         // we would utilize IReadOnlyCollection<PopoverQueueContainer>. This new collection would consist of various operations, such as detaching items, rendering items,
         // and triggering the PopoverCollectionUpdatedNotification, among others.
         return DetachRangeAsync(items);
@@ -231,7 +231,7 @@ internal class PopoverService : IPopoverService, IBatchTimerHandler<MudPopoverHo
 
     private Task DestroyPopoversQuick()
     {
-        var holdersListCopy = new List<MudPopoverHolder>(_holders.Values);
+        var holdersListCopy = new List<HamkarePopoverHolder>(_holders.Values);
         _holders.Clear();
 
         holdersListCopy.ForEach(holder => holder.IsDetached = true);
@@ -252,7 +252,7 @@ internal class PopoverService : IPopoverService, IBatchTimerHandler<MudPopoverHo
         }
         // Although it is not completely detached from the JS side until OnBatchTimerElapsedAsync fires, we mark it as "Detached"
         // because we want to let know the UpdatePopoverAsync method that there is no need to update it anymore,
-        // as it is no longer being rendered by MudPopoverProvider since it has been removed from the ActivePopovers collection.
+        // as it is no longer being rendered by HamkarePopoverProvider since it has been removed from the ActivePopovers collection.
         // Perhaps we could consider adding a state indicating that the object is queued for detaching instead.
         holder.IsDetached = true;
 
@@ -261,7 +261,7 @@ internal class PopoverService : IPopoverService, IBatchTimerHandler<MudPopoverHo
         return true;
     }
 
-    private async Task DetachRangeAsync(IReadOnlyCollection<MudPopoverHolder> holders)
+    private async Task DetachRangeAsync(IReadOnlyCollection<HamkarePopoverHolder> holders)
     {
         if (_disposed)
         {
@@ -290,7 +290,7 @@ internal class PopoverService : IPopoverService, IBatchTimerHandler<MudPopoverHo
         }
     }
 
-    private async Task InitializePopoverIfNeededAsync(MudPopoverHolder holder)
+    private async Task InitializePopoverIfNeededAsync(HamkarePopoverHolder holder)
     {
         if (_disposed || holder.IsConnected || holder.IsDetached)
         {

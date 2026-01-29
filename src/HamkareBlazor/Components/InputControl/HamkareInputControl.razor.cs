@@ -1,35 +1,35 @@
 ﻿using Microsoft.AspNetCore.Components;
-using MudBlazor.Utilities;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
 
     /// <summary>
     /// A base class for designing input components.
     /// </summary>
-    public partial class MudInputControl : MudComponentBase
+    public partial class HamkareInputControl : HamkareComponentBase
     {
         protected string Classname =>
-            new CssBuilder("mud-input-control")
-                .AddClass("mud-input-required", when: () => Required)
-                .AddClass($"mud-input-control-margin-{Margin.ToStringFast(true)}", when: () => Margin != Margin.None)
-                .AddClass("mud-input-control-full-width", FullWidth)
-                .AddClass("mud-input-error", Error)
-                .AddClass($"mud-input-{Variant.ToStringFast(true)}-with-label", !string.IsNullOrEmpty(Label))
+            new CssBuilder("hamkare-input-control")
+                .AddClass("hamkare-input-required", when: () => Required)
+                .AddClass($"hamkare-input-control-margin-{Margin.ToStringFast(true)}", when: () => Margin != Margin.None)
+                .AddClass("hamkare-input-control-full-width", FullWidth)
+                .AddClass("hamkare-input-error", Error)
+                .AddClass($"hamkare-input-{Variant.ToStringFast(true)}-with-label", !string.IsNullOrEmpty(Label))
                 .AddClass(Class)
                 .Build();
 
         protected string HelperContainer =>
-            new CssBuilder("mud-input-control-helper-container")
+            new CssBuilder("hamkare-input-control-helper-container")
                 .AddClass("px-1", Variant == Variant.Filled)
                 .AddClass("px-2", Variant == Variant.Outlined)
                 .Build();
 
         protected string HelperClass =>
-            new CssBuilder("mud-input-helper-text")
-                .AddClass("mud-input-helper-onfocus", HelperTextOnFocus)
-                .AddClass("mud-input-error", Error)
+            new CssBuilder("hamkare-input-helper-text")
+                .AddClass("hamkare-input-helper-onfocus", HelperTextOnFocus)
+                .AddClass("hamkare-input-error", Error)
                 .Build();
 
         /// <summary>

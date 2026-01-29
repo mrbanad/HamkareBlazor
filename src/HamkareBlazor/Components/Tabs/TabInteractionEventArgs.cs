@@ -1,13 +1,13 @@
-﻿// Copyright (c) MudBlazor 2023
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2023
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 #nullable enable
 
 /// <summary>
-/// The information about a requested activity when <see cref="MudTabs.OnPreviewInteraction"/> occurs.
+/// The information about a requested activity when <see cref="HamkareTabs.OnPreviewInteraction"/> occurs.
 /// </summary>
 public class TabInteractionEventArgs
 {

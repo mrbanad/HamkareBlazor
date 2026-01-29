@@ -1,12 +1,12 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 #nullable enable
 /// <summary>
-/// Represents the operation types for <see cref="IMudPopoverHolder"/>.
+/// Represents the operation types for <see cref="IHamkarePopoverHolder"/>.
 /// </summary>
 public enum PopoverHolderOperation
 {

@@ -1,10 +1,10 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using Microsoft.AspNetCore.Components.Web;
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 #nullable enable
 public class MultiDimensionSwipeEventArgs
@@ -20,9 +20,9 @@ public class MultiDimensionSwipeEventArgs
     public IReadOnlyList<double?> SwipeDeltas { get; }
 
     /// <summary>
-    /// The <see cref="MudSwipeArea"/> which raised the swipe event.
+    /// The <see cref="HamkareSwipeArea"/> which raised the swipe event.
     /// </summary>
-    public MudSwipeArea Sender { get; }
+    public HamkareSwipeArea Sender { get; }
 
     /// <summary>
     /// The direction list of the swipe. Has two values, one for the x-axis and one for the y-axis.
@@ -35,8 +35,8 @@ public class MultiDimensionSwipeEventArgs
     /// <param name="touchEventArgs">The size, pressure, and tilt of the pointer.</param>
     /// <param name="swipeDirections">The direction of the swipe.</param>
     /// <param name="swipeDeltas">The distance of the swipe movement, in pixels.</param>
-    /// <param name="sender">The <see cref="MudSwipeArea" /> which originated the swipe event.</param>
-    public MultiDimensionSwipeEventArgs(PointerEventArgs touchEventArgs, IReadOnlyList<SwipeDirection> swipeDirections, IReadOnlyList<double?> swipeDeltas, MudSwipeArea sender)
+    /// <param name="sender">The <see cref="HamkareSwipeArea" /> which originated the swipe event.</param>
+    public MultiDimensionSwipeEventArgs(PointerEventArgs touchEventArgs, IReadOnlyList<SwipeDirection> swipeDirections, IReadOnlyList<double?> swipeDeltas, HamkareSwipeArea sender)
     {
         TouchEventArgs = touchEventArgs;
         SwipeDirections = swipeDirections;

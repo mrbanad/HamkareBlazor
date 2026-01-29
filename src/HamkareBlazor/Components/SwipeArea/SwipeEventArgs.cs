@@ -1,14 +1,14 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using Microsoft.AspNetCore.Components.Web;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
     /// <summary>
-    /// Information about a swipe event when <see cref="MudSwipeArea.OnSwipeEnd"/> occurs.
+    /// Information about a swipe event when <see cref="HamkareSwipeArea.OnSwipeEnd"/> occurs.
     /// </summary>
     public class SwipeEventArgs
     {
@@ -23,9 +23,9 @@ namespace MudBlazor
         public double? SwipeDelta { get; }
 
         /// <summary>
-        /// The <see cref="MudSwipeArea"/> which raised the swipe event.
+        /// The <see cref="HamkareSwipeArea"/> which raised the swipe event.
         /// </summary>
-        public MudSwipeArea Sender { get; }
+        public HamkareSwipeArea Sender { get; }
 
         /// <summary>
         /// The direction of the swipe.
@@ -38,8 +38,8 @@ namespace MudBlazor
         /// <param name="touchEventArgs">The size, pressure, and tilt of the pointer.</param>
         /// <param name="swipeDirection">The direction of the swipe.</param>
         /// <param name="swipeDelta">The distance of the swipe movement, in pixels.</param>
-        /// <param name="sender">The <see cref="MudSwipeArea" /> which originated the swipe event.</param>
-        public SwipeEventArgs(PointerEventArgs touchEventArgs, SwipeDirection swipeDirection, double? swipeDelta, MudSwipeArea sender)
+        /// <param name="sender">The <see cref="HamkareSwipeArea" /> which originated the swipe event.</param>
+        public SwipeEventArgs(PointerEventArgs touchEventArgs, SwipeDirection swipeDirection, double? swipeDelta, HamkareSwipeArea sender)
         {
             TouchEventArgs = touchEventArgs;
             SwipeDirection = swipeDirection;

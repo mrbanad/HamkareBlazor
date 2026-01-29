@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel;
 using NetEscapades.EnumGenerators;
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 /// <summary>
-/// The vertical alignment applied to items in a <see cref="MudStack"/> or <see cref="MudDataGrid{T}"/>.
+/// The vertical alignment applied to items in a <see cref="HamkareStack"/> or <see cref="HamkareDataGrid{T}"/>.
 /// </summary>
 [EnumExtensions]
 public enum AlignItems

@@ -1,8 +1,8 @@
-﻿@namespace MudBlazor
-@using MudBlazor.Resources
-@inherits MudComponentBase
+﻿@namespace HamkareBlazor
+@using HamkareBlazor.Resources
+@inherits HamkareComponentBase
 
-@inject InternalMudLocalizer Localizer
+@inject InternalHamkareLocalizer Localizer
 
 <nav @attributes="UserAttributes"
      class="@Classname"
@@ -14,12 +14,12 @@
             class="@ButtonClassname"
             aria-controls="@_navigationContext.MenuId"
             aria-expanded="@_navigationContext.Expanded.ToString().ToLowerInvariant()"
-            aria-label="@Localizer[LanguageResource.MudNavGroup_ToggleExpand, Title ?? _navigationContext.MenuId]">
+            aria-label="@Localizer[LanguageResource.HamkareNavGroup_ToggleExpand, Title ?? _navigationContext.MenuId]">
         @if (!string.IsNullOrEmpty(Icon))
         {
-            <MudIcon Disabled="@Disabled" Icon="@Icon" Color="@IconColor" Class="@IconClassname" />
+            <HamkareIcon Disabled="@Disabled" Icon="@Icon" Color="@IconColor" Class="@IconClassname" />
         }
-        <div Class="mud-nav-link-text">
+        <div Class="hamkare-nav-link-text">
             @if (TitleContent is not null)
             {
                 @TitleContent
@@ -31,17 +31,17 @@
         </div>
         @if (!HideExpandIcon)
         {
-            <MudIcon Disabled="@Disabled" Icon="@ExpandIcon" Class="@ExpandIconClassname" />
+            <HamkareIcon Disabled="@Disabled" Icon="@ExpandIcon" Class="@ExpandIconClassname" />
         }
     </button>
-    <MudCollapse aria-hidden="@((!_navigationContext.Expanded).ToString().ToLowerInvariant())"
+    <HamkareCollapse aria-hidden="@((!_navigationContext.Expanded).ToString().ToLowerInvariant())"
                  Expanded="@_navigationContext.Expanded"
                  MaxHeight="@MaxHeight"
-                 Class="mud-navgroup-collapse">
+                 Class="hamkare-navgroup-collapse">
         <CascadingValue Value="@_navigationContext">
-            <MudNavMenu>
+            <HamkareNavMenu>
                 @ChildContent
-            </MudNavMenu>
+            </HamkareNavMenu>
         </CascadingValue>
-    </MudCollapse>
+    </HamkareCollapse>
 </nav>

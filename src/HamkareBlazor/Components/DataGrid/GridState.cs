@@ -1,5 +1,5 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Collections.Generic;
@@ -7,11 +7,11 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
     /// <summary>
-    /// Represents the current paging, sorting, and filtering for a <see cref="MudDataGrid{T}"/>.
+    /// Represents the current paging, sorting, and filtering for a <see cref="HamkareDataGrid{T}"/>.
     /// </summary>
     /// <typeparam name="T">The kind of item managed by the grid.</typeparam>
     public class GridState<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)] T>
@@ -62,7 +62,7 @@ namespace MudBlazor
     }
 
     /// <summary>
-    /// Represents data to display in a <see cref="MudDataGrid{T}"/>.
+    /// Represents data to display in a <see cref="HamkareDataGrid{T}"/>.
     /// </summary>
     /// <typeparam name="T">The kind of item managed by the grid.</typeparam>
     public class GridData<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)] T>

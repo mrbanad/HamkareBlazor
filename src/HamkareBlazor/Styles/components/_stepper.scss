@@ -1,17 +1,17 @@
 
 
-.mud-stepper {
+.hamkare-stepper {
 
-  .mud-stepper-nav {
+  .hamkare-stepper-nav {
 
-    .mud-step {
+    .hamkare-step {
       padding: 24px;
       position: relative;
       cursor: default;
       pointer-events: none;
       user-select: text;
 
-      &.mud-clickable {
+      &.hamkare-clickable {
         cursor: pointer;
         pointer-events: auto;
         user-select: none;
@@ -19,39 +19,39 @@
 
         @media(hover: hover) and (pointer: fine) {
           &:hover {
-            background-color: var(--mud-palette-action-default-hover);
+            background-color: var(--hamkare-palette-action-default-hover);
           }
         }
 
         &:focus-visible, &:active {
-          background-color: var(--mud-palette-action-default-hover);
+          background-color: var(--hamkare-palette-action-default-hover);
         }
       }
 
       &:disabled {
-        .mud-step-label-icon {
-          background-color: var(--mud-palette-lines-default) !important;
-          color: var(--mud-palette-text-disabled) !important;
+        .hamkare-step-label-icon {
+          background-color: var(--hamkare-palette-lines-default) !important;
+          color: var(--hamkare-palette-text-disabled) !important;
         }
 
-        .mud-step-label-content {
-          color: var(--mud-palette-text-disabled) !important;
+        .hamkare-step-label-content {
+          color: var(--hamkare-palette-text-disabled) !important;
         }
       }
 
-      .mud-step-label {
+      .hamkare-step-label {
         display: flex;
         align-items: center;
         flex-direction: row;
         height: 100%;
         gap: 8px;
 
-        .mud-step-label-icon {
+        .hamkare-step-label-icon {
           display: flex;
           flex-shrink: 0;
-          color: var(--mud-palette-white);
+          color: var(--hamkare-palette-white);
           border-radius: 50%;
-          background-color: var(--mud-palette-text-disabled);
+          background-color: var(--hamkare-palette-text-disabled);
           height: 24px;
           width: 24px;
           align-items: center;
@@ -61,136 +61,136 @@
           text-indent: 0;
           white-space: nowrap;
 
-          .mud-typography {
+          .hamkare-typography {
             line-height: 1;
           }
         }
 
-        .mud-step-label-content {
+        .hamkare-step-label-content {
           width: 100%;
-          color: var(--mud-palette-text-secondary);
-          --mud-ripple-color: var(--mud-palette-text-secondary);
+          color: var(--hamkare-palette-text-secondary);
+          --hamkare-ripple-color: var(--hamkare-palette-text-secondary);
           text-align: start;
         }
 
-        .mud-step-label-content-title {
-          line-height: var(--mud-typography-body2-lineheight)
+        .hamkare-step-label-content-title {
+          line-height: var(--hamkare-typography-body2-lineheight)
         }
       }
 
       &.active {
-        .mud-step-label-content {
-          color: var(--mud-palette-text-primary);
-          --mud-ripple-color: var(--mud-palette-text-primary);
+        .hamkare-step-label-content {
+          color: var(--hamkare-palette-text-primary);
+          --hamkare-ripple-color: var(--hamkare-palette-text-primary);
         }
       }
     }
 
-    &.mud-stepper-nav-scrollable {
+    &.hamkare-stepper-nav-scrollable {
       overflow: auto;
 
-      .mud-step {
+      .hamkare-step {
         min-width: fit-content;
       }
 
-      .mud-stepper-nav-connector {
+      .hamkare-stepper-nav-connector {
         min-width: 32px;
       }
     }
   }
 
-  .mud-stepper-content {
+  .hamkare-stepper-content {
     padding: 0 24px;
   }
 
-  .mud-stepper-nav-connector {
+  .hamkare-stepper-nav-connector {
     flex: 1 1 auto;
 
-    .mud-stepper-nav-connector-line {
+    .hamkare-stepper-nav-connector-line {
       display: block;
-      border-color: var(--mud-palette-lines-inputs);
+      border-color: var(--hamkare-palette-lines-inputs);
     }
   }
 
-  &.mud-stepper__horizontal {
+  &.hamkare-stepper__horizontal {
 
-    .mud-stepper-nav {
+    .hamkare-stepper-nav {
       display: flex;
     }
 
-    &.mud-stepper__center-labels {
+    &.hamkare-stepper__center-labels {
 
-      .mud-step {
+      .hamkare-step {
         flex-basis: 175px;
       }
 
-      .mud-step-label {
+      .hamkare-step-label {
         flex-direction: column;
         justify-content: flex-start;
         align-items: center;
 
-        .mud-step-label-icon {
+        .hamkare-step-label-icon {
           margin-inline-end: 0px !important;
         }
 
-        .mud-step-label-content {
+        .hamkare-step-label-content {
           margin-top: 12px;
           text-align: center;
         }
       }
 
-      .mud-stepper-nav-connector {
+      .hamkare-stepper-nav-connector {
         margin: 35px -67px 0;
         align-self: flex-start;
       }
     }
 
-    .mud-stepper-nav-connector {
+    .hamkare-stepper-nav-connector {
       align-self: center;
       margin: 0 -16px;
 
-      .mud-stepper-nav-connector-line {
+      .hamkare-stepper-nav-connector-line {
         border-top-style: solid;
         border-top-width: 1px;
       }
     }
   }
 
-  &.mud-stepper__vertical {
+  &.hamkare-stepper__vertical {
 
-    .mud-stepper-nav {
+    .hamkare-stepper-nav {
       padding: 8px 0px;
     }
 
-    .mud-step {
+    .hamkare-step {
       padding: 0 16px;
 
-      .mud-step-label {
+      .hamkare-step-label {
         padding: 8px 0px;
       }
     }
 
-    .mud-stepper-nav-connector {
+    .hamkare-stepper-nav-connector {
       margin-inline-start: 28px;
       margin-inline-end: 0;
 
-      .mud-stepper-nav-connector-line {
+      .hamkare-stepper-nav-connector-line {
         border-inline-start: 1px solid rgb(189, 189, 189);
         min-height: 24px;
       }
     }
 
-    .mud-stepper-content {
+    .hamkare-stepper-content {
       margin-inline-start: 28px;
       margin-inline-end: 0;
       padding-inline-start: 20px;
       padding-inline-end: 0;
-      border-inline-start: 1px solid var(--mud-palette-lines-inputs);
+      border-inline-start: 1px solid var(--hamkare-palette-lines-inputs);
     }
   }
 }
 
-.mud-stepper-step-button {
+.hamkare-stepper-step-button {
   display: inline-flex;
   -moz-box-align: center;
   align-items: center;

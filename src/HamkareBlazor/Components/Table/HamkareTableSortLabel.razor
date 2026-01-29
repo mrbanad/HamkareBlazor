@@ -1,6 +1,6 @@
-﻿@namespace MudBlazor
+﻿@namespace HamkareBlazor
 @typeparam T
-@inherits MudComponentBase
+@inherits HamkareComponentBase
 @implements IDisposable
 
 <span @onclick="ToggleSortDirection" class="@Classname" style="@Style" @attributes="@UserAttributes">
@@ -10,7 +10,7 @@
     }
     @if (Enabled)
     {
-        <MudIcon Icon="@SortIcon" Class="@SortIconClassname" />
+        <HamkareIcon Icon="@SortIcon" Class="@SortIconClassname" />
     }
     @if (AppendIcon)
     {

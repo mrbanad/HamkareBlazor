@@ -1,5 +1,5 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.ComponentModel.DataAnnotations;
@@ -9,14 +9,14 @@ using System.Linq.Expressions;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.Extensions.Logging;
-using MudBlazor.Extensions;
-using MudBlazor.Interfaces;
-using MudBlazor.State;
-using MudBlazor.Utilities.Comparer;
-using MudBlazor.Utilities.Converter.Base;
+using HamkareBlazor.Extensions;
+using HamkareBlazor.Interfaces;
+using HamkareBlazor.State;
+using HamkareBlazor.Utilities.Comparer;
+using HamkareBlazor.Utilities.Converter.Base;
 using static System.String;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
     /// <summary>
@@ -24,7 +24,7 @@ namespace MudBlazor
     /// </summary>
     /// <typeparam name="T">The complex type managed by this input.</typeparam>
     /// <typeparam name="U">The value type managed by this input.</typeparam>
-    public abstract class MudFormComponent<T, U> : MudComponentBase, IFormComponent, IAsyncDisposable
+    public abstract class HamkareFormComponent<T, U> : HamkareComponentBase, IFormComponent, IAsyncDisposable
     {
         private IConverter<T?, U?>? _defaultConverter;
         private ConversionResult<T?>? _getConversionResult;
@@ -37,9 +37,9 @@ namespace MudBlazor
         private readonly ParameterState<CultureInfo> _cultureState;
 
         [Inject]
-        private InternalMudLocalizer Localizer { get; set; } = null!;
+        private InternalHamkareLocalizer Localizer { get; set; } = null!;
 
-        protected MudFormComponent()
+        protected HamkareFormComponent()
         {
             using var registerScope = CreateRegisterScope();
             ErrorTextState = registerScope.RegisterParameter<string?>(nameof(ErrorText))
@@ -243,13 +243,13 @@ namespace MudBlazor
         /// </remarks>
         public bool Touched { get; protected set; }
 
-        #region MudForm Validation
+        #region HamkareForm Validation
 
         /// <summary>
         /// The list of problems with the current input value.
         /// </summary>
         /// <remarks>
-        /// When using a <see cref="MudForm"/>, this property is updated when validation has been performed.  Use the <see cref="Validation"/> property to control what validations are performed.
+        /// When using a <see cref="HamkareForm"/>, this property is updated when validation has been performed.  Use the <see cref="Validation"/> property to control what validations are performed.
         /// </remarks>
         public List<string> ValidationErrors { get; set; } = new();
 
@@ -257,7 +257,7 @@ namespace MudBlazor
         /// The function used to detect problems with the input.
         /// </summary>
         /// <remarks>
-        /// When using a <see cref="MudForm"/>, this property can be any of several kinds of functions:
+        /// When using a <see cref="HamkareForm"/>, this property can be any of several kinds of functions:
         /// <para>
         /// 1. A <c>Func&lt;T,bool&gt;</c> or <c>Func&lt;T,Task&lt;bool&gt;&gt;</c> function.  Returns <c>true</c> if valid.  When <c>false</c>, a standard <c>"Invalid"</c> message is shown.
         /// </para>
@@ -323,7 +323,7 @@ namespace MudBlazor
         /// Causes validation to be performed for this input.
         /// </summary>
         /// <remarks>
-        /// When using a <see cref="MudForm"/>, the input is validated via the function set in the <see cref="Validation"/> property.
+        /// When using a <see cref="HamkareForm"/>, the input is validated via the function set in the <see cref="Validation"/> property.
         /// </remarks>
         public Task ValidateAsync()
         {

@@ -1,22 +1,22 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Numerics;
 using Microsoft.AspNetCore.Components;
-using MudBlazor.Charts;
-using MudBlazor.State;
-using MudBlazor.Utilities;
+using HamkareBlazor.Charts;
+using HamkareBlazor.State;
+using HamkareBlazor.Utilities;
 
 #nullable enable
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 /// <summary>
 /// Represents a base class for chart components.
 /// </summary>
 /// <typeparam name="T">The data type of the chart.</typeparam>
 /// <typeparam name="TOptions">The type of options for the chart.</typeparam>
-public abstract class MudChartBase<T, TOptions> : MudComponentBase, IMudChart<T>
+public abstract class HamkareChartBase<T, TOptions> : HamkareComponentBase, IHamkareChart<T>
     where T : struct, INumber<T>, IMinMaxValue<T>, IFormattable
     where TOptions : IChartOptions
 {
@@ -32,7 +32,7 @@ public abstract class MudChartBase<T, TOptions> : MudComponentBase, IMudChart<T>
     /// </summary>
     [CascadingParameter]
     [Category(CategoryTypes.Chart.Behavior)]
-    public IMudChart<T>? ChartReference { get; set; }
+    public IHamkareChart<T>? ChartReference { get; set; }
 
     /// <summary>
     /// The labels describing data values.
@@ -171,8 +171,8 @@ public abstract class MudChartBase<T, TOptions> : MudComponentBase, IMudChart<T>
     /// <summary>
     /// The CSS classes for the chart component.
     /// </summary>
-    protected string Classname => new CssBuilder("mud-chart")
-        .AddClass($"mud-chart-legend-{ConvertLegendPosition(LegendPosition).ToStringFast(true)}")
+    protected string Classname => new CssBuilder("hamkare-chart")
+        .AddClass($"hamkare-chart-legend-{ConvertLegendPosition(LegendPosition).ToStringFast(true)}")
         .AddClass(Class)
         .Build();
 
@@ -182,9 +182,9 @@ public abstract class MudChartBase<T, TOptions> : MudComponentBase, IMudChart<T>
     protected readonly ParameterState<int> SelectedIndexState;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="MudChartBase{T, TOptions}"/> class.
+    /// Initializes a new instance of the <see cref="HamkareChartBase{T, TOptions}"/> class.
     /// </summary>
-    protected MudChartBase()
+    protected HamkareChartBase()
     {
         using var registerScope = CreateRegisterScope();
         SelectedIndexState = registerScope.RegisterParameter<int>(nameof(SelectedIndex))

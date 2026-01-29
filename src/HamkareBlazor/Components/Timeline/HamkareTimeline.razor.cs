@@ -1,28 +1,28 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using Microsoft.AspNetCore.Components;
-using MudBlazor.Utilities;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
 
     /// <summary>
     /// Displays items in chronological order.
     /// </summary>
-    /// <seealso cref="MudTimelineItem"/>
-    public partial class MudTimeline : MudBaseItemsControl<MudTimelineItem>
+    /// <seealso cref="HamkareTimelineItem"/>
+    public partial class HamkareTimeline : HamkareBaseItemsControl<HamkareTimelineItem>
     {
         protected string Classnames =>
-            new CssBuilder("mud-timeline")
-                .AddClass($"mud-timeline-{TimelineOrientation.ToStringFast(true)}")
-                .AddClass($"mud-timeline-position-{ConvertTimelinePosition().ToStringFast(true)}")
-                .AddClass($"mud-timeline-reverse", Reverse && TimelinePosition == TimelinePosition.Alternate)
-                .AddClass($"mud-timeline-align-{TimelineAlign.ToStringFast(true)}")
-                .AddClass($"mud-timeline-modifiers", Modifiers)
-                .AddClass($"mud-timeline-rtl", RightToLeft)
+            new CssBuilder("hamkare-timeline")
+                .AddClass($"hamkare-timeline-{TimelineOrientation.ToStringFast(true)}")
+                .AddClass($"hamkare-timeline-position-{ConvertTimelinePosition().ToStringFast(true)}")
+                .AddClass($"hamkare-timeline-reverse", Reverse && TimelinePosition == TimelinePosition.Alternate)
+                .AddClass($"hamkare-timeline-align-{TimelineAlign.ToStringFast(true)}")
+                .AddClass($"hamkare-timeline-modifiers", Modifiers)
+                .AddClass($"hamkare-timeline-rtl", RightToLeft)
                 .AddClass(Class)
                 .Build();
 
@@ -74,7 +74,7 @@ namespace MudBlazor
         public bool Reverse { get; set; } = false;
 
         /// <summary>
-        /// Enables modifiers for items, such as adding a caret for a <see cref="MudCard"/>.
+        /// Enables modifiers for items, such as adding a caret for a <see cref="HamkareCard"/>.
         /// </summary>
         /// <remarks>
         /// Defaults to <c>true</c>.

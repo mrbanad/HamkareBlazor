@@ -1,8 +1,8 @@
-﻿@namespace MudBlazor
-@inherits MudComponentBase
+﻿@namespace HamkareBlazor
+@inherits HamkareComponentBase
 
 <div @attributes="UserAttributes" class="@Classnames" style="@Style" @onclick="Select">
-    <div class="mud-timeline-item-content">
+    <div class="hamkare-timeline-item-content">
         @if (ChildContent is not null)
         {
             @ChildContent
@@ -12,7 +12,7 @@
             @ItemContent
         }
     </div>
-    <div class="mud-timeline-item-divider">
+    <div class="hamkare-timeline-item-divider">
         @if(!HideDot)
         {
             <div class="@DotClassnames">
@@ -27,7 +27,7 @@
     </div>
     @if (ItemOpposite is not null)
     {
-        <div class="mud-timeline-item-opposite">
+        <div class="hamkare-timeline-item-opposite">
             @ItemOpposite
         </div>
     }

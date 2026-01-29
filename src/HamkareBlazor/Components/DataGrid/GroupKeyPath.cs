@@ -2,7 +2,7 @@
 
 #nullable enable
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
     /// <summary>
     /// Represents a read-only, ordered collection of group key values forming a unique path through nested group levels.

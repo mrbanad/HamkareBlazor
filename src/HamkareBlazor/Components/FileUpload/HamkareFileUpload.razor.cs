@@ -1,5 +1,5 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using Microsoft.AspNetCore.Components;
@@ -7,12 +7,12 @@ using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.Extensions.Logging;
 using Microsoft.JSInterop;
-using MudBlazor.Interfaces;
-using MudBlazor.Resources;
-using MudBlazor.State;
-using MudBlazor.Utilities;
+using HamkareBlazor.Interfaces;
+using HamkareBlazor.Resources;
+using HamkareBlazor.State;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
 
@@ -20,7 +20,7 @@ namespace MudBlazor
     /// A form component for uploading one or more files.  For <c>T</c>, use either <c>IBrowserFile</c> for a single file or <c>IReadOnlyList&lt;IBrowserFile&gt;</c> for multiple files.
     /// </summary>
     /// <typeparam name="T">Either <see cref="IBrowserFile"/> for a single file or <see cref="IReadOnlyList{IBrowserFile}">IReadOnlyList&lt;IBrowserFile&gt;</see> for multiple files.</typeparam>
-    public partial class MudFileUpload<T> : MudFormComponent<T, string>, IActivatable
+    public partial class HamkareFileUpload<T> : HamkareFormComponent<T, string>, IActivatable
     {
         private readonly ParameterState<T?> _filesState;
 
@@ -28,12 +28,12 @@ namespace MudBlazor
         private IJSRuntime JsRuntime { get; set; } = null!;
 
         [Inject]
-        private InternalMudLocalizer Localizer { get; set; } = null!;
+        private InternalHamkareLocalizer Localizer { get; set; } = null!;
 
         /// <summary>
         /// Creates a new instance.
         /// </summary>
-        public MudFileUpload()
+        public HamkareFileUpload()
         {
             using var registerScope = CreateRegisterScope();
             _filesState = registerScope.RegisterParameter<T?>(nameof(Files))
@@ -45,7 +45,7 @@ namespace MudBlazor
         private readonly List<string> _validationErrors = [];
 
         protected string Classname =>
-            new CssBuilder("mud-file-upload")
+            new CssBuilder("hamkare-file-upload")
                 .AddClass(Class)
                 .Build();
 
@@ -144,7 +144,7 @@ namespace MudBlazor
         /// <remarks>
         /// These styles apply when <see cref="Hidden"/> is <c>false</c>.
         /// </remarks>
-        [Obsolete("Prefer the InputClass property with CSS https://github.com/MudBlazor/MudBlazor/issues/12047")]
+        [Obsolete("Prefer the InputClass property with CSS https://github.com/HamkareBlazor/HamkareBlazor/issues/12047")]
         [Parameter]
         [Category(CategoryTypes.FileUpload.Appearance)]
         public string? InputStyle { get; set; }
@@ -202,14 +202,14 @@ namespace MudBlazor
             _numberOfActiveFileInputs = 1;
 
             await NotifyValueChangedAsync(default);
-            await JsRuntime.InvokeVoidAsyncWithErrorHandling("mudInput.resetValue", GetActiveInputId());
+            await JsRuntime.InvokeVoidAsyncWithErrorHandling("hamkareInput.resetValue", GetActiveInputId());
         }
 
         /// <summary>
         /// Opens the file picker.
         /// </summary>
         public async Task OpenFilePickerAsync()
-            => await JsRuntime.InvokeVoidAsyncWithErrorHandling("mudFileUpload.openFilePicker", GetActiveInputId());
+            => await JsRuntime.InvokeVoidAsyncWithErrorHandling("hamkareFileUpload.openFilePicker", GetActiveInputId());
 
         /// <summary>
         /// Opens the file picker.
@@ -260,7 +260,7 @@ namespace MudBlazor
             {
                 if (MaxFileSize.HasValue && file.Size > MaxFileSize.Value)
                 {
-                    _validationErrors.Add(Localizer[LanguageResource.MudFileUpload_FileSizeError, file.Name, MaxFileSize.Value.ToString()]);
+                    _validationErrors.Add(Localizer[LanguageResource.HamkareFileUpload_FileSizeError, file.Name, MaxFileSize.Value.ToString()]);
                 }
                 else
                 {
@@ -283,7 +283,7 @@ namespace MudBlazor
 
             if (MaxFileSize.HasValue && file.Size > MaxFileSize.Value)
             {
-                _validationErrors.Add(Localizer[LanguageResource.MudFileUpload_FileSizeError, file.Name, MaxFileSize.Value.ToString()]);
+                _validationErrors.Add(Localizer[LanguageResource.HamkareFileUpload_FileSizeError, file.Name, MaxFileSize.Value.ToString()]);
                 return null;
             }
 

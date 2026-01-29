@@ -2,29 +2,29 @@
 using System.Diagnostics;
 using System.Linq;
 using Microsoft.AspNetCore.Components;
-using MudBlazor.Resources;
-using MudBlazor.Utilities;
+using HamkareBlazor.Resources;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
 
     /// <summary>
-    /// A component which changes pages and page size for a <see cref="MudTable{T}"/>.
+    /// A component which changes pages and page size for a <see cref="HamkareTable{T}"/>.
     /// </summary>
-    public partial class MudTablePager : MudComponentBase
+    public partial class HamkareTablePager : HamkareComponentBase
     {
         protected string Classname =>
-            new CssBuilder("mud-table-pagination-toolbar")
-                .AddClass("mud-tablepager-left", !RightToLeft)
-                .AddClass("mud-tablepager-right", RightToLeft)
+            new CssBuilder("hamkare-table-pagination-toolbar")
+                .AddClass("hamkare-tablepager-left", !RightToLeft)
+                .AddClass("hamkare-tablepager-right", RightToLeft)
                 .AddClass(Class)
                 .Build();
 
         protected string PaginationClassname =>
-            new CssBuilder("mud-table-pagination-display")
-                .AddClass("mud-tablepager-left", !RightToLeft)
-                .AddClass("mud-tablepager-right", RightToLeft)
+            new CssBuilder("hamkare-table-pagination-display")
+                .AddClass("hamkare-tablepager-left", !RightToLeft)
+                .AddClass("hamkare-tablepager-right", RightToLeft)
                 .AddClass(Class)
                 .Build();
 
@@ -32,7 +32,7 @@ namespace MudBlazor
         public bool RightToLeft { get; set; }
 
         /// <summary>
-        /// The current state of the <see cref="MudTable{T}"/> containing this pager.
+        /// The current state of the <see cref="HamkareTable{T}"/> containing this pager.
         /// </summary>
         [CascadingParameter]
         public TableContext? Context { get; set; }
@@ -65,7 +65,7 @@ namespace MudBlazor
         public bool HidePagination { get; set; }
 
         /// <summary>
-        /// The location of this pager relative to the parent <see cref="MudTable{T}"/>.
+        /// The location of this pager relative to the parent <see cref="HamkareTable{T}"/>.
         /// </summary>
         /// <remarks>
         /// Defaults to <see cref="HorizontalAlignment.Right"/>.
@@ -119,7 +119,7 @@ namespace MudBlazor
 
                 if (string.IsNullOrEmpty(InfoFormat))
                 {
-                    return Localizer[LanguageResource.MudDataGridPager_InfoFormat, firstItem, lastItem, $"{filteredItemsCount:N0}"];
+                    return Localizer[LanguageResource.HamkareDataGridPager_InfoFormat, firstItem, lastItem, $"{filteredItemsCount:N0}"];
                 }
 
                 return InfoFormat
@@ -178,9 +178,9 @@ namespace MudBlazor
         private bool ForwardButtonsDisabled => Table != null && (Table.CurrentPage + 1) * Table.RowsPerPage >= Table.GetFilteredItemsCount();
 
         /// <summary>
-        /// The <see cref="MudTable{T}"/> linked to this pager.
+        /// The <see cref="HamkareTable{T}"/> linked to this pager.
         /// </summary>
-        public MudTableBase? Table => Context?.Table;
+        public HamkareTableBase? Table => Context?.Table;
 
         protected override void OnInitialized()
         {
@@ -200,12 +200,12 @@ namespace MudBlazor
 
             if (string.IsNullOrEmpty(RowsPerPageString))
             {
-                RowsPerPageString = Localizer[LanguageResource.MudDataGridPager_RowsPerPage];
+                RowsPerPageString = Localizer[LanguageResource.HamkareDataGridPager_RowsPerPage];
             }
 
             if (string.IsNullOrEmpty(AllItemsText))
             {
-                AllItemsText = Localizer[LanguageResource.MudDataGridPager_AllItems];
+                AllItemsText = Localizer[LanguageResource.HamkareDataGridPager_AllItems];
             }
         }
     }

@@ -1,11 +1,11 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using Microsoft.AspNetCore.Components;
-using MudBlazor.State.Invocation;
+using HamkareBlazor.State.Invocation;
 
-namespace MudBlazor.State;
+namespace HamkareBlazor.State;
 
 #nullable enable
 /// <summary>
@@ -47,7 +47,7 @@ internal interface IParameterComponentLifeCycle
     /// Invoked when <see cref="ComponentBase.OnInitialized"/> is called, used to set the initial parameter value.
     /// </summary>
     /// <remarks>
-    /// This method is intended for internal use and is controlled by the <see cref="MudComponentBase"/> and <see cref="ParameterScopeContainer"/>.
+    /// This method is intended for internal use and is controlled by the <see cref="HamkareComponentBase"/> and <see cref="ParameterScopeContainer"/>.
     /// Direct invocation of this method by external code is discouraged.
     /// </remarks>
     void OnInitialized();
@@ -56,7 +56,7 @@ internal interface IParameterComponentLifeCycle
     /// Invoked when <see cref="ComponentBase.OnParametersSet"/> is called, used to synchronize the parameter value when Blazor updates the parameters.
     /// </summary>
     /// <remarks>
-    /// This method is intended for internal use and is controlled by the <see cref="MudComponentBase"/> and <see cref="ParameterScopeContainer"/>.
+    /// This method is intended for internal use and is controlled by the <see cref="HamkareComponentBase"/> and <see cref="ParameterScopeContainer"/>.
     /// Direct invocation of this method by external code is discouraged.
     /// </remarks>
     void OnParametersSet();

@@ -1,5 +1,5 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Diagnostics;
@@ -7,19 +7,19 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq.Expressions;
 using Microsoft.AspNetCore.Components;
-using MudBlazor.Interfaces;
-using MudBlazor.State;
-using MudBlazor.Utilities;
+using HamkareBlazor.Interfaces;
+using HamkareBlazor.State;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
     /// <summary>
     /// Represents a vertical set of values.
     /// </summary>
     /// <typeparam name="T">The kind of item for this column.</typeparam>
-    /// <seealso cref="MudDataGrid{T}"/>
-    public abstract partial class Column<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)] T> : MudComponentBase, IDisposable
+    /// <seealso cref="HamkareDataGrid{T}"/>
+    public abstract partial class Column<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)] T> : HamkareComponentBase, IDisposable
     {
         private static readonly RenderFragment<CellContext<T>> EmptyChildContent = _ => builder => { };
         internal ParameterState<bool> HiddenState { get; }
@@ -31,7 +31,7 @@ namespace MudBlazor
         /// The data grid which owns this column.
         /// </summary>
         [CascadingParameter]
-        public MudDataGrid<T> DataGrid { get; set; } = null!;
+        public HamkareDataGrid<T> DataGrid { get; set; } = null!;
 
         //[CascadingParameter(Name = "HeaderCell")] public HeaderCell<T> HeaderCell { get; set; }
 
@@ -210,7 +210,7 @@ namespace MudBlazor
         /// Sorts values in this column.
         /// </summary>
         /// <remarks>
-        /// Defaults to <c>null</c>.  When set, this overrides the <see cref="MudDataGrid{T}.SortMode"/> property.
+        /// Defaults to <c>null</c>.  When set, this overrides the <see cref="HamkareDataGrid{T}.SortMode"/> property.
         /// </remarks>
         [Parameter]
         public virtual bool? Sortable { get; set; }
@@ -225,7 +225,7 @@ namespace MudBlazor
         /// Allows this column to be reordered via drag-and-drop operations.
         /// </summary>
         /// <remarks>
-        /// Defaults to <c>null</c>.  When set, this overrides the <see cref="MudDataGrid{T}.DragDropColumnReordering"/> property.
+        /// Defaults to <c>null</c>.  When set, this overrides the <see cref="HamkareDataGrid{T}.DragDropColumnReordering"/> property.
         /// </remarks>
         [Parameter]
         public virtual bool? DragAndDropEnabled { get; set; }
@@ -234,7 +234,7 @@ namespace MudBlazor
         /// Allows filters to be used on this column.
         /// </summary>
         /// <remarks>
-        /// Defaults to <c>null</c>.  When set, this overrides the <see cref="MudDataGrid{T}.Filterable"/> property.
+        /// Defaults to <c>null</c>.  When set, this overrides the <see cref="HamkareDataGrid{T}.Filterable"/> property.
         /// </remarks>
         [Parameter]
         public virtual bool? Filterable { get; set; }
@@ -243,7 +243,7 @@ namespace MudBlazor
         /// Shows the filter icon.
         /// </summary>
         /// <remarks>
-        /// Defaults to <c>null</c>.  When set, this overrides the <see cref="MudDataGrid{T}.ShowFilterIcons"/> property.
+        /// Defaults to <c>null</c>.  When set, this overrides the <see cref="HamkareDataGrid{T}.ShowFilterIcons"/> property.
         /// </remarks>
         [Parameter]
         public bool? ShowFilterIcon { get; set; }
@@ -252,7 +252,7 @@ namespace MudBlazor
         /// Allows this column to be hidden.
         /// </summary>
         /// <remarks>
-        /// Defaults to <c>null</c>.  When set, this overrides the <see cref="MudDataGrid{T}.Hideable"/> property.
+        /// Defaults to <c>null</c>.  When set, this overrides the <see cref="HamkareDataGrid{T}.Hideable"/> property.
         /// </remarks>
         [Parameter]
         public bool? Hideable { get; set; }
@@ -276,7 +276,7 @@ namespace MudBlazor
         /// Shows options for this column.
         /// </summary>
         /// <remarks>
-        /// Defaults to <c>null</c>.  When set, this overrides the <see cref="MudDataGrid{T}.ShowColumnOptions"/> property.
+        /// Defaults to <c>null</c>.  When set, this overrides the <see cref="HamkareDataGrid{T}.ShowColumnOptions"/> property.
         /// </remarks>
         [Parameter] public virtual bool? ShowColumnOptions { get; set; }
 
@@ -321,7 +321,7 @@ namespace MudBlazor
         /// Allows values in this column to be grouped.
         /// </summary>
         /// <remarks>
-        /// Defaults to <c>null</c>.  When set, this overrides the <see cref="MudDataGrid{T}.Groupable"/> property.
+        /// Defaults to <c>null</c>.  When set, this overrides the <see cref="HamkareDataGrid{T}.Groupable"/> property.
         /// </remarks>
         [Parameter]
         public bool? Groupable { get; set; }
@@ -379,7 +379,7 @@ namespace MudBlazor
         /// The culture used to parse, filter, and display values in this column.
         /// </summary>
         /// <remarks>
-        /// Defaults to <see cref="MudDataGrid{T}.Culture"/>.
+        /// Defaults to <see cref="HamkareDataGrid{T}.Culture"/>.
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.Table.Appearance)]
@@ -490,16 +490,16 @@ namespace MudBlazor
         #endregion
 
         internal string HeaderClassname =>
-            new CssBuilder("mud-table-cell")
-                .AddClass("mud-table-cell-hide", HideSmall)
+            new CssBuilder("hamkare-table-cell")
+                .AddClass("hamkare-table-cell-hide", HideSmall)
                 .AddClass("sticky-left", StickyLeft)
                 .AddClass("sticky-right", StickyRight)
                 .AddClass(Class)
                 .Build();
 
         internal string FooterClassname =>
-            new CssBuilder("mud-table-cell")
-                .AddClass("mud-table-cell-hide", HideSmall)
+            new CssBuilder("hamkare-table-cell")
+                .AddClass("hamkare-table-cell-hide", HideSmall)
                 .AddClass(Class)
                 .Build();
 
@@ -744,7 +744,7 @@ namespace MudBlazor
         {
             Debug.Assert(DataGrid is not null);
             await HiddenState.SetValueAsync(!HiddenState.Value);
-            ((IMudStateHasChanged)DataGrid).StateHasChanged();
+            ((IHamkareStateHasChanged)DataGrid).StateHasChanged();
         }
 
         /// <summary>

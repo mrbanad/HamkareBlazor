@@ -1,8 +1,8 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-window.mudDragAndDrop = {
+window.hamkareDragAndDrop = {
 
     initDropZone: (id) => {
         const elem = document.getElementById(id);
@@ -10,19 +10,19 @@ window.mudDragAndDrop = {
         elem.addEventListener('dragstart', (event) => event.dataTransfer.setData('', event.target.id));
     },
     makeDropZonesNotRelative: () => {
-        const firstDropItems = Array.from(document.getElementsByClassName('mud-drop-item')).filter(x => x.getAttribute('index') == "-1");
+        const firstDropItems = Array.from(document.getElementsByClassName('hamkare-drop-item')).filter(x => x.getAttribute('index') == "-1");
         for (const dropItem of firstDropItems) {
             dropItem.style.position = 'static';
         }
 
-        const dropZones = document.getElementsByClassName('mud-drop-zone');
+        const dropZones = document.getElementsByClassName('hamkare-drop-zone');
         for (const dropZone of dropZones) {
             dropZone.style.position = 'unset';
         }
     },
     getDropZoneIdentifierOnPosition: (x, y) => {
         const elems = document.elementsFromPoint(x, y);
-        const dropZones = elems.filter(e => e.classList.contains('mud-drop-zone'));
+        const dropZones = elems.filter(e => e.classList.contains('hamkare-drop-zone'));
         const dropZone = dropZones[0];
         if (dropZone) {
             return dropZone.getAttribute('identifier') || "";
@@ -34,7 +34,7 @@ window.mudDragAndDrop = {
 
         const elems = document.elementsFromPoint(x, y);
 
-        const dropItems = elems.filter(e => e.classList.contains('mud-drop-item') && e.id != id);
+        const dropItems = elems.filter(e => e.classList.contains('hamkare-drop-item') && e.id != id);
         const dropItem = dropItems[0];
         if (dropItem) {
             return dropItem.getAttribute('index') || "";
@@ -42,18 +42,18 @@ window.mudDragAndDrop = {
         return "";
     },
     makeDropZonesRelative: () => {
-        const dropZones = document.getElementsByClassName('mud-drop-zone');
+        const dropZones = document.getElementsByClassName('hamkare-drop-zone');
         for (const dropZone of dropZones) {
             dropZone.style.position = 'relative';
         }
-        const firstDropItems = Array.from(document.getElementsByClassName('mud-drop-item')).filter(x => x.getAttribute('index') == "-1");
+        const firstDropItems = Array.from(document.getElementsByClassName('hamkare-drop-item')).filter(x => x.getAttribute('index') == "-1");
         for (const dropItem of firstDropItems) {
             dropItem.style.position = 'relative';
         }
     },
     moveItemByDifference: (id, dx, dy) => {
         const elem = document.getElementById(id);
-        
+
 
 
         // keep the ACCUMULATED dragged position in the data-x/data-y attributes
@@ -65,7 +65,7 @@ window.mudDragAndDrop = {
         elem.style.webkitTransform =
             elem.style.transform =
             'translate3d(' + tx + 'px, ' + ty + 'px, 10px)';
-        
+
         // update the posiion attributes
         elem.setAttribute('data-x', tx);
         elem.setAttribute('data-y', ty);
@@ -80,6 +80,6 @@ window.mudDragAndDrop = {
             elem.setAttribute('data-x', 0);
             elem.setAttribute('data-y', 0);
         }
-        
+
     }
 };

@@ -1,20 +1,20 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
-using MudBlazor.State;
-using MudBlazor.Utilities;
+using HamkareBlazor.State;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 #nullable enable
 /// <summary>
 /// Allows registering a hotkey.
 /// </summary>
-public partial class MudHotkey : MudComponentBase, IAsyncDisposable
+public partial class HamkareHotkey : HamkareComponentBase, IAsyncDisposable
 {
     private readonly string _hotkeyId = Identifier.Create("hotkey");
     private bool _childContentIsVisible;
-    private DotNetObjectReference<MudHotkey>? _dotNetObjectReference;
+    private DotNetObjectReference<HamkareHotkey>? _dotNetObjectReference;
 
     [Inject]
     private IJSRuntime JsRuntime { get; set; } = null!;
@@ -76,8 +76,8 @@ public partial class MudHotkey : MudComponentBase, IAsyncDisposable
     [Parameter, Category(CategoryTypes.Hotkey.Behavior)]
     public bool Disabled { get; set; }
 
-    [DynamicDependency(nameof(MudHotkeyProviderJsCallback))]
-    public MudHotkey()
+    [DynamicDependency(nameof(HamkareHotkeyProviderJsCallback))]
+    public HamkareHotkey()
     {
         _dotNetObjectReference = DotNetObjectReference.Create(this);
         using var registerScope = CreateRegisterScope();
@@ -112,9 +112,9 @@ public partial class MudHotkey : MudComponentBase, IAsyncDisposable
             return;
         }
 
-        await JsRuntime.InvokeVoidAsyncWithErrorHandling("mudHotkeyListener.registerOrUpdateHotkey",
+        await JsRuntime.InvokeVoidAsyncWithErrorHandling("hamkareHotkeyListener.registerOrUpdateHotkey",
             _dotNetObjectReference,
-            nameof(MudHotkeyProviderJsCallback),
+            nameof(HamkareHotkeyProviderJsCallback),
             _hotkeyId,
             Key.ToString(),
             KeyModifiers.Select(m => m.ToString()).ToArray(),
@@ -128,7 +128,7 @@ public partial class MudHotkey : MudComponentBase, IAsyncDisposable
             return;
         }
 
-        await JsRuntime.InvokeVoidAsyncWithErrorHandling("mudHotkeyListener.unregisterHotkey", _hotkeyId);
+        await JsRuntime.InvokeVoidAsyncWithErrorHandling("hamkareHotkeyListener.unregisterHotkey", _hotkeyId);
     }
 
     private Task OnDisabledChangedAsync(ParameterChangedEventArgs<bool> args)
@@ -139,7 +139,7 @@ public partial class MudHotkey : MudComponentBase, IAsyncDisposable
     }
 
     [JSInvokable]
-    public async Task MudHotkeyProviderJsCallback()
+    public async Task HamkareHotkeyProviderJsCallback()
     {
         if (!_childContentIsVisible)
         {

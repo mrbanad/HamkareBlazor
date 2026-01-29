@@ -1,11 +1,11 @@
-﻿@namespace MudBlazor
-@inherits MudComponentBase
+﻿@namespace HamkareBlazor
+@inherits HamkareComponentBase
 
-<MudElement HtmlTag="div" Class="@Classname" Style="@Style" Tag="@Tag" UserAttributes="@UserAttributes">
+<HamkareElement HtmlTag="div" Class="@Classname" Style="@Style" Tag="@Tag" UserAttributes="@UserAttributes">
     <CascadingValue IsFixed="true" Value="this">
         @ChildContent
     </CascadingValue>
-</MudElement>
+</HamkareElement>
 
 @{
     UserAttributes.TryAdd("role", "group");

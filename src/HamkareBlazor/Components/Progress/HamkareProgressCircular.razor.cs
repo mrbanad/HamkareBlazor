@@ -1,20 +1,20 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using Microsoft.AspNetCore.Components;
-using MudBlazor.State;
-using MudBlazor.Utilities;
+using HamkareBlazor.State;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
 
     /// <summary>
     /// Informs users about the status of ongoing processes, such as loading an app, submitting a form, or saving updates. Shows either the length of a process or unspecified wait time.
     /// </summary>
-    /// <seealso cref="MudProgressLinear"/>
-    public partial class MudProgressCircular : MudComponentBase
+    /// <seealso cref="HamkareProgressLinear"/>
+    public partial class HamkareProgressCircular : HamkareComponentBase
     {
         private int _svgValue;
         private readonly ParameterState<double> _valueState;
@@ -24,19 +24,19 @@ namespace MudBlazor
         private const double CircleCenter = 44.0;
 
         protected string Classname =>
-            new CssBuilder("mud-progress-circular")
-                .AddClass($"mud-{Color.ToStringFast(true)}-text")
-                .AddClass($"mud-progress-{Size.ToStringFast(true)}")
-                .AddClass("mud-progress-indeterminate", Indeterminate)
-                .AddClass("mud-progress-static", !Indeterminate)
+            new CssBuilder("hamkare-progress-circular")
+                .AddClass($"hamkare-{Color.ToStringFast(true)}-text")
+                .AddClass($"hamkare-progress-{Size.ToStringFast(true)}")
+                .AddClass("hamkare-progress-indeterminate", Indeterminate)
+                .AddClass("hamkare-progress-static", !Indeterminate)
                 .AddClass(Class)
                 .Build();
 
         protected string SvgClassname =>
-            new CssBuilder("mud-progress-circular-circle")
-                .AddClass("mud-progress-indeterminate", Indeterminate)
-                .AddClass("mud-progress-static", !Indeterminate)
-                .AddClass("mud-progress-circular-circle-rounded", Rounded)
+            new CssBuilder("hamkare-progress-circular-circle")
+                .AddClass("hamkare-progress-indeterminate", Indeterminate)
+                .AddClass("hamkare-progress-static", !Indeterminate)
+                .AddClass("hamkare-progress-circular-circle-rounded", Rounded)
                 .Build();
 
         /// <summary>
@@ -127,7 +127,7 @@ namespace MudBlazor
         [Category(CategoryTypes.ProgressCircular.Appearance)]
         public RenderFragment? ChildContent { get; set; }
 
-        public MudProgressCircular()
+        public HamkareProgressCircular()
         {
             using var registerScope = CreateRegisterScope();
             _valueState = registerScope.RegisterParameter<double>(nameof(Value))

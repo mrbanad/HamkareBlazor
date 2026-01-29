@@ -1,24 +1,24 @@
 ﻿@import '../abstracts/variables';
 
-.mud-carousel {
+.hamkare-carousel {
   display: flex !important;
   position: relative;
   margin: 0px !important;
   clip-path: inset(0px 0px 0px 0px);
   overflow: hidden;
 
-  @each $color in $mud-palette-colors {
-    &.mud-carousel-#{$color} {
-      color: var(--mud-palette-#{$color}-text);
+  @each $color in $hamkare-palette-colors {
+    &.hamkare-carousel-#{$color} {
+      color: var(--hamkare-palette-#{$color}-text);
     }
   }
 }
 
-.mud-carousel-elements-rtl {
+.hamkare-carousel-elements-rtl {
   transform: rotate(180deg) !important;
 }
 
-.mud-carousel-item {
+.hamkare-carousel-item {
   position: absolute;
   left: 0px;
   right: 0px;
@@ -28,15 +28,15 @@
   padding: inherit;
   z-index: 2;
 
-  @each $color in $mud-palette-colors {
-    &.mud-carousel-item-#{$color} {
-      color: var(--mud-palette-#{$color}-text);
-      background-color: var(--mud-palette-#{$color});
+  @each $color in $hamkare-palette-colors {
+    &.hamkare-carousel-item-#{$color} {
+      color: var(--hamkare-palette-#{$color}-text);
+      background-color: var(--hamkare-palette-#{$color});
     }
   }
 }
 
-.mud-carousel-item-exit {
+.hamkare-carousel-item-exit {
   z-index: 1;
 }
 
@@ -44,7 +44,7 @@
 
 /*Fade
 */
-@keyframes mud-carousel-transition-fade-in-keyframe {
+@keyframes hamkare-carousel-transition-fade-in-keyframe {
   from {
     opacity: 0;
   }
@@ -54,7 +54,7 @@
   }
 }
 
-@keyframes mud-carousel-transition-fade-out-keyframe {
+@keyframes hamkare-carousel-transition-fade-out-keyframe {
   from {
     opacity: 1;
   }
@@ -65,16 +65,16 @@
 }
 
 
-.mud-carousel-transition-fade-in {
-  animation: 0.5s mud-carousel-transition-fade-in-keyframe
+.hamkare-carousel-transition-fade-in {
+  animation: 0.5s hamkare-carousel-transition-fade-in-keyframe
 }
 
-.mud-carousel-transition-fade-out {
-  animation: 0.5s mud-carousel-transition-fade-out-keyframe;
+.hamkare-carousel-transition-fade-out {
+  animation: 0.5s hamkare-carousel-transition-fade-out-keyframe;
   animation-fill-mode: forwards;
 }
 
-.mud-carousel-transition-none {
+.hamkare-carousel-transition-none {
   display: none;
 }
 
@@ -82,7 +82,7 @@
 
 /*Slide
 */
-@keyframes mud-carousel-transition-slide-next-enter-keyframe {
+@keyframes hamkare-carousel-transition-slide-next-enter-keyframe {
   from {
     transform: translate3d(100%, 0, 0);
     visibility: visible;
@@ -93,7 +93,7 @@
   }
 }
 
-@keyframes mud-carousel-transition-slide-next-rtl-enter-keyframe {
+@keyframes hamkare-carousel-transition-slide-next-rtl-enter-keyframe {
   from {
     transform: translate3d(-100%, 0, 0);
     visibility: visible;
@@ -104,7 +104,7 @@
   }
 }
 
-@keyframes mud-carousel-transition-slide-next-exit-keyframe {
+@keyframes hamkare-carousel-transition-slide-next-exit-keyframe {
   from {
     transform: translate3d(0, 0, 0);
     visibility: visible;
@@ -115,7 +115,7 @@
   }
 }
 
-@keyframes mud-carousel-transition-slide-next-rtl-exit-keyframe {
+@keyframes hamkare-carousel-transition-slide-next-rtl-exit-keyframe {
   from {
     transform: translate3d(0, 0, 0);
     visibility: visible;
@@ -126,27 +126,27 @@
   }
 }
 
-.mud-carousel-transition-slide-next-enter {
-  animation: 0.5s mud-carousel-transition-slide-next-enter-keyframe
+.hamkare-carousel-transition-slide-next-enter {
+  animation: 0.5s hamkare-carousel-transition-slide-next-enter-keyframe
 }
 
-.mud-carousel-transition-slide-next-rtl-enter {
-  animation: 0.5s mud-carousel-transition-slide-next-rtl-enter-keyframe;
+.hamkare-carousel-transition-slide-next-rtl-enter {
+  animation: 0.5s hamkare-carousel-transition-slide-next-rtl-enter-keyframe;
 }
 
-.mud-carousel-transition-slide-next-exit {
-  animation: 0.5s mud-carousel-transition-slide-next-exit-keyframe;
+.hamkare-carousel-transition-slide-next-exit {
+  animation: 0.5s hamkare-carousel-transition-slide-next-exit-keyframe;
   animation-fill-mode: forwards;
 }
 
-.mud-carousel-transition-slide-next-rtl-exit {
-  animation: 0.5s mud-carousel-transition-slide-next-rtl-exit-keyframe;
+.hamkare-carousel-transition-slide-next-rtl-exit {
+  animation: 0.5s hamkare-carousel-transition-slide-next-rtl-exit-keyframe;
   animation-fill-mode: forwards;
 }
 
 
 
-@keyframes mud-carousel-transition-slide-prev-enter-keyframe {
+@keyframes hamkare-carousel-transition-slide-prev-enter-keyframe {
   from {
     transform: translate3d(-100%, 0, 0);
     visibility: visible;
@@ -157,7 +157,7 @@
   }
 }
 
-@keyframes mud-carousel-transition-slide-prev-rtl-enter-keyframe {
+@keyframes hamkare-carousel-transition-slide-prev-rtl-enter-keyframe {
   from {
     transform: translate3d(100%, 0, 0);
     visibility: visible;
@@ -168,7 +168,7 @@
   }
 }
 
-@keyframes mud-carousel-transition-slide-prev-exit-keyframe {
+@keyframes hamkare-carousel-transition-slide-prev-exit-keyframe {
   from {
     transform: translate3d(0, 0, 0);
     visibility: visible;
@@ -179,7 +179,7 @@
   }
 }
 
-@keyframes mud-carousel-transition-slide-prev-rtl-exit-keyframe {
+@keyframes hamkare-carousel-transition-slide-prev-rtl-exit-keyframe {
   from {
     transform: translate3d(0, 0, 0);
     visibility: visible;
@@ -190,20 +190,20 @@
   }
 }
 
-.mud-carousel-transition-slide-prev-enter {
-  animation: 0.5s mud-carousel-transition-slide-prev-enter-keyframe
+.hamkare-carousel-transition-slide-prev-enter {
+  animation: 0.5s hamkare-carousel-transition-slide-prev-enter-keyframe
 }
 
-.mud-carousel-transition-slide-prev-rtl-enter {
-  animation: 0.5s mud-carousel-transition-slide-prev-rtl-enter-keyframe;
+.hamkare-carousel-transition-slide-prev-rtl-enter {
+  animation: 0.5s hamkare-carousel-transition-slide-prev-rtl-enter-keyframe;
 }
 
-.mud-carousel-transition-slide-prev-exit {
-  animation: 0.5s mud-carousel-transition-slide-prev-exit-keyframe;
+.hamkare-carousel-transition-slide-prev-exit {
+  animation: 0.5s hamkare-carousel-transition-slide-prev-exit-keyframe;
   animation-fill-mode: forwards;
 }
 
-.mud-carousel-transition-slide-prev-rtl-exit {
-  animation: 0.5s mud-carousel-transition-slide-prev-rtl-exit-keyframe;
+.hamkare-carousel-transition-slide-prev-rtl-exit {
+  animation: 0.5s hamkare-carousel-transition-slide-prev-rtl-exit-keyframe;
   animation-fill-mode: forwards;
 }

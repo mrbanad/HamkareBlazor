@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
-using MudBlazor.Interop;
+using HamkareBlazor.Interop;
 
-namespace MudBlazor.Services
+namespace HamkareBlazor.Services
 {
 #nullable enable
     /// <summary>

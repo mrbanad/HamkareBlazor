@@ -1,14 +1,14 @@
-﻿@namespace MudBlazor
-@using MudBlazor.Internal
-@using MudBlazor.Resources
+﻿@namespace HamkareBlazor
+@using HamkareBlazor.Internal
+@using HamkareBlazor.Resources
 @typeparam T
-@inherits MudBaseInput<T>
-@inject InternalMudLocalizer Localizer
+@inherits HamkareBaseInput<T>
+@inject InternalHamkareLocalizer Localizer
 
 <div class="@Classname" style="@Style">
     @if (Adornment == Adornment.Start)
     {
-        <MudInputAdornment Class="@AdornmentClassname"
+        <HamkareInputAdornment Class="@AdornmentClassname"
                            Icon="@AdornmentIcon"
                            Color="@AdornmentColor"
                            Size="@IconSize"
@@ -101,19 +101,19 @@
 
     @if (ShowClearButton())
     {
-        <MudIconButton Class="@ClearButtonClassname"
+        <HamkareIconButton Class="@ClearButtonClassname"
                        Color="@Color.Default"
                        Icon="@ClearIcon"
                        Size="@Size.Small"
                        OnClick="@HandleClearButtonAsync"
-                       aria-label="@Localizer[LanguageResource.MudInput_Clear]"
+                       aria-label="@Localizer[LanguageResource.HamkareInput_Clear]"
                        tabindex="-1"
                        @onmousedown:stopPropagation />
     }
 
     @if (Adornment == Adornment.End)
     {
-        <MudInputAdornment Class="@AdornmentClassname"
+        <HamkareInputAdornment Class="@AdornmentClassname"
                            Icon="@AdornmentIcon"
                            Color="@AdornmentColor"
                            Size="@IconSize"
@@ -125,7 +125,7 @@
 
     @if (Variant == Variant.Outlined)
     {
-        <fieldset class="mud-input-outlined-border">
+        <fieldset class="hamkare-input-outlined-border">
             @if (!string.IsNullOrEmpty(Label))
             {
                 <legend>@Label</legend>
@@ -135,22 +135,22 @@
 
     @if (!HideSpinButtons)
     {
-        <div class="mud-input-numeric-spin">
-            <MudButton Variant="Variant.Text"
+        <div class="hamkare-input-numeric-spin">
+            <HamkareButton Variant="Variant.Text"
                        @onclick="OnIncrement"
                        Disabled="@(GetDisabledState() || GetReadOnlyState())"
                        tabindex="-1"
-                       aria-label="@Localizer[LanguageResource.MudInput_Increment]">
-                <MudIcon Icon="@NumericUpIcon" Size="@GetButtonSize()" />
-            </MudButton>
+                       aria-label="@Localizer[LanguageResource.HamkareInput_Increment]">
+                <HamkareIcon Icon="@NumericUpIcon" Size="@GetButtonSize()" />
+            </HamkareButton>
 
-            <MudButton Variant="Variant.Text"
+            <HamkareButton Variant="Variant.Text"
                        @onclick="OnDecrement"
                        Disabled="@(GetDisabledState() || GetReadOnlyState())"
                        tabindex="-1"
-                       aria-label="@Localizer[LanguageResource.MudInput_Decrement]">
-                <MudIcon Icon="@NumericDownIcon" Size="@GetButtonSize()" />
-            </MudButton>
+                       aria-label="@Localizer[LanguageResource.HamkareInput_Decrement]">
+                <HamkareIcon Icon="@NumericDownIcon" Size="@GetButtonSize()" />
+            </HamkareButton>
         </div>
     }
 </div>

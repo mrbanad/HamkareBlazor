@@ -1,6 +1,6 @@
 ﻿using NetEscapades.EnumGenerators;
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 /// <summary>
 /// Indicates the element which will receive focus.

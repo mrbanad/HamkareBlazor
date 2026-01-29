@@ -1,84 +1,84 @@
 @import '../abstracts/variables';
 
-.mud-tabs {
+.hamkare-tabs {
   display: flex;
   flex-direction: column;
 
-  &.mud-tabs-reverse {
+  &.hamkare-tabs-reverse {
     flex-direction: column-reverse;
   }
 
-  &.mud-tabs-vertical {
+  &.hamkare-tabs-vertical {
     flex-direction: row;
 
-    .mud-tooltip-root {
+    .hamkare-tooltip-root {
       width: auto;
     }
   }
 
-  &.mud-tabs-vertical-reverse {
+  &.hamkare-tabs-vertical-reverse {
     flex-direction: row-reverse;
   }
 
-  &.mud-tabs-rounded {
-    border-radius: var(--mud-default-borderradius);
+  &.hamkare-tabs-rounded {
+    border-radius: var(--hamkare-default-borderradius);
     overflow: hidden;
 
-    .mud-tabs-tabbar {
-      border-radius: var(--mud-default-borderradius);
+    .hamkare-tabs-tabbar {
+      border-radius: var(--hamkare-default-borderradius);
     }
 
-    .mud-tabs-panels {
-      border-radius: var(--mud-default-borderradius);
+    .hamkare-tabs-panels {
+      border-radius: var(--hamkare-default-borderradius);
       flex-grow: 1;
     }
   }
 }
 
-.mud-tabs-tabbar {
+.hamkare-tabs-tabbar {
   position: relative;
-  background-color: var(--mud-palette-surface);
+  background-color: var(--hamkare-palette-surface);
 
-  &.mud-tabs-border-left {
+  &.hamkare-tabs-border-left {
     border-top-right-radius: 0 !important;
     border-bottom-right-radius: 0 !important;
-    border-right: 1px solid var(--mud-palette-lines-default);
+    border-right: 1px solid var(--hamkare-palette-lines-default);
   }
 
-  &.mud-tabs-border-right {
+  &.hamkare-tabs-border-right {
     border-top-left-radius: 0 !important;
     border-bottom-left-radius: 0 !important;
-    border-left: 1px solid var(--mud-palette-lines-default);
+    border-left: 1px solid var(--hamkare-palette-lines-default);
   }
 
-  &.mud-tabs-border-top {
+  &.hamkare-tabs-border-top {
     border-bottom-left-radius: 0 !important;
     border-bottom-right-radius: 0 !important;
-    border-bottom: 1px solid var(--mud-palette-lines-default);
+    border-bottom: 1px solid var(--hamkare-palette-lines-default);
   }
 
-  &.mud-tabs-border-bottom {
+  &.hamkare-tabs-border-bottom {
     border-top-left-radius: 0 !important;
     border-top-right-radius: 0 !important;
-    border-top: 1px solid var(--mud-palette-lines-default);
+    border-top: 1px solid var(--hamkare-palette-lines-default);
   }
 
-  &.mud-tabs-rounded {
-    border-radius: var(--mud-default-borderradius);
+  &.hamkare-tabs-rounded {
+    border-radius: var(--hamkare-default-borderradius);
   }
 
-  &.mud-tabs-vertical {
-    .mud-tabs-tabbar-inner {
+  &.hamkare-tabs-vertical {
+    .hamkare-tabs-tabbar-inner {
       flex-direction: column;
 
-      .mud-tabs-scroll-button {
-        .mud-button-root {
+      .hamkare-tabs-scroll-button {
+        .hamkare-button-root {
           width: 100%;
           border-radius: 0px;
           height: 32px;
 
-          .mud-icon-button-label {
-            .mud-icon-root {
+          .hamkare-icon-button-label {
+            .hamkare-icon-root {
               transform: rotate(90deg);
             }
           }
@@ -87,14 +87,14 @@
     }
   }
 
-  & .mud-tabs-tabbar-inner {
+  & .hamkare-tabs-tabbar-inner {
     display: flex;
     min-height: 48px;
   }
 }
 
 
-.mud-tabs-tabbar-content {
+.hamkare-tabs-tabbar-content {
   width: 100%;
   flex: 1 1 auto;
   display: inline-block;
@@ -102,33 +102,33 @@
   white-space: nowrap;
   overflow: hidden;
 
-  & .mud-tabs-tabbar-wrapper {
+  & .hamkare-tabs-tabbar-wrapper {
     width: max-content;
     position: inherit;
     display: flex;
     transition: .3s cubic-bezier(.25,.8,.5,1);
 
-    &.mud-tabs-centered {
+    &.hamkare-tabs-centered {
       margin: auto;
     }
 
-    &.mud-tabs-vertical {
+    &.hamkare-tabs-vertical {
       flex-direction: column;
     }
   }
 }
 
-.mud-tabs-panels {
+.hamkare-tabs-panels {
   position: relative;
   transition: .3s cubic-bezier(.25,.8,.5,1);
 
-  &.mud-tabs-vertical {
+  &.hamkare-tabs-vertical {
     display: flex;
     flex-grow: 1;
   }
 }
 
-.mud-tab {
+.hamkare-tab {
   width: 100%;
   display: inline-flex;
   padding: 6px 12px;
@@ -148,88 +148,88 @@
   @media(hover: hover) and (pointer: fine) {
     &:hover {
       cursor: pointer;
-      background-color: var(--mud-palette-action-default-hover);
+      background-color: var(--hamkare-palette-action-default-hover);
     }
   }
 
-  &.mud-tab-active {
-    color: var(--mud-palette-primary);
+  &.hamkare-tab-active {
+    color: var(--hamkare-palette-primary);
 
     @media(hover: hover) and (pointer: fine) {
       &:hover {
-        background-color: var(--mud-palette-primary-hover);
+        background-color: var(--hamkare-palette-primary-hover);
       }
     }
   }
 
-  &.mud-disabled {
+  &.hamkare-disabled {
     cursor: default;
     pointer-events: none;
-    color: var(--mud-palette-text-disabled);
+    color: var(--hamkare-palette-text-disabled);
   }
 
-  & .mud-tab-icon-text {
+  & .hamkare-tab-icon-text {
     margin-right: 8px;
     margin-inline-end: 8px;
     margin-inline-start: unset;
   }
 
-  &.mud-tab-panel-hidden {
+  &.hamkare-tab-panel-hidden {
     display: none;
   }
 }
 
-.mud-tab-slider {
+.hamkare-tab-slider {
   position: absolute;
-  background: var(--mud-palette-primary);
+  background: var(--hamkare-palette-primary);
 
-  &.mud-tab-slider-horizontal {
+  &.hamkare-tab-slider-horizontal {
     height: 2px;
     bottom: 0;
     transition: left .3s cubic-bezier(.64,.09,.08,1);
     will-change: left;
 
-    &.mud-tab-slider-horizontal-reverse {
+    &.hamkare-tab-slider-horizontal-reverse {
       top: 0;
       bottom: unset;
     }
   }
 
-  &.mud-tab-slider-vertical {
+  &.hamkare-tab-slider-vertical {
     width: 2px;
     right: 0;
     transition: top .3s cubic-bezier(.64,.09,.08,1);
     will-change: top;
 
-    &.mud-tab-slider-vertical-reverse {
+    &.hamkare-tab-slider-vertical-reverse {
       left: 0;
       right: unset;
     }
   }
 }
 
-.mud-tab-badge {
+.hamkare-tab-badge {
   margin-left: 8px;
   margin-inline-start: 8px;
   margin-inline-end: unset;
 }
 
-@each $color in $mud-palette-colors {
-  .mud-tabs-tabbar-#{$color} {
-    background-color: var(--mud-palette-#{$color});
-    color: var(--mud-palette-#{$color}-text);
+@each $color in $hamkare-palette-colors {
+  .hamkare-tabs-tabbar-#{$color} {
+    background-color: var(--hamkare-palette-#{$color});
+    color: var(--hamkare-palette-#{$color}-text);
 
-    .mud-tab-slider {
-      background: var(--mud-palette-#{$color}-text);
+    .hamkare-tab-slider {
+      background: var(--hamkare-palette-#{$color}-text);
     }
 
-    .mud-tab {
-      &.mud-tab-active {
-        color: var(--mud-palette-#{$color}-text);
+    .hamkare-tab {
+      &.hamkare-tab-active {
+        color: var(--hamkare-palette-#{$color}-text);
 
         @media(hover: hover) and (pointer: fine) {
           &:hover {
-            background-color: var(--mud-palette-#{$color}-lighten);
+            background-color: var(--hamkare-palette-#{$color}-lighten);
           }
         }
       }
@@ -266,25 +266,25 @@
   }
 }
 
-.mud-dynamic-tabs {
-  .mud-tabs-tabbar {
-    .mud-tab {
+.hamkare-dynamic-tabs {
+  .hamkare-tabs-tabbar {
+    .hamkare-tab {
       padding: 6px 14px;
 
-      .mud-icon-button {
+      .hamkare-icon-button {
         padding: 4px;
         margin-right: -4px;
         margin-inline-end: -4px;
         margin-inline-start: unset;
       }
 
-      .mud-tabs-panel-header-before {
+      .hamkare-tabs-panel-header-before {
         padding-right: 8px;
         padding-inline-end: 8px;
         padding-inline-start: unset;
       }
 
-      .mud-tabs-panel-header-after {
+      .hamkare-tabs-panel-header-after {
         padding-left: 8px;
         padding-inline-start: 8px;
         padding-inline-end: unset;
@@ -293,25 +293,25 @@
   }
 }
 
-.mud-tabs-header {
-  &.mud-tabs-header-before {
+.hamkare-tabs-header {
+  &.hamkare-tabs-header-before {
     display: inherit;
   }
 
-  &.mud-tabs-header-after {
+  &.hamkare-tabs-header-after {
     display: inherit;
   }
 }
 
-.mud-tabs-panel-header {
+.hamkare-tabs-panel-header {
   display: flex;
   flex: 1 1 auto;
 
-  &.mud-tabs-panel-header-before {
+  &.hamkare-tabs-panel-header-before {
     justify-content: flex-start;
   }
 
-  &.mud-tabs-panel-header-after {
+  &.hamkare-tabs-panel-header-after {
     justify-content: flex-end;
   }
 }

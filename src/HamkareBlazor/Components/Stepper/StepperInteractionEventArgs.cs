@@ -1,13 +1,13 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 #nullable enable
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 /// <summary>
-/// Information about a requested step change when <see cref="MudStepper.OnPreviewInteraction"/> occurs.
+/// Information about a requested step change when <see cref="HamkareStepper.OnPreviewInteraction"/> occurs.
 /// </summary>
 public class StepperInteractionEventArgs
 {

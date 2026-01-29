@@ -1,15 +1,15 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Components;
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 #nullable enable
 /// <summary>
-/// Represents the grouping information for columns in a <see cref="MudDataGrid{T}"/>.
+/// Represents the grouping information for columns in a <see cref="HamkareDataGrid{T}"/>.
 /// </summary>
 /// <typeparam name="T"></typeparam>
 public class GroupDefinition<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)] T>
@@ -17,9 +17,9 @@ public class GroupDefinition<[DynamicallyAccessedMembers(DynamicallyAccessedMemb
     private GroupDefinition<T>? _innerGroup;
 
     /// <summary>
-    /// The <see cref="MudDataGrid{T}"/> which contains this group definition.
+    /// The <see cref="HamkareDataGrid{T}"/> which contains this group definition.
     /// </summary>
-    public required MudDataGrid<T> DataGrid { get; init; }
+    public required HamkareDataGrid<T> DataGrid { get; init; }
 
     /// <summary>
     /// The LINQ definition of the grouping.

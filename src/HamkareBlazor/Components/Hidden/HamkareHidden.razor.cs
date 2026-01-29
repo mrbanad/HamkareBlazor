@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
-using MudBlazor.State;
+using HamkareBlazor.State;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
 
@@ -9,9 +9,9 @@ namespace MudBlazor
     /// A component which conditionally renders content depending on the screen size.
     /// </summary>
     /// <remarks>
-    /// This component uses JavaScript to listen for browser window size changes.  If you want a solution using only CSS, you can use the <see href="https://mudblazor.com/features/display#class-reference">responsive display classes</see>.
+    /// This component uses JavaScript to listen for browser window size changes.  If you want a solution using only CSS, you can use the <see href="https://hamkareblazor.com/features/display#class-reference">responsive display classes</see>.
     /// </remarks>
-    public partial class MudHidden : MudComponentBase, IBrowserViewportObserver, IAsyncDisposable
+    public partial class HamkareHidden : HamkareComponentBase, IBrowserViewportObserver, IAsyncDisposable
     {
         private readonly ParameterState<bool> _hiddenState;
         private bool _serviceIsReady = false;
@@ -72,7 +72,7 @@ namespace MudBlazor
         [Category(CategoryTypes.Hidden.Behavior)]
         public RenderFragment? ChildContent { get; set; }
 
-        public MudHidden()
+        public HamkareHidden()
         {
             using var registerScope = CreateRegisterScope();
             _hiddenState = registerScope.RegisterParameter<bool>(nameof(Hidden))

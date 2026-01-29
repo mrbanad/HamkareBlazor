@@ -1,23 +1,23 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using Microsoft.AspNetCore.Components;
-using MudBlazor.Utilities;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 #nullable enable
 
 /// <summary>
 /// A 12-point grid system for organizing content with responsive breakpoints for different screen sizes.
 /// </summary>
-/// <seealso cref="MudItem"/>
-public partial class MudGrid : MudComponentBase
+/// <seealso cref="HamkareItem"/>
+public partial class HamkareGrid : HamkareComponentBase
 {
     protected string Classname =>
-        new CssBuilder("mud-grid")
-            .AddClass($"mud-grid-spacing-xs-{Spacing.ToString()}")
+        new CssBuilder("hamkare-grid")
+            .AddClass($"hamkare-grid-spacing-xs-{Spacing.ToString()}")
             .AddClass($"justify-{Justify.ToStringFast(true)}")
             .AddClass(Class)
             .Build();
@@ -35,7 +35,7 @@ public partial class MudGrid : MudComponentBase
     public int Spacing { set; get; } = 6;
 
     /// <summary>
-    /// Defines the distribution of children along the main axis within a <see cref="MudStack"/> component.
+    /// Defines the distribution of children along the main axis within a <see cref="HamkareStack"/> component.
     /// </summary>
     [Parameter]
     [Category(CategoryTypes.Grid.Behavior)]

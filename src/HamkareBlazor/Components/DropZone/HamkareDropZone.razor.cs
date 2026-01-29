@@ -1,5 +1,5 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System;
@@ -8,9 +8,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
-using MudBlazor.Utilities;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
 
@@ -18,22 +18,22 @@ namespace MudBlazor
     /// A location which can participate in a drag-and-drop operation.
     /// </summary>
     /// <typeparam name="T">The kind of item to drag.</typeparam>
-    /// <seealso cref="MudDropContainer{T}"/>
-    /// <seealso cref="MudDynamicDropItem{T}"/>
-    public partial class MudDropZone<T> : MudComponentBase, IDisposable where T : notnull
+    /// <seealso cref="HamkareDropContainer{T}"/>
+    /// <seealso cref="HamkareDynamicDropItem{T}"/>
+    public partial class HamkareDropZone<T> : HamkareComponentBase, IDisposable where T : notnull
     {
         private bool _containerIsInitialized = false;
         private bool _canDrop = false;
         private bool _dragInProgress = false;
         private bool _disposedValue = false;
-        private string _id = MudBlazor.Identifier.Create();
+        private string _id = HamkareBlazor.Identifier.Create();
 
         private Dictionary<T, int> _indices = new();
 
         [Inject] private IJSRuntime JsRuntime { get; set; } = null!;
 
         [CascadingParameter]
-        protected MudDropContainer<T>? Container { get; set; }
+        protected HamkareDropContainer<T>? Container { get; set; }
 
         /// <summary>
         /// The custom content within this drop zone.
@@ -56,17 +56,17 @@ namespace MudBlazor
         /// The template used to render items within this drop zone.
         /// </summary>
         /// <remarks>
-        /// When set, overrides the <see cref="MudDropContainer{T}.ItemRenderer"/>.
+        /// When set, overrides the <see cref="HamkareDropContainer{T}.ItemRenderer"/>.
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.DropZone.Items)]
         public RenderFragment<T>? ItemRenderer { get; set; }
 
         /// <summary>
-        /// The function which determines whether an item is within this <see cref="MudDropZone{T}"/> .
+        /// The function which determines whether an item is within this <see cref="HamkareDropZone{T}"/> .
         /// </summary>
         /// <remarks>
-        /// When set, overrides the <see cref="MudDropContainer{T}.ItemsSelector"/> function.
+        /// When set, overrides the <see cref="HamkareDropContainer{T}.ItemsSelector"/> function.
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.DropZone.Items)]
@@ -76,7 +76,7 @@ namespace MudBlazor
         /// The function which determines whether an item can be dropped within a drop zone.
         /// </summary>
         /// <remarks>
-        /// When a drop zone is allowed, the <see cref="CanDropClass"/> is applied, otherwise <see cref="NoDropClass"/> is applied.  When set, overrides <see cref="MudDropContainer{T}.CanDrop"/>.
+        /// When a drop zone is allowed, the <see cref="CanDropClass"/> is applied, otherwise <see cref="NoDropClass"/> is applied.  When set, overrides <see cref="HamkareDropContainer{T}.CanDrop"/>.
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.DropZone.DropRules)]
@@ -86,7 +86,7 @@ namespace MudBlazor
         /// The CSS classes applied to valid drop zones.
         /// </summary>
         /// <remarks>
-        /// This class is applied when <see cref="CanDrop"/> returns <c>true</c> for an item.  Multiple classes must be separated by spaces.  When set, overrides <see cref="MudDropContainer{T}.CanDropClass"/>.
+        /// This class is applied when <see cref="CanDrop"/> returns <c>true</c> for an item.  Multiple classes must be separated by spaces.  When set, overrides <see cref="HamkareDropContainer{T}.CanDropClass"/>.
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.DropZone.DropRules)]
@@ -96,7 +96,7 @@ namespace MudBlazor
         /// The CSS classes applied to invalid drop zones.
         /// </summary>
         /// <remarks>
-        /// This class is applied when <see cref="CanDrop"/> returns <c>false</c> for an item.  Multiple classes must be separated by spaces.  When set, overrides <see cref="MudDropContainer{T}.NoDropClass"/>.
+        /// This class is applied when <see cref="CanDrop"/> returns <c>false</c> for an item.  Multiple classes must be separated by spaces.  When set, overrides <see cref="HamkareDropContainer{T}.NoDropClass"/>.
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.DropZone.DropRules)]
@@ -106,7 +106,7 @@ namespace MudBlazor
         /// Applies either <see cref="CanDropClass"/> or <see cref="NoDropClass"/> to drop zones during a drag-and-drop transaction.
         /// </summary>
         /// <remarks>
-        /// Defaults to <c>false</c>.  The <see cref="CanDrop"/> function determines which classes are applied.  When set, overrides <see cref="MudDropContainer{T}.ApplyDropClassesOnDragStarted"/>.
+        /// Defaults to <c>false</c>.  The <see cref="CanDrop"/> function determines which classes are applied.  When set, overrides <see cref="HamkareDropContainer{T}.ApplyDropClassesOnDragStarted"/>.
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.DropZone.DropRules)]
@@ -116,7 +116,7 @@ namespace MudBlazor
         /// The function which determines whether an item cannot be dragged.
         /// </summary>
         /// <remarks>
-        /// If no value is given, all items can be dragged by default.  When an item is disabled, the <see cref="DisabledClass"/> is applied.  When set, overrides <see cref="MudDropContainer{T}.ItemDisabled"/>.
+        /// If no value is given, all items can be dragged by default.  When an item is disabled, the <see cref="DisabledClass"/> is applied.  When set, overrides <see cref="HamkareDropContainer{T}.ItemDisabled"/>.
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.DropZone.Disabled)]
@@ -126,7 +126,7 @@ namespace MudBlazor
         /// The CSS classes applied to disabled drop items.
         /// </summary>
         /// <remarks>
-        /// This class is applied when <see cref="ItemDisabled"/> returns <c>true</c> for an item.  Multiple classes must be separated by spaces.  When set, overrides <see cref="MudDropContainer{T}.DisabledClass"/>.
+        /// This class is applied when <see cref="ItemDisabled"/> returns <c>true</c> for an item.  Multiple classes must be separated by spaces.  When set, overrides <see cref="HamkareDropContainer{T}.DisabledClass"/>.
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.DropZone.Disabled)]
@@ -136,7 +136,7 @@ namespace MudBlazor
         /// The CSS classes applied to drop zones during a drag-and-drop operation.
         /// </summary>
         /// <remarks>
-        /// Multiple classes must be separated by spaces.  When set, overrides <see cref="MudDropContainer{T}.DraggingClass"/>.
+        /// Multiple classes must be separated by spaces.  When set, overrides <see cref="HamkareDropContainer{T}.DraggingClass"/>.
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.DropZone.DraggingClass)]
@@ -146,7 +146,7 @@ namespace MudBlazor
         /// The CSS classes applied to items during a drag-and-drop operation.
         /// </summary>
         /// <remarks>
-        /// Multiple classes must be separated by spaces.  When set, overrides <see cref="MudDropContainer{T}.ItemDraggingClass"/>.
+        /// Multiple classes must be separated by spaces.  When set, overrides <see cref="HamkareDropContainer{T}.ItemDraggingClass"/>.
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.DropZone.DraggingClass)]
@@ -156,7 +156,7 @@ namespace MudBlazor
         /// The function which determines the CSS classes for each item.
         /// </summary>
         /// <remarks>
-        /// When set, overrides <see cref="MudDropContainer{T}.ItemsClassSelector"/>.
+        /// When set, overrides <see cref="HamkareDropContainer{T}.ItemsClassSelector"/>.
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.DropZone.Items)]
@@ -257,8 +257,8 @@ namespace MudBlazor
         }
 
         protected string Classname =>
-            new CssBuilder("mud-drop-zone")
-                //.AddClass("mud-drop-zone-drag-block", Container?.TransactionInProgress() == true && Container.GetTransactionOrignZoneIdentiifer() != Identifier)
+            new CssBuilder("hamkare-drop-zone")
+                //.AddClass("hamkare-drop-zone-drag-block", Container?.TransactionInProgress() == true && Container.GetTransactionOrignZoneIdentiifer() != Identifier)
                 .AddClass(CanDropClass ?? Container?.CanDropClass, Container is not null && Container.TransactionInProgress() && Container.GetTransactionOriginZoneIdentifier() != Identifier && _canDrop && (_dragCounter > 0 || GetApplyDropClassesOnDragStarted()))
                 .AddClass(NoDropClass ?? Container?.NoDropClass, Container is not null && Container.TransactionInProgress() && Container.GetTransactionOriginZoneIdentifier() != Identifier && !_canDrop && (_dragCounter > 0 || GetApplyDropClassesOnDragStarted()))
                 .AddClass(GetDraggingClass(), _dragInProgress)
@@ -266,7 +266,7 @@ namespace MudBlazor
                 .Build();
 
         protected string PlaceholderClassname =>
-            new CssBuilder("border-2 mud-border-primary border-dashed mud-chip-text mud-chip-color-primary pa-4 mud-dropitem-placeholder")
+            new CssBuilder("border-2 hamkare-border-primary border-dashed hamkare-chip-text hamkare-chip-color-primary pa-4 hamkare-dropitem-placeholder")
                 .AddClass("d-none", !AllowReorder || Container?.TransactionInProgress() == false || Container?.GetTransactionCurrentZoneIdentifier() != Identifier)
                 .Build();
 
@@ -308,7 +308,7 @@ namespace MudBlazor
 
         #region container event handling
 
-        private void Container_TransactionEnded(object? sender, MudDragAndDropTransactionFinishedEventArgs<T> e)
+        private void Container_TransactionEnded(object? sender, HamkareDragAndDropTransactionFinishedEventArgs<T> e)
         {
             _dragCounter = 0;
 
@@ -341,7 +341,7 @@ namespace MudBlazor
             StateHasChanged();
         }
 
-        private void Container_TransactionStarted(object? sender, MudDragAndDropItemTransaction<T> e)
+        private void Container_TransactionStarted(object? sender, HamkareDragAndDropItemTransaction<T> e)
         {
             if (GetApplyDropClassesOnDragStarted())
             {
@@ -480,7 +480,7 @@ namespace MudBlazor
             base.OnParametersSet();
         }
 
-        private void Container_TransactionIndexChanged(object? sender, MudDragAndDropIndexChangedEventArgs e)
+        private void Container_TransactionIndexChanged(object? sender, HamkareDragAndDropIndexChangedEventArgs e)
         {
             if (e.ZoneIdentifier != Identifier && e.OldZoneIdentifier != Identifier) { return; }
 
@@ -491,7 +491,7 @@ namespace MudBlazor
         {
             if (firstRender)
             {
-                await JsRuntime.InvokeVoidAsyncWithErrorHandling("mudDragAndDrop.initDropZone", _id.ToString());
+                await JsRuntime.InvokeVoidAsyncWithErrorHandling("hamkareDragAndDrop.initDropZone", _id.ToString());
             }
 
             await base.OnAfterRenderAsync(firstRender);

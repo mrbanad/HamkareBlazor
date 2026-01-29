@@ -14,21 +14,21 @@ strong, b {
 }
 
 body {
-  color: var(--mud-palette-text-primary);
-  font-family: var(--mud-typography-default-family);
-  font-size: var(--mud-typography-default-size);
-  font-weight: var(--mud-typography-default-weight);
-  line-height: var(--mud-typography-default-lineheight);
-  letter-spacing: var(--mud-typography-default-letterspacing);
-  text-transform: var(--mud-typography-default-text-transform);
-  background-color: var(--mud-palette-background);
+  color: var(--hamkare-palette-text-primary);
+  font-family: var(--hamkare-typography-default-family);
+  font-size: var(--hamkare-typography-default-size);
+  font-weight: var(--hamkare-typography-default-weight);
+  line-height: var(--hamkare-typography-default-lineheight);
+  letter-spacing: var(--hamkare-typography-default-letterspacing);
+  text-transform: var(--hamkare-typography-default-text-transform);
+  background-color: var(--hamkare-palette-background);
 }
 
 a {
-  color: var(--mud-palette-text-primary);
+  color: var(--hamkare-palette-text-primary);
 }
 
-.mud-layout {
+.hamkare-layout {
   height: 100%;
   width: 100%;
   position: relative;

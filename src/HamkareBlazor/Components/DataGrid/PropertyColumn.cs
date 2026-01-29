@@ -1,5 +1,5 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System;
@@ -7,13 +7,13 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 using System.Reflection;
 using Microsoft.AspNetCore.Components;
-using MudBlazor.Utilities.Expressions;
+using HamkareBlazor.Utilities.Expressions;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
     /// <summary>
-    /// Represents a column in a <see cref="MudDataGrid{T}"/> associated with an object's property.
+    /// Represents a column in a <see cref="HamkareDataGrid{T}"/> associated with an object's property.
     /// </summary>
     /// <typeparam name="T">The type of object represented by each row in the data grid.</typeparam>
     /// <typeparam name="TProperty">The type of the property whose values are displayed in the column's cells.</typeparam>
@@ -63,7 +63,7 @@ namespace MudBlazor
             }
             else
             {
-                // Most likely this is a dynamic expression that people use as workaround https://try.mudblazor.com/snippet/cYGxuTmhyqAQeCVM
+                // Most likely this is a dynamic expression that people use as workaround https://try.hamkareblazor.com/snippet/cYGxuTmhyqAQeCVM
                 // We can't assign any meaningful name at all, therefore we should assign an unique ID like we do for TemplateColumn
                 _propertyName = _id.ToString();
             }

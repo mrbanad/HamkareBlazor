@@ -1,7 +1,7 @@
 ﻿#nullable enable
 using System.Diagnostics.CodeAnalysis;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
     /// <summary>
     /// Represents an arbitrary SVG path.

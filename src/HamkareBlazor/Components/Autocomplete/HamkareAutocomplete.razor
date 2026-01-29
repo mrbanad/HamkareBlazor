@@ -1,10 +1,10 @@
-﻿@namespace MudBlazor
-@inherits MudBaseInput<T>
+﻿@namespace HamkareBlazor
+@inherits HamkareBaseInput<T>
 @typeparam T
 
 <CascadingValue Name="SubscribeToParentForm" Value="false" IsFixed="true">
     <div class="@AutocompleteClassname" @onclick:stopPropagation @onmousedown:stopPropagation>
-        <MudInputControl Label="@Label"
+        <HamkareInputControl Label="@Label"
                          Variant="@Variant"
                          HelperId="@GetHelperId()"
                          HelperText="@HelperText"
@@ -22,7 +22,7 @@
                          @onfocus="@OnInputFocusedAsync"
                          ForId="@InputElementId">
             <InputContent>
-                <MudInput @ref="_elementReference" @key="_elementKey" InputType="InputType.Text"
+                <HamkareInput @ref="_elementReference" @key="_elementKey" InputType="InputType.Text"
                           Class="@InputClassname" Margin="@Margin"
                           Variant="@Variant"
                           Typo="@Typo"
@@ -63,12 +63,12 @@
                     else
                     {
                         <div class="@CircularProgressClassname">
-                            <MudProgressCircular Color="ProgressIndicatorColor" Indeterminate="true" Size="Size.Small" />
+                            <HamkareProgressCircular Color="ProgressIndicatorColor" Indeterminate="true" Size="Size.Small" />
                         </div>
                     }
                 }
 
-                <MudPopover Open="@Open"
+                <HamkarePopover Open="@Open"
                             Class="@PopoverClass"
                             MaxHeight="@MaxHeight"
                             RelativeWidth="@RelativeWidth"
@@ -81,10 +81,10 @@
                     }
                     else if (_items != null && _items.Length != 0)
                     {
-                        <MudList T="T" Class="@ListClass" Dense="@Dense">
+                        <HamkareList T="T" Class="@ListClass" Dense="@Dense">
                             @if (BeforeItemsTemplate is not null)
                             {
-                                <div class="mud-autocomplete-before-items pa-1">
+                                <div class="hamkare-autocomplete-before-items pa-1">
                                     @BeforeItemsTemplate
                                 </div>
                             }
@@ -96,7 +96,7 @@
                                 bool showSelectedTemplate = ItemSelectedTemplate is not null && isSelected;
                                 bool showDisabledTemplate = ItemDisabledTemplate is not null && isDisabled;
                                 var captureIndex = index;
-                                <MudListItem T="T" Value="@item" @key="@item" id="@GetListItemId(captureIndex)" Disabled="@(isDisabled)" OnClick="@(async () => await ListItemOnClickAsync(item))" OnClickPreventDefault="true" Class="@GetListItemClassname(isSelected)">
+                                <HamkareListItem T="T" Value="@item" @key="@item" id="@GetListItemId(captureIndex)" Disabled="@(isDisabled)" OnClick="@(async () => await ListItemOnClickAsync(item))" OnClickPreventDefault="true" Class="@GetListItemClassname(isSelected)">
                                     @if (showDisabledTemplate)
                                     {
                                         @ItemDisabledTemplate!(item)
@@ -113,35 +113,35 @@
                                     {
                                         @GetItemString(item)
                                     }
-                                </MudListItem>
+                                </HamkareListItem>
                             }
                             @if (MoreItemsTemplate is not null && _returnedItemsCount > MaxItems)
                             {
-                                <div class="mud-autocomplete-more-items pa-1">
+                                <div class="hamkare-autocomplete-more-items pa-1">
                                     @MoreItemsTemplate
                                 </div>
                             }
                             @if (AfterItemsTemplate is not null)
                             {
-                                <div class="mud-autocomplete-after-items pa-1">
+                                <div class="hamkare-autocomplete-after-items pa-1">
                                     @AfterItemsTemplate
                                 </div>
                             }
-                        </MudList>
+                        </HamkareList>
                     }
                     else if (NoItemsTemplate is not null)
                     {
-                        <div class="mud-autocomplete-no-items pa-1">
+                        <div class="hamkare-autocomplete-no-items pa-1">
                             @NoItemsTemplate
                         </div>
                     }
-                </MudPopover>
+                </HamkarePopover>
             </InputContent>
-        </MudInputControl>
+        </HamkareInputControl>
     </div>
 </CascadingValue>
 
-<MudOverlay AutoClose
+<HamkareOverlay AutoClose
             Visible="Open"
             OnClosed="OnOverlayClosedAsync"
             LockScroll="@LockScroll"

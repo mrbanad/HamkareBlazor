@@ -1,24 +1,24 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 #nullable enable
 using System.Numerics;
 using Microsoft.AspNetCore.Components;
-using MudBlazor.Charts;
-using MudBlazor.Utilities;
+using HamkareBlazor.Charts;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
     /// <summary>
     /// Represents a single cell in a <see cref="HeatMap{T}"/>. You can override the value from the <see cref="ChartSeries{T}"/> 
     /// or provide a custom graphic to be shown inside the cell. You should provide a width and height for the custom graphic you are including
     /// so the Heat Map can resize it dynamically. 
     /// </summary>
-    public partial class MudHeatMapCell<T> : MudComponentBase where T : struct, INumber<T>, IMinMaxValue<T>, IFormattable
+    public partial class HamkareHeatMapCell<T> : HamkareComponentBase where T : struct, INumber<T>, IMinMaxValue<T>, IFormattable
     {
         [CascadingParameter]
-        internal IMudChart<T>? Parent { get; set; }
+        internal IHamkareChart<T>? Parent { get; set; }
 
         /// <summary>
         /// The row of the cell you want to modify. Rows use a 0 based index.
@@ -46,7 +46,7 @@ namespace MudBlazor
         /// </summary>
         [Parameter]
         [Category(CategoryTypes.Chart.Appearance)]
-        public MudColor? MudColor { get; set; }
+        public HamkareColor? HamkareColor { get; set; }
 
         /// <summary>
         /// Optional, The width of the custom svg element you want to include. Please note the custom svg elements you provide are resized according to this value if supplied.
@@ -64,7 +64,7 @@ namespace MudBlazor
 
         /// <summary>
         /// Optional, setting this will set the minimum value for the heatmap range, by default the range is calculated from the data. This only needs to be set on one
-        /// <see cref="MudHeatMapCell{T}"/> in the <see cref="HeatMap{T}"/>."/> Only the last value set will be used.
+        /// <see cref="HamkareHeatMapCell{T}"/> in the <see cref="HeatMap{T}"/>."/> Only the last value set will be used.
         /// </summary>
         [Parameter]
         [Category(CategoryTypes.Chart.Behavior)]
@@ -72,7 +72,7 @@ namespace MudBlazor
 
         /// <summary>
         /// Optional, setting this will set the maximum value for the heatmap range, by default the range is calculated from the data. This only needs to be set on one
-        /// <see cref="MudHeatMapCell{T}"/> in the <see cref="HeatMap{T}"/>."/> Only the last value set will be used.
+        /// <see cref="HamkareHeatMapCell{T}"/> in the <see cref="HeatMap{T}"/>."/> Only the last value set will be used.
         /// </summary>
         [Parameter]
         [Category(CategoryTypes.Chart.Behavior)]
@@ -93,7 +93,7 @@ namespace MudBlazor
             }
             else
             {
-                throw new InvalidOperationException("MudHeatMapCell must be used inside a MudChart component.");
+                throw new InvalidOperationException("HamkareHeatMapCell must be used inside a HamkareChart component.");
             }
         }
 

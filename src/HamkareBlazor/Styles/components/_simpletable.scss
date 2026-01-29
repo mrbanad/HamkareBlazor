@@ -1,5 +1,5 @@
 
-.mud-simple-table {
+.hamkare-simple-table {
 
   table {
     width: 100%;
@@ -31,32 +31,32 @@
         display: table-cell;
         padding: 16px;
         text-align: start;
-        border-bottom: 1px solid var(--mud-palette-table-lines);
+        border-bottom: 1px solid var(--hamkare-palette-table-lines);
         vertical-align: inherit;
       }
 
       > td {
-        font-size: var(--mud-typography-body2-size);
-        font-family: var(--mud-typography-body2-family);
-        font-weight: var(--mud-typography-body2-weight);
-        line-height: var(--mud-typography-body2-lineheight);
-        letter-spacing: var(--mud-typography-body2-letterspacing);
-        text-transform: var(--mud-typography-body2-text-transform);
+        font-size: var(--hamkare-typography-body2-size);
+        font-family: var(--hamkare-typography-body2-family);
+        font-weight: var(--hamkare-typography-body2-weight);
+        line-height: var(--hamkare-typography-body2-lineheight);
+        letter-spacing: var(--hamkare-typography-body2-letterspacing);
+        text-transform: var(--hamkare-typography-body2-text-transform);
       }
 
       > th {
-        font-size: var(--mud-typography-subtitle2-size);
-        font-family: var(--mud-typography-subtitle2-family);
-        font-weight: var(--mud-typography-subtitle2-weight);
-        line-height: var(--mud-typography-subtitle2-lineheight);
-        letter-spacing: var(--mud-typography-subtitle2-letterspacing);
-        text-transform: var(--mud-typography-subtitle2-text-transform);
+        font-size: var(--hamkare-typography-subtitle2-size);
+        font-family: var(--hamkare-typography-subtitle2-family);
+        font-weight: var(--hamkare-typography-subtitle2-weight);
+        line-height: var(--hamkare-typography-subtitle2-lineheight);
+        letter-spacing: var(--hamkare-typography-subtitle2-letterspacing);
+        text-transform: var(--hamkare-typography-subtitle2-text-transform);
       }
     }
   }
 }
 
-.mud-simple-table.mud-table-dense {
+.hamkare-simple-table.hamkare-table-dense {
   & * tr {
     & td, th {
       padding: 6px 16px;
@@ -64,21 +64,21 @@
   }
 }
 
-.mud-simple-table.mud-table-hover {
-  & .mud-table-container table tbody {
+.hamkare-simple-table.hamkare-table-hover {
+  & .hamkare-table-container table tbody {
     @media(hover: hover) and (pointer: fine) {
       & tr:hover {
-        background-color: var(--mud-palette-table-hover);
+        background-color: var(--hamkare-palette-table-hover);
       }
     }
   }
 }
 
-.mud-simple-table.mud-table-bordered {
-  & .mud-table-container table tbody {
+.hamkare-simple-table.hamkare-table-bordered {
+  & .hamkare-table-container table tbody {
     & tr {
       td {
-        border-right: 1px solid var(--mud-palette-table-lines);
+        border-right: 1px solid var(--hamkare-palette-table-lines);
       }
 
       td:last-child {
@@ -88,26 +88,26 @@
   }
 }
 
-.mud-simple-table.mud-table-striped {
-  & .mud-table-container table tbody {
+.hamkare-simple-table.hamkare-table-striped {
+  & .hamkare-table-container table tbody {
     & tr:nth-of-type(odd) {
-      background-color: var(--mud-palette-table-striped);
+      background-color: var(--hamkare-palette-table-striped);
     }
   }
 }
 
-.mud-table-hover.mud-table-striped {
-  & .mud-table-container table tbody {
+.hamkare-table-hover.hamkare-table-striped {
+  & .hamkare-table-container table tbody {
     @media(hover: hover) and (pointer: fine) {
       & tr:nth-of-type(odd):nth-of-type(odd):hover {
-        background-color: var(--mud-palette-table-hover);
+        background-color: var(--hamkare-palette-table-hover);
       }
     }
   }
 }
 
-.mud-simple-table.mud-table-sticky-header {
-  .mud-table-container {
+.hamkare-simple-table.hamkare-table-sticky-header {
+  .hamkare-table-container {
     overflow-x: auto;
     max-height: 100%;
   }
@@ -117,15 +117,15 @@
 
     thead {
       & * th:first-child {
-        border-radius: var(--mud-default-borderradius) 0 0 0;
+        border-radius: var(--hamkare-default-borderradius) 0 0 0;
       }
 
       & * th:last-child {
-        border-radius: 0 var(--mud-default-borderradius) 0 0;
+        border-radius: 0 var(--hamkare-default-borderradius) 0 0;
       }
 
       & * th {
-        background-color: var(--mud-palette-surface);
+        background-color: var(--hamkare-palette-surface);
         position: sticky;
         z-index: 1;
         top: 0;
@@ -135,8 +135,8 @@
 }
 
 
-.mud-simple-table.mud-table-sticky-footer {
-  .mud-table-container {
+.hamkare-simple-table.hamkare-table-sticky-footer {
+  .hamkare-table-container {
     overflow-x: auto;
     max-height: 100%;
   }
@@ -146,7 +146,7 @@
 
     tfoot {
       & * td {
-        background-color: var(--mud-palette-surface);
+        background-color: var(--hamkare-palette-surface);
         position: sticky;
         z-index: 1;
         bottom: 0;

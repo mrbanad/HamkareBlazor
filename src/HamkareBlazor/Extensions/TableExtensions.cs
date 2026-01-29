@@ -1,10 +1,10 @@
 ﻿using System.Linq.Expressions;
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 #nullable enable
 /// <summary>
-/// Provides extension methods for sorting and for <see cref="MudTable{T}"/>.
+/// Provides extension methods for sorting and for <see cref="HamkareTable{T}"/>.
 /// </summary>
 public static class TableExtensions
 {

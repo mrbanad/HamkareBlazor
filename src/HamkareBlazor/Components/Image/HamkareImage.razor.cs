@@ -1,12 +1,12 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using Microsoft.AspNetCore.Components;
-using MudBlazor.State;
-using MudBlazor.Utilities;
+using HamkareBlazor.State;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 #nullable enable
 
@@ -16,11 +16,11 @@ namespace MudBlazor;
 /// <remarks>
 /// This component is equivalent to the <c>img</c> HTML tag.
 /// </remarks>
-public partial class MudImage : MudComponentBase
+public partial class HamkareImage : HamkareComponentBase
 {
     private readonly ParameterState<string?> _srcState;
 
-    public MudImage()
+    public HamkareImage()
     {
         using var registerScope = CreateRegisterScope();
         _srcState = registerScope.RegisterParameter<string?>(nameof(Src))
@@ -28,11 +28,11 @@ public partial class MudImage : MudComponentBase
     }
 
     protected string Classname =>
-        new CssBuilder("mud-image")
+        new CssBuilder("hamkare-image")
             .AddClass("fluid", Fluid)
             .AddClass($"object-{ObjectFit.ToStringFast(true)}")
             .AddClass($"object-{ObjectPosition.ToStringFast(true)}")
-            .AddClass($"mud-elevation-{Elevation}", Elevation > 0)
+            .AddClass($"hamkare-elevation-{Elevation}", Elevation > 0)
             .AddClass(Class)
             .Build();
 

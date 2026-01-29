@@ -1,18 +1,18 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using MudBlazor.Interfaces;
-using MudBlazor.State;
-using MudBlazor.Utilities;
+using HamkareBlazor.Interfaces;
+using HamkareBlazor.State;
+using HamkareBlazor.Utilities;
 
 #nullable enable
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 /// <summary>
-/// A individual step as part of a <see cref="MudStepper"/>.
+/// A individual step as part of a <see cref="HamkareStepper"/>.
 /// </summary>
-public class MudStep : MudComponentBase, IStepContext, IAsyncDisposable
+public class HamkareStep : HamkareComponentBase, IStepContext, IAsyncDisposable
 {
-    public MudStep()
+    public HamkareStep()
     {
         using var registerScope = CreateRegisterScope();
         CompletedState = registerScope.RegisterParameter<bool>(nameof(Completed))
@@ -44,21 +44,21 @@ public class MudStep : MudComponentBase, IStepContext, IAsyncDisposable
         .Build();
 
     internal string LabelClassname =>
-        new CssBuilder("mud-step-label")
-            .AddClass("mud-step-label-active", IsActive)
+        new CssBuilder("hamkare-step-label")
+            .AddClass("hamkare-step-label-active", IsActive)
             .Build();
 
     internal string LabelIconClassname =>
-        new CssBuilder("mud-step-label-icon")
-            .AddClass($"mud-{(CompletedStepColor.HasValue ? CompletedStepColor.Value.ToStringFast(true) : Parent?.CompletedStepColor.ToStringFast(true))}", CompletedState && !HasErrorState && Parent?.CompletedStepColor != Color.Default && (Parent?.ActiveStep != this || (Parent?.IsCompleted == true && Parent?.NonLinear == false)))
-            .AddClass($"mud-{(ErrorStepColor.HasValue ? ErrorStepColor.Value.ToStringFast(true) : Parent?.ErrorStepColor.ToStringFast(true))}", HasErrorState)
-            .AddClass($"mud-{(SkippedStepColor.HasValue ? SkippedStepColor.Value.ToStringFast(true) : Parent?.SkippedStepColor.ToStringFast(true))}", SkippedState)
-            .AddClass($"mud-{Parent?.CurrentStepColor.ToStringFast(true)}", Parent?.ActiveStep == this && !(Parent?.IsCompleted == true && Parent?.NonLinear == false))
+        new CssBuilder("hamkare-step-label-icon")
+            .AddClass($"hamkare-{(CompletedStepColor.HasValue ? CompletedStepColor.Value.ToStringFast(true) : Parent?.CompletedStepColor.ToStringFast(true))}", CompletedState && !HasErrorState && Parent?.CompletedStepColor != Color.Default && (Parent?.ActiveStep != this || (Parent?.IsCompleted == true && Parent?.NonLinear == false)))
+            .AddClass($"hamkare-{(ErrorStepColor.HasValue ? ErrorStepColor.Value.ToStringFast(true) : Parent?.ErrorStepColor.ToStringFast(true))}", HasErrorState)
+            .AddClass($"hamkare-{(SkippedStepColor.HasValue ? SkippedStepColor.Value.ToStringFast(true) : Parent?.SkippedStepColor.ToStringFast(true))}", SkippedState)
+            .AddClass($"hamkare-{Parent?.CurrentStepColor.ToStringFast(true)}", Parent?.ActiveStep == this && !(Parent?.IsCompleted == true && Parent?.NonLinear == false))
             .Build();
 
     internal string LabelContentClassname =>
-        new CssBuilder("mud-step-label-content")
-            .AddClass($"mud-{(ErrorStepColor.HasValue ? ErrorStepColor.Value.ToStringFast(true) : Parent?.ErrorStepColor.ToStringFast(true))}-text", HasErrorState)
+        new CssBuilder("hamkare-step-label-content")
+            .AddClass($"hamkare-{(ErrorStepColor.HasValue ? ErrorStepColor.Value.ToStringFast(true) : Parent?.ErrorStepColor.ToStringFast(true))}-text", HasErrorState)
             .Build();
 
     internal string Classname => new CssBuilder()
@@ -67,14 +67,14 @@ public class MudStep : MudComponentBase, IStepContext, IAsyncDisposable
         .Build();
 
     [CascadingParameter]
-    internal MudStepper? Parent { get; set; }
+    internal HamkareStepper? Parent { get; set; }
 
     /// <summary>
     /// The content for this step.
     /// </summary>
     /// <remarks>
     /// Defaults to <c>null</c>.  Only shown when this step is active.
-    /// Use the <see cref="MudStepContext"/> cascading parameter to access information about the current step inside the template.
+    /// Use the <see cref="HamkareStepContext"/> cascading parameter to access information about the current step inside the template.
     /// </remarks>
     [Parameter]
     [Category(CategoryTypes.List.Appearance)]
@@ -272,7 +272,7 @@ public class MudStep : MudComponentBase, IStepContext, IAsyncDisposable
 
     private void OnParameterChanged() => RefreshParent();
 
-    private void RefreshParent() => (Parent as IMudStateHasChanged)?.StateHasChanged();
+    private void RefreshParent() => (Parent as IHamkareStateHasChanged)?.StateHasChanged();
 
     /// <inheritdoc />
     public async ValueTask DisposeAsync()

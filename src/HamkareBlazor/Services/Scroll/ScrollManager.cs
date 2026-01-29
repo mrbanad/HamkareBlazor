@@ -1,10 +1,10 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using Microsoft.JSInterop;
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 #nullable enable
 /// <summary>
@@ -25,11 +25,11 @@ internal sealed class ScrollManager : IScrollManager
 
     /// <inheritdoc />
     public ValueTask ScrollToAsync(string? id, int left, int top, ScrollBehavior behavior) =>
-        _jSRuntime.InvokeVoidAsync("mudScrollManager.scrollTo", id, left, top, behavior.ToStringFast(true));
+        _jSRuntime.InvokeVoidAsync("hamkareScrollManager.scrollTo", id, left, top, behavior.ToStringFast(true));
 
     /// <inheritdoc />
     public ValueTask ScrollIntoViewAsync(string? selector, ScrollBehavior behavior) =>
-        _jSRuntime.InvokeVoidAsync("mudScrollManager.scrollIntoView", selector, behavior.ToStringFast(true));
+        _jSRuntime.InvokeVoidAsync("hamkareScrollManager.scrollIntoView", selector, behavior.ToStringFast(true));
 
     /// <inheritdoc />
     public ValueTask ScrollToTopAsync(string? id, ScrollBehavior scrollBehavior = ScrollBehavior.Auto) =>
@@ -37,27 +37,27 @@ internal sealed class ScrollManager : IScrollManager
 
     /// <inheritdoc />
     public ValueTask ScrollToBottomAsync(string id, ScrollBehavior behavior) =>
-        _jSRuntime.InvokeVoidAsync("mudScrollManager.scrollToBottom", id, behavior.ToStringFast(true));
+        _jSRuntime.InvokeVoidAsync("hamkareScrollManager.scrollToBottom", id, behavior.ToStringFast(true));
 
     /// <inheritdoc />
     public ValueTask ScrollToYearAsync(string elementId) =>
-        _jSRuntime.InvokeVoidAsync("mudScrollManager.scrollToYear", elementId);
+        _jSRuntime.InvokeVoidAsync("hamkareScrollManager.scrollToYear", elementId);
 
     /// <inheritdoc />
     public ValueTask ScrollToListItemAsync(string elementId) =>
-        _jSRuntime.InvokeVoidAsync("mudScrollManager.scrollToListItem", elementId);
+        _jSRuntime.InvokeVoidAsync("hamkareScrollManager.scrollToListItem", elementId);
 
     // lockScroll and unlockScroll use a counter system in javascript so we can lock/unlock without limit
     // and maintain the proper lock. IF YOU CHANGE THIS, CHANGE THE JAVASCRIPT AS WELL
     /// <inheritdoc />
     public ValueTask LockScrollAsync(string selector = "body", string cssClass = "scroll-locked") =>
-        _jSRuntime.InvokeVoidAsync("mudScrollManager.lockScroll", selector, cssClass);
+        _jSRuntime.InvokeVoidAsync("hamkareScrollManager.lockScroll", selector, cssClass);
 
     /// <inheritdoc />
     public ValueTask UnlockScrollAsync(string selector = "body", string cssClass = "scroll-locked") =>
-        _jSRuntime.InvokeVoidAsyncIgnoreErrors("mudScrollManager.unlockScroll", selector, cssClass);
+        _jSRuntime.InvokeVoidAsyncIgnoreErrors("hamkareScrollManager.unlockScroll", selector, cssClass);
 
     /// <inheritdoc />
     public ValueTask ScrollToVirtualizedItemAsync(string containerId, int itemIndex, double itemHeight, string targetItemId, ScrollBehavior scrollBehavior = ScrollBehavior.Auto) =>
-        _jSRuntime.InvokeVoidAsyncIgnoreErrors("mudScrollManager.scrollToVirtualizedItem", containerId, itemIndex, itemHeight, targetItemId, scrollBehavior.ToStringFast(true));
+        _jSRuntime.InvokeVoidAsyncIgnoreErrors("hamkareScrollManager.scrollToVirtualizedItem", containerId, itemIndex, itemHeight, targetItemId, scrollBehavior.ToStringFast(true));
 }

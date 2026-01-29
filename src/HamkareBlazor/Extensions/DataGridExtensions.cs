@@ -1,10 +1,10 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Diagnostics.CodeAnalysis;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
     public static class DataGridExtensions
@@ -55,7 +55,7 @@ namespace MudBlazor
             return orderedEnumerable ?? source;
         }
 
-        public static Column<T>? GetColumnByPropertyName<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)] T>(this MudDataGrid<T> dataGrid, string propertyName)
+        public static Column<T>? GetColumnByPropertyName<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)] T>(this HamkareDataGrid<T> dataGrid, string propertyName)
         {
             return dataGrid.RenderedColumns.FirstOrDefault(x => x.PropertyName == propertyName);
         }

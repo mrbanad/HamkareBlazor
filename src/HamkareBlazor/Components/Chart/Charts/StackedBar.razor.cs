@@ -1,12 +1,12 @@
 ﻿using System.Numerics;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using MudBlazor.Extensions;
-using MudBlazor.Interfaces;
-using MudBlazor.Justification.StackedBars;
+using HamkareBlazor.Extensions;
+using HamkareBlazor.Interfaces;
+using HamkareBlazor.Justification.StackedBars;
 
 #nullable enable
-namespace MudBlazor.Charts
+namespace HamkareBlazor.Charts
 {
     /// <summary>
     /// Represents a chart which displays series values as portions of vertical rectangles.
@@ -16,7 +16,7 @@ namespace MudBlazor.Charts
     /// <seealso cref="Line{T}"/>
     /// <seealso cref="Pie{T}"/>
     /// <seealso cref="TimeSeries{T}"/>
-    partial class StackedBar<T> : MudAxisChartBase<T, StackedBarChartOptions> where T : struct, INumber<T>, IMinMaxValue<T>, IFormattable
+    partial class StackedBar<T> : HamkareAxisChartBase<T, StackedBarChartOptions> where T : struct, INumber<T>, IMinMaxValue<T>, IFormattable
     {
         public override RenderFragment? OverlayContent { get; set; }
 
@@ -34,7 +34,7 @@ namespace MudBlazor.Charts
             ChartType = ChartType.StackedBar;
             ChartOptions ??= new StackedBarChartOptions();
 
-            if (ChartReference is IMudAxisChart<T> axisChart)
+            if (ChartReference is IHamkareAxisChart<T> axisChart)
             {
                 axisChart.OverlayChart = this;
                 axisChart.OverlayContent = this.Chart;
@@ -48,7 +48,7 @@ namespace MudBlazor.Charts
             // shared plot points should be initialized before generating overlay charts
             if (IsOverlayChart && SharedData is null) return;
 
-            Series = (ChartContainer != null && ChartReference is MudChart<T>)
+            Series = (ChartContainer != null && ChartReference is HamkareChart<T>)
                 ? ChartContainer.ChartSeries
                 : ChartSeries;
 
@@ -60,7 +60,7 @@ namespace MudBlazor.Charts
             if (!IsOverlayChart)
             {
                 // If this is not an overlay chart, we generate the shared plot points if an overlay exists
-                SharedData = OverlayChart is IMudAxisChart<T> ? new AxisGridData<T>(lowestHorizontalLine, numHorizontalLines, gridYUnits, _boundWidth, _boundHeight) : null;
+                SharedData = OverlayChart is IHamkareAxisChart<T> ? new AxisGridData<T>(lowestHorizontalLine, numHorizontalLines, gridYUnits, _boundWidth, _boundHeight) : null;
             }
             else
             {
@@ -317,7 +317,7 @@ namespace MudBlazor.Charts
         {
             _hoveredBar = bar;
 
-            if (IsOverlayChart && ChartReference is IMudStateHasChanged chart)
+            if (IsOverlayChart && ChartReference is IHamkareStateHasChanged chart)
                 chart.StateHasChanged();
         }
 
@@ -325,7 +325,7 @@ namespace MudBlazor.Charts
         {
             _hoveredBar = null;
 
-            if (IsOverlayChart && ChartReference is IMudStateHasChanged chart)
+            if (IsOverlayChart && ChartReference is IHamkareStateHasChanged chart)
                 chart.StateHasChanged();
         }
     }

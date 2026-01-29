@@ -1,5 +1,5 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System;
@@ -8,24 +8,24 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
-using MudBlazor.Resources;
-using MudBlazor.Utilities;
+using HamkareBlazor.Resources;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
     /// <summary>
-    /// Represents a pager for navigating pages of a <see cref="MudDataGrid{T}"/>.
+    /// Represents a pager for navigating pages of a <see cref="HamkareDataGrid{T}"/>.
     /// </summary>
     /// <typeparam name="T">The kind of data displayed in the grid.</typeparam>
-    /// <seealso cref="MudDataGrid{T}"/>
-    public partial class MudDataGridPager<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)] T> : MudComponentBase, IDisposable
+    /// <seealso cref="HamkareDataGrid{T}"/>
+    public partial class HamkareDataGridPager<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)] T> : HamkareComponentBase, IDisposable
     {
         /// <summary>
         /// The grid which contains this pager.
         /// </summary>
         [CascadingParameter]
-        public MudDataGrid<T>? DataGrid { get; set; }
+        public HamkareDataGrid<T>? DataGrid { get; set; }
 
         /// <summary>
         /// Shows the page-size drop-down list.
@@ -112,7 +112,7 @@ namespace MudBlazor
                         .Replace("{all_items}", $"{allItems}");
                 }
 
-                return Localizer[LanguageResource.MudDataGridPager_InfoFormat, firstItem, lastItem, allItems];
+                return Localizer[LanguageResource.HamkareDataGridPager_InfoFormat, firstItem, lastItem, allItems];
             }
         }
 
@@ -121,7 +121,7 @@ namespace MudBlazor
         private bool ForwardButtonsDisabled => Disabled || (DataGrid != null && (DataGrid.CurrentPage + 1) * DataGrid.RowsPerPage >= DataGrid.GetFilteredItemsCount());
 
         protected string Classname =>
-            new CssBuilder("mud-table-pagination-toolbar")
+            new CssBuilder("hamkare-table-pagination-toolbar")
                 .AddClass(Class)
                 .Build();
 
@@ -139,12 +139,12 @@ namespace MudBlazor
 
             if (string.IsNullOrEmpty(RowsPerPageString))
             {
-                RowsPerPageString = Localizer[LanguageResource.MudDataGridPager_RowsPerPage];
+                RowsPerPageString = Localizer[LanguageResource.HamkareDataGridPager_RowsPerPage];
             }
 
             if (string.IsNullOrEmpty(AllItemsText))
             {
-                AllItemsText = Localizer[LanguageResource.MudDataGridPager_AllItems];
+                AllItemsText = Localizer[LanguageResource.HamkareDataGridPager_AllItems];
             }
         }
 

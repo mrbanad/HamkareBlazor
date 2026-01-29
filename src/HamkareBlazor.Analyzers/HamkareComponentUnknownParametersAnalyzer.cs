@@ -1,5 +1,5 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Collections.Concurrent;
@@ -11,7 +11,7 @@ using Microsoft.CodeAnalysis.Text;
 namespace HamkareBlazor.Analyzers
 {
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public sealed class MudComponentUnknownParametersAnalyzer : DiagnosticAnalyzer
+    public sealed class HamkareComponentUnknownParametersAnalyzer : DiagnosticAnalyzer
     {
         public const string DiagnosticId = "MUD0002";
         public const string ClassNamePropertyKey = "ClassName";
@@ -23,9 +23,9 @@ namespace HamkareBlazor.Analyzers
         private static readonly LocalizableResourceString _url = new(nameof(Resources.HelpLinkUrl), Resources.ResourceManager, typeof(Resources));
 
         private const string Category = "Attributes/Parameters";
-        public const string DebugAnalyzerProperty = "build_property.MudDebugAnalyzer";
-        public const string AllowedAttributePatternProperty = "build_property.mudallowedattributepattern";
-        public const string AllowedAttributeListProperty = "build_property.mudallowedattributelist";
+        public const string DebugAnalyzerProperty = "build_property.HamkareDebugAnalyzer";
+        public const string AllowedAttributePatternProperty = "build_property.hamkareallowedattributepattern";
+        public const string AllowedAttributeListProperty = "build_property.hamkareallowedattributelist";
 
         public static readonly DiagnosticDescriptor AttributeDescriptor = new(DiagnosticId, _title, _attributeMessageFormat, Category, DiagnosticSeverity.Warning, isEnabledByDefault: true, description: _description, helpLinkUri: _url.ToString());
 
@@ -81,7 +81,7 @@ namespace HamkareBlazor.Analyzers
             private readonly INamedTypeSymbol? _componentBaseSymbol;
             private readonly INamedTypeSymbol? _parameterSymbol;
             private readonly INamedTypeSymbol? _renderTreeBuilderSymbol;
-            private readonly INamedTypeSymbol? _mudComponentBaseType;
+            private readonly INamedTypeSymbol? _hamkareComponentBaseType;
             private readonly ImmutableHashSet<string> _allowedAttributes;
 
             public AnalyzerContext(Compilation compilation, AllowedAttributePattern allowedAttributePattern, string allowedAttributes)
@@ -94,10 +94,10 @@ namespace HamkareBlazor.Analyzers
                 _componentBaseSymbol = compilation.GetBestTypeByMetadataName("Microsoft.AspNetCore.Components.ComponentBase");
                 _parameterSymbol = compilation.GetBestTypeByMetadataName("Microsoft.AspNetCore.Components.ParameterAttribute");
                 _renderTreeBuilderSymbol = compilation.GetBestTypeByMetadataName("Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder");
-                _mudComponentBaseType = compilation.GetBestTypeByMetadataName("MudBlazor.MudComponentBase");
+                _hamkareComponentBaseType = compilation.GetBestTypeByMetadataName("HamkareBlazor.HamkareComponentBase");
             }
 
-            public bool IsValid => _componentBaseSymbol is not null && _parameterSymbol is not null && _renderTreeBuilderSymbol is not null && _mudComponentBaseType is not null;
+            public bool IsValid => _componentBaseSymbol is not null && _parameterSymbol is not null && _renderTreeBuilderSymbol is not null && _hamkareComponentBaseType is not null;
 
             public void AnalyzeBlockOptions(OperationAnalysisContext context)
             {
@@ -131,7 +131,7 @@ namespace HamkareBlazor.Analyzers
                                 if (string.Equals(targetMethod.Name, "OpenComponent", StringComparison.Ordinal) && targetMethod.TypeArguments.Length == 1)
                                 {
                                     var componentType = targetMethod.TypeArguments[0];
-                                    if (componentType.IsOrInheritFrom(_mudComponentBaseType))
+                                    if (componentType.IsOrInheritFrom(_hamkareComponentBaseType))
                                     {
                                         currentComponent = componentType;
                                         currentComponentDescriptor = _componentDescriptors.GetOrAdd(currentComponent, ComponentDescriptor.GetComponentDescriptor(componentType, _parameterSymbol));

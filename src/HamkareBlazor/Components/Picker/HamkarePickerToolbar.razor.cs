@@ -1,24 +1,24 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using Microsoft.AspNetCore.Components;
-using MudBlazor.Utilities;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 /// <summary>
-/// The toolbar content of a <see cref="MudPicker{T}"/>.
+/// The toolbar content of a <see cref="HamkarePicker{T}"/>.
 /// </summary>
-/// <seealso cref="MudPicker{T}" />
-/// <seealso cref="MudPickerContent" />
+/// <seealso cref="HamkarePicker{T}" />
+/// <seealso cref="HamkarePickerContent" />
 #nullable enable
-public partial class MudPickerToolbar : MudComponentBase
+public partial class HamkarePickerToolbar : HamkareComponentBase
 {
     protected string Classname =>
-        new CssBuilder("mud-picker-toolbar")
-            .AddClass($"mud-theme-{Color.ToStringFast(true)}")
-            .AddClass("mud-picker-toolbar-landscape",
+        new CssBuilder("hamkare-picker-toolbar")
+            .AddClass($"hamkare-theme-{Color.ToStringFast(true)}")
+            .AddClass("hamkare-picker-toolbar-landscape",
                 Orientation == Orientation.Landscape && PickerVariant == PickerVariant.Static)
             .AddClass(Class)
             .Build();

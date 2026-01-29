@@ -1,26 +1,26 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Components;
-using MudBlazor.Interfaces;
-using MudBlazor.Utilities;
+using HamkareBlazor.Interfaces;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
     /// <summary>
-    /// Represents a grouping of multiple <see cref="MudAvatar"/> components.
+    /// Represents a grouping of multiple <see cref="HamkareAvatar"/> components.
     /// </summary>
-    /// <seealso cref="MudAvatar" />
-    partial class MudAvatarGroup : MudComponentBase
+    /// <seealso cref="HamkareAvatar" />
+    partial class HamkareAvatarGroup : HamkareComponentBase
     {
         private bool _childrenNeedUpdates = false;
 
-        protected string Classname => new CssBuilder("mud-avatar-group")
-            .AddClass($"mud-avatar-group-outlined", Outlined)
-            .AddClass($"mud-avatar-group-outlined-{OutlineColor.ToStringFast(true)}", Outlined)
+        protected string Classname => new CssBuilder("hamkare-avatar-group")
+            .AddClass($"hamkare-avatar-group-outlined", Outlined)
+            .AddClass($"hamkare-avatar-group-outlined-{OutlineColor.ToStringFast(true)}", Outlined)
             .AddClass(Class)
             .Build();
 
-        protected string MaxAvatarClassname => new CssBuilder("mud-avatar-group-max-avatar")
+        protected string MaxAvatarClassname => new CssBuilder("hamkare-avatar-group-max-avatar")
             .AddClass($"ms-n{Spacing}")
             .AddClass(MaxAvatarClass)
             .Build();
@@ -148,9 +148,9 @@ namespace MudBlazor
         [Category(CategoryTypes.AvatarGroup.Behavior)]
         public RenderFragment? ChildContent { get; set; }
 
-        internal List<MudAvatar> _avatars = new();
+        internal List<HamkareAvatar> _avatars = new();
 
-        public MudAvatarGroup()
+        public HamkareAvatarGroup()
         {
             using var registerScope = CreateRegisterScope();
             registerScope.RegisterParameter<int>(nameof(Spacing))
@@ -163,13 +163,13 @@ namespace MudBlazor
                 .Attach();
         }
 
-        internal void AddAvatar(MudAvatar avatar)
+        internal void AddAvatar(HamkareAvatar avatar)
         {
             _avatars.Add(avatar);
             StateHasChanged();
         }
 
-        internal void RemoveAvatar(MudAvatar avatar)
+        internal void RemoveAvatar(HamkareAvatar avatar)
         {
             _avatars.Remove(avatar);
         }
@@ -177,10 +177,10 @@ namespace MudBlazor
         internal CssBuilder GetAvatarSpacing() => new CssBuilder()
             .AddClass($"ms-n{Spacing}");
 
-        internal StyleBuilder GetAvatarZindex(MudAvatar avatar) => new StyleBuilder()
+        internal StyleBuilder GetAvatarZindex(HamkareAvatar avatar) => new StyleBuilder()
             .AddStyle("z-index", $"{_avatars.Count - _avatars.IndexOf(avatar)}");
 
-        internal bool MaxGroupReached(MudAvatar avatar)
+        internal bool MaxGroupReached(HamkareAvatar avatar)
         {
             return _avatars.IndexOf(avatar) >= Max;
         }
@@ -192,7 +192,7 @@ namespace MudBlazor
 
             if (_childrenNeedUpdates)
             {
-                foreach (IMudStateHasChanged avatar in _avatars)
+                foreach (IHamkareStateHasChanged avatar in _avatars)
                 {
                     avatar.StateHasChanged();
                 }

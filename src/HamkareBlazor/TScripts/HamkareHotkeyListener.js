@@ -1,8 +1,8 @@
 "use strict";
 
 // noinspection JSUnusedGlobalSymbols
-/** This is the companion class for the MudBlazor.MudHotkey component. */
-class MudHotkeyListener {
+/** This is the companion class for the HamkareBlazor.HamkareHotkey component. */
+class HamkareHotkeyListener {
     constructor() {
         this._EVENT_TYPE = "keydown";
         this._hotkeys = new Map();
@@ -25,7 +25,7 @@ class MudHotkeyListener {
         if (this._hotkeys.has(hotkeyId)) {
             this._hotkeys.delete(hotkeyId);
         } else {
-            console.warn("[MudBlazor] MudHotkey: No matching hotkey found to unregister");
+            console.warn("[HamkareBlazor] HamkareHotkey: No matching hotkey found to unregister");
         }
     }
 
@@ -58,7 +58,7 @@ class MudHotkeyListener {
                     // noinspection JSUnresolvedReference
                     hotkey.dotnetRef.invokeMethodAsync(hotkey.dotnetMethodId);
                 } catch (err) {
-                    console.error("[MudBlazor] MudHotkey: DotNet invocation failed", {
+                    console.error("[HamkareBlazor] HamkareHotkey: DotNet invocation failed", {
                         key: hotkey.key,
                         modifiers: [...hotkey.modifiers],
                         err: err
@@ -109,6 +109,6 @@ class MudHotkeyListener {
     }
 }
 
-if (!window.mudHotkeyListener) {
-    window.mudHotkeyListener = new MudHotkeyListener();
+if (!window.hamkareHotkeyListener) {
+    window.hamkareHotkeyListener = new HamkareHotkeyListener();
 }

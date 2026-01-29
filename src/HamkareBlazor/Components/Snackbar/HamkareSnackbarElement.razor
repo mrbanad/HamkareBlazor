@@ -1,6 +1,6 @@
 ﻿@*
     Copyright (c) Alessandro Ghidini. All rights reserved.
-    Changes and improvements Copyright (c) The MudBlazor Team.
+    Changes and improvements Copyright (c) The HamkareBlazor Team.
 *@
 
 @{
@@ -8,10 +8,10 @@
 #pragma warning disable IL2111
 }
 
-@namespace MudBlazor
-@using MudBlazor.Resources
-@inherits MudComponentBase
-@inject InternalMudLocalizer Localizer
+@namespace HamkareBlazor
+@using HamkareBlazor.Resources
+@inherits HamkareComponentBase
+@inject InternalHamkareLocalizer Localizer
 
 @_css
 <div role="alert"
@@ -28,12 +28,12 @@
 
     @if (!HideIcon)
     {
-        <div class="mud-snackbar-icon">
-            <MudIcon Icon="@Icon" Color="@IconColor" Size="@IconSize" />
+        <div class="hamkare-snackbar-icon">
+            <HamkareIcon Icon="@Icon" Color="@IconColor" Size="@IconSize" />
         </div>
     }
 
-    <div class="mud-snackbar-content-message">
+    <div class="hamkare-snackbar-content-message">
         @if (Message?.ComponentType != null)
         {
             <DynamicComponent Type="Message.ComponentType" Parameters="Message.ComponentParameters" />
@@ -42,18 +42,18 @@
 
     @if (ShowCloseIcon || ShowActionButton)
     {
-        <div class="mud-snackbar-content-action">
+        <div class="hamkare-snackbar-content-action">
             @if (ShowActionButton)
             {
-                <MudButton Class="mud-snackbar-action-button" Variant="@ActionVariant" Color="@ActionColor" OnClick="ActionClicked" DropShadow="false">
+                <HamkareButton Class="hamkare-snackbar-action-button" Variant="@ActionVariant" Color="@ActionColor" OnClick="ActionClicked" DropShadow="false">
                     @Action
-                </MudButton>
+                </HamkareButton>
             }
 
             @if (ShowCloseIcon)
             {
-                <MudIconButton Class="mud-snackbar-close-button ms-2" Icon="@CloseIcon" Size="Size.Small" OnClick="CloseIconClicked"
-                               aria-label="@Localizer[LanguageResource.MudSnackbar_Close]" />
+                <HamkareIconButton Class="hamkare-snackbar-close-button ms-2" Icon="@CloseIcon" Size="Size.Small" OnClick="CloseIconClicked"
+                               aria-label="@Localizer[LanguageResource.HamkareSnackbar_Close]" />
             }
         </div>
     }

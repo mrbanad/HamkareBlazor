@@ -1,8 +1,8 @@
-﻿using MudBlazor.Interop;
+﻿using HamkareBlazor.Interop;
 
 #nullable enable
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
     public class ScrollEventArgs : EventArgs
     {

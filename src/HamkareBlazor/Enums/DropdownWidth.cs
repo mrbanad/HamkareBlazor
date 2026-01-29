@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel;
 using NetEscapades.EnumGenerators;
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 /// <summary>
-/// Indicates the behavior of a <see cref="MudPopover"/> drop down relative width.
+/// Indicates the behavior of a <see cref="HamkarePopover"/> drop down relative width.
 /// </summary>
 [EnumExtensions]
 public enum DropdownWidth

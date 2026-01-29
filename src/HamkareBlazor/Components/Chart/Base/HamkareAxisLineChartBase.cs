@@ -1,5 +1,5 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 #nullable enable
@@ -7,17 +7,17 @@ using System.Numerics;
 using System.Text;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using MudBlazor.Interfaces;
-using MudBlazor.Interpolation;
+using HamkareBlazor.Interfaces;
+using HamkareBlazor.Interpolation;
 
-namespace MudBlazor.Charts;
+namespace HamkareBlazor.Charts;
 
 /// <summary>
 /// Represents a base class for axis-based line charts.
 /// </summary>
 /// <typeparam name="T">The data type of the chart.</typeparam>
 /// <typeparam name="TOptions">The type of options for the chart.</typeparam>
-public abstract class MudAxisLineChartBase<T, TOptions> : MudAxisChartBase<T, TOptions>, IMudAxisChart<T>
+public abstract class HamkareAxisLineChartBase<T, TOptions> : HamkareAxisChartBase<T, TOptions>, IHamkareAxisChart<T>
     where T : struct, INumber<T>, IMinMaxValue<T>, IFormattable
     where TOptions : IAxisLineChartOptions
 {
@@ -442,7 +442,7 @@ public abstract class MudAxisLineChartBase<T, TOptions> : MudAxisChartBase<T, TO
     {
         HoveredDataPointPath = hoveredPoint;
 
-        if (IsOverlayChart && ChartReference is IMudStateHasChanged chart)
+        if (IsOverlayChart && ChartReference is IHamkareStateHasChanged chart)
             chart.StateHasChanged();
     }
 
@@ -453,7 +453,7 @@ public abstract class MudAxisLineChartBase<T, TOptions> : MudAxisChartBase<T, TO
     {
         HoveredDataPointPath = null;
 
-        if (IsOverlayChart && ChartReference is IMudStateHasChanged chart)
+        if (IsOverlayChart && ChartReference is IHamkareStateHasChanged chart)
             chart.StateHasChanged();
     }
 }

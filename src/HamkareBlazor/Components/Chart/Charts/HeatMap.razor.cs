@@ -1,5 +1,5 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Diagnostics.CodeAnalysis;
@@ -9,15 +9,15 @@ using System.Numerics;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
-using MudBlazor.Interop;
-using MudBlazor.Utilities;
-using MudBlazor.Utilities.Debounce;
+using HamkareBlazor.Interop;
+using HamkareBlazor.Utilities;
+using HamkareBlazor.Utilities.Debounce;
 
 #nullable enable
 
-namespace MudBlazor.Charts
+namespace HamkareBlazor.Charts
 {
-    partial class HeatMap<T> : MudChartBase<T, HeatMapChartOptions>, IDisposable where T : struct, INumber<T>, IMinMaxValue<T>, IFormattable
+    partial class HeatMap<T> : HamkareChartBase<T, HeatMapChartOptions>, IDisposable where T : struct, INumber<T>, IMinMaxValue<T>, IFormattable
     {
         internal record CellDimension(double Width, double Height, int Padding);
 
@@ -109,7 +109,7 @@ namespace MudBlazor.Charts
 
         private readonly List<(T value, string color)> _legends = [];
 
-        internal List<MudHeatMapCell<T>> _customHeatMapCells = [];
+        internal List<HamkareHeatMapCell<T>> _customHeatMapCells = [];
 
         private CellDimension _cellDimension = new(0, 0, 0);
 
@@ -137,7 +137,7 @@ namespace MudBlazor.Charts
         /// The chart, if any, containing this component.
         /// </summary>
         [CascadingParameter]
-        public MudChart<T>? MudChartParent { get; set; }
+        public HamkareChart<T>? HamkareChartParent { get; set; }
 
         [DynamicDependency(nameof(OnElementSizeChanged))]
         [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(ElementSize))]
@@ -158,7 +158,7 @@ namespace MudBlazor.Charts
                 UpdateChartOptions(ChartOptions);
             }
 
-            UpdateHeatMapCells(MudHeatMapCells);
+            UpdateHeatMapCells(HamkareHeatMapCells);
 
             RebuildChart();
         }
@@ -176,7 +176,7 @@ namespace MudBlazor.Charts
 
             if (firstRender)
             {
-                var elementSize = await JsRuntime.InvokeAsync<ElementSize>("mudObserveElementSize", _dotNetObjectReference, _elementReference);
+                var elementSize = await JsRuntime.InvokeAsync<ElementSize>("hamkareObserveElementSize", _dotNetObjectReference, _elementReference);
                 OnElementSizeChanged(elementSize);
             }
         }
@@ -212,14 +212,14 @@ namespace MudBlazor.Charts
             }
         }
 
-        private void UpdateHeatMapCells(List<MudHeatMapCell<T>> mudHeatMapCellsList)
+        private void UpdateHeatMapCells(List<HamkareHeatMapCell<T>> hamkareHeatMapCellsList)
         {
-            var hasUpdatedList = mudHeatMapCellsList.Count > 0 && _customHeatMapCells != mudHeatMapCellsList;
+            var hasUpdatedList = hamkareHeatMapCellsList.Count > 0 && _customHeatMapCells != hamkareHeatMapCellsList;
 
             if (_customHeatMapCells.Count == 0 || hasUpdatedList)
             {
                 _customHeatMapCells.Clear();
-                _customHeatMapCells = mudHeatMapCellsList;
+                _customHeatMapCells = hamkareHeatMapCellsList;
             }
 
             var padding = _options is { EnableSmoothGradient: true } ? 0 : CellPadding;
@@ -255,17 +255,17 @@ namespace MudBlazor.Charts
             {
                 for (var col = 0; col < cols; col++)
                 {
-                    var mudHeatMapOverride = _customHeatMapCells.FirstOrDefault(x => x.Row == row && x.Column == col);
-                    var value = mudHeatMapOverride?.Value ?? GetDataValue(row, col); // Method to retrieve the value for each cell                    
+                    var hamkareHeatMapOverride = _customHeatMapCells.FirstOrDefault(x => x.Row == row && x.Column == col);
+                    var value = hamkareHeatMapOverride?.Value ?? GetDataValue(row, col); // Method to retrieve the value for each cell                    
                     _heatMapCells.Add(new HeatMapCell<T>
                     {
                         Row = row,
                         Column = col,
                         Value = value,
-                        CustomFragment = mudHeatMapOverride?.ChildContent,
-                        Width = mudHeatMapOverride?.Width,
-                        Height = mudHeatMapOverride?.Height,
-                        MudColor = mudHeatMapOverride?.MudColor,
+                        CustomFragment = hamkareHeatMapOverride?.ChildContent,
+                        Width = hamkareHeatMapOverride?.Width,
+                        Height = hamkareHeatMapOverride?.Height,
+                        HamkareColor = hamkareHeatMapOverride?.HamkareColor,
                     });
                     if (value.HasValue)
                     {
@@ -296,7 +296,7 @@ namespace MudBlazor.Charts
 
             CalculateAreas();
             BuildLegends();
-            UpdateHeatMapCells(MudHeatMapCells);
+            UpdateHeatMapCells(HamkareHeatMapCells);
             StateHasChanged();
         }
 
@@ -372,7 +372,7 @@ namespace MudBlazor.Charts
             {
                 var t = i / (double)(colors.Length - 1);
                 var value = _minValue + T.CreateSaturating(t) * (_maxValue - _minValue);
-                _legends.Add((value, colors[i].ToString(MudColorOutputFormats.RGB)));
+                _legends.Add((value, colors[i].ToString(HamkareColorOutputFormats.RGB)));
             }
         }
 
@@ -407,18 +407,18 @@ namespace MudBlazor.Charts
             return _legends[Math.Clamp(legendIndex, 0, _legends.Count - 1)].color;
         }
 
-        private MudColor[] GetEqualizedColorPalette(int shadeCount)
+        private HamkareColor[] GetEqualizedColorPalette(int shadeCount)
         {
-            var baseColors = _colorPalette.Select(x => new MudColor(x)).ToArray();
+            var baseColors = _colorPalette.Select(x => new HamkareColor(x)).ToArray();
             var colorCount = baseColors.Length;
 
             if (colorCount == 1)
             {
-                return MudColor.GenerateTintShadePalette(baseColors[0]).ToArray();
+                return HamkareColor.GenerateTintShadePalette(baseColors[0]).ToArray();
             }
             else if (colorCount != 5)
             {
-                return MudColor.GenerateMultiGradientPalette(baseColors, shadeCount).ToArray();
+                return HamkareColor.GenerateMultiGradientPalette(baseColors, shadeCount).ToArray();
             }
             else
             {
@@ -488,11 +488,11 @@ namespace MudBlazor.Charts
                 (_options?.XAxisLabelPosition == XAxisLabelPosition.Top ? _dynamicFontSize + CellPadding : 0);
         }
 
-        internal List<MudHeatMapCell<T>> MudHeatMapCells { get; set; } = [];
+        internal List<HamkareHeatMapCell<T>> HamkareHeatMapCells { get; set; } = [];
 
-        internal void AddCell(MudHeatMapCell<T> cell)
+        internal void AddCell(HamkareHeatMapCell<T> cell)
         {
-            MudHeatMapCells.Add(cell);
+            HamkareHeatMapCells.Add(cell);
 
             DebouncedRebuild();
         }

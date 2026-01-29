@@ -3,9 +3,9 @@ using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using MudBlazor.Utilities;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
 
@@ -13,17 +13,17 @@ namespace MudBlazor
     /// Displays an important message which is statically embedded in the page content.
     /// </summary>
     /// <seealso cref="SnackbarService"/>
-    public partial class MudAlert : MudComponentBase
+    public partial class HamkareAlert : HamkareComponentBase
     {
-        protected string Classname => new CssBuilder("mud-alert")
-            .AddClass($"mud-alert-{Variant.ToStringFast(true)}-{Severity.ToStringFast(true)}")
-            .AddClass($"mud-dense", Dense)
-            .AddClass($"mud-square", Square)
-            .AddClass($"mud-elevation-{Elevation}")
+        protected string Classname => new CssBuilder("hamkare-alert")
+            .AddClass($"hamkare-alert-{Variant.ToStringFast(true)}-{Severity.ToStringFast(true)}")
+            .AddClass($"hamkare-dense", Dense)
+            .AddClass($"hamkare-square", Square)
+            .AddClass($"hamkare-elevation-{Elevation}")
             .AddClass(Class)
             .Build();
 
-        protected string ClassPosition => new CssBuilder("mud-alert-position")
+        protected string ClassPosition => new CssBuilder("hamkare-alert-position")
             .AddClass($"justify-sm-{ConvertHorizontalAlignment(ContentAlignment).ToStringFast(true)}")
             .Build();
 
@@ -63,7 +63,7 @@ namespace MudBlazor
         /// Occurs when the close button has been clicked.
         /// </summary>
         [Parameter]
-        public EventCallback<MudAlert> CloseIconClicked { get; set; }
+        public EventCallback<HamkareAlert> CloseIconClicked { get; set; }
 
         /// <summary>
         /// Icon used for the close button.

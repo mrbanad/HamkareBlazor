@@ -1,12 +1,12 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
-namespace MudBlazor.Services
+namespace HamkareBlazor.Services
 {
 #nullable enable
     [ExcludeFromCodeCoverage]
@@ -17,7 +17,7 @@ namespace MudBlazor.Services
         /// </summary>
         /// <param name="services">IServiceCollection</param>
         /// <returns>Continues the IServiceCollection chain.</returns>
-        public static IServiceCollection AddMudBlazorDialog(this IServiceCollection services)
+        public static IServiceCollection AddHamkareBlazorDialog(this IServiceCollection services)
         {
             services.TryAddScoped<IDialogService, DialogService>();
 
@@ -29,7 +29,7 @@ namespace MudBlazor.Services
         /// </summary>
         /// <param name="services">IServiceCollection</param>
         /// <returns>Continues the IServiceCollection chain.</returns>
-        public static IServiceCollection AddMudBlazorSnackbar(this IServiceCollection services)
+        public static IServiceCollection AddHamkareBlazorSnackbar(this IServiceCollection services)
         {
             services.TryAddScoped<ISnackbar, SnackbarService>();
 
@@ -42,9 +42,9 @@ namespace MudBlazor.Services
         /// <param name="services">IServiceCollection</param>
         /// <param name="options">Defines SnackbarConfiguration for this instance.</param>
         /// <returns>Continues the IServiceCollection chain.</returns>
-        public static IServiceCollection AddMudBlazorSnackbar(this IServiceCollection services, Action<SnackbarConfiguration> options)
+        public static IServiceCollection AddHamkareBlazorSnackbar(this IServiceCollection services, Action<SnackbarConfiguration> options)
         {
-            services.AddMudBlazorSnackbar();
+            services.AddHamkareBlazorSnackbar();
             services.Configure(options);
 
             return services;
@@ -55,7 +55,7 @@ namespace MudBlazor.Services
         /// </summary>
         /// <param name="services">IServiceCollection</param>
         /// <returns>Continues the IServiceCollection chain.</returns>
-        public static IServiceCollection AddMudBlazorResizeListener(this IServiceCollection services)
+        public static IServiceCollection AddHamkareBlazorResizeListener(this IServiceCollection services)
         {
             services.TryAddScoped<IBrowserViewportService, BrowserViewportService>();
 
@@ -68,9 +68,9 @@ namespace MudBlazor.Services
         /// <param name="services">IServiceCollection</param>
         /// <param name="options">Defines ResizeOptions for this instance</param>
         /// <returns>Continues the IServiceCollection chain.</returns>
-        public static IServiceCollection AddMudBlazorResizeListener(this IServiceCollection services, Action<ResizeOptions> options)
+        public static IServiceCollection AddHamkareBlazorResizeListener(this IServiceCollection services, Action<ResizeOptions> options)
         {
-            services.AddMudBlazorResizeListener();
+            services.AddHamkareBlazorResizeListener();
             services.Configure(options);
 
             return services;
@@ -81,7 +81,7 @@ namespace MudBlazor.Services
         /// </summary>
         /// <param name="services">IServiceCollection</param>
         /// <returns>Continues the IServiceCollection chain.</returns>
-        public static IServiceCollection AddMudBlazorResizeObserver(this IServiceCollection services)
+        public static IServiceCollection AddHamkareBlazorResizeObserver(this IServiceCollection services)
         {
             services.TryAddTransient<IResizeObserver, ResizeObserver>();
 
@@ -94,9 +94,9 @@ namespace MudBlazor.Services
         /// <param name="services">IServiceCollection</param>
         /// <param name="options">Defines ResizeObserverOptions for this instance</param>
         /// <returns>Continues the IServiceCollection chain.</returns>
-        public static IServiceCollection AddMudBlazorResizeObserver(this IServiceCollection services, Action<ResizeObserverOptions> options)
+        public static IServiceCollection AddHamkareBlazorResizeObserver(this IServiceCollection services, Action<ResizeObserverOptions> options)
         {
-            services.AddMudBlazorResizeObserver();
+            services.AddHamkareBlazorResizeObserver();
             services.Configure(options);
 
             return services;
@@ -107,7 +107,7 @@ namespace MudBlazor.Services
         /// </summary>
         /// <param name="services">IServiceCollection</param>
         /// <returns>Continues the IServiceCollection chain.</returns>
-        public static IServiceCollection AddMudBlazorResizeObserverFactory(this IServiceCollection services)
+        public static IServiceCollection AddHamkareBlazorResizeObserverFactory(this IServiceCollection services)
         {
             services.TryAddScoped<IResizeObserverFactory, ResizeObserverFactory>();
 
@@ -120,9 +120,9 @@ namespace MudBlazor.Services
         /// <param name="services">IServiceCollection</param>
         /// <param name="options">Defines ResizeObserverOptions for this instance</param>
         /// <returns>Continues the IServiceCollection chain.</returns>
-        public static IServiceCollection AddMudBlazorResizeObserverFactory(this IServiceCollection services, Action<ResizeObserverOptions> options)
+        public static IServiceCollection AddHamkareBlazorResizeObserverFactory(this IServiceCollection services, Action<ResizeObserverOptions> options)
         {
-            services.AddMudBlazorResizeObserverFactory();
+            services.AddHamkareBlazorResizeObserverFactory();
             services.Configure(options);
 
             return services;
@@ -133,7 +133,7 @@ namespace MudBlazor.Services
         /// </summary>
         /// <param name="services">IServiceCollection</param>
         /// <returns>Continues the IServiceCollection chain.</returns>
-        public static IServiceCollection AddMudBlazorKeyInterceptor(this IServiceCollection services)
+        public static IServiceCollection AddHamkareBlazorKeyInterceptor(this IServiceCollection services)
         {
             services.TryAddScoped<IKeyInterceptorService, KeyInterceptorService>();
 
@@ -145,7 +145,7 @@ namespace MudBlazor.Services
         /// </summary>
         /// <param name="services">IServiceCollection</param>
         /// <returns>Continues the IServiceCollection chain.</returns>
-        public static IServiceCollection AddMudBlazorJsEvent(this IServiceCollection services)
+        public static IServiceCollection AddHamkareBlazorJsEvent(this IServiceCollection services)
         {
             services.TryAddTransient<IJsEvent, JsEvent>();
             services.TryAddScoped<IJsEventFactory, JsEventFactory>();
@@ -157,7 +157,7 @@ namespace MudBlazor.Services
         /// Adds ScrollManager as a transient instance.
         /// </summary>
         /// <param name="services">IServiceCollection</param>
-        public static IServiceCollection AddMudBlazorScrollManager(this IServiceCollection services)
+        public static IServiceCollection AddHamkareBlazorScrollManager(this IServiceCollection services)
         {
             services.TryAddTransient<IScrollManager, ScrollManager>();
 
@@ -168,7 +168,7 @@ namespace MudBlazor.Services
         /// Adds ScrollManager as a transient instance.
         /// </summary>
         /// <param name="services">IServiceCollection</param>
-        public static IServiceCollection AddMudPopoverService(this IServiceCollection services)
+        public static IServiceCollection AddHamkarePopoverService(this IServiceCollection services)
         {
             services.TryAddScoped<IPopoverService, PopoverService>();
 
@@ -180,9 +180,9 @@ namespace MudBlazor.Services
         /// </summary>
         /// <param name="services">IServiceCollection</param>
         /// <param name="options">Defines PopoverOptions for the application/user</param>
-        public static IServiceCollection AddMudPopoverService(this IServiceCollection services, Action<PopoverOptions> options)
+        public static IServiceCollection AddHamkarePopoverService(this IServiceCollection services, Action<PopoverOptions> options)
         {
-            services.AddMudPopoverService();
+            services.AddHamkarePopoverService();
             services.Configure(options);
 
             return services;
@@ -192,7 +192,7 @@ namespace MudBlazor.Services
         /// Adds ScrollListener as a transient instance.
         /// </summary>
         /// <param name="services">IServiceCollection</param>
-        public static IServiceCollection AddMudBlazorScrollListener(this IServiceCollection services)
+        public static IServiceCollection AddHamkareBlazorScrollListener(this IServiceCollection services)
         {
             services.TryAddTransient<IScrollListener, ScrollListener>();
             services.TryAddScoped<IScrollListenerFactory, ScrollListenerFactory>();
@@ -204,7 +204,7 @@ namespace MudBlazor.Services
         /// Adds ScrollSpy as a transient instance.
         /// </summary>
         /// <param name="services">IServiceCollection</param>
-        public static IServiceCollection AddMudBlazorScrollSpy(this IServiceCollection services)
+        public static IServiceCollection AddHamkareBlazorScrollSpy(this IServiceCollection services)
         {
             services.TryAddTransient<IScrollSpy, ScrollSpy>();
             services.TryAddScoped<IScrollSpyFactory, ScrollSpyFactory>();
@@ -216,7 +216,7 @@ namespace MudBlazor.Services
         /// Adds JsApi as a transient instance.
         /// </summary>
         /// <param name="services">IServiceCollection</param>
-        public static IServiceCollection AddMudBlazorJsApi(this IServiceCollection services)
+        public static IServiceCollection AddHamkareBlazorJsApi(this IServiceCollection services)
         {
             services.TryAddTransient<IJsApiService, JsApiService>();
 
@@ -227,7 +227,7 @@ namespace MudBlazor.Services
         /// Adds IPointerEventsNoneService as a scoped dependency.
         /// </summary>
         /// <param name="services">IServiceCollection</param>
-        public static IServiceCollection AddMudBlazorPointerEventsNoneService(this IServiceCollection services)
+        public static IServiceCollection AddHamkareBlazorPointerEventsNoneService(this IServiceCollection services)
         {
             services.TryAddScoped<IPointerEventsNoneService, PointerEventsNoneService>();
 
@@ -239,11 +239,11 @@ namespace MudBlazor.Services
         /// </summary>
         /// <param name="services">IServiceCollection</param>
         /// <returns>Continues the IServiceCollection chain.</returns>
-        public static IServiceCollection AddMudLocalization(this IServiceCollection services)
+        public static IServiceCollection AddHamkareLocalization(this IServiceCollection services)
         {
             services.TryAddTransient<ILocalizationInterceptor, DefaultLocalizationInterceptor>();
             services.TryAddTransient<ILocalizationEnumInterceptor, DefaultLocalizationEnumInterceptor>();
-            services.TryAddTransient<InternalMudLocalizer>();
+            services.TryAddTransient<InternalHamkareLocalizer>();
 
             return services;
         }
@@ -303,47 +303,47 @@ namespace MudBlazor.Services
         }
 
         /// <summary>
-        /// Adds common services required by MudBlazor components
+        /// Adds common services required by HamkareBlazor components
         /// </summary>
         /// <param name="services">IServiceCollection</param>
         /// <returns>Continues the IServiceCollection chain.</returns>
-        public static IServiceCollection AddMudServices(this IServiceCollection services)
+        public static IServiceCollection AddHamkareServices(this IServiceCollection services)
         {
             return services
                 .AddCommonServices()
-                .AddMudBlazorDialog()
-                .AddMudBlazorSnackbar()
-                .AddMudBlazorResizeListener()
-                .AddMudBlazorResizeObserver()
-                .AddMudBlazorResizeObserverFactory()
-                .AddMudBlazorKeyInterceptor()
-                .AddMudBlazorJsEvent()
-                .AddMudBlazorScrollManager()
-                .AddMudBlazorScrollListener()
-                .AddMudBlazorJsApi()
-                .AddMudBlazorScrollSpy()
-                .AddMudPopoverService()
-                .AddMudBlazorPointerEventsNoneService()
-                .AddMudLocalization();
+                .AddHamkareBlazorDialog()
+                .AddHamkareBlazorSnackbar()
+                .AddHamkareBlazorResizeListener()
+                .AddHamkareBlazorResizeObserver()
+                .AddHamkareBlazorResizeObserverFactory()
+                .AddHamkareBlazorKeyInterceptor()
+                .AddHamkareBlazorJsEvent()
+                .AddHamkareBlazorScrollManager()
+                .AddHamkareBlazorScrollListener()
+                .AddHamkareBlazorJsApi()
+                .AddHamkareBlazorScrollSpy()
+                .AddHamkarePopoverService()
+                .AddHamkareBlazorPointerEventsNoneService()
+                .AddHamkareLocalization();
         }
 
         /// <summary>
-        /// Adds common services required by MudBlazor components
+        /// Adds common services required by HamkareBlazor components
         /// </summary>
         /// <param name="services">IServiceCollection</param>
-        /// <param name="configuration">Defines options for all MudBlazor services.</param>
+        /// <param name="configuration">Defines options for all HamkareBlazor services.</param>
         /// <returns>Continues the IServiceCollection chain.</returns>
-        public static IServiceCollection AddMudServices(this IServiceCollection services, Action<MudServicesConfiguration> configuration)
+        public static IServiceCollection AddHamkareServices(this IServiceCollection services, Action<HamkareServicesConfiguration> configuration)
         {
             ArgumentNullException.ThrowIfNull(configuration);
 
-            var options = new MudServicesConfiguration();
+            var options = new HamkareServicesConfiguration();
             configuration(options);
 
             return services
                 .AddCommonServices()
-                .AddMudBlazorDialog()
-                .AddMudBlazorSnackbar(snackBarConfiguration =>
+                .AddHamkareBlazorDialog()
+                .AddHamkareBlazorSnackbar(snackBarConfiguration =>
                 {
                     snackBarConfiguration.ClearAfterNavigation = options.SnackbarConfiguration.ClearAfterNavigation;
                     snackBarConfiguration.MaxDisplayedSnackbars = options.SnackbarConfiguration.MaxDisplayedSnackbars;
@@ -366,7 +366,7 @@ namespace MudBlazor.Services
                     snackBarConfiguration.ErrorIcon = options.SnackbarConfiguration.ErrorIcon;
                     snackBarConfiguration.HideIcon = options.SnackbarConfiguration.HideIcon;
                 })
-                .AddMudBlazorResizeListener(resizeOptions =>
+                .AddHamkareBlazorResizeListener(resizeOptions =>
                 {
                     resizeOptions.BreakpointDefinitions = options.ResizeOptions.BreakpointDefinitions;
                     resizeOptions.EnableLogging = options.ResizeOptions.EnableLogging;
@@ -374,22 +374,22 @@ namespace MudBlazor.Services
                     resizeOptions.ReportRate = options.ResizeOptions.ReportRate;
                     resizeOptions.SuppressInitEvent = options.ResizeOptions.SuppressInitEvent;
                 })
-                .AddMudBlazorResizeObserver(observerOptions =>
+                .AddHamkareBlazorResizeObserver(observerOptions =>
                 {
                     observerOptions.EnableLogging = options.ResizeObserverOptions.EnableLogging;
                     observerOptions.ReportRate = options.ResizeObserverOptions.ReportRate;
                 })
-                .AddMudBlazorResizeObserverFactory(observerOptions =>
+                .AddHamkareBlazorResizeObserverFactory(observerOptions =>
                 {
                     observerOptions.EnableLogging = options.ResizeObserverOptions.EnableLogging;
                     observerOptions.ReportRate = options.ResizeObserverOptions.ReportRate;
                 })
-                .AddMudBlazorKeyInterceptor()
-                .AddMudBlazorJsEvent()
-                .AddMudBlazorScrollManager()
-                .AddMudBlazorScrollListener()
-                .AddMudBlazorJsApi()
-                .AddMudPopoverService(popoverOptions =>
+                .AddHamkareBlazorKeyInterceptor()
+                .AddHamkareBlazorJsEvent()
+                .AddHamkareBlazorScrollManager()
+                .AddHamkareBlazorScrollListener()
+                .AddHamkareBlazorJsApi()
+                .AddHamkarePopoverService(popoverOptions =>
                 {
                     popoverOptions.CheckForPopoverProvider = options.PopoverOptions.CheckForPopoverProvider;
                     popoverOptions.ContainerClass = options.PopoverOptions.ContainerClass;
@@ -403,9 +403,9 @@ namespace MudBlazor.Services
                     popoverOptions.Delay = options.PopoverOptions.Delay;
                     popoverOptions.Duration = options.PopoverOptions.Duration;
                 })
-                .AddMudBlazorScrollSpy()
-                .AddMudBlazorPointerEventsNoneService()
-                .AddMudLocalization();
+                .AddHamkareBlazorScrollSpy()
+                .AddHamkareBlazorPointerEventsNoneService()
+                .AddHamkareLocalization();
         }
 
         private static IServiceCollection AddCommonServices(this IServiceCollection service)

@@ -1,5 +1,5 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System;
@@ -7,17 +7,17 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
     /// <summary>
-    /// Represents the current state of a filter in a <see cref="MudDataGrid{T}"/>.
+    /// Represents the current state of a filter in a <see cref="HamkareDataGrid{T}"/>.
     /// </summary>
-    /// <typeparam name="T">The type of item managed by the <see cref="MudDataGrid{T}"/>.</typeparam>
-    /// <seealso cref="MudDataGrid{T}"/>
+    /// <typeparam name="T">The type of item managed by the <see cref="HamkareDataGrid{T}"/>.</typeparam>
+    /// <seealso cref="HamkareDataGrid{T}"/>
     public class FilterContext<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)] T>
     {
-        private readonly MudDataGrid<T> _dataGrid;
+        private readonly HamkareDataGrid<T> _dataGrid;
 
         internal HeaderCell<T>? HeaderCell { get; set; }
 
@@ -44,8 +44,8 @@ namespace MudBlazor
         /// <summary>
         /// Creates a new instance.
         /// </summary>
-        /// <param name="dataGrid">The <see cref="MudDataGrid{T}"/> managing this filter.</param>
-        public FilterContext(MudDataGrid<T> dataGrid)
+        /// <param name="dataGrid">The <see cref="HamkareDataGrid{T}"/> managing this filter.</param>
+        public FilterContext(HamkareDataGrid<T> dataGrid)
         {
             _dataGrid = dataGrid;
             Actions = new FilterActions
@@ -58,7 +58,7 @@ namespace MudBlazor
         }
 
         /// <summary>
-        /// Represents the apply and clear behaviors for a filter of a<see cref="MudDataGrid{T}"/>.
+        /// Represents the apply and clear behaviors for a filter of a<see cref="HamkareDataGrid{T}"/>.
         /// </summary>
         public class FilterActions
         {

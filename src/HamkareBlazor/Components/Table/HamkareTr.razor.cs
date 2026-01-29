@@ -1,22 +1,22 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using MudBlazor.Utilities;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
 
     /// <summary>
-    /// A row of data within a <see cref="MudTable{T}"/>.
+    /// A row of data within a <see cref="HamkareTable{T}"/>.
     /// </summary>
-    public partial class MudTr : MudComponentBase
+    public partial class HamkareTr : HamkareComponentBase
     {
         private bool _checked;
         private bool _hasBeenCanceled;
         private bool _hasBeenCommitted;
         private bool _hasBeenClickedFirstTime;
 
-        protected string Classname => new CssBuilder("mud-table-row")
+        protected string Classname => new CssBuilder("hamkare-table-row")
             .AddClass(Class)
             .Build();
 
@@ -25,7 +25,7 @@ namespace MudBlazor
             .Build();
 
         /// <summary>
-        /// The current state of the <see cref="MudTable{T}"/> containing this data row.
+        /// The current state of the <see cref="HamkareTable{T}"/> containing this data row.
         /// </summary>
         [CascadingParameter]
         public TableContext? Context { get; set; }
@@ -53,7 +53,7 @@ namespace MudBlazor
         /// Displays a checkbox at the start of this row.
         /// </summary>
         /// <remarks>
-        /// Defaults to <c>false</c>.  Managed automatically by the parent <see cref="MudTable{T}"/>.
+        /// Defaults to <c>false</c>.  Managed automatically by the parent <see cref="HamkareTable{T}"/>.
         /// </remarks>
         [Parameter]
         public bool Checkable { get; set; }
@@ -62,7 +62,7 @@ namespace MudBlazor
         /// Prevents the change of the current selection.
         /// </summary>
         /// <remarks>
-        /// Defaults to <c>true</c>.  Requires <see cref="Checkable"/> to be <c>true</c>.  Managed automatically by the parent <see cref="MudTable{T}"/>.
+        /// Defaults to <c>true</c>.  Requires <see cref="Checkable"/> to be <c>true</c>.  Managed automatically by the parent <see cref="HamkareTable{T}"/>.
         /// </remarks>
         [Parameter]
         public bool SelectionChangeable { get; set; } = true;
@@ -71,7 +71,7 @@ namespace MudBlazor
         /// Allows this row to be edited.
         /// </summary>
         /// <remarks>
-        /// Defaults to <c>false</c>.  Managed automatically by the parent <see cref="MudTable{T}"/>.
+        /// Defaults to <c>false</c>.  Managed automatically by the parent <see cref="HamkareTable{T}"/>.
         /// </remarks>
         [Parameter]
         public bool Editable { get; set; }
@@ -80,7 +80,7 @@ namespace MudBlazor
         /// Allows this row to expand to display nested content.
         /// </summary>
         /// <remarks>
-        /// Defaults to <c>false</c>.  Managed automatically by the parent <see cref="MudTable{T}"/>.
+        /// Defaults to <c>false</c>.  Managed automatically by the parent <see cref="HamkareTable{T}"/>.
         /// </remarks>
         [Parameter]
         public bool Expandable { get; set; }
@@ -250,7 +250,7 @@ namespace MudBlazor
         /// Sets <see cref="Checked"/> to the specified value.
         /// </summary>
         /// <param name="checkedState">The new checked state.</param>
-        /// <param name="notify">When <c>true</c>, the table's <see cref="MudTable{T}.OnHeaderCheckboxClicked(bool)"/> event occurs.</param>
+        /// <param name="notify">When <c>true</c>, the table's <see cref="HamkareTable{T}.OnHeaderCheckboxClicked(bool)"/> event occurs.</param>
         public void SetChecked(bool checkedState, bool notify)
         {
             if (_checked != checkedState)

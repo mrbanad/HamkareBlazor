@@ -2,23 +2,23 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
-using MudBlazor.Utilities;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
     /// <summary>
     /// An input for collecting text values.
     /// </summary>
     /// <typeparam name="T">The type of object managed by this input.</typeparam>
-    public partial class MudTextField<T> : MudDebouncedInput<T>
+    public partial class HamkareTextField<T> : HamkareDebouncedInput<T>
     {
         private IMask? _mask;
-        private MudMask? _maskReference;
+        private HamkareMask? _maskReference;
 
         protected string Classname =>
-            new CssBuilder("mud-input-input-control")
-                .AddClass($"mud-input-sizing-{Sizing.ToStringFast(true)}")
+            new CssBuilder("hamkare-input-input-control")
+                .AddClass($"hamkare-input-sizing-{Sizing.ToStringFast(true)}")
                 .AddClass(Class)
                 .Build();
 
@@ -26,9 +26,9 @@ namespace MudBlazor
         private IJSRuntime JsRuntime { get; set; } = null!;
 
         /// <summary>
-        /// The reference to the underlying <see cref="MudInput{T}"/> component.
+        /// The reference to the underlying <see cref="HamkareInput{T}"/> component.
         /// </summary>
-        public MudInput<string>? InputReference { get; private set; }
+        public HamkareInput<string>? InputReference { get; private set; }
 
         /// <summary>
         /// The type of input collected by this component.
@@ -64,7 +64,7 @@ namespace MudBlazor
         /// Occurs when the clear button is clicked.
         /// </summary>
         /// <remarks>
-        /// When clicked, the <see cref="MudBaseInput{T}.Text"/> and <see cref="MudBaseInput{T}.Value"/> properties are reset.
+        /// When clicked, the <see cref="HamkareBaseInput{T}.Text"/> and <see cref="HamkareBaseInput{T}.Value"/> properties are reset.
         /// </remarks>
         [Parameter]
         public EventCallback<MouseEventArgs> OnClearButtonClick { get; set; }
@@ -74,13 +74,13 @@ namespace MudBlazor
         /// </summary>
         /// <remarks>
         /// Typically set to common masks such as <see cref="PatternMask"/>, <see cref="MultiMask"/>, <see cref="RegexMask"/>, and <see cref="BlockMask"/>.
-        /// When set, some properties will be ignored such as <see cref="MudInput{T}.MaxLines"/>, <see cref="MudInput{T}.Sizing"/>, and <see cref="MudInput{T}.HideSpinButtons"/>.
+        /// When set, some properties will be ignored such as <see cref="HamkareInput{T}.MaxLines"/>, <see cref="HamkareInput{T}.Sizing"/>, and <see cref="HamkareInput{T}.HideSpinButtons"/>.
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.General.Data)]
         public IMask? Mask
         {
-            get => _maskReference?.Mask ?? _mask; // this might look strange, but it is absolutely necessary due to how MudMask works.
+            get => _maskReference?.Mask ?? _mask; // this might look strange, but it is absolutely necessary due to how HamkareMask works.
             set => _mask = value;
         }
 
@@ -168,7 +168,7 @@ namespace MudBlazor
         }
 
         /// <summary>
-        /// Clears the <see cref="MudBaseInput{T}.Text"/> and sets <see cref="MudBaseInput{T}.Value"/> to <c>default(T)</c>.
+        /// Clears the <see cref="HamkareBaseInput{T}.Text"/> and sets <see cref="HamkareBaseInput{T}.Value"/> to <c>default(T)</c>.
         /// </summary>
         public Task ClearAsync()
         {
@@ -181,7 +181,7 @@ namespace MudBlazor
         }
 
         /// <summary>
-        /// Sets the <see cref="MudBaseInput{T}.Text"/> to the specified value.
+        /// Sets the <see cref="HamkareBaseInput{T}.Text"/> to the specified value.
         /// </summary>
         /// <param name="text">The new text value to use.</param>
         public async Task SetTextAsync(string? text)
@@ -207,7 +207,7 @@ namespace MudBlazor
         {
             if (IsJSRuntimeAvailable && InputReference != null)
             {
-                return await JsRuntime.InvokeAsync<int>("mudInput.getCaretPosition", InputReference.ElementReference);
+                return await JsRuntime.InvokeAsync<int>("hamkareInput.getCaretPosition", InputReference.ElementReference);
             }
 
             return -1;
@@ -221,7 +221,7 @@ namespace MudBlazor
         /// <remarks>
         /// If <c>position</c> is greater than the current text length, the text will be inserted at the end.<br/>
         /// If <c>position</c> is less than <c>0</c>, the text will be inserted at the beginning.<br/>
-        /// Note that this function doesn't support <see cref="MudMask"/>.
+        /// Note that this function doesn't support <see cref="HamkareMask"/>.
         /// </remarks>
         public async Task InsertTextAsync(string text, int position = int.MaxValue)
         {
@@ -232,7 +232,7 @@ namespace MudBlazor
 
             if (IsJSRuntimeAvailable && InputReference != null)
             {
-                await JsRuntime.InvokeVoidAsyncWithErrorHandling("mudInput.insertAtPosition", InputReference.ElementReference, text, position);
+                await JsRuntime.InvokeVoidAsyncWithErrorHandling("hamkareInput.insertAtPosition", InputReference.ElementReference, text, position);
             }
         }
 
@@ -244,7 +244,7 @@ namespace MudBlazor
         {
             if (!HasMask && IsJSRuntimeAvailable && InputReference != null)
             {
-                await JsRuntime.InvokeVoidAsyncWithErrorHandling("mudInput.insertAtCurrentCaretPosition", InputReference.ElementReference, text);
+                await JsRuntime.InvokeVoidAsyncWithErrorHandling("hamkareInput.insertAtCurrentCaretPosition", InputReference.ElementReference, text);
                 return;
             }
 

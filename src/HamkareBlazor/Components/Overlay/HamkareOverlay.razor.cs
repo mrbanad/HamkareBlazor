@@ -1,20 +1,20 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using MudBlazor.State;
-using MudBlazor.Utilities;
+using HamkareBlazor.State;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 #nullable enable
 
 /// <summary>
 /// Renders a translucent layer over content, typically used for modals, popovers, progress bars, or blocking interactions.
 /// </summary>
-public partial class MudOverlay : MudComponentBase, IPointerEventsNoneObserver, IAsyncDisposable
+public partial class HamkareOverlay : HamkareComponentBase, IPointerEventsNoneObserver, IAsyncDisposable
 {
     private int _lockCount;
     private bool _previousAbsolute;
@@ -23,15 +23,15 @@ public partial class MudOverlay : MudComponentBase, IPointerEventsNoneObserver, 
     private readonly string _elementId = Identifier.Create("overlay");
 
     protected string Classname =>
-        new CssBuilder("mud-overlay")
-            .AddClass("mud-overlay-absolute", Absolute)
+        new CssBuilder("hamkare-overlay")
+            .AddClass("hamkare-overlay-absolute", Absolute)
             .AddClass(Class)
             .Build();
 
     protected string ScrimClassname =>
-        new CssBuilder("mud-overlay-scrim")
-            .AddClass("mud-overlay-dark", DarkBackground)
-            .AddClass("mud-overlay-light", LightBackground)
+        new CssBuilder("hamkare-overlay-scrim")
+            .AddClass("hamkare-overlay-dark", DarkBackground)
+            .AddClass("hamkare-overlay-light", LightBackground)
             .Build();
 
     protected string Styles =>
@@ -187,22 +187,22 @@ public partial class MudOverlay : MudComponentBase, IPointerEventsNoneObserver, 
     public EventCallback OnClosed { get; set; }
 
     /// <summary>
-    /// Determines whether the overlay should be rendered outside of the section. If it's false, the overlay will be rendered with the MudPopOverProvider.
+    /// Determines whether the overlay should be rendered outside of the section. If it's false, the overlay will be rendered with the HamkarePopOverProvider.
     /// If it's true it will be rendered as is where is (v7 and previous behavior)
     /// </summary>
     /// <remarks>
-    /// If the user sets Absolute to true, the user intends for it to be part of his markup and not rendered by the MudPopoverProvider
+    /// If the user sets Absolute to true, the user intends for it to be part of his markup and not rendered by the HamkarePopoverProvider
     /// Dialog's need the separation of the overlay for display purposes
-    /// If the user provides a child content, the user intends for it to be part of his markup and not rendered by the MudPopoverProvider
+    /// If the user provides a child content, the user intends for it to be part of his markup and not rendered by the HamkarePopoverProvider
     /// </remarks>
     internal bool RenderOutsideOfSection =>
         Absolute ||
-        (Class?.Contains("mud-skip-overlay-section") ?? false) ||
+        (Class?.Contains("hamkare-skip-overlay-section") ?? false) ||
         ChildContent != null;
 
     string IPointerEventsNoneObserver.ElementId => _elementId;
 
-    public MudOverlay()
+    public HamkareOverlay()
     {
         using var registerScope = CreateRegisterScope();
         _visibleState = registerScope.RegisterParameter<bool>(nameof(Visible))

@@ -1,26 +1,26 @@
 ﻿using Microsoft.AspNetCore.Components;
-using MudBlazor.Utilities;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
 
     /// <summary>
-    /// A table similar to <see cref="MudTable{T}"/> but with basic styling features.
+    /// A table similar to <see cref="HamkareTable{T}"/> but with basic styling features.
     /// </summary>
-    /// <seealso cref="MudTable{T}"/>
-    public partial class MudSimpleTable : MudComponentBase
+    /// <seealso cref="HamkareTable{T}"/>
+    public partial class HamkareSimpleTable : HamkareComponentBase
     {
         protected string Classname =>
-            new CssBuilder("mud-table mud-simple-table")
-                .AddClass($"mud-table-dense", Dense)
-                .AddClass($"mud-table-hover", Hover)
-                .AddClass($"mud-table-bordered", Bordered)
-                .AddClass($"mud-table-outlined", Outlined)
-                .AddClass($"mud-table-striped", Striped)
-                .AddClass($"mud-table-square", Square)
-                .AddClass($"mud-table-sticky-header", FixedHeader)
-                .AddClass($"mud-elevation-{Elevation}", !Outlined)
+            new CssBuilder("hamkare-table hamkare-simple-table")
+                .AddClass($"hamkare-table-dense", Dense)
+                .AddClass($"hamkare-table-hover", Hover)
+                .AddClass($"hamkare-table-bordered", Bordered)
+                .AddClass($"hamkare-table-outlined", Outlined)
+                .AddClass($"hamkare-table-striped", Striped)
+                .AddClass($"hamkare-table-square", Square)
+                .AddClass($"hamkare-table-sticky-header", FixedHeader)
+                .AddClass($"hamkare-elevation-{Elevation}", !Outlined)
                 .AddClass(Class)
                 .Build();
 

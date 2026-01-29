@@ -1,12 +1,12 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using MudBlazor.Extensions;
-using MudBlazor.Utilities;
+using HamkareBlazor.Extensions;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 #nullable enable
 /// <summary>
-/// Represents a date range used by a <see cref="MudDatePicker"/>.
+/// Represents a date range used by a <see cref="HamkareDatePicker"/>.
 /// </summary>
 public class DateRange : Range<DateTime?>, IEquatable<DateRange?>
 {

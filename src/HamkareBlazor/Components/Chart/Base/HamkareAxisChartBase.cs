@@ -3,11 +3,11 @@ using System.Globalization;
 using System.Numerics;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
-using MudBlazor.Interop;
-using MudBlazor.Utilities.Debounce;
+using HamkareBlazor.Interop;
+using HamkareBlazor.Utilities.Debounce;
 
 #nullable enable
-namespace MudBlazor.Charts;
+namespace HamkareBlazor.Charts;
 
 /// <summary>
 /// Serves as the base class for axis-based charts, providing core functionality for rendering and managing chart
@@ -19,7 +19,7 @@ namespace MudBlazor.Charts;
 /// </remarks>
 /// <typeparam name="T">The type of numeric values used by the chart</typeparam>
 /// <typeparam name="TOptions">The type of chart options used to configure the chart's behavior and appearance.</typeparam>
-public abstract class MudAxisChartBase<T, TOptions> : MudChartBase<T, TOptions>, IMudAxisChart<T>, IDisposable
+public abstract class HamkareAxisChartBase<T, TOptions> : HamkareChartBase<T, TOptions>, IHamkareAxisChart<T>, IDisposable
     where T : struct, INumber<T>, IMinMaxValue<T>, IFormattable
     where TOptions : IAxisChartOptions
 {
@@ -40,17 +40,17 @@ public abstract class MudAxisChartBase<T, TOptions> : MudChartBase<T, TOptions>,
     /// The chart, if any, containing this component.
     /// </summary>
     [CascadingParameter]
-    public MudChart<T>? ChartContainer { get; set; }
+    public HamkareChart<T>? ChartContainer { get; set; }
 
     /// <summary>
     /// The chart to be overlaid on top of the current chart.
     /// </summary>
-    public IMudChart<T>? OverlayChart { get; set; }
+    public IHamkareChart<T>? OverlayChart { get; set; }
 
     /// <summary>
     /// Indicates whether the current chart is an overlay chart.
     /// </summary>
-    public bool IsOverlayChart => ChartReference is IMudAxisChart<T>;
+    public bool IsOverlayChart => ChartReference is IHamkareAxisChart<T>;
 
     /// <summary>
     /// The list of chart series.
@@ -140,7 +140,7 @@ public abstract class MudAxisChartBase<T, TOptions> : MudChartBase<T, TOptions>,
     protected ElementSize? _yAxisLabelSize;
     protected ElementSize? _xAxisLabelSize;
 
-    private readonly DotNetObjectReference<MudAxisChartBase<T, TOptions>> _dotNetObjectReference;
+    private readonly DotNetObjectReference<HamkareAxisChartBase<T, TOptions>> _dotNetObjectReference;
 
     /// <summary>
     /// The reference to the chart element.
@@ -162,7 +162,7 @@ public abstract class MudAxisChartBase<T, TOptions> : MudChartBase<T, TOptions>,
 
     [DynamicDependency(nameof(OnElementSizeChanged))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(ElementSize))]
-    protected MudAxisChartBase()
+    protected HamkareAxisChartBase()
     {
         _dotNetObjectReference = DotNetObjectReference.Create(this);
     }
@@ -184,7 +184,7 @@ public abstract class MudAxisChartBase<T, TOptions> : MudChartBase<T, TOptions>,
     /// </summary>
     protected void RenderOverlay()
     {
-        if (OverlayChart is IMudAxisChart<T> overlay)
+        if (OverlayChart is IHamkareAxisChart<T> overlay)
         {
             overlay.SharedData = SharedData;
             overlay.RebuildChart();
@@ -199,7 +199,7 @@ public abstract class MudAxisChartBase<T, TOptions> : MudChartBase<T, TOptions>,
     /// <returns>A task representing the asynchronous operation.</returns>
     protected async Task SetElementReference(ElementReference elementRef)
     {
-        var elementSize = await JsRuntime.InvokeAsync<ElementSize>("mudObserveElementSize", _dotNetObjectReference, elementRef);
+        var elementSize = await JsRuntime.InvokeAsync<ElementSize>("hamkareObserveElementSize", _dotNetObjectReference, elementRef);
 
         OnElementSizeChanged(elementSize);
     }
@@ -217,7 +217,7 @@ public abstract class MudAxisChartBase<T, TOptions> : MudChartBase<T, TOptions>,
     /// </summary>
     protected void SetBounds()
     {
-        if (ChartReference is IMudAxisChart<T> chart && chart.SharedData is { } data)
+        if (ChartReference is IHamkareAxisChart<T> chart && chart.SharedData is { } data)
         {
             _boundWidth = data.BoundWidth;
             _boundHeight = data.BoundHeight;
@@ -297,7 +297,7 @@ public abstract class MudAxisChartBase<T, TOptions> : MudChartBase<T, TOptions>,
             Legends.Add(legend);
         }
 
-        if (OverlayChart is IMudAxisChart<T> overlay)
+        if (OverlayChart is IHamkareAxisChart<T> overlay)
         {
             for (var i = 0; i < overlay.ChartSeries.Count; i++)
             {
@@ -405,7 +405,7 @@ public abstract class MudAxisChartBase<T, TOptions> : MudChartBase<T, TOptions>,
     /// <param name="overlayChart">The overlay chart.</param>
     /// <param name="index">The index of the series.</param>
     /// <param name="isVisible">Whether the series is visible.</param>
-    protected void HandleOverlayChartLegendVisibility(IMudChart<T> overlayChart, int index, bool isVisible)
+    protected void HandleOverlayChartLegendVisibility(IHamkareChart<T> overlayChart, int index, bool isVisible)
     {
         if (overlayChart?.ChartSeries != null && index >= 0 && index < overlayChart.ChartSeries.Count)
         {

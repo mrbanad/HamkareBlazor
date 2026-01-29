@@ -1,30 +1,30 @@
-﻿// Copyright (c) 2020 MudBlazor
+﻿// Copyright (c) 2020 HamkareBlazor
 // License: MIT
 
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using MudBlazor.State;
-using MudBlazor.Utilities;
+using HamkareBlazor.State;
+using HamkareBlazor.Utilities;
 
 #nullable enable
-namespace MudBlazor
+namespace HamkareBlazor
 {
     /// <summary>
     /// A pop-up dialog with a simple message and button choices.
     /// </summary>
-    /// <seealso cref="MudDialog" />
-    public partial class MudMessageBox : MudComponentBase
+    /// <seealso cref="HamkareDialog" />
+    public partial class HamkareMessageBox : HamkareComponentBase
     {
         private readonly ParameterState<bool> _visibleState;
         private IDialogReference? _reference;
         private ActivatableCallback? _yesCallback, _cancelCallback, _noCallback;
 
         protected string Classname =>
-            new CssBuilder("mud-message-box")
+            new CssBuilder("hamkare-message-box")
                 .Build();
 
-        public MudMessageBox()
+        public HamkareMessageBox()
         {
             using var registerScope = CreateRegisterScope();
             _visibleState = registerScope.RegisterParameter<bool>(nameof(Visible))
@@ -37,7 +37,7 @@ namespace MudBlazor
         private IDialogService DialogService { get; set; } = null!;
 
         [CascadingParameter]
-        internal IMudDialogInstance? DialogInstance { get; set; }
+        internal IHamkareDialogInstance? DialogInstance { get; set; }
 
         /// <summary>
         /// The title of this message box.
@@ -103,7 +103,7 @@ namespace MudBlazor
         /// The custom content for the Cancel button.
         /// </summary>
         /// <remarks>
-        /// Must be a <see cref="MudButton"/>.  When set, <see cref="CancelText"/> is ignored.
+        /// Must be a <see cref="HamkareButton"/>.  When set, <see cref="CancelText"/> is ignored.
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.MessageBox.Behavior)]
@@ -123,7 +123,7 @@ namespace MudBlazor
         /// The custom content for the No button.
         /// </summary>
         /// <remarks>
-        /// Must be a <see cref="MudButton"/>.  When set, <see cref="NoText"/> is ignored.
+        /// Must be a <see cref="HamkareButton"/>.  When set, <see cref="NoText"/> is ignored.
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.MessageBox.Behavior)]
@@ -143,7 +143,7 @@ namespace MudBlazor
         /// The custom content for the Yes button.
         /// </summary>
         /// <remarks>
-        /// Must be a <see cref="MudButton"/>.  When set, <see cref="YesText"/> is ignored.
+        /// Must be a <see cref="HamkareButton"/>.  When set, <see cref="YesText"/> is ignored.
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.MessageBox.Behavior)]
@@ -207,7 +207,7 @@ namespace MudBlazor
                 [nameof(YesText)] = YesText,
                 [nameof(YesButton)] = YesButton,
             };
-            _reference = await DialogService.ShowAsync<MudMessageBox>(title: Title, parameters: parameters, options: options);
+            _reference = await DialogService.ShowAsync<HamkareMessageBox>(title: Title, parameters: parameters, options: options);
             var result = await _reference.Result;
 
             if (result is null)

@@ -1,9 +1,9 @@
 ﻿using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using MudBlazor.Resources;
+using HamkareBlazor.Resources;
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 #nullable enable
 /// <summary>
@@ -17,21 +17,21 @@ public abstract class AbstractLocalizationInterceptor : ILocalizationInterceptor
     protected internal IStringLocalizer Localizer { get; }
 
     /// <summary>
-    /// Gets the custom <see cref="MudBlazor.MudLocalizer"/> for additional translations, if provided.
+    /// Gets the custom <see cref="HamkareBlazor.HamkareLocalizer"/> for additional translations, if provided.
     /// </summary>
-    protected internal MudLocalizer? MudLocalizer { get; }
+    protected internal HamkareLocalizer? HamkareLocalizer { get; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="AbstractLocalizationInterceptor"/> class.
     /// This creates an ResX reader for builtin <see cref="LanguageResource"/> with the default <see cref="LocalizationOptions"/>.
     /// </summary>
     /// <param name="loggerFactory">The logger factory.</param>
-    /// <param name="mudLocalizer">The optional custom MudLocalizer.</param>
+    /// <param name="hamkareLocalizer">The optional custom HamkareLocalizer.</param>
     /// <remarks>
-    /// For more custom options use <see cref="AbstractLocalizationInterceptor(IStringLocalizer,MudBlazor.MudLocalizer)"/> constuctor.
+    /// For more custom options use <see cref="AbstractLocalizationInterceptor(IStringLocalizer,HamkareBlazor.HamkareLocalizer)"/> constuctor.
     /// </remarks>
-    protected AbstractLocalizationInterceptor(ILoggerFactory loggerFactory, MudLocalizer? mudLocalizer = null)
-        : this(DefaultLanguageResourceReader(loggerFactory), mudLocalizer)
+    protected AbstractLocalizationInterceptor(ILoggerFactory loggerFactory, HamkareLocalizer? hamkareLocalizer = null)
+        : this(DefaultLanguageResourceReader(loggerFactory), hamkareLocalizer)
     {
     }
 
@@ -39,11 +39,11 @@ public abstract class AbstractLocalizationInterceptor : ILocalizationInterceptor
     /// Initializes a new instance of the <see cref="AbstractLocalizationInterceptor"/> class.
     /// </summary>
     /// <param name="localizer">The instance of <see cref="IStringLocalizer"/>.</param>
-    /// <param name="mudLocalizer">The optional custom MudLocalizer.</param>
-    protected AbstractLocalizationInterceptor(IStringLocalizer localizer, MudLocalizer? mudLocalizer = null)
+    /// <param name="hamkareLocalizer">The optional custom HamkareLocalizer.</param>
+    protected AbstractLocalizationInterceptor(IStringLocalizer localizer, HamkareLocalizer? hamkareLocalizer = null)
     {
         Localizer = localizer;
-        MudLocalizer = mudLocalizer;
+        HamkareLocalizer = hamkareLocalizer;
     }
 
     /// <inheritdoc />

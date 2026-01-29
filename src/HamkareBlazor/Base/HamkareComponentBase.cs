@@ -1,22 +1,22 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 using Microsoft.JSInterop;
-using MudBlazor.Interfaces;
+using HamkareBlazor.Interfaces;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
     /// <summary>
-    /// Represents a base class for designing MudBlazor components.
+    /// Represents a base class for designing HamkareBlazor components.
     /// </summary>
-    public abstract class MudComponentBase : ComponentBaseWithState, IMudStateHasChanged
+    public abstract class HamkareComponentBase : ComponentBaseWithState, IHamkareStateHasChanged
     {
         private ILogger? _logger;
-        private readonly string _id = Identifier.Create("mudinput");
+        private readonly string _id = Identifier.Create("hamkareinput");
 
         [Inject]
         private ILoggerFactory LoggerFactory { get; set; } = null!;
@@ -94,6 +94,6 @@ namespace MudBlazor
         }
 
         /// <inheritdoc />
-        void IMudStateHasChanged.StateHasChanged() => StateHasChanged();
+        void IHamkareStateHasChanged.StateHasChanged() => StateHasChanged();
     }
 }

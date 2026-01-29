@@ -1,35 +1,35 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using MudBlazor.Utilities;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 #nullable enable
 
 /// <summary>
 /// A clickable link which can navigate to a URL.
 /// </summary>
-public partial class MudLink : MudComponentBase
+public partial class HamkareLink : HamkareComponentBase
 {
     protected string Classname =>
-        new CssBuilder("mud-typography mud-link")
-            .AddClass($"mud-{Color.ToStringFast(true)}-text")
-            .AddClass($"mud-link-underline-{Underline.ToStringFast(true)}")
-            .AddClass($"mud-typography-{Typo.ToStringFast(true)}", Typo != Typo.inherit)
+        new CssBuilder("hamkare-typography hamkare-link")
+            .AddClass($"hamkare-{Color.ToStringFast(true)}-text")
+            .AddClass($"hamkare-link-underline-{Underline.ToStringFast(true)}")
+            .AddClass($"hamkare-typography-{Typo.ToStringFast(true)}", Typo != Typo.inherit)
             // When Href is empty, link's hover cursor is text "I beam" even when OnClick has a delegate.
             // To change this for more expected look change hover cursor to a pointer:
             .AddClass("cursor-pointer", Href == default && OnClick.HasDelegate && !Disabled)
-            .AddClass("mud-link-disabled", Disabled)
+            .AddClass("hamkare-link-disabled", Disabled)
             .AddClass(Class)
             .Build();
 
     protected string StartIconClassname =>
-        new CssBuilder("mud-link-icon-start")
+        new CssBuilder("hamkare-link-icon-start")
             .AddClass(IconClass)
             .Build();
 
     protected string EndIconClassname =>
-        new CssBuilder("mud-link-icon-end")
+        new CssBuilder("hamkare-link-icon-end")
             .AddClass(IconClass)
             .Build();
 

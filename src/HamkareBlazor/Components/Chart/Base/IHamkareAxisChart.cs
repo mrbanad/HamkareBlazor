@@ -1,12 +1,12 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Numerics;
 using Microsoft.AspNetCore.Components;
 
 #nullable enable
-namespace MudBlazor.Charts;
+namespace HamkareBlazor.Charts;
 
 /// <summary>
 /// Represents data for the grid of an axis chart.
@@ -24,7 +24,7 @@ public record struct AxisGridData<T>(int LowestHorizontalLine, int HorizontalLin
 /// Represents a chart that has axes.
 /// </summary>
 /// <typeparam name="T">The data type of the chart.</typeparam>
-public interface IMudAxisChart<T> : IMudChart<T> where T : struct, INumber<T>, IMinMaxValue<T>, IFormattable
+public interface IHamkareAxisChart<T> : IHamkareChart<T> where T : struct, INumber<T>, IMinMaxValue<T>, IFormattable
 {
     /// <summary>
     /// The data for the grid of the chart.
@@ -34,7 +34,7 @@ public interface IMudAxisChart<T> : IMudChart<T> where T : struct, INumber<T>, I
     /// <summary>
     /// The chart to be overlaid on top of this chart.
     /// </summary>
-    public IMudChart<T>? OverlayChart { get; set; }
+    public IHamkareChart<T>? OverlayChart { get; set; }
 
     /// <summary>
     /// The content to be rendered as an overlay.

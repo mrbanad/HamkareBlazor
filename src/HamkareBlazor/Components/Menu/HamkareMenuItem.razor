@@ -1,7 +1,7 @@
-﻿@namespace MudBlazor
-@inherits MudComponentBase
+﻿@namespace HamkareBlazor
+@inherits HamkareComponentBase
 
-<MudElement HtmlTag="@GetHtmlTag()"
+<HamkareElement HtmlTag="@GetHtmlTag()"
             Class="@Classname"
             Style="@Style"
             href="@Href"
@@ -16,13 +16,13 @@
 
     @if (!string.IsNullOrWhiteSpace(Icon))
     {
-        <MudIcon Class="mud-menu-item-icon"
+        <HamkareIcon Class="hamkare-menu-item-icon"
                  Icon="@Icon"
                  Color="IconColor"
                  Disabled="GetDisabled()" />
     }
 
-    <MudText Class="mud-menu-item-text"
+    <HamkareText Class="hamkare-menu-item-text"
              Typo="GetTypo()">
         @if (ChildContent is null)
         {
@@ -32,12 +32,12 @@
         {
             @ChildContent
         }
-    </MudText>
+    </HamkareText>
 
     @if (ActivatesSubMenu && !HideSubMenuArrow)
     {
-        <MudIcon Class="mud-menu-submenu-icon"
+        <HamkareIcon Class="hamkare-menu-submenu-icon"
                  Icon="@Icons.Material.Filled.ArrowRight"
                  Disabled="GetDisabled()" />
     }
-</MudElement>
+</HamkareElement>

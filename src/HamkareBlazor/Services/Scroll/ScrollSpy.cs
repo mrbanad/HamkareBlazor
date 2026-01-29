@@ -1,11 +1,11 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.JSInterop;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
     /// <summary>
@@ -36,20 +36,20 @@ namespace MudBlazor
 
         /// <inheritdoc />
         public async Task StartSpying(string containerSelector, string sectionClassSelector) =>
-            await _js.InvokeVoidAsync("mudScrollSpy.spying", _dotNetRef, containerSelector, sectionClassSelector);
+            await _js.InvokeVoidAsync("hamkareScrollSpy.spying", _dotNetRef, containerSelector, sectionClassSelector);
 
         /// <inheritdoc />
         public async Task ScrollToSection(string id)
         {
             CenteredSection = id;
-            await _js.InvokeVoidAsyncWithErrorHandling("mudScrollSpy.scrollToSection", id.Trim('#'));
+            await _js.InvokeVoidAsyncWithErrorHandling("hamkareScrollSpy.scrollToSection", id.Trim('#'));
         }
 
         /// <inheritdoc />
         public async Task SetSectionAsActive(string id)
         {
             CenteredSection = id;
-            await _js.InvokeVoidAsyncWithErrorHandling("mudScrollSpy.activateSection", id.Trim('#'));
+            await _js.InvokeVoidAsyncWithErrorHandling("hamkareScrollSpy.activateSection", id.Trim('#'));
         }
 
         /// <inheritdoc />
@@ -73,7 +73,7 @@ namespace MudBlazor
             {
                 _disposed = true;
 
-                await _js.InvokeVoidAsyncWithErrorHandling("mudScrollSpy.unspy");
+                await _js.InvokeVoidAsyncWithErrorHandling("hamkareScrollSpy.unspy");
                 _dotNetRef.Dispose();
             }
         }

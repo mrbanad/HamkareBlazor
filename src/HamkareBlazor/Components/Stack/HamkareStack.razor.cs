@@ -1,18 +1,18 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using Microsoft.AspNetCore.Components;
-using MudBlazor.Utilities;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 #nullable enable
 
 /// <summary>
 /// Manages layout of its child items along the vertical or horizontal axis with optional spacing.
 /// </summary>
-public partial class MudStack : MudComponentBase
+public partial class HamkareStack : HamkareComponentBase
 {
     protected string Classname =>
         new CssBuilder("d-flex")
@@ -21,7 +21,7 @@ public partial class MudStack : MudComponentBase
             .AddClass($"align-{AlignItems?.ToStringFast(true)}", AlignItems is not null)
             .AddClass($"flex-{Wrap?.ToStringFast(true)}", Wrap is not null)
             .AddClass($"gap-{Spacing}", Spacing >= 0)
-            .AddClass($"flex-grow-{StretchItems?.ToStringFast(true)}", StretchItems is not null and not MudBlazor.StretchItems.None)
+            .AddClass($"flex-grow-{StretchItems?.ToStringFast(true)}", StretchItems is not null and not HamkareBlazor.StretchItems.None)
             .AddClass(Class)
             .Build();
 
@@ -140,7 +140,7 @@ public partial class MudStack : MudComponentBase
     public AlignItems? AlignItems { get; set; }
 
     /// <summary>
-    /// Defines the stretching behaviour of children along the main axis within a <see cref="MudStack"/> component.
+    /// Defines the stretching behaviour of children along the main axis within a <see cref="HamkareStack"/> component.
     /// </summary>
     /// <remarks>
     /// Defaults to <c>null</c>.  

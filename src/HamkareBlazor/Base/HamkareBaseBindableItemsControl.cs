@@ -2,16 +2,16 @@
 using System.Linq;
 using Microsoft.AspNetCore.Components;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
     /// <summary>
     /// Represents a base class for designing components with bindable items.
     /// </summary>
-    /// <typeparam name="TChildComponent">The <see cref="MudComponentBase"/> managed within this component..</typeparam>
+    /// <typeparam name="TChildComponent">The <see cref="HamkareComponentBase"/> managed within this component..</typeparam>
     /// <typeparam name="TData">The type of item managed by this component.</typeparam>
-    public abstract class MudBaseBindableItemsControl<TChildComponent, TData> : MudBaseItemsControl<TChildComponent>
-        where TChildComponent : MudComponentBase
+    public abstract class HamkareBaseBindableItemsControl<TChildComponent, TData> : HamkareBaseItemsControl<TChildComponent>
+        where TChildComponent : HamkareComponentBase
     {
         /// <summary>
         /// The alternate source of items if <c>Items</c> is not set.

@@ -1,49 +1,49 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using Microsoft.AspNetCore.Components;
-using MudBlazor.Utilities;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
 
     /// <summary>
-    /// An item as part of a <see cref="MudToggleGroup{T}"/>
+    /// An item as part of a <see cref="HamkareToggleGroup{T}"/>
     /// </summary>
     /// <typeparam name="T">The type of item being toggled.</typeparam>
-    /// <seealso cref="MudToggleGroup{T}"/>
-    /// <seealso cref="MudRadioGroup{T}"/>
-    /// <seealso cref="MudRadio{T}"/>
-    public partial class MudToggleItem<T> : MudComponentBase, IDisposable
+    /// <seealso cref="HamkareToggleGroup{T}"/>
+    /// <seealso cref="HamkareRadioGroup{T}"/>
+    /// <seealso cref="HamkareRadio{T}"/>
+    public partial class HamkareToggleItem<T> : HamkareComponentBase, IDisposable
     {
-        protected string Classname => new CssBuilder("mud-toggle-item")
+        protected string Classname => new CssBuilder("hamkare-toggle-item")
             .AddClass(AssertedParent.SelectedClass, Selected && !string.IsNullOrEmpty(AssertedParent.SelectedClass))
-            .AddClass("mud-toggle-item-selected", Selected)
-            .AddClass("mud-toggle-item-vertical", AssertedParent.Vertical)
-            .AddClass("mud-toggle-item-delimiter", AssertedParent.Delimiters)
-            .AddClass("mud-toggle-item-fixed", AssertedParent.CheckMark && AssertedParent.FixedContent)
-            .AddClass($"mud-toggle-item-size-{AssertedParent.Size.ToStringFast(true)}")
-            .AddClass("mud-ripple", AssertedParent.Ripple)
-            .AddClass("mud-typography-input")
+            .AddClass("hamkare-toggle-item-selected", Selected)
+            .AddClass("hamkare-toggle-item-vertical", AssertedParent.Vertical)
+            .AddClass("hamkare-toggle-item-delimiter", AssertedParent.Delimiters)
+            .AddClass("hamkare-toggle-item-fixed", AssertedParent.CheckMark && AssertedParent.FixedContent)
+            .AddClass($"hamkare-toggle-item-size-{AssertedParent.Size.ToStringFast(true)}")
+            .AddClass("hamkare-ripple", AssertedParent.Ripple)
+            .AddClass("hamkare-typography-input")
             .AddClass(Class)
             .Build();
 
-        protected string CheckMarkClassname => new CssBuilder("mud-toggle-item-check-icon")
+        protected string CheckMarkClassname => new CssBuilder("hamkare-toggle-item-check-icon")
             .AddClass(AssertedParent.CheckMarkClass)
             .Build();
 
         /// <summary>
-        /// The <see cref="MudToggleGroup{T}"/> hosting this item if one exists.
+        /// The <see cref="HamkareToggleGroup{T}"/> hosting this item if one exists.
         /// </summary>
         [CascadingParameter]
-        public MudToggleGroup<T>? Parent { get; set; }
+        public HamkareToggleGroup<T>? Parent { get; set; }
 
         /// <summary>
-        /// The <see cref="MudToggleGroup{T}"/> hosting this item, but validated to be non-null.
+        /// The <see cref="HamkareToggleGroup{T}"/> hosting this item, but validated to be non-null.
         /// </summary>
-        private MudToggleGroup<T> AssertedParent => Parent ?? throw new InvalidOperationException($"{nameof(MudToggleItem<T>)} must be used within a {nameof(MudToggleGroup<T>)}.");
+        private HamkareToggleGroup<T> AssertedParent => Parent ?? throw new InvalidOperationException($"{nameof(HamkareToggleItem<T>)} must be used within a {nameof(HamkareToggleGroup<T>)}.");
 
         /// <summary>
         /// Prevents the user from interacting with this item.
@@ -66,7 +66,7 @@ namespace MudBlazor
         /// The icon shown for the unselected checkmark.
         /// </summary>
         /// <remarks>
-        /// Defaults to <c>null</c> (no icon). Applies when <see cref="MudToggleGroup{T}.CheckMark"/> is <c>true</c>.
+        /// Defaults to <c>null</c> (no icon). Applies when <see cref="HamkareToggleGroup{T}.CheckMark"/> is <c>true</c>.
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.List.Appearance)]
@@ -76,7 +76,7 @@ namespace MudBlazor
         /// The icon shown for the selected checkmark.
         /// </summary>
         /// <remarks>
-        /// Defaults to <see cref="Icons.Material.Filled.Check" />. Applies when <see cref="MudToggleGroup{T}.CheckMark"/> is <c>true</c>.
+        /// Defaults to <see cref="Icons.Material.Filled.Check" />. Applies when <see cref="HamkareToggleGroup{T}.CheckMark"/> is <c>true</c>.
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.List.Appearance)]

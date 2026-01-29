@@ -1,26 +1,26 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using MudBlazor.State;
-using MudBlazor.Utilities;
+using HamkareBlazor.State;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
 
     /// <summary>
-    /// An item within a <see cref="MudList{T}"/> component.
+    /// An item within a <see cref="HamkareList{T}"/> component.
     /// </summary>
     /// <typeparam name="T">The type of item being listed.</typeparam>
-    /// <seealso cref="MudList{T}"/>
-    /// <seealso cref="MudListSubheader"/>
-    public partial class MudListItem<T> : MudComponentBase, IDisposable
+    /// <seealso cref="HamkareList{T}"/>
+    /// <seealso cref="HamkareListSubheader"/>
+    public partial class HamkareListItem<T> : HamkareComponentBase, IDisposable
     {
         private bool _selected;
-        private bool MultiSelection => MudList?.SelectionMode == SelectionMode.MultiSelection;
+        private bool MultiSelection => HamkareList?.SelectionMode == SelectionMode.MultiSelection;
 
         private ParameterState<bool> _expandedState;
 
-        public MudListItem()
+        public HamkareListItem()
         {
             using var registerScope = CreateRegisterScope();
             _expandedState = registerScope.RegisterParameter<bool>(nameof(Expanded))
@@ -29,14 +29,14 @@ namespace MudBlazor
         }
 
         protected string Classname =>
-            new CssBuilder("mud-list-item")
-                .AddClass("mud-list-item-dense", GetDense())
-                .AddClass("mud-list-item-gutters", GetGutters())
-                .AddClass("mud-list-item-clickable", GetClickable())
-                .AddClass("mud-ripple", Ripple && GetClickable())
-                .AddClass($"mud-selected-item mud-{MudList?.Color.ToStringFast(true)}-text", !MultiSelection && _selected && !GetDisabled())
-                .AddClass($"mud-{MudList?.Color.ToStringFast(true)}-hover", !MultiSelection && _selected && !GetDisabled())
-                .AddClass("mud-list-item-disabled", GetDisabled())
+            new CssBuilder("hamkare-list-item")
+                .AddClass("hamkare-list-item-dense", GetDense())
+                .AddClass("hamkare-list-item-gutters", GetGutters())
+                .AddClass("hamkare-list-item-clickable", GetClickable())
+                .AddClass("hamkare-ripple", Ripple && GetClickable())
+                .AddClass($"hamkare-selected-item hamkare-{HamkareList?.Color.ToStringFast(true)}-text", !MultiSelection && _selected && !GetDisabled())
+                .AddClass($"hamkare-{HamkareList?.Color.ToStringFast(true)}-hover", !MultiSelection && _selected && !GetDisabled())
+                .AddClass("hamkare-list-item-disabled", GetDisabled())
                 .AddClass(Class)
                 .Build();
 
@@ -44,9 +44,9 @@ namespace MudBlazor
         protected NavigationManager UriHelper { get; set; } = null!;
 
         [CascadingParameter]
-        protected MudList<T>? MudList { get; set; }
+        protected HamkareList<T>? HamkareList { get; set; }
 
-        private MudList<T>? TopLevelList => MudList?.TopLevelList;
+        private HamkareList<T>? TopLevelList => HamkareList?.TopLevelList;
 
         /// <summary>
         /// The text to display.
@@ -73,7 +73,7 @@ namespace MudBlazor
         public T? Value { get; set; }
 
         /// <summary>
-        /// The custom <see cref="MudAvatar" /> to display to the left of <see cref="Text"/>.
+        /// The custom <see cref="HamkareAvatar" /> to display to the left of <see cref="Text"/>.
         /// </summary>
         /// <remarks>
         /// When a value is set, <see cref="Icon"/> is ignored.
@@ -116,7 +116,7 @@ namespace MudBlazor
         /// Prevents this list item from being clicked.
         /// </summary>
         /// <remarks>
-        /// Defaults to <c>false</c>.  This value can be overridden by <see cref="MudList{T}.Disabled"/>.
+        /// Defaults to <c>false</c>.  This value can be overridden by <see cref="HamkareList{T}.Disabled"/>.
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.List.Behavior)]
@@ -213,7 +213,7 @@ namespace MudBlazor
         /// Applies left and right padding to this list items.
         /// </summary>
         /// <remarks>
-        /// Defaults to the value of the parent <see cref="MudList{T}.Gutters"/>. When set, it overrides the list's setting.
+        /// Defaults to the value of the parent <see cref="HamkareList{T}.Gutters"/>. When set, it overrides the list's setting.
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.List.Appearance)]
@@ -259,7 +259,7 @@ namespace MudBlazor
         [Parameter]
         public EventCallback<MouseEventArgs> OnClick { get; set; }
 
-        private IEqualityComparer<T?> Comparer => MudList?.Comparer ?? EqualityComparer<T?>.Default;
+        private IEqualityComparer<T?> Comparer => HamkareList?.Comparer ?? EqualityComparer<T?>.Default;
 
         private bool ReadOnly => TopLevelList is not null && TopLevelList.ReadOnly;
 
@@ -283,9 +283,9 @@ namespace MudBlazor
         protected override async Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
-            if (MudList is not null)
+            if (HamkareList is not null)
             {
-                await MudList.RegisterAsync(this);
+                await HamkareList.RegisterAsync(this);
             }
         }
 
@@ -353,13 +353,13 @@ namespace MudBlazor
             return Value;
         }
 
-        private bool GetDisabled() => Disabled || MudList?.GetDisabled() == true || TopLevelList?.GetDisabled() == true;
+        private bool GetDisabled() => Disabled || HamkareList?.GetDisabled() == true || TopLevelList?.GetDisabled() == true;
 
-        private bool GetReadOnly() => MudList?.ReadOnly == true || TopLevelList?.GetReadOnly() == true;
+        private bool GetReadOnly() => HamkareList?.ReadOnly == true || TopLevelList?.GetReadOnly() == true;
 
-        private bool GetDense() => Dense ?? MudList?.Dense == true;
+        private bool GetDense() => Dense ?? HamkareList?.Dense == true;
 
-        private bool GetGutters() => Gutters ?? MudList?.Gutters ?? true;
+        private bool GetGutters() => Gutters ?? HamkareList?.Gutters ?? true;
 
         private bool? GetCheckBoxState() => _selected;
 
@@ -405,13 +405,13 @@ namespace MudBlazor
 
         public void Dispose()
         {
-            if (MudList is null)
+            if (HamkareList is null)
             {
                 return;
             }
             try
             {
-                MudList.Unregister(this);
+                HamkareList.Unregister(this);
             }
             catch (Exception) { /*ignore*/ }
         }

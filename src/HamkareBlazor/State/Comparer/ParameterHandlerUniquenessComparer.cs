@@ -1,6 +1,6 @@
-﻿using MudBlazor.State.Invocation;
+﻿using HamkareBlazor.State.Invocation;
 
-namespace MudBlazor.State.Comparer;
+namespace HamkareBlazor.State.Comparer;
 
 #nullable enable
 /// <summary>

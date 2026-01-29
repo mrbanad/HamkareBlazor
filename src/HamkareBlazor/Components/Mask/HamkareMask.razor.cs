@@ -1,24 +1,24 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using MudBlazor.Services;
-using MudBlazor.Utilities;
+using HamkareBlazor.Services;
+using HamkareBlazor.Utilities;
 
 #nullable enable
-namespace MudBlazor
+namespace HamkareBlazor
 {
     /// <summary>
     /// A text input which conforms user input to a specific format while typing.
     /// <remarks>
-    /// Note that MudMask is recommended to be used in WASM projects only because it has known problems
+    /// Note that HamkareMask is recommended to be used in WASM projects only because it has known problems
     /// in BSS, especially with high network latency.
     /// </remarks>
     /// </summary>
-    public partial class MudMask : MudBaseInput<string>
+    public partial class HamkareMask : HamkareBaseInput<string>
     {
         private int _caret;
         private bool _updating;
@@ -31,43 +31,43 @@ namespace MudBlazor
         private readonly string _elementId = Identifier.Create("mask");
 
         protected string Classname =>
-            new CssBuilder("mud-input")
-                .AddClass($"mud-input-{Variant.ToStringFast(true)}")
-                .AddClass($"mud-input-{Variant.ToStringFast(true)}-with-label", !string.IsNullOrEmpty(Label))
-                .AddClass($"mud-input-adorned-{Adornment.ToStringFast(true)}", Adornment != Adornment.None)
-                .AddClass($"mud-input-margin-{Margin.ToStringFast(true)}", () => Margin != Margin.None)
-                .AddClass("mud-input-underline", () => Underline && Variant != Variant.Outlined)
-                .AddClass("mud-shrink", () => !string.IsNullOrEmpty(ReadText) || Adornment == Adornment.Start || !string.IsNullOrWhiteSpace(Placeholder) || ShrinkLabel)
-                .AddClass("mud-disabled", GetDisabledState())
-                .AddClass("mud-input-error", HasErrors)
-                .AddClass("mud-ltr", GetInputType() == InputType.Email || GetInputType() == InputType.Telephone)
-                .AddClass($"mud-typography-{Typo.ToStringFast(true)}")
+            new CssBuilder("hamkare-input")
+                .AddClass($"hamkare-input-{Variant.ToStringFast(true)}")
+                .AddClass($"hamkare-input-{Variant.ToStringFast(true)}-with-label", !string.IsNullOrEmpty(Label))
+                .AddClass($"hamkare-input-adorned-{Adornment.ToStringFast(true)}", Adornment != Adornment.None)
+                .AddClass($"hamkare-input-margin-{Margin.ToStringFast(true)}", () => Margin != Margin.None)
+                .AddClass("hamkare-input-underline", () => Underline && Variant != Variant.Outlined)
+                .AddClass("hamkare-shrink", () => !string.IsNullOrEmpty(ReadText) || Adornment == Adornment.Start || !string.IsNullOrWhiteSpace(Placeholder) || ShrinkLabel)
+                .AddClass("hamkare-disabled", GetDisabledState())
+                .AddClass("hamkare-input-error", HasErrors)
+                .AddClass("hamkare-ltr", GetInputType() == InputType.Email || GetInputType() == InputType.Telephone)
+                .AddClass($"hamkare-typography-{Typo.ToStringFast(true)}")
                 .AddClass(Class)
                 .Build();
 
         protected string InputClassname =>
-            new CssBuilder("mud-input-slot")
-                .AddClass("mud-input-root")
-                .AddClass($"mud-input-root-{Variant.ToStringFast(true)}")
-                .AddClass($"mud-input-root-adorned-{Adornment.ToStringFast(true)}", Adornment != Adornment.None)
-                .AddClass($"mud-input-root-margin-{Margin.ToStringFast(true)}", () => Margin != Margin.None)
+            new CssBuilder("hamkare-input-slot")
+                .AddClass("hamkare-input-root")
+                .AddClass($"hamkare-input-root-{Variant.ToStringFast(true)}")
+                .AddClass($"hamkare-input-root-adorned-{Adornment.ToStringFast(true)}", Adornment != Adornment.None)
+                .AddClass($"hamkare-input-root-margin-{Margin.ToStringFast(true)}", () => Margin != Margin.None)
                 .AddClass(Class)
                 .Build();
 
         protected string AdornmentClassname =>
             new CssBuilder()
-                .AddClass($"mud-input-adornment-{Adornment.ToStringFast(true)}", Adornment != Adornment.None)
-                .AddClass($"mud-text", !string.IsNullOrEmpty(AdornmentText))
-                .AddClass($"mud-input-root-filled-shrink", Variant == Variant.Filled)
+                .AddClass($"hamkare-input-adornment-{Adornment.ToStringFast(true)}", Adornment != Adornment.None)
+                .AddClass($"hamkare-text", !string.IsNullOrEmpty(AdornmentText))
+                .AddClass($"hamkare-input-root-filled-shrink", Variant == Variant.Filled)
                 .AddClass(Class)
                 .Build();
 
         protected string ClearButtonClassname =>
-            new CssBuilder("mud-input-clear-button")
+            new CssBuilder("hamkare-input-clear-button")
                 // .AddClass("me-n1", Adornment == Adornment.End && HideSpinButtons == false)
-                .AddClass("mud-icon-button-edge-end", Adornment == Adornment.End)
+                .AddClass("hamkare-icon-button-edge-end", Adornment == Adornment.End)
                 // .AddClass("me-6", Adornment != Adornment.End && HideSpinButtons == false)
-                .AddClass("mud-icon-button-edge-margin-end", Adornment != Adornment.End)
+                .AddClass("hamkare-icon-button-edge-margin-end", Adornment != Adornment.End)
                 .Build();
 
         [Inject]
@@ -94,7 +94,7 @@ namespace MudBlazor
         /// </summary>
         /// <remarks>
         /// Typically set to common masks such as <see cref="PatternMask"/>, <see cref="MultiMask"/>, <see cref="RegexMask"/>, and <see cref="BlockMask"/>.
-        /// When set, some properties will be ignored such as <see cref="MudInput{T}.MaxLines"/>, <see cref="MudInput{T}.Sizing"/>, and <see cref="MudInput{T}.HideSpinButtons"/>.
+        /// When set, some properties will be ignored such as <see cref="HamkareInput{T}.MaxLines"/>, <see cref="HamkareInput{T}.Sizing"/>, and <see cref="HamkareInput{T}.HideSpinButtons"/>.
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.General.Data)]
@@ -152,7 +152,7 @@ namespace MudBlazor
                     new JsEventOptions
                     {
                         //EnableLogging = true,
-                        TargetClass = "mud-input-slot",
+                        TargetClass = "hamkare-input-slot",
                         TagName = "INPUT"
                     });
                 _jsEvent.CaretPositionChanged += OnCaretPositionChanged;
@@ -160,7 +160,7 @@ namespace MudBlazor
                 _jsEvent.Select += OnSelect;
 
                 var options = new KeyInterceptorOptions(
-                    "mud-input-slot",
+                    "hamkare-input-slot",
                     [
                         // prevent scrolling page, toggle open/close
                         new(" ", preventDown: "key+none"),
@@ -359,7 +359,7 @@ namespace MudBlazor
         /// </summary>
         public override ValueTask SelectAsync()
         {
-            return _elementReference.MudSelectAsync();
+            return _elementReference.HamkareSelectAsync();
         }
 
         /// <summary>
@@ -369,7 +369,7 @@ namespace MudBlazor
         /// <param name="pos2">The index of the last character to select.</param>
         public override ValueTask SelectRangeAsync(int pos1, int pos2)
         {
-            return _elementReference.MudSelectRangeAsync(pos1, pos2);
+            return _elementReference.HamkareSelectRangeAsync(pos1, pos2);
         }
 
         internal Task OnCopyAsync() => CopySelectionToClipboard();
@@ -414,12 +414,12 @@ namespace MudBlazor
             _selection = selection;
             if (selection == null)
             {
-                await _elementReference.MudSelectRangeAsync(caret, caret);
+                await _elementReference.HamkareSelectRangeAsync(caret, caret);
             }
             else
             {
                 var sel = selection.Value;
-                await _elementReference.MudSelectRangeAsync(sel.Item1, sel.Item2);
+                await _elementReference.HamkareSelectRangeAsync(sel.Item1, sel.Item2);
             }
         }
 

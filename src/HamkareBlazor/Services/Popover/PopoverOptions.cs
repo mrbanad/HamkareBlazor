@@ -1,8 +1,8 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 #nullable enable
 /// <summary>
@@ -23,16 +23,16 @@ public class PopoverOptions
     public TimeSpan Duration { get; set; } = TimeSpan.FromMilliseconds(251);
 
     /// <summary>
-    /// Gets or sets a value indicating whether to check for the presence of a popover provider <see cref="MudPopoverProvider"/>.
+    /// Gets or sets a value indicating whether to check for the presence of a popover provider <see cref="HamkarePopoverProvider"/>.
     /// The default value is <c>true</c>.
     /// </summary>
     public bool CheckForPopoverProvider { get; set; } = true;
 
     /// <summary>
     /// Gets or sets the CSS class of the popover container.
-    /// The default value is <c>mud-popover-provider</c>.
+    /// The default value is <c>hamkare-popover-provider</c>.
     /// </summary>
-    public string ContainerClass { get; set; } = "mud-popover-provider";
+    public string ContainerClass { get; set; } = "hamkare-popover-provider";
 
     /// <summary>
     /// Gets or sets the FlipMargin for the popover.
@@ -54,7 +54,7 @@ public class PopoverOptions
     public int OverflowPadding { get; set; } = 24;
 
     /// <summary>
-    /// Gets or sets a value indicating whether to throw an exception when a duplicate <see cref="MudPopoverProvider"/> is encountered.
+    /// Gets or sets a value indicating whether to throw an exception when a duplicate <see cref="HamkarePopoverProvider"/> is encountered.
     /// The default value is <c>true</c>.
     /// </summary>
     public bool ThrowOnDuplicateProvider { get; set; } = true;
@@ -69,8 +69,8 @@ public class PopoverOptions
     /// Gets or sets a value indicating whether the modal overlay prevents interaction with background elements.
     /// </summary>
     /// <remarks>
-    /// Only applies to components that use a <see cref="MudPopover"/> in conjunction with a <see cref="MudOverlay"/>
-    /// to close the popover when a user clicks outside, such as <see cref="MudSelect{T}"/>.
+    /// Only applies to components that use a <see cref="HamkarePopover"/> in conjunction with a <see cref="HamkareOverlay"/>
+    /// to close the popover when a user clicks outside, such as <see cref="HamkareSelect{T}"/>.
     /// The default value is <c>false</c>.
     /// </remarks>
     public bool ModalOverlay { get; set; }

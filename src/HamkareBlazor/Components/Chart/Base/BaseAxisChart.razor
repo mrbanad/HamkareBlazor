@@ -1,24 +1,24 @@
-﻿@namespace MudBlazor.Charts
+﻿@namespace HamkareBlazor.Charts
 @using System.Globalization
 
-@inherits MudComponentBase
+@inherits HamkareComponentBase
 
 @typeparam T
 @typeparam TChartOptions
 
-<svg @ref="_svgRef" @attributes="UserAttributes" class="@($"{ChartClass} mud-ltr")" width="@Width" height="@Height" viewBox="0 0 @ViewBoxWidth.ToStr() @ViewBoxHeight.ToStr()" style="@HoveredStylename">
+<svg @ref="_svgRef" @attributes="UserAttributes" class="@($"{ChartClass} hamkare-ltr")" width="@Width" height="@Height" viewBox="0 0 @ViewBoxWidth.ToStr() @ViewBoxHeight.ToStr()" style="@HoveredStylename">
     <Filters />
 
-    <g class="mud-charts-grid">
+    <g class="hamkare-charts-grid">
         @if (XAxisTitle is not null)
         {
             <g transform="translate(@(ToS(ViewBoxWidth / 2)), 10)">
-                <text class="mud-charts-yaxis axis-title" font-size="14px" text-anchor="middle" dominant-baseline="hanging">@XAxisTitle</text>
+                <text class="hamkare-charts-yaxis axis-title" font-size="14px" text-anchor="middle" dominant-baseline="hanging">@XAxisTitle</text>
             </g>
         }
         @if (ChartOptions?.YAxisLines is true)
         {
-            <g class="mud-charts-gridlines-yaxis">
+            <g class="hamkare-charts-gridlines-yaxis">
                 @foreach (var horizontalLine in HorizontalLines)
                 {
                     <path stroke="#e0e0e0" stroke-width="0.3" d="@horizontalLine.Data"></path>
@@ -27,7 +27,7 @@
         }
         @if (ChartOptions?.XAxisLines is true)
         {
-            <g class="mud-charts-gridlines-xaxis-lines">
+            <g class="hamkare-charts-gridlines-xaxis-lines">
                 @foreach (var verticalLine in VerticalLines)
                 {
                     <path stroke="gray" stroke-width="0.3" d="@verticalLine.Data"></path>
@@ -35,7 +35,7 @@
             </g>
         }
     </g>
-    <g @ref="_yAxisGroupElementReference" class="mud-charts-yaxis">
+    <g @ref="_yAxisGroupElementReference" class="hamkare-charts-yaxis">
         @foreach (var horizontalLineValue in HorizontalValues)
         {
             @((MarkupString)$"<text x='{horizontalLineValue.X.ToStr()}' y='{horizontalLineValue.Y.ToStr()}' font-size='12px' text-anchor='end' dominant-baseline='auto'>{horizontalLineValue.Value}</text>")
@@ -44,10 +44,10 @@
     @if (YAxisTitle is not null)
     {
         <g transform="translate(@(ToS(-1 * (_yAxisLabelSize?.Width ?? 2 / 2))), @(ToS(ViewBoxHeight / 2)))">
-            <text class="mud-charts-yaxis axis-title" transform="rotate(-90)" font-size="14px" text-anchor="middle" dominant-baseline="hanging">@YAxisTitle</text>
+            <text class="hamkare-charts-yaxis axis-title" transform="rotate(-90)" font-size="14px" text-anchor="middle" dominant-baseline="hanging">@YAxisTitle</text>
         </g>
     }
-    <g @ref="_xAxisGroupElementReference" class="mud-charts-xaxis">
+    <g @ref="_xAxisGroupElementReference" class="hamkare-charts-xaxis">
         @for (var i = 0; i < VerticalValues.Count; i++)
         {
             var verticalLineValue = VerticalValues[i];
@@ -57,7 +57,7 @@
             @((MarkupString)$"<text x='{x}' y='{y}' font-size='12px' text-anchor='middle' dominant-baseline='middle' transform='rotate({rotation} {x} {y})'>{verticalLineValue.Value}</text>")
         }
     </g>
-    <g class="@($"mud-charts-{ChartType?.ToString().ToLower()}-series")">
+    <g class="@($"hamkare-charts-{ChartType?.ToString().ToLower()}-series")">
         @SeriesContent
     </g>
 
@@ -67,7 +67,7 @@
 
     @if (ChartOptions?.ShowToolTips is true) 
     {
-        <g class="mud-charts-tooltip" style="@TooltipStylename">
+        <g class="hamkare-charts-tooltip" style="@TooltipStylename">
             @TooltipContent
         </g>
     }
@@ -75,7 +75,7 @@
 
 @* @if (XAxisTitle is not null)
 {
-    <MudStack Class="mt-2" Row="true" Justify="Justify.Center">
-        <MudText Class="mud-charts-xaxis axis-title" Typo="Typo.body2">@XAxisTitle</MudText>
-    </MudStack>
+    <HamkareStack Class="mt-2" Row="true" Justify="Justify.Center">
+        <HamkareText Class="hamkare-charts-xaxis axis-title" Typo="Typo.body2">@XAxisTitle</HamkareText>
+    </HamkareStack>
 } *@

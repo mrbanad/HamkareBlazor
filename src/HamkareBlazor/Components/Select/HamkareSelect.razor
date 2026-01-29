@@ -1,10 +1,10 @@
-﻿@namespace MudBlazor
+﻿@namespace HamkareBlazor
 @typeparam T
-@inherits MudBaseInput<T>
+@inherits HamkareBaseInput<T>
 
 <CascadingValue Name="SubscribeToParentForm" Value="false" IsFixed="true">
     <div class="@OuterClassname" id="@_elementId" @onfocusout="@OnFocusOutAsync" @onclick:stopPropagation @onmousedown:stopPropagation>
-        <MudInputControl Label="@Label"
+        <HamkareInputControl Label="@Label"
                          Variant="@Variant"
                          HelperId="@GetHelperId()"
                          HelperText="@HelperText"
@@ -21,7 +21,7 @@
                          ForId="@InputElementId"
                          @onmousedown="@HandleMouseDown">
             <InputContent>
-                <MudInput @ref="_elementReference"
+                <HamkareInput @ref="_elementReference"
                           InputType="@(CanRenderValue || (Strict && !IsValueInList) ? InputType.Hidden : InputType.Text)"
                           Class="@InputClassname"
                           Margin="@Margin"
@@ -56,10 +56,10 @@
                     {
                         @GetSelectedValuePresenter()
                     }
-                </MudInput>
+                </HamkareInput>
                 @if (FitContent)
                 {
-                    <MudStack Class="@FillerClassname" Spacing="1" Row>
+                    <HamkareStack Class="@FillerClassname" Spacing="1" Row>
                         @{
                             var value = _longestItem is { Value: not null } ? ToStringFunc ?.Invoke(_longestItem.Value) ?? ConvertSet(_longestItem.Value) : string.Empty;
                             var useLabel = Label is not null && Placeholder is null && !ShrinkLabel
@@ -69,59 +69,59 @@
                         }
                         @if (defaultValue?.Length > value!.Length)
                         {
-                            <MudText Typo="@Typo">@(MultiSelectionTextFunc?.Invoke([defaultValue]) ?? defaultValue)</MudText>
+                            <HamkareText Typo="@Typo">@(MultiSelectionTextFunc?.Invoke([defaultValue]) ?? defaultValue)</HamkareText>
                         }
                         else if (_longestItem?.ChildContent is null || MultiSelectionTextFunc is not null)
                         {
-                            <MudText Typo="@Typo">@(MultiSelectionTextFunc?.Invoke([value!]) ?? value!)</MudText>
+                            <HamkareText Typo="@Typo">@(MultiSelectionTextFunc?.Invoke([value!]) ?? value!)</HamkareText>
                         }
                         else
                         {
-                            <MudText Typo="@Typo">@_longestItem.ChildContent</MudText>
+                            <HamkareText Typo="@Typo">@_longestItem.ChildContent</HamkareText>
                         }
                         @AdornmentText
                         @if (AdornmentText is null)
                         {
-                            <MudIcon Icon="@(AdornmentIcon ?? OpenIcon)" Size="IconSize"></MudIcon>
+                            <HamkareIcon Icon="@(AdornmentIcon ?? OpenIcon)" Size="IconSize"></HamkareIcon>
                         }
                         @if (Clearable)
                         {
-                            <MudIcon Icon="@ClearIcon" Size="IconSize"></MudIcon>
+                            <HamkareIcon Icon="@ClearIcon" Size="IconSize"></HamkareIcon>
                         }
-                    </MudStack>
+                    </HamkareStack>
                 }
-                <MudPopover Open=@(_open)
+                <HamkarePopover Open=@(_open)
                             MaxHeight="@MaxHeight"
                             Class="@PopoverClass"
                             AnchorOrigin="@AnchorOrigin"
                             TransformOrigin="@TransformOrigin"
                             Fixed="@PopoverFixed"
                             RelativeWidth="@RelativeWidth">
-                    <CascadingValue Value="@((IMudSelect)this)" IsFixed="true">
-                        <MudList T="string"
+                    <CascadingValue Value="@((IHamkareSelect)this)" IsFixed="true">
+                        <HamkareList T="string"
                                  Class="@ListClass"
                                  Dense="@Dense"
                                  @bind-SelectedValue="_activeItemId">
                             @if (MultiSelection && SelectAll)
                             {
-                                <MudListItem Value="@("__SelectAll__")"
+                                <HamkareListItem Value="@("__SelectAll__")"
                                              Icon="@SelectAllCheckBoxIcon"
                                              Text="@SelectAllText"
                                              OnClick="SelectAllClickAsync"
                                              OnClickPreventDefault="true"
                                              Dense="@Dense"
                                              Class="mb-2" />
-                                <MudDivider />
+                                <HamkareDivider />
                             }
                             @ChildContent
-                        </MudList>
+                        </HamkareList>
                     </CascadingValue>
-                </MudPopover>
+                </HamkarePopover>
             </InputContent>
-        </MudInputControl>
+        </HamkareInputControl>
     </div>
     @*Shadow select items for IsValueInList and CanRenderValue*@
-    <CascadingValue Value="@((IMudShadowSelect)this)" IsFixed="true">
+    <CascadingValue Value="@((IHamkareShadowSelect)this)" IsFixed="true">
         <CascadingValue Name="HideContent" Value="true">
             @ChildContent
         </CascadingValue>
@@ -134,7 +134,7 @@ When Modal is false the overlay does not receive pointer events so we activate
 the auto close feature and call CloseMenu in OnClosed. The modeless auto close
 feature relies on pointerdown event resulting in the same order of events.
 -->
-<MudOverlay Visible="_open"
+<HamkareOverlay Visible="_open"
             @onpointerdown="@(() => CloseMenu(false))"
             LockScroll="@LockScroll"
             AutoClose="@(!GetModal())"

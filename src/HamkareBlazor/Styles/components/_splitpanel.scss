@@ -1,4 +1,4 @@
-.mud-split-panel {
+.hamkare-split-panel {
   display: flex;
 
   &.absolute {
@@ -13,7 +13,7 @@
   .child-panel {
     flex: 1 1 auto;
     overflow: hidden;
-    background-color: var(--mud-palette-surface);
+    background-color: var(--hamkare-palette-surface);
 
     &.transparent {
       background: transparent;
@@ -39,7 +39,7 @@
     }
 
     &:focus {
-      outline: 2px solid var(--mud-palette-action-default-hover);
+      outline: 2px solid var(--hamkare-palette-action-default-hover);
       outline-offset: 2px;
     }
   }

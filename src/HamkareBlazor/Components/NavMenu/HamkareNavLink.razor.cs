@@ -1,38 +1,38 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Routing;
 using Microsoft.AspNetCore.Components.Web;
-using MudBlazor.Interfaces;
-using MudBlazor.Utilities;
+using HamkareBlazor.Interfaces;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
 
     /// <summary>
-    /// A navigation link as part of a <see cref="MudNavMenu"/>.
+    /// A navigation link as part of a <see cref="HamkareNavMenu"/>.
     /// </summary>
-    /// <seealso cref="MudNavGroup"/>
-    /// <seealso cref="MudNavMenu"/>
-    public partial class MudNavLink : MudComponentBase
+    /// <seealso cref="HamkareNavGroup"/>
+    /// <seealso cref="HamkareNavMenu"/>
+    public partial class HamkareNavLink : HamkareComponentBase
     {
         protected string Classname =>
-            new CssBuilder("mud-nav-item")
+            new CssBuilder("hamkare-nav-item")
                 .AddClass(Class)
                 .Build();
 
         protected string LinkClassname =>
-            new CssBuilder("mud-nav-link")
-                .AddClass($"mud-nav-link-disabled", Disabled)
-                .AddClass($"mud-ripple", Ripple && !Disabled)
+            new CssBuilder("hamkare-nav-link")
+                .AddClass($"hamkare-nav-link-disabled", Disabled)
+                .AddClass($"hamkare-ripple", Ripple && !Disabled)
                 .Build();
 
         protected string IconClassname =>
-            new CssBuilder("mud-nav-link-icon")
-                .AddClass($"mud-nav-link-icon-default", IconColor == Color.Default)
+            new CssBuilder("hamkare-nav-link-icon")
+                .AddClass($"hamkare-nav-link-icon-default", IconColor == Color.Default)
                 .Build();
 
         protected Dictionary<string, object?> Attributes

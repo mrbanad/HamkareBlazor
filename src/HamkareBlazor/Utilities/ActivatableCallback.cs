@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.AspNetCore.Components.Web;
-using MudBlazor.Interfaces;
+using HamkareBlazor.Interfaces;
 
 #nullable enable
-namespace MudBlazor
+namespace HamkareBlazor
 {
     public class ActivatableCallback : IActivatable
     {

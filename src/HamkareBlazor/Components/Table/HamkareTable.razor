@@ -1,6 +1,6 @@
-﻿@namespace MudBlazor
-@inherits MudTableBase
-@using MudBlazor.Utilities
+﻿@namespace HamkareBlazor
+@inherits HamkareTableBase
+@using HamkareBlazor.Utilities
 @typeparam T
 
 @(ClearFilterCache()) @*Clear filtered items cache for this render*@
@@ -11,24 +11,24 @@
     <CascadingValue Value="TableContext" IsFixed="true">
         @if (ToolBarContent != null)
         {
-            <MudToolBar Class="mud-table-toolbar">
+            <HamkareToolBar Class="hamkare-table-toolbar">
                 @ToolBarContent
-            </MudToolBar>
+            </HamkareToolBar>
         }
         @if (Context.SortLabels.Any())
         {
-            <div Class="mud-table-smalldevices-sortselect">
+            <div Class="hamkare-table-smalldevices-sortselect">
                 <CascadingValue Name="SubscribeToParentForm" Value="false" IsFixed>
-                    <MudSelect Value="@Context.CurrentSortLabel" Label="@SortLabel" ValueChanged="@(v => Context.SetSortFunc(v, overrideDirectionNone: true))" T="MudTableSortLabel<T>">
+                    <HamkareSelect Value="@Context.CurrentSortLabel" Label="@SortLabel" ValueChanged="@(v => Context.SetSortFunc(v, overrideDirectionNone: true))" T="HamkareTableSortLabel<T>">
                         @foreach (var label in Context.SortLabels)
                         {
-                            <MudSelectItem Value="@label">@label.ChildContent</MudSelectItem>
+                            <HamkareSelectItem Value="@label">@label.ChildContent</HamkareSelectItem>
                         }
-                    </MudSelect>
+                    </HamkareSelect>
                 </CascadingValue>
             </div>
         }
-        <div id="@_tableId" class="mud-table-container @TableContainerClass" style="@TableContainerStyle @(GetHorizontalScrollbarStyle())">
+        <div id="@_tableId" class="hamkare-table-container @TableContainerClass" style="@TableContainerStyle @(GetHorizontalScrollbarStyle())">
             <table class="@TableClassname" aria-label="@AriaLabel">
                 @if (ColGroup != null)
                 {
@@ -45,7 +45,7 @@
                         }
                         else
                         {
-                            <MudTHeadRow Checkable="MultiSelection" SelectionChangeable="SelectionChangeable" Expandable="@(GroupBy?.Expandable ?? false)">
+                            <HamkareTHeadRow Checkable="MultiSelection" SelectionChangeable="SelectionChangeable" Expandable="@(GroupBy?.Expandable ?? false)">
                                 @if (HeaderContent != null)
                                 {
                                     @HeaderContent
@@ -55,13 +55,13 @@
                                 {
                                     @Columns(Def)
                                 }
-                            </MudTHeadRow>
+                            </HamkareTHeadRow>
                         }
                         @if (Loading)
                         {
                             <tr>
-                                <th colspan="1000" class="@(CurrentPageItems.Any() || (LoadingContent is not null || LoadingContentBody is not null) ? "mud-table-loading" : "")">
-                                    <MudProgressLinear Color="@LoadingProgressColor" Class="mud-table-loading-progress" Indeterminate="true" />
+                                <th colspan="1000" class="@(CurrentPageItems.Any() || (LoadingContent is not null || LoadingContentBody is not null) ? "hamkare-table-loading" : "")">
+                                    <HamkareProgressLinear Color="@LoadingProgressColor" Class="hamkare-table-loading-progress" Indeterminate="true" />
                                 </th>
                             </tr>
                         }
@@ -70,19 +70,19 @@
                 else if (Loading)
                 {
                     <thead class="@HeadClassname">
-                        <tr class="mud-table-row">
-                            <th colspan="1000" class="@(CurrentPageItems.Any() || (LoadingContent is not null || LoadingContentBody is not null) ? "mud-table-loading" : "")">
-                                <MudProgressLinear Color="@LoadingProgressColor" Class="mud-table-loading-progress" Indeterminate="true" />
+                        <tr class="hamkare-table-row">
+                            <th colspan="1000" class="@(CurrentPageItems.Any() || (LoadingContent is not null || LoadingContentBody is not null) ? "hamkare-table-loading" : "")">
+                                <HamkareProgressLinear Color="@LoadingProgressColor" Class="hamkare-table-loading-progress" Indeterminate="true" />
                             </th>
                         </tr>
                     </thead>
                 }
-                <tbody class="mud-table-body">
+                <tbody class="hamkare-table-body">
                     @if(GroupBy != null)
                     {
                         @foreach (var group in GroupItemsPage)
                         {
-                            <MudTableGroupRow @key="group.Key" T="T" GroupDefinition="GroupBy" Items="group"
+                            <HamkareTableGroupRow @key="group.Key" T="T" GroupDefinition="GroupBy" Items="group"
                                               Checkable="MultiSelection" SelectionChangeable="SelectionChangeable"
                                               HeaderClass="@GroupHeaderClass" HeaderStyle="@GroupHeaderStyle" HeaderTemplate="@GroupHeaderTemplate"
                                               FooterClass="@GroupFooterClass" FooterStyle="@GroupFooterStyle" FooterTemplate="@GroupFooterTemplate" />
@@ -93,14 +93,14 @@
                         @if (CurrentPageItems != null && CurrentPageItems.Any())
                         {
                             var rowIndex = 0;
-                            <MudVirtualize Enabled="@Virtualize" Items="@CurrentPageItems.ToList()" OverscanCount="@OverscanCount" ItemSize="@ItemSize" Context="item">
+                            <HamkareVirtualize Enabled="@Virtualize" Items="@CurrentPageItems.ToList()" OverscanCount="@OverscanCount" ItemSize="@ItemSize" Context="item">
                                 @{
                                     var itemIndex = FilteredItems.ToList().IndexOf(item);
                                     var generatedRowId = itemIndex != -1 ? $"{_tableId}_row_{itemIndex}" : null;
                                     var rowClass = new CssBuilder(RowClass).AddClass(RowClassFunc?.Invoke(item, itemIndex)).Build();
                                     var rowStyle = new StyleBuilder().AddStyle(RowStyle).AddStyle(RowStyleFunc?.Invoke(item, itemIndex)).Build();
                                 }
-                                <MudTr Class="@rowClass" Style="@rowStyle" Item="item" @key="item" RowId="@generatedRowId"
+                                <HamkareTr Class="@rowClass" Style="@rowStyle" Item="item" @key="item" RowId="@generatedRowId"
                                         Checkable="MultiSelection" SelectionChangeable="SelectionChangeable" Editable="IsItemEditable(item)"
                                         Checked="@(IsCheckedRow(item))"
                                         CheckedChanged="((value) => OnRowCheckboxChanged(value, item))">
@@ -129,13 +129,13 @@
                                             @Columns(item)
                                         }
                                     }
-                                </MudTr>
+                                </HamkareTr>
                                 @if (ChildRowContent != null)
                                 {
                                     @ChildRowContent(item)
                                 }
                                 @{ rowIndex++; }
-                            </MudVirtualize>
+                            </HamkareVirtualize>
                         }
                     }
                     @if (!(CurrentPageItems is not null && CurrentPageItems.Any()))
@@ -147,7 +147,7 @@
                         else if (Loading ? LoadingContent != null : NoRecordsContent != null)
                         {                            
                             <tr>
-                                <th colspan="1000" class="mud-table-empty-row">
+                                <th colspan="1000" class="hamkare-table-empty-row">
                                     <div Class="my-3">
                                         @if(Loading)
                                         {
@@ -172,7 +172,7 @@
                         }
                         else
                         {
-                            <MudTFootRow Checkable="MultiSelection" SelectionChangeable="SelectionChangeable" Expandable="@(GroupBy?.Expandable ?? false)">
+                            <HamkareTFootRow Checkable="MultiSelection" SelectionChangeable="SelectionChangeable" Expandable="@(GroupBy?.Expandable ?? false)">
                                 @if (FooterContent != null)
                                 {
                                     @FooterContent
@@ -181,7 +181,7 @@
                                 {
                                     @Columns(Def)
                                 }
-                            </MudTFootRow>
+                            </HamkareTFootRow>
                         }
                     </tfoot>
                 }
@@ -189,7 +189,7 @@
         </div>
         @if (PagerContent != null)
         {
-            <div class="mud-table-pagination">
+            <div class="hamkare-table-pagination">
                 @PagerContent
             </div>
         }
@@ -205,8 +205,8 @@
 
         RenderFragment rootNode =
             @<text>
-                <MudVirtualize Enabled="@Virtualize" Items="@source?.ToList()" OverscanCount="@OverscanCount" ItemSize="@ItemSize" Context="item" ChildContent="@child()">
-                </MudVirtualize>
+                <HamkareVirtualize Enabled="@Virtualize" Items="@source?.ToList()" OverscanCount="@OverscanCount" ItemSize="@ItemSize" Context="item" ChildContent="@child()">
+                </HamkareVirtualize>
             </text>;
 
          RenderFragment<T> child() => item =>
@@ -218,7 +218,7 @@
                  var rowClass = new CssBuilder(RowClass).AddClass(RowClassFunc?.Invoke(item, itemIndexForId)).AddClass(customClass, !string.IsNullOrEmpty(customClass)).Build();
                  var rowStyle = new StyleBuilder().AddStyle(RowStyle).AddStyle(RowStyleFunc?.Invoke(item, itemIndexForId)).Build();
              }
-             <MudTr Class="@rowClass" Style="@rowStyle" Item="item" @key="item" RowId="@generatedRowId" Checkable="MultiSelection" SelectionChangeable="SelectionChangeable" Editable="IsItemEditable(item)" Expandable="expandable"
+             <HamkareTr Class="@rowClass" Style="@rowStyle" Item="item" @key="item" RowId="@generatedRowId" Checkable="MultiSelection" SelectionChangeable="SelectionChangeable" Editable="IsItemEditable(item)" Expandable="expandable"
                 Checked="Context.Selection.Contains(item)" CheckedChanged="((value) => { var x = item; OnRowCheckboxChanged(value, x); })">
                 @if ((!ReadOnly) && Editable && Equals(_editingItem, item))
                 {
@@ -244,7 +244,7 @@
                         @Columns(item)
                     }
                 }
-            </MudTr>
+            </HamkareTr>
             @if (ChildRowContent != null)
             {
                 @ChildRowContent(item)

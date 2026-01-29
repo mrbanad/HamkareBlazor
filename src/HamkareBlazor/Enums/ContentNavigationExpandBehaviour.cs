@@ -1,4 +1,4 @@
-﻿namespace MudBlazor
+﻿namespace HamkareBlazor
 {
     public enum ContentNavigationExpandBehaviour
     {

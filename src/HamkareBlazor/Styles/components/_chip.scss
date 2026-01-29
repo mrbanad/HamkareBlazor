@@ -1,10 +1,10 @@
 @import '../abstracts/variables';
 
-.mud-chip-container {
+.hamkare-chip-container {
   display: contents;
 }
 
-.mud-chip {
+.hamkare-chip {
   border: none;
   display: inline-flex;
   max-width: 100%;
@@ -21,18 +21,18 @@
   line-height: normal;
   margin: 4px;
 
-  &.mud-disabled {
+  &.hamkare-disabled {
     opacity: 0.5;
     pointer-events: none;
   }
 
-  &.mud-chip-size-small {
+  &.hamkare-chip-size-small {
     border-radius: 12px;
     font-size: 12px;
     height: 24px;
     padding: 0 8px;
 
-    .mud-avatar {
+    .hamkare-avatar {
       margin-left: -4px;
       margin-right: 4px;
       margin-inline-start: -4px;
@@ -42,11 +42,11 @@
       font-size: 0.625rem;
     }
 
-    .mud-icon-root {
+    .hamkare-icon-root {
       font-size: 1.125rem;
     }
 
-    .mud-chip-close-button {
+    .hamkare-chip-close-button {
       margin-right: -4px;
       margin-left: 4px;
       margin-inline-end: -4px;
@@ -54,12 +54,12 @@
     }
   }
 
-  &.mud-chip-size-medium {
+  &.hamkare-chip-size-medium {
     height: 32px;
     font-size: 14px;
     border-radius: 16px;
 
-    .mud-avatar {
+    .hamkare-avatar {
       margin-left: -8px;
       margin-right: 8px;
       margin-inline-start: -8px;
@@ -70,13 +70,13 @@
     }
   }
 
-  &.mud-chip-size-large {
+  &.hamkare-chip-size-large {
     height: 40px;
     font-size: 16px;
     border-radius: 20px;
     padding: 0 16px;
 
-    .mud-avatar {
+    .hamkare-avatar {
       margin-left: -12px;
       margin-right: 8px;
       margin-inline-start: -12px;
@@ -86,7 +86,7 @@
       font-size: 1rem;
     }
 
-    .mud-chip-icon {
+    .hamkare-chip-icon {
       font-size: 1.5rem;
       margin-left: -6px;
       margin-right: 6px;
@@ -95,16 +95,16 @@
     }
   }
 
-  &.mud-chip-label {
-    border-radius: var(--mud-default-borderradius);
+  &.hamkare-chip-label {
+    border-radius: var(--hamkare-default-borderradius);
   }
 
-  &.mud-clickable {
+  &.hamkare-clickable {
     cursor: pointer;
     user-select: none;
   }
 
-  .mud-chip-icon {
+  .hamkare-chip-icon {
     margin-left: -4px;
     margin-right: 4px;
     margin-inline-start: -4px;
@@ -112,7 +112,7 @@
     color: inherit;
   }
 
-  .mud-chip-close-button {
+  .hamkare-chip-close-button {
     padding: 1px;
     margin-right: -4px;
     margin-left: 6px;
@@ -123,22 +123,22 @@
     color: inherit;
     transition: .3s cubic-bezier(.25,.8,.5,1),visibility 0s;
 
-    .mud-icon-size-small {
+    .hamkare-icon-size-small {
       font-size: 1.15rem;
     }
 
     @media(hover: hover) and (pointer: fine) {
-      &:hover:not(.mud-disabled) {
+      &:hover:not(.hamkare-disabled) {
         opacity: .70;
       }
     }
 
-    &:focus-visible:not(.mud-disabled), &:active:not(.mud-disabled) {
+    &:focus-visible:not(.hamkare-disabled), &:active:not(.hamkare-disabled) {
       opacity: .70;
     }
   }
 
-  & > .mud-chip-content {
+  & > .hamkare-chip-content {
     align-items: center;
     display: inline-flex;
     height: 100%;
@@ -146,126 +146,126 @@
   }
 }
 
-.mud-chip-filled {
-  color: var(--mud-palette-text-primary);
-  background-color: var(--mud-palette-action-disabled-background);
-  --mud-ripple-opacity: var(--mud-ripple-opacity-secondary);
+.hamkare-chip-filled {
+  color: var(--hamkare-palette-text-primary);
+  background-color: var(--hamkare-palette-action-disabled-background);
+  --hamkare-ripple-opacity: var(--hamkare-ripple-opacity-secondary);
 
-  &.mud-clickable {
+  &.hamkare-clickable {
     @media(hover: hover) and (pointer: fine) {
-      &:hover:not(.mud-disabled) {
-        background-color: var(--mud-palette-action-disabled);
+      &:hover:not(.hamkare-disabled) {
+        background-color: var(--hamkare-palette-action-disabled);
       }
     }
 
-    &:focus-visible:not(.mud-disabled), &:active:not(.mud-disabled) {
-      background-color: var(--mud-palette-action-disabled);
+    &:focus-visible:not(.hamkare-disabled), &:active:not(.hamkare-disabled) {
+      background-color: var(--hamkare-palette-action-disabled);
     }
   }
 
-  @each $color in $mud-palette-colors {
-    &.mud-chip-color-#{$color} {
-      color: var(--mud-palette-#{$color}-text);
-      --mud-ripple-color: var(--mud-palette-#{$color}-text) !important;
-      background-color: var(--mud-palette-#{$color});
+  @each $color in $hamkare-palette-colors {
+    &.hamkare-chip-color-#{$color} {
+      color: var(--hamkare-palette-#{$color}-text);
+      --hamkare-ripple-color: var(--hamkare-palette-#{$color}-text) !important;
+      background-color: var(--hamkare-palette-#{$color});
 
-      &.mud-clickable {
+      &.hamkare-clickable {
         @media(hover: hover) and (pointer: fine) {
-          &:hover:not(.mud-disabled) {
-            background-color: var(--mud-palette-#{$color}-darken);
+          &:hover:not(.hamkare-disabled) {
+            background-color: var(--hamkare-palette-#{$color}-darken);
           }
         }
 
-        &:focus-visible:not(.mud-disabled), &:active:not(.mud-disabled) {
-          background-color: var(--mud-palette-#{$color}-darken);
+        &:focus-visible:not(.hamkare-disabled), &:active:not(.hamkare-disabled) {
+          background-color: var(--hamkare-palette-#{$color}-darken);
         }
       }
     }
   }
 }
 
-.mud-chip-outlined {
-  color: var(--mud-palette-text-primary);
-  border: 1px solid var(--mud-palette-lines-inputs);
+.hamkare-chip-outlined {
+  color: var(--hamkare-palette-text-primary);
+  border: 1px solid var(--hamkare-palette-lines-inputs);
 
-  &.mud-clickable {
+  &.hamkare-clickable {
     @media(hover: hover) and (pointer: fine) {
-      &:hover:not(.mud-disabled) {
-        background-color: var(--mud-palette-action-default-hover);
+      &:hover:not(.hamkare-disabled) {
+        background-color: var(--hamkare-palette-action-default-hover);
       }
     }
 
-    &:focus-visible:not(.mud-disabled), &:active:not(.mud-disabled) {
-      background-color: var(--mud-palette-action-default-hover);
+    &:focus-visible:not(.hamkare-disabled), &:active:not(.hamkare-disabled) {
+      background-color: var(--hamkare-palette-action-default-hover);
     }
   }
 
-  @each $color in $mud-palette-colors {
-    &.mud-chip-color-#{$color} {
-      color: var(--mud-palette-#{$color});
-      --mud-ripple-color: var(--mud-palette-#{$color}) !important;
-      border: 1px solid rgba(var(--mud-palette-#{$color}-rgb), var(--mud-palette-border-opacity));
+  @each $color in $hamkare-palette-colors {
+    &.hamkare-chip-color-#{$color} {
+      color: var(--hamkare-palette-#{$color});
+      --hamkare-ripple-color: var(--hamkare-palette-#{$color}) !important;
+      border: 1px solid rgba(var(--hamkare-palette-#{$color}-rgb), var(--hamkare-palette-border-opacity));
 
-      &.mud-clickable {
+      &.hamkare-clickable {
         @media(hover: hover) and (pointer: fine) {
-          &:hover:not(.mud-disabled) {
-            background-color: var(--mud-palette-#{$color}-hover);
+          &:hover:not(.hamkare-disabled) {
+            background-color: var(--hamkare-palette-#{$color}-hover);
           }
         }
 
-        &:focus-visible:not(.mud-disabled), &:active:not(.mud-disabled) {
-          background-color: var(--mud-palette-#{$color}-hover);
+        &:focus-visible:not(.hamkare-disabled), &:active:not(.hamkare-disabled) {
+          background-color: var(--hamkare-palette-#{$color}-hover);
         }
       }
 
-      &.mud-chip-selected {
-        background-color: var(--mud-palette-#{$color}-hover);
+      &.hamkare-chip-selected {
+        background-color: var(--hamkare-palette-#{$color}-hover);
 
         @media(hover: hover) and (pointer: fine) {
-          &:hover:not(.mud-disabled) {
-            background-color: rgba(var(--mud-palette-#{$color}-rgb), 0.12);
+          &:hover:not(.hamkare-disabled) {
+            background-color: rgba(var(--hamkare-palette-#{$color}-rgb), 0.12);
           }
         }
 
-        &:focus-visible:not(.mud-disabled), &:active:not(.mud-disabled) {
-          background-color: rgba(var(--mud-palette-#{$color}-rgb), 0.12);
+        &:focus-visible:not(.hamkare-disabled), &:active:not(.hamkare-disabled) {
+          background-color: rgba(var(--hamkare-palette-#{$color}-rgb), 0.12);
         }
       }
     }
   }
 }
 
-.mud-chip-text {
-  color: var(--mud-palette-text-primary);
-  background-color: var(--mud-palette-action-default-hover);
+.hamkare-chip-text {
+  color: var(--hamkare-palette-text-primary);
+  background-color: var(--hamkare-palette-action-default-hover);
 
-  &.mud-clickable {
+  &.hamkare-clickable {
     @media(hover: hover) and (pointer: fine) {
-      &:hover:not(.mud-disabled) {
-        background-color: var(--mud-palette-action-disabled-background);
+      &:hover:not(.hamkare-disabled) {
+        background-color: var(--hamkare-palette-action-disabled-background);
       }
     }
 
-    &:focus-visible:not(.mud-disabled), &:active:not(.mud-disabled) {
-      background-color: var(--mud-palette-action-disabled-background);
+    &:focus-visible:not(.hamkare-disabled), &:active:not(.hamkare-disabled) {
+      background-color: var(--hamkare-palette-action-disabled-background);
     }
   }
 
-  @each $color in $mud-palette-colors {
-    &.mud-chip-color-#{$color} {
-      color: var(--mud-palette-#{$color});
-      --mud-ripple-color: var(--mud-palette-#{$color}) !important;
-      background-color: var(--mud-palette-#{$color}-hover);
+  @each $color in $hamkare-palette-colors {
+    &.hamkare-chip-color-#{$color} {
+      color: var(--hamkare-palette-#{$color});
+      --hamkare-ripple-color: var(--hamkare-palette-#{$color}) !important;
+      background-color: var(--hamkare-palette-#{$color}-hover);
 
-      &.mud-clickable {
+      &.hamkare-clickable {
         @media(hover: hover) and (pointer: fine) {
-          &:hover:not(.mud-disabled) {
-            background-color: rgba(var(--mud-palette-#{$color}-rgb), 0.12);
+          &:hover:not(.hamkare-disabled) {
+            background-color: rgba(var(--hamkare-palette-#{$color}-rgb), 0.12);
           }
         }
 
-        &:focus-visible:not(.mud-disabled), &:active:not(.mud-disabled) {
-          background-color: rgba(var(--mud-palette-#{$color}-rgb), 0.12);
+        &:focus-visible:not(.hamkare-disabled), &:active:not(.hamkare-disabled) {
+          background-color: rgba(var(--hamkare-palette-#{$color}-rgb), 0.12);
         }
       }
     }

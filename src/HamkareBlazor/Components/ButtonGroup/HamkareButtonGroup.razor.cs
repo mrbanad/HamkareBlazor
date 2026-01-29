@@ -1,26 +1,26 @@
 ﻿using Microsoft.AspNetCore.Components;
-using MudBlazor.Utilities;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
     /// <summary>
-    /// Groups related <see cref="MudButton"/> components together visually.
+    /// Groups related <see cref="HamkareButton"/> components together visually.
     /// </summary>
-    /// <seealso cref="MudButton" />
-    /// <seealso cref="MudToggleGroup{T}"/>
-    public partial class MudButtonGroup : MudComponentBase
+    /// <seealso cref="HamkareButton" />
+    /// <seealso cref="HamkareToggleGroup{T}"/>
+    public partial class HamkareButtonGroup : HamkareComponentBase
     {
-        protected string Classname => new CssBuilder("mud-button-group-root")
-            .AddClass($"mud-button-group-override-styles", OverrideStyles)
-            .AddClass($"mud-button-group-{Variant.ToStringFast(true)}")
-            .AddClass($"mud-button-group-{Variant.ToStringFast(true)}-{Color.ToStringFast(true)}")
-            .AddClass($"mud-button-group-{Variant.ToStringFast(true)}-size-{Size.ToStringFast(true)}")
-            .AddClass("mud-button-group-vertical", Vertical)
-            .AddClass("mud-button-group-horizontal", !Vertical)
-            .AddClass("mud-button-group-disable-elevation", !DropShadow)
-            .AddClass("mud-button-group-rtl", RightToLeft)
-            .AddClass("mud-width-full", FullWidth)
+        protected string Classname => new CssBuilder("hamkare-button-group-root")
+            .AddClass($"hamkare-button-group-override-styles", OverrideStyles)
+            .AddClass($"hamkare-button-group-{Variant.ToStringFast(true)}")
+            .AddClass($"hamkare-button-group-{Variant.ToStringFast(true)}-{Color.ToStringFast(true)}")
+            .AddClass($"hamkare-button-group-{Variant.ToStringFast(true)}-size-{Size.ToStringFast(true)}")
+            .AddClass("hamkare-button-group-vertical", Vertical)
+            .AddClass("hamkare-button-group-horizontal", !Vertical)
+            .AddClass("hamkare-button-group-disable-elevation", !DropShadow)
+            .AddClass("hamkare-button-group-rtl", RightToLeft)
+            .AddClass("hamkare-width-full", FullWidth)
             .AddClass(Class)
             .Build();
 
@@ -104,14 +104,14 @@ namespace MudBlazor
         [Category(CategoryTypes.ButtonGroup.Appearance)]
         public bool FullWidth { get; set; }
 
-        private readonly List<MudButton> _renderedButtons = [];
+        private readonly List<HamkareButton> _renderedButtons = [];
 
-        internal void AddButton(MudButton button)
+        internal void AddButton(HamkareButton button)
         {
             _renderedButtons.Add(button);
         }
 
-        internal void RemoveButton(MudButton button)
+        internal void RemoveButton(HamkareButton button)
         {
             _renderedButtons.Remove(button);
         }

@@ -1,6 +1,6 @@
-﻿using MudBlazor.Utilities.Converter.Chain;
+﻿using HamkareBlazor.Utilities.Converter.Chain;
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 #nullable enable
 /// <summary>

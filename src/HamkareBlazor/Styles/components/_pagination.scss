@@ -1,6 +1,6 @@
 @import '../abstracts/variables';
 
-.mud-pagination {
+.hamkare-pagination {
   display: inline-flex;
   flex-wrap: wrap;
   gap: 6px;
@@ -8,7 +8,7 @@
   margin: 0;
   list-style: none;
 
-  .mud-pagination-item {
+  .hamkare-pagination-item {
     & > * {
       height: 32px;
       min-width: 32px;
@@ -18,55 +18,55 @@
       border-radius: 16px;
     }
 
-    :not(mud-pagination-item-selected) > * {
+    :not(hamkare-pagination-item-selected) > * {
       box-shadow: none;
     }
 
-    .mud-button {
+    .hamkare-button {
       line-height: normal;
     }
 
-    .mud-icon-button {
+    .hamkare-icon-button {
       padding: 0;
     }
 
-    &-rectangular .mud-button {
-      border-radius: var(--mud-default-borderradius);
+    &-rectangular .hamkare-button {
+      border-radius: var(--hamkare-default-borderradius);
     }
 
-    .mud-typography[disabled] {
-      color: var(--mud-palette-action-disabled) !important;
+    .hamkare-typography[disabled] {
+      color: var(--hamkare-palette-action-disabled) !important;
     }
   }
 
   &-outlined {
-    .mud-pagination-item-selected {
-      .mud-button-outlined-default {
-        background-color: var(--mud-palette-action-default-hover)
+    .hamkare-pagination-item-selected {
+      .hamkare-button-outlined-default {
+        background-color: var(--hamkare-palette-action-default-hover)
       }
 
-      @each $color in $mud-palette-colors {
-        .mud-button-outlined-#{$color} {
-          background-color: var(--mud-palette-#{$color}-hover);
+      @each $color in $hamkare-palette-colors {
+        .hamkare-button-outlined-#{$color} {
+          background-color: var(--hamkare-palette-#{$color}-hover);
         }
       }
     }
   }
 
   &-filled {
-    .mud-pagination-item {
-      &:not(.mud-pagination-item-selected) .mud-button {
-        background-color: var(--mud-palette-surface);
+    .hamkare-pagination-item {
+      &:not(.hamkare-pagination-item-selected) .hamkare-button {
+        background-color: var(--hamkare-palette-surface);
       }
 
-      .mud-button {
-        box-shadow: var(--mud-elevation-1);
+      .hamkare-button {
+        box-shadow: var(--hamkare-elevation-1);
       }
     }
   }
 
   &-small {
-    .mud-pagination-item {
+    .hamkare-pagination-item {
       & > * {
         height: 26px;
         min-width: 26px;
@@ -78,7 +78,7 @@
   }
 
   &-large {
-    .mud-pagination-item {
+    .hamkare-pagination-item {
       & > * {
         height: 40px;
         min-width: 40px;
@@ -88,11 +88,11 @@
     }
   }
 
-  &-disable-elevation .mud-pagination-item .mud-button {
+  &-disable-elevation .hamkare-pagination-item .hamkare-button {
     box-shadow: none;
   }
 
-  &-rtl .mud-pagination-item .mud-icon-root {
+  &-rtl .hamkare-pagination-item .hamkare-icon-root {
     transform: scaleX(-1);
   }
 }

@@ -1,23 +1,23 @@
 ﻿using Microsoft.AspNetCore.Components;
-using MudBlazor.Utilities;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
     /// <summary>
-    /// Represents an image displayed as part of a <see cref="MudCard"/>.
+    /// Represents an image displayed as part of a <see cref="HamkareCard"/>.
     /// </summary>
-    /// <seealso cref="MudCard" />
-    /// <seealso cref="MudCardActions" />
-    /// <seealso cref="MudCardContent" />
-    /// <seealso cref="MudCardHeader" />
-    public partial class MudCardMedia : MudComponentBase
+    /// <seealso cref="HamkareCard" />
+    /// <seealso cref="HamkareCardActions" />
+    /// <seealso cref="HamkareCardContent" />
+    /// <seealso cref="HamkareCardHeader" />
+    public partial class HamkareCardMedia : HamkareComponentBase
     {
         protected string StyleString => StyleBuilder.Default($"background-image:url(\"{Image}\");height: {Height}px;")
             .AddStyle(Style)
             .Build();
 
-        protected string Classname => new CssBuilder("mud-card-media")
+        protected string Classname => new CssBuilder("hamkare-card-media")
             .AddClass(Class)
             .Build();
 

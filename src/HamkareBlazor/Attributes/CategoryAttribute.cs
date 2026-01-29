@@ -1,10 +1,10 @@
-﻿using MudBlazor.Charts;
-namespace MudBlazor
+﻿using HamkareBlazor.Charts;
+namespace HamkareBlazor
 {
 #nullable enable
 
     /// <summary>
-    /// Specifies the name of the category in which to group the property of a MudBlazor component when displayed in the API documentation.
+    /// Specifies the name of the category in which to group the property of a HamkareBlazor component when displayed in the API documentation.
     /// </summary>
     /// <remarks>
     /// Use this attribute together with the <see cref="Microsoft.AspNetCore.Components.ParameterAttribute"/>. <br/>
@@ -70,7 +70,7 @@ namespace MudBlazor
             ["Picker appearance"] = 405,
             ["Dot"] = 406,
 
-            // "Miscellaneous" category. In classes inheriting from MudComponentBase it can be used only exceptionally -
+            // "Miscellaneous" category. In classes inheriting from HamkareComponentBase it can be used only exceptionally -
             //  - only when the property can define behavior or appearance depending on value of the property.
             ["Misc"] = int.MaxValue - 1,
 
@@ -79,13 +79,13 @@ namespace MudBlazor
     }
 
     /// <summary>
-    /// Possible categories of MudBlazor components properties.
+    /// Possible categories of HamkareBlazor components properties.
     /// </summary>
     /// <remarks>
     ///     <b>General categories</b>
     ///     <para>
-    ///       - <i>Data</i>       - Used e.g. in form fields, pickers, <see cref="MudRating"/>, <see cref="MudTable{T}"/>, <see cref="MudTreeView{T}"/>,
-    ///                              <see cref="MudTreeViewItem{T}"/>, and <see cref="MudCarousel{TData}"/>. Containers have this group when their items can be defined
+    ///       - <i>Data</i>       - Used e.g. in form fields, pickers, <see cref="HamkareRating"/>, <see cref="HamkareTable{T}"/>, <see cref="HamkareTreeView{T}"/>,
+    ///                              <see cref="HamkareTreeViewItem{T}"/>, and <see cref="HamkareCarousel{TData}"/>. Containers have this group when their items can be defined
     ///                             not only in markup language, but also programmatically in the Items property and by specifying ItemTemplate.<br/>
     ///       - <i>Validation</i> - Used in form fields and pickers.<br/>
     ///       - <i>Behavior</i>   - Changing these properties changes behavior of the component and behavior of the application. So in some way they are or may be more
@@ -97,13 +97,13 @@ namespace MudBlazor
     ///                             <c>Square</c>, <c>Rounded</c>, <c>Gutters</c>, <c>Dense</c>, <c>Ripple</c>; b) size, color, and typography of the item
     ///                             and its subelements; c) CSS classes and styles of subelements; d) icons with the default value already set (because most often changing its value
     ///                             doesn't change passed information).<br/>
-    ///       - <i>Common</i>     - Properties defined in <see cref="MudComponentBase"/>.
+    ///       - <i>Common</i>     - Properties defined in <see cref="HamkareComponentBase"/>.
     ///     </para>
     ///     <para>
     ///     Note: The following properties belong to the "Behavior" group, not to the "Appearance" group:<br/>
-    ///      - <see cref="MudIconButton.Icon"/> - because it describes meaning of the button, since MudIconButton doesn't have text,<br/>
-    ///      - <see cref="MudBaseInput{T}.Label"/> - because it describes meaning of the field,<br/>
-    ///      - <see cref="MudBaseInput{T}.AdornmentText"/> - because it can describe information important to a user, e.g. a numeric field unit such as kilograms.<br/>
+    ///      - <see cref="HamkareIconButton.Icon"/> - because it describes meaning of the button, since HamkareIconButton doesn't have text,<br/>
+    ///      - <see cref="HamkareBaseInput{T}.Label"/> - because it describes meaning of the field,<br/>
+    ///      - <see cref="HamkareBaseInput{T}.AdornmentText"/> - because it can describe information important to a user, e.g. a numeric field unit such as kilograms.<br/>
     ///     Sometimes choosing a category can be difficult - in such case choose a category that makes the most sense.
     ///     </para>
     ///
@@ -111,7 +111,7 @@ namespace MudBlazor
     ///     <para>If some elements or behaviors can be distinguished in a component, then their properties are included in separate groups.</para>
     ///
     ///     <para>Note: If a property qualifies for both the "Appearance" or "Behavior" group, and for some special group, then this special group takes precedence.
-    ///           For example, <see cref="MudTableBase.CommitEditIcon"/> could belong to the "Appearance" group, but belongs to the "Editing" group.</para>
+    ///           For example, <see cref="HamkareTableBase.CommitEditIcon"/> could belong to the "Appearance" group, but belongs to the "Editing" group.</para>
     /// 
     ///     <b>Additional information</b>
     ///     <para>The list of categories is inspired by the categories displayed for Windows Forms and Web Forms components in the Visual Studio "Properties" window.</para>
@@ -123,13 +123,13 @@ namespace MudBlazor
          * by inheriting these constants, but C# doesn't allow to inherit static members of a class.
          */
 
-        /// <summary>Used in <see cref="MudComponentBase"/>.</summary>
+        /// <summary>Used in <see cref="HamkareComponentBase"/>.</summary>
         public static class ComponentBase
         {
             public const string Common = "Common";
         }
 
-        /// <summary>Used in: <see cref="MudBaseButton"/>, all components inheriting from it, and <see cref="MudToggleIconButton"/>.</summary>
+        /// <summary>Used in: <see cref="HamkareBaseButton"/>, all components inheriting from it, and <see cref="HamkareToggleIconButton"/>.</summary>
         public static class Button
         {
             public const string Behavior = "Behavior";
@@ -137,7 +137,7 @@ namespace MudBlazor
             public const string Appearance = "Appearance";
         }
 
-        /// <summary>Used in <see cref="MudFormComponent{T, U}"/> and all components inheriting from it.</summary>
+        /// <summary>Used in <see cref="HamkareFormComponent{T, U}"/> and all components inheriting from it.</summary>
         public static class FormComponent
         {
             public const string Data = "Data";
@@ -150,7 +150,7 @@ namespace MudBlazor
             public const string PickerAppearance = "Picker appearance";
         }
 
-        /// <summary>Used in <see cref="MudChartBase{T, TOptions}"/> and all components inheriting from it.</summary>
+        /// <summary>Used in <see cref="HamkareChartBase{T, TOptions}"/> and all components inheriting from it.</summary>
         public static class Chart
         {
             public const string Behavior = "Behavior";

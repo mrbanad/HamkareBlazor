@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel;
 using NetEscapades.EnumGenerators;
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 /// <summary>
-/// Specifies how items are drawn in a <see cref="MudTimeline" />.
+/// Specifies how items are drawn in a <see cref="HamkareTimeline" />.
 /// </summary>
 [EnumExtensions]
 public enum TimelinePosition
@@ -19,7 +19,7 @@ public enum TimelinePosition
     /// Dots are displayed above the text of each timeline item.
     /// </summary>
     /// <remarks>
-    /// Only applies if <see cref="MudTimeline.TimelineOrientation"/> is <see cref="TimelineOrientation.Horizontal"/>.
+    /// Only applies if <see cref="HamkareTimeline.TimelineOrientation"/> is <see cref="TimelineOrientation.Horizontal"/>.
     /// </remarks>
     [Description("top")]
     Top,
@@ -28,7 +28,7 @@ public enum TimelinePosition
     /// Dots are displayed below the text of each timeline item.
     /// </summary>
     /// <remarks>
-    /// Only applies if <see cref="MudTimeline.TimelineOrientation"/> is <see cref="TimelineOrientation.Vertical"/>.
+    /// Only applies if <see cref="HamkareTimeline.TimelineOrientation"/> is <see cref="TimelineOrientation.Vertical"/>.
     /// </remarks>
     [Description("bottom")]
     Bottom,
@@ -37,7 +37,7 @@ public enum TimelinePosition
     /// Dots are displayed to the left of text for each timeline item.
     /// </summary>
     /// <remarks>
-    /// Only applies if <see cref="MudTimeline.TimelineOrientation"/> is <see cref="TimelineOrientation.Vertical"/>.
+    /// Only applies if <see cref="HamkareTimeline.TimelineOrientation"/> is <see cref="TimelineOrientation.Vertical"/>.
     /// </remarks>
     [Description("left")]
     Left,
@@ -46,16 +46,16 @@ public enum TimelinePosition
     /// Dots are displayed to the right of text for each timeline item.
     /// </summary>
     /// <remarks>
-    /// Only applies if <see cref="MudTimeline.TimelineOrientation"/> is <see cref="TimelineOrientation.Vertical"/>.
+    /// Only applies if <see cref="HamkareTimeline.TimelineOrientation"/> is <see cref="TimelineOrientation.Vertical"/>.
     /// </remarks>
     [Description("right")]
     Right,
 
     /// <summary>
-    /// Dots are displayed at the start based on the Right-to-Left setting of the <see cref="MudRTLProvider"/>.
+    /// Dots are displayed at the start based on the Right-to-Left setting of the <see cref="HamkareRTLProvider"/>.
     /// </summary>
     /// <remarks>
-    /// Only applies if <see cref="MudTimeline.TimelineOrientation"/> is <see cref="TimelineOrientation.Vertical"/>.<br />
+    /// Only applies if <see cref="HamkareTimeline.TimelineOrientation"/> is <see cref="TimelineOrientation.Vertical"/>.<br />
     /// When Right-to-Left is enabled, the dots are displayed on the right of each item's text.<br />
     /// When Right-to-Left is disabled, the dots are displayed on the left of each item's text.
     /// </remarks>
@@ -63,10 +63,10 @@ public enum TimelinePosition
     Start,
 
     /// <summary>
-    /// Dots are displayed at the end based on the Right-to-Left setting of the <see cref="MudRTLProvider"/>.
+    /// Dots are displayed at the end based on the Right-to-Left setting of the <see cref="HamkareRTLProvider"/>.
     /// </summary>
     /// <remarks>
-    /// Only applies if <see cref="MudTimeline.TimelineOrientation"/> is <see cref="TimelineOrientation.Vertical"/>.<br />
+    /// Only applies if <see cref="HamkareTimeline.TimelineOrientation"/> is <see cref="TimelineOrientation.Vertical"/>.<br />
     /// When Right-to-Left is enabled, the dots are displayed on the left of each item's text.<br />
     /// When Right-to-Left is disabled, the dots are displayed on the right of each item's text.
     /// </remarks>

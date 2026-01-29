@@ -1,16 +1,16 @@
 ﻿using Microsoft.Extensions.Localization;
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 #nullable enable
 /// <summary>
-/// This customizable localizer service allows users to supply custom translations for MudBlazor components.
+/// This customizable localizer service allows users to supply custom translations for HamkareBlazor components.
 /// Users can register custom implementations using the following syntax, where the scope depends on the implementation:
-/// <c>services.Add{scope}Transient&lt;MudLocalizer, CustomMudLocalizerImpl&gt;()</c>
+/// <c>services.Add{scope}Transient&lt;HamkareLocalizer, CustomHamkareLocalizerImpl&gt;()</c>
 /// or
-/// <c>services.TryAdd{scope}Transient&lt;MudLocalizer, CustomMudLocalizerImpl&gt;()</c>
+/// <c>services.TryAdd{scope}Transient&lt;HamkareLocalizer, CustomHamkareLocalizerImpl&gt;()</c>
 /// </summary>
-public class MudLocalizer
+public class HamkareLocalizer
 {
     /// <summary>
     /// Retrieves the translation for the specified translation key.

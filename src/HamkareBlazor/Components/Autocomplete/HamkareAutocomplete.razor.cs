@@ -1,17 +1,17 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.Extensions.Logging;
-using MudBlazor.Utilities;
+using HamkareBlazor.Utilities;
 
 #nullable enable
-namespace MudBlazor
+namespace HamkareBlazor
 {
     /// <summary>
-    /// A text input for searching and selecting from a list of options. Unlike <see cref="MudSelect{T}"/>, it doesn't require the complete item list upfront and supports asynchronous search for database queries.
+    /// A text input for searching and selecting from a list of options. Unlike <see cref="HamkareSelect{T}"/>, it doesn't require the complete item list upfront and supports asynchronous search for database queries.
     /// </summary>
     /// <typeparam name="T">The type of item to search.</typeparam>
-    /// <seealso cref="MudSelect{T}"/>
-    public partial class MudAutocomplete<T> : MudBaseInput<T>
+    /// <seealso cref="HamkareSelect{T}"/>
+    public partial class HamkareAutocomplete<T> : HamkareBaseInput<T>
     {
         /// <summary>
         /// We need a random id for the year items in the year list so we can scroll to the item safely in every DatePicker.
@@ -27,7 +27,7 @@ namespace MudBlazor
         private bool _open;
         private bool _opening;
         private bool _isValueCoerced;
-        private MudInput<string> _elementReference = null!;
+        private HamkareInput<string> _elementReference = null!;
         private CancellationTokenSource? _cancellationTokenSrc;
         private Task? _currentSearchTask;
         private Timer? _debounceTimer;
@@ -42,20 +42,20 @@ namespace MudBlazor
         private IPopoverService PopoverService { get; set; } = null!;
 
         protected string Classname =>
-            new CssBuilder("mud-select")
+            new CssBuilder("hamkare-select")
                 .AddClass(Class)
                 .Build();
 
         protected string InputClassname =>
-            new CssBuilder("mud-select-input")
+            new CssBuilder("hamkare-select-input")
                 .AddClass(InputClass)
                 .Build();
 
         protected string AutocompleteClassname =>
-            new CssBuilder("mud-select")
-                .AddClass("mud-autocomplete")
-                .AddClass("mud-width-full", FullWidth)
-                .AddClass("mud-autocomplete--with-progress", ShowProgressIndicator && IsLoading)
+            new CssBuilder("hamkare-select")
+                .AddClass("hamkare-autocomplete")
+                .AddClass("hamkare-width-full", FullWidth)
+                .AddClass("hamkare-autocomplete--with-progress", ShowProgressIndicator && IsLoading)
                 .Build();
 
         protected string CircularProgressClassname =>
@@ -65,7 +65,7 @@ namespace MudBlazor
 
         protected string GetListItemClassname(bool isSelected) =>
             new CssBuilder()
-                .AddClass("mud-selected-item mud-primary-text mud-primary-hover", isSelected)
+                .AddClass("hamkare-selected-item hamkare-primary-text hamkare-primary-hover", isSelected)
                 .AddClass(ListItemClass)
                 .Build();
 
@@ -525,7 +525,7 @@ namespace MudBlazor
         /// </summary>
         protected object? GetAutocomplete() => UserAttributes.GetValueOrDefault("autocomplete", "off");
 
-        public MudAutocomplete()
+        public HamkareAutocomplete()
         {
             Adornment = Adornment.End;
             IconSize = Size.Medium;
@@ -595,7 +595,7 @@ namespace MudBlazor
                 //Meanwhile, in parallel, the ClearAsync method will be called, which sets isCleared to true.
                 //However, by the time SetValueAsync is released and SelectOptionAsync continues its execution, an OnAfterRender event might fire, setting isCleared back to false.
                 //This can result in a race condition.
-                //https://github.com/MudBlazor/MudBlazor/pull/6701
+                //https://github.com/HamkareBlazor/HamkareBlazor/pull/6701
                 base.OnAfterRender(firstRender);
                 return;
             }

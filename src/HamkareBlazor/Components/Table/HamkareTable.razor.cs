@@ -2,24 +2,24 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
-using MudBlazor.Extensions;
-using MudBlazor.Utilities;
+using HamkareBlazor.Extensions;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
-    // note: the MudTable code is split. Everything depending on the type parameter T of MudTable<T> is here in MudTable<T>
+    // note: the HamkareTable code is split. Everything depending on the type parameter T of HamkareTable<T> is here in HamkareTable<T>
 
     /// <summary>
     /// A sortable, filterable table with multiselection and pagination.
     /// </summary>
     /// <typeparam name="T">The type of item displayed in this table.</typeparam>
-    public partial class MudTable<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)] T> : MudTableBase, IDisposable
+    public partial class HamkareTable<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)] T> : HamkareTableBase, IDisposable
     {
         [Inject] private IJSRuntime JSRuntime { get; set; } = null!;
         [Inject] private IScrollManager ScrollManager { get; set; } = null!;
 
-        private readonly string _tableId = Identifier.Create("mudtable_");
+        private readonly string _tableId = Identifier.Create("hamkaretable_");
         private T? _selectedItem;
         private IEnumerable<T>? _items;
         private IEnumerable<T>? _preEditSort;
@@ -42,7 +42,7 @@ namespace MudBlazor
         protected bool IsVirtualized => Virtualize && !string.IsNullOrEmpty(Height);
 
         protected string TableClassname =>
-            new CssBuilder("mud-table-root")
+            new CssBuilder("hamkare-table-root")
                 .AddClass(TableClass)
                 .Build();
 
@@ -50,7 +50,7 @@ namespace MudBlazor
         /// The columns for each row in this table.
         /// </summary>
         /// <remarks>
-        /// Use <see cref="MudTd"/> to define columns, and <c>context</c> to access item properties for each column.
+        /// Use <see cref="HamkareTd"/> to define columns, and <c>context</c> to access item properties for each column.
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.Table.Rows)]
@@ -60,7 +60,7 @@ namespace MudBlazor
         /// The optional nested content underneath each row.
         /// </summary>
         /// <remarks>
-        /// Use <see cref="MudTr"/> and <see cref="MudTd"/> to define the child content, and <c>context</c> to access item properties.
+        /// Use <see cref="HamkareTr"/> and <see cref="HamkareTd"/> to define the child content, and <c>context</c> to access item properties.
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.Table.Rows)]
@@ -70,7 +70,7 @@ namespace MudBlazor
         /// The columns for each row when a row is being edited.
         /// </summary>
         /// <remarks>
-        /// Use <see cref="MudTd"/> to define columns, and <c>context</c> to access item properties for each column.  Typically looks similar to rows in <see cref="RowTemplate"/> but with edit components.
+        /// Use <see cref="HamkareTd"/> to define columns, and <c>context</c> to access item properties for each column.  Typically looks similar to rows in <see cref="RowTemplate"/> but with edit components.
         /// </remarks>        
         [Parameter]
         [Category(CategoryTypes.Table.Editing)]
@@ -141,7 +141,7 @@ namespace MudBlazor
         /// The content shown when there are no rows to display.
         /// </summary>
         /// <remarks>
-        /// No <see cref="MudTr"/> or <see cref="MudTd"/> is necessary.
+        /// No <see cref="HamkareTr"/> or <see cref="HamkareTd"/> is necessary.
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.Table.Data)]
@@ -165,7 +165,7 @@ namespace MudBlazor
         /// </summary>
         /// <remarks>
         /// Rendered directly into the table body at the top.
-        /// You must supply valid table row/cell markup (for example <c>&lt;MudTr&gt;</c> and <c>&lt;MudTd&gt;</c>).
+        /// You must supply valid table row/cell markup (for example <c>&lt;HamkareTr&gt;</c> and <c>&lt;HamkareTd&gt;</c>).
         /// If you place plain text or non-table markup here most browsers will ignore it.
         /// Use this when you need to produce arbitrary rows and columns while the table is loading.<br/>
         /// This content is displayed in addition to the table's loading animation.<br/>
@@ -225,7 +225,7 @@ namespace MudBlazor
         [Parameter]
         public EventCallback<TableRowClickEventArgs<T>> OnRowClick { get; set; }
 
-        internal override async Task FireRowClickEventAsync(MouseEventArgs args, MudTr row, object? o)
+        internal override async Task FireRowClickEventAsync(MouseEventArgs args, HamkareTr row, object? o)
         {
             var item = default(T);
             try
@@ -244,7 +244,7 @@ namespace MudBlazor
 
         internal override bool HasRowMouseEnterEventHandler => OnRowMouseEnter.HasDelegate;
 
-        internal override async Task FireRowMouseEnterEventAsync(PointerEventArgs args, MudTr row, object? o)
+        internal override async Task FireRowMouseEnterEventAsync(PointerEventArgs args, HamkareTr row, object? o)
         {
             var item = default(T);
             try
@@ -263,7 +263,7 @@ namespace MudBlazor
 
         internal override bool HasRowMouseLeaveEventHandler => OnRowMouseLeave.HasDelegate;
 
-        internal override async Task FireRowMouseLeaveEventAsync(PointerEventArgs args, MudTr row, object? o)
+        internal override async Task FireRowMouseLeaveEventAsync(PointerEventArgs args, HamkareTr row, object? o)
         {
             var item = default(T);
             try
@@ -425,7 +425,7 @@ namespace MudBlazor
         /// The content for the header of each group when <see cref="GroupBy"/> is set.
         /// </summary>
         /// <remarks>
-        /// Use <see cref="MudTd"/> to define the cells in the group header.
+        /// Use <see cref="HamkareTd"/> to define the cells in the group header.
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.Table.Grouping)]
@@ -469,7 +469,7 @@ namespace MudBlazor
         /// The content for the footer of each group when <see cref="GroupBy"/> is set.
         /// </summary>
         /// <remarks>
-        /// Use <see cref="MudTd"/> to define the cells in the group footer.
+        /// Use <see cref="HamkareTd"/> to define the cells in the group footer.
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.Table.Grouping)]
@@ -869,8 +869,8 @@ namespace MudBlazor
                     await ScrollManager.ScrollIntoViewAsync($"#{targetItemId}", ScrollBehavior.Auto);
                 }
 
-                await JSRuntime.InvokeVoidAsync("mudTableCell.focusCell", targetItemId, cellIndex);
-                await JSRuntime.InvokeVoidAsync("mudTableCell.selectCell", targetItemId, cellIndex);
+                await JSRuntime.InvokeVoidAsync("hamkareTableCell.focusCell", targetItemId, cellIndex);
+                await JSRuntime.InvokeVoidAsync("hamkareTableCell.selectCell", targetItemId, cellIndex);
             }
         }
     }

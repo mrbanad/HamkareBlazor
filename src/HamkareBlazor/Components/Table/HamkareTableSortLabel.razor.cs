@@ -1,45 +1,45 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Components;
-using MudBlazor.Utilities;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
 
     /// <summary>
-    /// A clickable column which toggles the sort column and direction for a <see cref="MudTable{T}"/>.
+    /// A clickable column which toggles the sort column and direction for a <see cref="HamkareTable{T}"/>.
     /// </summary>
     /// <typeparam name="T">The type of item displayed in the table.</typeparam>
-    public partial class MudTableSortLabel<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)] T> : MudComponentBase
+    public partial class HamkareTableSortLabel<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)] T> : HamkareComponentBase
     {
         private SortDirection _direction = SortDirection.None;
 
         protected string Classname =>
-            new CssBuilder("mud-table-sort-label")
-                .AddClass("mud-clickable", Enabled)
+            new CssBuilder("hamkare-table-sort-label")
+                .AddClass("hamkare-clickable", Enabled)
                 .AddClass(Class)
                 .Build();
 
         protected string SortIconClassname =>
-            new CssBuilder("mud-table-sort-label-icon")
-                .AddClass("mud-direction-none", _direction == SortDirection.None)
-                .AddClass("mud-direction-asc", _direction == SortDirection.Ascending)
-                .AddClass("mud-direction-desc", _direction == SortDirection.Descending)
+            new CssBuilder("hamkare-table-sort-label-icon")
+                .AddClass("hamkare-direction-none", _direction == SortDirection.None)
+                .AddClass("hamkare-direction-asc", _direction == SortDirection.Ascending)
+                .AddClass("hamkare-direction-desc", _direction == SortDirection.Descending)
                 .Build();
 
         /// <summary>
-        /// The current state of the <see cref="MudTable{T}"/> containing this sort label.
+        /// The current state of the <see cref="HamkareTable{T}"/> containing this sort label.
         /// </summary>
         [CascadingParameter]
         public TableContext? TableContext { get; set; }
 
         /// <summary>
-        /// The <see cref="MudTable{T}"/> containing this sort label.
+        /// The <see cref="HamkareTable{T}"/> containing this sort label.
         /// </summary>
-        public MudTableBase? Table => TableContext?.Table;
+        public HamkareTableBase? Table => TableContext?.Table;
 
         /// <summary>
-        /// The current state of the <see cref="MudTable{T}"/> containing this sort label.
+        /// The current state of the <see cref="HamkareTable{T}"/> containing this sort label.
         /// </summary>
         public TableContext<T>? Context => TableContext as TableContext<T>;
 
@@ -50,7 +50,7 @@ namespace MudBlazor
         public RenderFragment? ChildContent { get; set; }
 
         /// <summary>
-        /// The sort direction when the <see cref="MudTable{T}"/> is first displayed.
+        /// The sort direction when the <see cref="HamkareTable{T}"/> is first displayed.
         /// </summary>
         /// <remarks>
         /// Defaults to <see cref="SortDirection.None"/>.  When using multiple sort labels, the table will sort by the first sort label with a value other than <see cref="SortDirection.None"/>.
@@ -121,7 +121,7 @@ namespace MudBlazor
         /// The custom function for sorting rows for this sort label.
         /// </summary>
         /// <remarks>
-        /// Defaults to <c>null</c>.  When using <see cref="MudTable{T}.ServerData"/>, this function is not necessary.
+        /// Defaults to <c>null</c>.  When using <see cref="HamkareTable{T}.ServerData"/>, this function is not necessary.
         /// </remarks>
         [Parameter]
         public Func<T, object>? SortBy { get; set; } = null;
@@ -136,7 +136,7 @@ namespace MudBlazor
         /// Toggles the sort direction.
         /// </summary>
         /// <remarks>
-        /// When <see cref="MudTableBase.AllowUnsorted"/> is <c>true</c>, the sort direction will cycle from <see cref="SortDirection.None"/> to <see cref="SortDirection.Ascending"/> to <see cref="SortDirection.Descending"/>.  Otherwise, the sort direction will toggle between <see cref="SortDirection.Ascending"/> and <see cref="SortDirection.Descending"/>.
+        /// When <see cref="HamkareTableBase.AllowUnsorted"/> is <c>true</c>, the sort direction will cycle from <see cref="SortDirection.None"/> to <see cref="SortDirection.Ascending"/> to <see cref="SortDirection.Descending"/>.  Otherwise, the sort direction will toggle between <see cref="SortDirection.Ascending"/> and <see cref="SortDirection.Descending"/>.
         /// </remarks>
         public Task ToggleSortDirection()
         {

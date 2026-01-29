@@ -1,21 +1,21 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Components;
-using MudBlazor.Components.Highlighter; // Added for FragmentInfo
-// Removed: using static MudBlazor.Components.Highlighter.Splitter; 
+using HamkareBlazor.Components.Highlighter; // Added for FragmentInfo
+// Removed: using static HamkareBlazor.Components.Highlighter.Splitter; 
 // We will call Splitter methods statically: Splitter.GetFragments, Splitter.GetHtmlAwareFragments
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 #nullable enable
 
 /// <summary>
 /// A component which highlights words or phrases within text.
 /// </summary>
-public partial class MudHighlighter : MudComponentBase
+public partial class HamkareHighlighter : HamkareComponentBase
 {
     private Memory<string> _fragments;
     private string? _regex;

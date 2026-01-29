@@ -1,7 +1,7 @@
-﻿@namespace MudBlazor
-@inherits MudBaseButton
+﻿@namespace HamkareBlazor
+@inherits HamkareBaseButton
 
-<MudElement @bind-Ref="@_elementReference"
+<HamkareElement @bind-Ref="@_elementReference"
             HtmlTag="@HtmlTag"
             Class="@Classname" 
             Style="@Style"
@@ -15,12 +15,12 @@
             ClickPropagation="@GetClickPropagation()">
     @if (!string.IsNullOrEmpty(Icon))
     {
-        <span class="mud-icon-button-label">
-            <MudIcon Disabled="@Disabled" Icon="@Icon" Size="@Size" />
+        <span class="hamkare-icon-button-label">
+            <HamkareIcon Disabled="@Disabled" Icon="@Icon" Size="@Size" />
         </span>
     }
     else
     {
-        <MudText Typo="Typo.body2" Color="Color.Inherit">@ChildContent</MudText>
+        <HamkareText Typo="Typo.body2" Color="Color.Inherit">@ChildContent</HamkareText>
     }
-</MudElement>
+</HamkareElement>

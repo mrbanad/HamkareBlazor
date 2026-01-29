@@ -1,6 +1,6 @@
-﻿@namespace MudBlazor
+﻿@namespace HamkareBlazor
 @implements IDisposable
-@inherits MudComponentBase
+@inherits HamkareComponentBase
 @typeparam T
 
 @*HEADER:*@
@@ -9,11 +9,11 @@
 <tr class="@HeaderClassname" @onclick="@OnRowClick" style="@HeaderStyle" @attributes="@UserAttributes">
     @if ((GroupDefinition?.IsThisOrParentExpandable ?? false) || (Context?.Table?.MultiSelection ?? false))
     {
-        <MudTd>
+        <HamkareTd>
             <div class="d-flex">
                 @if (GroupDefinition?.Expandable ?? false)
                 {
-                    <MudIconButton Class="mud-table-row-expander" Icon="@(Expanded ? ExpandIcon : CollapseIcon)" OnClick="@(() => Expanded = !Expanded)"/>
+                    <HamkareIconButton Class="hamkare-table-row-expander" Icon="@(Expanded ? ExpandIcon : CollapseIcon)" OnClick="@(() => Expanded = !Expanded)"/>
                 }
                 else
                 {
@@ -24,21 +24,21 @@
                 }
                 @if (Checkable)
                 {
-                    <MudCheckBox T="bool?" @bind-Value="Checked" ReadOnly="!SelectionChangeable" Disabled="!SelectionChangeable" Class="mud-table-cell-checkbox"/>
+                    <HamkareCheckBox T="bool?" @bind-Value="Checked" ReadOnly="!SelectionChangeable" Disabled="!SelectionChangeable" Class="hamkare-table-cell-checkbox"/>
                 }
             </div>
-        </MudTd>
+        </HamkareTd>
     }
     @HeaderTemplate(new TableGroupData<object, T>(GroupDefinition?.GroupName, Items?.Key, Items?.ToList() ?? new List<T>()))
     @if ((Context?.Table?.Editable ?? false))
     {
-        <MudTd />
+        <HamkareTd />
     }
 </tr>
 }
 else
 {
-    <MudText @attributes="@UserAttributes">@("There aren't any group definition to use with this component.")</MudText>
+    <HamkareText @attributes="@UserAttributes">@("There aren't any group definition to use with this component.")</HamkareText>
 }
 
 @if (Expanded)
@@ -50,7 +50,7 @@ else
     {
         @foreach (var group in _innerGroupItems)
         {
-            <MudTableGroupRow @key="group.Key" T="T" GroupDefinition="GroupDefinition.InnerGroup" Items="@group"
+            <HamkareTableGroupRow @key="group.Key" T="T" GroupDefinition="GroupDefinition.InnerGroup" Items="@group"
                               Checkable="@Checkable" SelectionChangeable="SelectionChangeable"
                               HeaderClass="@HeaderClass" HeaderStyle="@HeaderStyle" HeaderTemplate="@HeaderTemplate"
                               FooterClass="@FooterClass" FooterStyle="@FooterStyle" FooterTemplate="@FooterTemplate"
@@ -59,7 +59,7 @@ else
     }
     else
     {
-        @Table?.RenderRows(Items, (GroupDefinition?.Indentation ?? false) ? $"mud-table-row-group-indented-{GroupDefinition?.Level - 1}" : null, GroupDefinition?.IsThisOrParentExpandable ?? false)
+        @Table?.RenderRows(Items, (GroupDefinition?.Indentation ?? false) ? $"hamkare-table-row-group-indented-{GroupDefinition?.Level - 1}" : null, GroupDefinition?.IsThisOrParentExpandable ?? false)
     }
 
     @*FOOTER:*@
@@ -68,12 +68,12 @@ else
         <tr class="@FooterClassname" @onclick="@OnRowClick" style="@FooterStyle" @attributes="@UserAttributes">
             @if ((GroupDefinition?.IsThisOrParentExpandable ?? false) || (Context?.Table?.MultiSelection ?? false))
             {
-                <MudTd/>
+                <HamkareTd/>
             }
             @FooterTemplate(new TableGroupData<object, T>(GroupDefinition?.GroupName, Items?.Key, Items?.ToList() ?? []))
             @if ((Context?.Table?.Editable ?? false))
             {
-                <MudTd />
+                <HamkareTd />
             }
         </tr>
     }

@@ -1,4 +1,4 @@
-﻿namespace MudBlazor.State.Rule.Exclusion;
+﻿namespace HamkareBlazor.State.Rule.Exclusion;
 
 #nullable enable
 /// <summary>

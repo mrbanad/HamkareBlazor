@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Components;
-using MudBlazor.Utilities;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
     /// <summary>
@@ -11,10 +11,10 @@ namespace MudBlazor
     /// <seealso cref="BreadcrumbItem" />
     /// <seealso cref="BreadcrumbLink" />
     /// <seealso cref="BreadcrumbSeparator" />
-    public partial class MudBreadcrumbs : MudComponentBase
+    public partial class HamkareBreadcrumbs : HamkareComponentBase
     {
-        private string Classname => new CssBuilder("mud-breadcrumbs")
-            .AddClass("mud-typography-body1")
+        private string Classname => new CssBuilder("hamkare-breadcrumbs")
+            .AddClass("hamkare-typography-body1")
             .AddClass(Class)
             .Build();
 
@@ -79,8 +79,8 @@ namespace MudBlazor
 
         internal static string GetItemClassname(BreadcrumbItem item)
         {
-            return new CssBuilder("mud-breadcrumb-item")
-                .AddClass("mud-disabled", item.Disabled)
+            return new CssBuilder("hamkare-breadcrumb-item")
+                .AddClass("hamkare-disabled", item.Disabled)
                 .Build();
         }
 

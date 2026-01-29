@@ -1,11 +1,11 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 #nullable enable
-public interface IMudDialogInstance
+public interface IHamkareDialogInstance
 {
     /// <summary>
     /// The unique ID for this instance.
@@ -13,7 +13,7 @@ public interface IMudDialogInstance
     Guid Id { get; }
 
     /// <summary>
-    /// The unique HTML element ID of the dialog container (mud-dialog-container).
+    /// The unique HTML element ID of the dialog container (hamkare-dialog-container).
     /// </summary>
     string ElementId { get; }
 
@@ -21,12 +21,12 @@ public interface IMudDialogInstance
     /// The options used for this dialog.
     /// </summary>
     /// <remarks>
-    /// Defaults to the options in the <see cref="MudDialog"/> or options passed during <see cref="DialogService.ShowAsync(Type)"/> methods.
+    /// Defaults to the options in the <see cref="HamkareDialog"/> or options passed during <see cref="DialogService.ShowAsync(Type)"/> methods.
     /// </remarks>
     DialogOptions Options { get; }
 
     /// <summary>
-    /// The text displayed at the top of this dialog if <see cref="MudDialogContainer.TitleContent" /> is not set.
+    /// The text displayed at the top of this dialog if <see cref="HamkareDialogContainer.TitleContent" /> is not set.
     /// </summary>
     string? Title { get; }
 
@@ -44,7 +44,7 @@ public interface IMudDialogInstance
     /// </summary>
     /// <param name="title">The new dialog title to use.</param>
     /// <remarks>
-    /// Use this method to change the title while a dialog is open, such as when the title reflects a value within this dialog.  Has no effect when <see cref="MudDialogContainer.TitleContent"/> is set.
+    /// Use this method to change the title while a dialog is open, such as when the title reflects a value within this dialog.  Has no effect when <see cref="HamkareDialogContainer.TitleContent"/> is set.
     /// </remarks>
     Task SetTitleAsync(string? title);
 

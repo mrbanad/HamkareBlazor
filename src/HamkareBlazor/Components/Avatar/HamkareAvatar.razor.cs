@@ -1,26 +1,26 @@
 ﻿using System;
 using Microsoft.AspNetCore.Components;
-using MudBlazor.Utilities;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
     /// <summary>
     /// Represents a component which displays circular user profile pictures, icons or text.
     /// </summary>
-    /// <seealso cref="MudAvatarGroup" />
-    partial class MudAvatar : MudComponentBase, IDisposable
+    /// <seealso cref="HamkareAvatarGroup" />
+    partial class HamkareAvatar : HamkareComponentBase, IDisposable
     {
         [CascadingParameter]
-        protected MudAvatarGroup? AvatarGroup { get; set; }
+        protected HamkareAvatarGroup? AvatarGroup { get; set; }
 
-        protected string Classname => new CssBuilder("mud-avatar")
-            .AddClass($"mud-avatar-{Size.ToStringFast(true)}")
-            .AddClass($"mud-avatar-rounded", Rounded)
-            .AddClass($"mud-avatar-square", Square)
-            .AddClass($"mud-avatar-{Variant.ToStringFast(true)}")
-            .AddClass($"mud-avatar-{Variant.ToStringFast(true)}-{Color.ToStringFast(true)}")
-            .AddClass($"mud-elevation-{Elevation.ToString()}")
+        protected string Classname => new CssBuilder("hamkare-avatar")
+            .AddClass($"hamkare-avatar-{Size.ToStringFast(true)}")
+            .AddClass($"hamkare-avatar-rounded", Rounded)
+            .AddClass($"hamkare-avatar-square", Square)
+            .AddClass($"hamkare-avatar-{Variant.ToStringFast(true)}")
+            .AddClass($"hamkare-avatar-{Variant.ToStringFast(true)}-{Color.ToStringFast(true)}")
+            .AddClass($"hamkare-elevation-{Elevation.ToString()}")
             .AddClass(AvatarGroup?.GetAvatarSpacing() ?? new CssBuilder(), AvatarGroup != null)
             .AddClass(Class)
             .Build();

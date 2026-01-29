@@ -1,14 +1,14 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
-using MudBlazor.Interfaces;
-using MudBlazor.State;
-using MudBlazor.Utilities;
+using HamkareBlazor.Interfaces;
+using HamkareBlazor.State;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
 
@@ -16,13 +16,13 @@ namespace MudBlazor
     /// Toggle buttons grouped to select one or multiple values.
     /// </summary>
     /// <typeparam name="T">The type of item being toggled.</typeparam>
-    /// <seealso cref="MudToggleItem{T}"/>
-    /// <seealso cref="MudRadioGroup{T}"/>
-    /// <seealso cref="MudRadio{T}"/>
-    /// <seealso cref="MudButtonGroup"/>
-    public partial class MudToggleGroup<T> : MudComponentBase
+    /// <seealso cref="HamkareToggleItem{T}"/>
+    /// <seealso cref="HamkareRadioGroup{T}"/>
+    /// <seealso cref="HamkareRadio{T}"/>
+    /// <seealso cref="HamkareButtonGroup"/>
+    public partial class HamkareToggleGroup<T> : HamkareComponentBase
     {
-        public MudToggleGroup()
+        public HamkareToggleGroup()
         {
             using var registerScope = CreateRegisterScope();
             _value = registerScope.RegisterParameter<T?>(nameof(Value))
@@ -64,16 +64,16 @@ namespace MudBlazor
 
         private readonly ParameterState<T?> _value;
         private readonly ParameterState<IEnumerable<T?>?> _values;
-        private readonly List<MudToggleItem<T>> _items = new();
+        private readonly List<HamkareToggleItem<T>> _items = new();
 
-        protected string Classname => new CssBuilder("mud-toggle-group")
-            .AddClass("mud-toggle-group-horizontal", !Vertical)
-            .AddClass("mud-toggle-group-vertical", Vertical)
-            .AddClass($"mud-toggle-group-size-{Size.ToStringFast(true)}")
-            .AddClass("mud-toggle-group-rtl", RightToLeft)
-            .AddClass($"mud-toggle-group-{Color.ToStringFast(true)}")
-            .AddClass("mud-toggle-group-outlined", Outlined)
-            .AddClass("mud-disabled", Disabled)
+        protected string Classname => new CssBuilder("hamkare-toggle-group")
+            .AddClass("hamkare-toggle-group-horizontal", !Vertical)
+            .AddClass("hamkare-toggle-group-vertical", Vertical)
+            .AddClass($"hamkare-toggle-group-size-{Size.ToStringFast(true)}")
+            .AddClass("hamkare-toggle-group-rtl", RightToLeft)
+            .AddClass($"hamkare-toggle-group-{Color.ToStringFast(true)}")
+            .AddClass("hamkare-toggle-group-outlined", Outlined)
+            .AddClass("hamkare-disabled", Disabled)
             .AddClass(Class)
             .Build();
 
@@ -249,7 +249,7 @@ namespace MudBlazor
         public bool FixedContent { get; set; }
 
         /// <summary>
-        /// Contains the <see cref="MudToggleItem{T}"/> components of this group.
+        /// Contains the <see cref="HamkareToggleItem{T}"/> components of this group.
         /// </summary>
         [Parameter]
         [Category(CategoryTypes.List.Behavior)]
@@ -259,7 +259,7 @@ namespace MudBlazor
         /// Adds the specified item to this group.
         /// </summary>
         /// <param name="item">The item to add.</param>
-        protected internal void Register(MudToggleItem<T> item)
+        protected internal void Register(HamkareToggleItem<T> item)
         {
             if (_items.Select(x => x.Value).Contains(item.Value))
             {
@@ -275,7 +275,7 @@ namespace MudBlazor
         /// Removes the specified item from this group.
         /// </summary>
         /// <param name="item">The item to remove.</param>
-        protected internal void Unregister(MudToggleItem<T> item)
+        protected internal void Unregister(HamkareToggleItem<T> item)
         {
             if (_items.Remove(item))
             {
@@ -327,9 +327,9 @@ namespace MudBlazor
 
         private void OnParameterChanged()
         {
-            foreach (IMudStateHasChanged mudComponent in _items)
+            foreach (IHamkareStateHasChanged hamkareComponent in _items)
             {
-                mudComponent.StateHasChanged();
+                hamkareComponent.StateHasChanged();
             }
 
             StateHasChanged();
@@ -343,7 +343,7 @@ namespace MudBlazor
             }
         }
 
-        private void ApplySelectionState(MudToggleItem<T> item)
+        private void ApplySelectionState(HamkareToggleItem<T> item)
         {
             var selected = SelectionMode == SelectionMode.MultiSelection
                 ? _values.Value?.Contains(item.Value) ?? false
@@ -354,7 +354,7 @@ namespace MudBlazor
             }
         }
 
-        protected internal async Task ToggleItemAsync(MudToggleItem<T> item)
+        protected internal async Task ToggleItemAsync(HamkareToggleItem<T> item)
         {
             var itemValue = item.Value;
             var previousItem = SelectionMode != SelectionMode.MultiSelection
@@ -407,10 +407,10 @@ namespace MudBlazor
             }
         }
 
-        protected internal IEnumerable<MudToggleItem<T>> GetItems() => _items;
+        protected internal IEnumerable<HamkareToggleItem<T>> GetItems() => _items;
 
-        protected internal bool IsFirstItem(MudToggleItem<T> item) => item.Equals(_items.FirstOrDefault());
+        protected internal bool IsFirstItem(HamkareToggleItem<T> item) => item.Equals(_items.FirstOrDefault());
 
-        protected internal bool IsLastItem(MudToggleItem<T> item) => item.Equals(_items.LastOrDefault());
+        protected internal bool IsLastItem(HamkareToggleItem<T> item) => item.Equals(_items.LastOrDefault());
     }
 }

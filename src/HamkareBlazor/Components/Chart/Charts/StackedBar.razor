@@ -1,8 +1,8 @@
 ﻿@using System.Globalization;
 
-@namespace MudBlazor.Charts
+@namespace HamkareBlazor.Charts
 
-@inherits MudAxisChartBase<T, StackedBarChartOptions>
+@inherits HamkareAxisChartBase<T, StackedBarChartOptions>
 
 @typeparam T
 
@@ -17,7 +17,7 @@
                        Height="@Height"
                        ViewBoxWidth="_boundWidth"
                        ViewBoxHeight="_boundHeight"
-                       ChartClass="mud-chart-bar"
+                       ChartClass="hamkare-chart-bar"
                        ChartSeries="@ChartSeries"
                        ChartLabels="@ChartLabels"
                        ChartOptions="@ChartOptions"
@@ -57,7 +57,7 @@
                 : string.Empty;
 
             builder.OpenElement(seq++, "path");
-            builder.AddAttribute(seq++, "class", "mud-chart-bar");
+            builder.AddAttribute(seq++, "class", "hamkare-chart-bar");
             builder.AddAttribute(seq++, "onclick", EventCallback.Factory.Create(this, () => SetSelectedIndexAsync(bar.Index)));
             builder.AddAttribute(seq++, "stroke", color);
             builder.AddAttribute(seq++, "stroke-width", _barWidthStroke.ToStr());
@@ -87,7 +87,7 @@
         if (TooltipTemplate is not null)
         {
             builder.OpenElement(seq++, "g");
-            builder.AddAttribute(seq++, "class", "mud-chart-tooltip");
+            builder.AddAttribute(seq++, "class", "hamkare-chart-tooltip");
             builder.AddAttribute(seq++, "transform", $"translate({tooltipX.ToStr()},{tooltipY.ToStr()})");
             builder.AddContent(seq++, TooltipTemplate((_hoveredBar, color)));
             builder.CloseElement();
@@ -114,7 +114,7 @@
         }
     };
 
-    private RenderFragment Chart =>@<g class="mud-charts-bar-series">
+    private RenderFragment Chart =>@<g class="hamkare-charts-bar-series">
                                         @RenderStackedBars()
                                         @RenderTooltip()
                                     </g>;

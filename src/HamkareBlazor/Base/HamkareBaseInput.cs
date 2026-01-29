@@ -1,16 +1,16 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
-using MudBlazor.State;
+using HamkareBlazor.State;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
     /// <summary>
     /// Represents a base class for designing form input components.
     /// </summary>
     /// <typeparam name="T">The type of item being input.</typeparam>
-    public abstract class MudBaseInput<T> : MudFormComponent<T, string>
+    public abstract class HamkareBaseInput<T> : HamkareFormComponent<T, string>
     {
         private bool _isDirty;
         /// <summary>
@@ -27,14 +27,14 @@ namespace MudBlazor
         /// The resolved input element ID.
         /// </summary>
         protected string? InputElementId => _inputIdState.Value;
-        private string? _userAttributesId = Identifier.Create("mudinput");
-        private readonly string _componentId = Identifier.Create("mudinput");
+        private string? _userAttributesId = Identifier.Create("hamkareinput");
+        private readonly string _componentId = Identifier.Create("hamkareinput");
         private readonly ParameterState<string?> _textState;
         private readonly ParameterState<T?> _valueState;
         private readonly ParameterState<string?> _formatState;
         private readonly ParameterState<string?> _inputIdState;
 
-        protected MudBaseInput()
+        protected HamkareBaseInput()
         {
             using var registerScope = CreateRegisterScope();
             _textState = registerScope.RegisterParameter<string?>(nameof(Text))
@@ -476,7 +476,7 @@ namespace MudBlazor
                 return;
             }
 
-            // all the OnBlur parents (TextField, MudMask, NumericField, DateRange, etc) currently point to this method
+            // all the OnBlur parents (TextField, HamkareMask, NumericField, DateRange, etc) currently point to this method
             // which causes this method to be fired repeatedly, we can use the obj.Type of FocusedEventArgs to track it
 
             if (!OnlyValidateIfDirty || _isDirty)
@@ -699,7 +699,7 @@ namespace MudBlazor
             }
             else
             {
-                // MudBlazor uses an unconventional SubscribeToParentForm mechanism whose behavior is not fully understandable.
+                // HamkareBlazor uses an unconventional SubscribeToParentForm mechanism whose behavior is not fully understandable.
                 // Because of this, we must manually call OnParametersSet on the ParameterContainer to ensure ParameterState fields update correctly.
                 //
                 // Without this manual call, scenarios involving inherited components can fall out of sync. For example:
@@ -726,7 +726,7 @@ namespace MudBlazor
                 return HelperId;
             }
 
-            // error text replaces helper text in MudInputControl, so if the user does not provide a custom helper id, we have no valid helper element
+            // error text replaces helper text in HamkareInputControl, so if the user does not provide a custom helper id, we have no valid helper element
             if (HasErrors)
             {
                 return null;

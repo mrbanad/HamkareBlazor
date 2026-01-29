@@ -1,5 +1,5 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System;
@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
-using MudBlazor.Utilities;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 #nullable enable
-public partial class MudDynamicDropItem<T> : MudComponentBase where T : notnull
+public partial class HamkareDynamicDropItem<T> : HamkareComponentBase where T : notnull
 {
     private bool _dragOperationIsInProgress = false;
     private string _id = Identifier.Create();
@@ -24,7 +24,7 @@ public partial class MudDynamicDropItem<T> : MudComponentBase where T : notnull
     [Inject] private IJSRuntime JsRuntime { get; set; } = null!;
 
     [CascadingParameter]
-    protected MudDropContainer<T>? Container { get; set; }
+    protected HamkareDropContainer<T>? Container { get; set; }
 
     /// <summary>
     /// The zone identifier of the corresponding drop zone
@@ -120,7 +120,7 @@ public partial class MudDynamicDropItem<T> : MudComponentBase where T : notnull
         }
 
         _dragOperationIsInProgress = true;
-        await JsRuntime.InvokeVoidAsync("mudDragAndDrop.makeDropZonesNotRelative");
+        await JsRuntime.InvokeVoidAsync("hamkareDragAndDrop.makeDropZonesNotRelative");
         Container.StartTransaction(Item, ZoneIdentifier ?? string.Empty, Index, OnDroppedSucceeded,
             OnDroppedCanceled);
         await OnDragStarted.InvokeAsync();
@@ -129,7 +129,7 @@ public partial class MudDynamicDropItem<T> : MudComponentBase where T : notnull
     private async Task OnDroppedSucceeded()
     {
         _dragOperationIsInProgress = false;
-        await JsRuntime.InvokeVoidAsync("mudDragAndDrop.resetItem", _id);
+        await JsRuntime.InvokeVoidAsync("hamkareDragAndDrop.resetItem", _id);
         await OnDragEnded.InvokeAsync(Item);
         StateHasChanged();
     }
@@ -137,7 +137,7 @@ public partial class MudDynamicDropItem<T> : MudComponentBase where T : notnull
     private async Task OnDroppedCanceled()
     {
         _dragOperationIsInProgress = false;
-        await JsRuntime.InvokeVoidAsync("mudDragAndDrop.resetItem", _id);
+        await JsRuntime.InvokeVoidAsync("hamkareDragAndDrop.resetItem", _id);
         await OnDragEnded.InvokeAsync(Item);
         StateHasChanged();
     }
@@ -170,11 +170,11 @@ public partial class MudDynamicDropItem<T> : MudComponentBase where T : notnull
         _onTouchLastY = e.ChangedTouches[0].ClientY;
 
         //Send to JS to move DOM element
-        await JsRuntime.InvokeVoidAsync("mudDragAndDrop.moveItemByDifference", _id, x, y);
+        await JsRuntime.InvokeVoidAsync("hamkareDragAndDrop.moveItemByDifference", _id, x, y);
 
         if (Container is not null && Container.TransactionInProgress())
         {
-            var dropIndexOnPositionString = await JsRuntime.InvokeAsync<string>("mudDragAndDrop.getDropIndexOnPosition", _onTouchLastX, _onTouchLastY, _id);
+            var dropIndexOnPositionString = await JsRuntime.InvokeAsync<string>("hamkareDragAndDrop.getDropIndexOnPosition", _onTouchLastX, _onTouchLastY, _id);
             if (int.TryParse(dropIndexOnPositionString, out var dropIndex))
             {
                 Container.UpdateTransactionIndex(dropIndex);
@@ -196,7 +196,7 @@ public partial class MudDynamicDropItem<T> : MudComponentBase where T : notnull
             _onTouchLastX = e.ChangedTouches[0].ClientX;
             _onTouchLastY = e.ChangedTouches[0].ClientY;
             var dropZoneIdentifier =
-                await JsRuntime.InvokeAsync<string>("mudDragAndDrop.getDropZoneIdentifierOnPosition", _onTouchLastX,
+                await JsRuntime.InvokeAsync<string>("hamkareDragAndDrop.getDropZoneIdentifierOnPosition", _onTouchLastX,
                     _onTouchLastY);
 
             var (_, isValidZone) = ItemCanBeDropped(dropZoneIdentifier);
@@ -220,7 +220,7 @@ public partial class MudDynamicDropItem<T> : MudComponentBase where T : notnull
                 StateHasChanged();
             }
         }
-        //await JsRuntime.InvokeVoidAsync("mudDragAndDrop.makeDropZonesRelative");
+        //await JsRuntime.InvokeVoidAsync("hamkareDragAndDrop.makeDropZonesRelative");
     }
 
     /// <summary>
@@ -272,7 +272,7 @@ public partial class MudDynamicDropItem<T> : MudComponentBase where T : notnull
     #endregion
 
     protected string Classname =>
-        new CssBuilder("mud-drop-item")
+        new CssBuilder("hamkare-drop-item")
             .AddClass(DraggingClass, _dragOperationIsInProgress)
             .AddClass(DisabledClass, Disabled)
             .AddClass(Class)

@@ -1,8 +1,8 @@
-﻿using MudBlazor.Utilities.Converter.Base;
-using MudBlazor.Utilities.Converter.Chain;
-using MudBlazor.Utilities.Exceptions;
+﻿using HamkareBlazor.Utilities.Converter.Base;
+using HamkareBlazor.Utilities.Converter.Chain;
+using HamkareBlazor.Utilities.Exceptions;
 
-namespace MudBlazor.Extensions;
+namespace HamkareBlazor.Extensions;
 
 #nullable enable
 /// <summary>

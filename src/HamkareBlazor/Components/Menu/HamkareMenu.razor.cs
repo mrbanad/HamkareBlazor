@@ -1,5 +1,5 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Diagnostics.CodeAnalysis;
@@ -7,21 +7,21 @@ using System.Globalization;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
-using MudBlazor.Services;
-using MudBlazor.State;
-using MudBlazor.Utilities;
+using HamkareBlazor.Services;
+using HamkareBlazor.State;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
     /// <summary>
     /// Displays a list of options that users can select from. Make menus easy to open, close, and select. Menus can open from a variety of components.
     /// </summary>
-    /// <seealso cref="MudMenuItem" />
-    public partial class MudMenu : MudComponentBase, IDisposable
+    /// <seealso cref="HamkareMenuItem" />
+    public partial class HamkareMenu : HamkareComponentBase, IDisposable
     {
         private readonly ParameterState<bool> _openState;
-        private readonly List<MudMenu> _subMenus = [];
+        private readonly List<HamkareMenu> _subMenus = [];
         private (double Top, double Left) _openPosition;
         private bool _isPointerOver;
         private bool _isTransient;
@@ -29,9 +29,9 @@ namespace MudBlazor
         private CancellationTokenSource? _hoverCts;
         private CancellationTokenSource? _leaveCts;
         private int _focusedIndex = -1;
-        private MudButton? _buttonActivator;
-        private MudMenuItem? _menuItemActivator;
-        private MudIconButton? _iconButtonActivator;
+        private HamkareButton? _buttonActivator;
+        private HamkareMenuItem? _menuItemActivator;
+        private HamkareIconButton? _iconButtonActivator;
         private ElementReference _menuWrapperRef;
         private readonly List<object> _menuItems = [];
         private readonly string _elementId = Identifier.Create("menu");
@@ -44,7 +44,7 @@ namespace MudBlazor
         [Inject]
         private IPopoverService PopoverService { get; set; } = null!;
 
-        public MudMenu()
+        public HamkareMenu()
         {
             _menuContext = new MenuContext(this);
             using var registerScope = CreateRegisterScope();
@@ -58,8 +58,8 @@ namespace MudBlazor
         /// The CSS class for the root menu container.
         /// </summary>
         protected string Classname =>
-            new CssBuilder("mud-menu")
-                .AddClass("mud-menu-button-hidden", GetActivatorHidden())
+            new CssBuilder("hamkare-menu")
+                .AddClass("hamkare-menu-button-hidden", GetActivatorHidden())
                 .AddClass(Class)
                 .Build();
 
@@ -69,15 +69,15 @@ namespace MudBlazor
         protected string PopoverClassname =>
             new CssBuilder()
                 .AddClass(PopoverClass)
-                .AddClass("mud-popover-nested", ParentMenu is not null)
-                .AddClass("mud-popover-position-override", PositionAtCursor)
+                .AddClass("hamkare-popover-nested", ParentMenu is not null)
+                .AddClass("hamkare-popover-position-override", PositionAtCursor)
                 .Build();
 
         /// <summary>
         /// The CSS class for the list containing menu items.
         /// </summary>
         protected string ListClassname =>
-            new CssBuilder("mud-menu-list")
+            new CssBuilder("hamkare-menu-list")
                 .AddClass(ListClass)
                 .Build();
 
@@ -85,8 +85,8 @@ namespace MudBlazor
         /// The CSS class for the activator element (button or custom content).
         /// </summary>
         protected string ActivatorClassname =>
-            new CssBuilder("mud-menu-activator")
-                .AddClass("mud-disabled", Disabled)
+            new CssBuilder("hamkare-menu-activator")
+                .AddClass("hamkare-disabled", Disabled)
                 .Build();
 
         /// <summary>
@@ -139,7 +139,7 @@ namespace MudBlazor
         /// The icon displayed for this menu.
         /// </summary>
         /// <remarks>
-        /// When set, this menu will display a <see cref="MudIconButton" />.
+        /// When set, this menu will display a <see cref="HamkareIconButton" />.
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.Menu.Behavior)]
@@ -156,7 +156,7 @@ namespace MudBlazor
         public Color IconColor { get; set; } = Color.Inherit;
 
         /// <summary>
-        /// The icon displayed before the text when <see cref="Icon"/> is not set. Also used for nested <see cref="MudMenu"/>.
+        /// The icon displayed before the text when <see cref="Icon"/> is not set. Also used for nested <see cref="HamkareMenu"/>.
         /// </summary>
         /// <remarks>
         /// Defaults to <c>null</c>.
@@ -176,7 +176,7 @@ namespace MudBlazor
         public string? EndIcon { get; set; }
 
         /// <summary>
-        /// The color of this menu's button when <see cref="Icon"/> is not set, or the color of the <see cref="MudIconButton" /> when <see cref="Icon"/> is set.
+        /// The color of this menu's button when <see cref="Icon"/> is not set, or the color of the <see cref="HamkareIconButton" /> when <see cref="Icon"/> is set.
         /// </summary>
         /// <remarks>
         /// Defaults to <see cref="Color.Default"/>.
@@ -186,7 +186,7 @@ namespace MudBlazor
         public Color Color { get; set; } = Color.Default;
 
         /// <summary>
-        /// The size of this menu's button when <see cref="Icon"/> is not set, or the size of the <see cref="MudIconButton" /> when <see cref="Icon"/> is set.
+        /// The size of this menu's button when <see cref="Icon"/> is not set, or the size of the <see cref="HamkareIconButton" /> when <see cref="Icon"/> is set.
         /// </summary>
         /// <remarks>
         /// Defaults to <see cref="Size.Medium"/>.
@@ -254,14 +254,14 @@ namespace MudBlazor
         /// <see cref="MenuContext.CloseAllAsync"/>.</para>
         /// <para>Example usage:</para>
         /// <code>
-        /// &lt;MudMenu&gt;
+        /// &lt;HamkareMenu&gt;
         ///     &lt;ActivatorContent&gt;
-        ///         &lt;MudButton OnClick="@context.ToggleAsync"&gt;Open Menu&lt;/MudButton&gt;
+        ///         &lt;HamkareButton OnClick="@context.ToggleAsync"&gt;Open Menu&lt;/HamkareButton&gt;
         ///     &lt;/ActivatorContent&gt;
         ///     &lt;ChildContent&gt;
-        ///         &lt;MudMenuItem&gt;Item 1&lt;/MudMenuItem&gt;
+        ///         &lt;HamkareMenuItem&gt;Item 1&lt;/HamkareMenuItem&gt;
         ///     &lt;/ChildContent&gt;
-        /// &lt;/MudMenu&gt;
+        /// &lt;/HamkareMenu&gt;
         /// </code>
         /// </remarks>
         [Parameter]
@@ -384,7 +384,7 @@ namespace MudBlazor
         protected double GetTransitionDuration() => GetDense() ? 0 : PopoverService.PopoverOptions.Duration.TotalMilliseconds;
 
         /// <summary>
-        /// The <see cref="MudMenuItem" /> components within this menu.
+        /// The <see cref="HamkareMenuItem" /> components within this menu.
         /// </summary>
         [Parameter]
         [Category(CategoryTypes.Menu.PopupBehavior)]
@@ -407,7 +407,7 @@ namespace MudBlazor
         public EventCallback<bool> OpenChanged { get; set; }
 
         [CascadingParameter]
-        protected MudMenu? ParentMenu { get; set; }
+        protected HamkareMenu? ParentMenu { get; set; }
 
         protected bool GetActivatorHidden() => ActivatorContent is null && string.IsNullOrWhiteSpace(Label) && string.IsNullOrWhiteSpace(Icon);
 
@@ -448,8 +448,8 @@ namespace MudBlazor
         /// Registers a child menu with this menu, allowing for hierarchical menu management.
         /// This is crucial for controlling the open/close state of nested menus.
         /// </summary>
-        /// <param name="child">The child <see cref="MudMenu"/> to register.</param>
-        protected void RegisterChild(MudMenu child)
+        /// <param name="child">The child <see cref="HamkareMenu"/> to register.</param>
+        protected void RegisterChild(HamkareMenu child)
         {
             _subMenus.Add(child);
         }
@@ -458,8 +458,8 @@ namespace MudBlazor
         /// Unregisters a child menu from this menu.
         /// This is called when a child menu is disposed or removed, maintaining accurate tracking of nested menus.
         /// </summary>
-        /// <param name="child">The child <see cref="MudMenu"/> to unregister.</param>
-        protected void UnregisterChild(MudMenu child)
+        /// <param name="child">The child <see cref="HamkareMenu"/> to unregister.</param>
+        protected void UnregisterChild(HamkareMenu child)
         {
             _subMenus.Remove(child);
         }
@@ -473,7 +473,7 @@ namespace MudBlazor
 
             if (ParentMenu != null)
             {
-                ParentMenu.RegisterItem(this); // Pass the MudMenu directly
+                ParentMenu.RegisterItem(this); // Pass the HamkareMenu directly
             }
         }
 
@@ -693,13 +693,13 @@ namespace MudBlazor
                 return;
             }
 
-            if (MudGlobal.MenuDefaults.HoverDelay > 0)
+            if (HamkareGlobal.MenuDefaults.HoverDelay > 0)
             {
                 _hoverCts = new();
 
                 try
                 {
-                    await Task.Delay(MudGlobal.MenuDefaults.HoverDelay, _hoverCts.Token);
+                    await Task.Delay(HamkareGlobal.MenuDefaults.HoverDelay, _hoverCts.Token);
                 }
                 catch (TaskCanceledException)
                 {
@@ -734,13 +734,13 @@ namespace MudBlazor
             }
 
             // Add a delay if one is configured.
-            if (MudGlobal.MenuDefaults.HoverDelay > 0)
+            if (HamkareGlobal.MenuDefaults.HoverDelay > 0)
             {
                 _leaveCts = new();
 
                 try
                 {
-                    await Task.Delay(MudGlobal.MenuDefaults.HoverDelay, _leaveCts.Token);
+                    await Task.Delay(HamkareGlobal.MenuDefaults.HoverDelay, _leaveCts.Token);
                 }
                 catch (TaskCanceledException)
                 {
@@ -762,7 +762,7 @@ namespace MudBlazor
         /// <remarks>
         /// This is crucial for determining when to close hover-activated menus.
         /// </remarks>
-        protected bool HasPointerOver(MudMenu menu)
+        protected bool HasPointerOver(HamkareMenu menu)
         {
             if (menu._isPointerOver)
                 return true;
@@ -838,7 +838,7 @@ namespace MudBlazor
         /// </summary>
         private async Task HandleNavigationKeyAsync(KeyboardEventArgs e)
         {
-            var items = _menuItems.Where(x => x is MudMenuItem).ToList();
+            var items = _menuItems.Where(x => x is HamkareMenuItem).ToList();
             if (items.Count == 0)
                 return;
 
@@ -883,7 +883,7 @@ namespace MudBlazor
 
                 switch (currentItem)
                 {
-                    case MudMenuItem menuItem:
+                    case HamkareMenuItem menuItem:
                         var submenu = FindSubmenuForItem(menuItem);
                         if (submenu != null)
                         {
@@ -895,7 +895,7 @@ namespace MudBlazor
                         }
                         break;
 
-                    case MudMenu menu:
+                    case HamkareMenu menu:
                         await menu.OpenSubMenuAsync(EventArgs.Empty);
                         break;
                 }
@@ -945,7 +945,7 @@ namespace MudBlazor
                 // Handle different item types
                 switch (currentItem)
                 {
-                    case MudMenuItem menuItem:
+                    case HamkareMenuItem menuItem:
                         // If this item has a submenu, open it instead of invoking click
                         var submenu = FindSubmenuForItem(menuItem);
                         if (submenu != null)
@@ -961,8 +961,8 @@ namespace MudBlazor
                         }
                         break;
 
-                    case MudMenu menu:
-                        // For MudMenu items, always open the submenu
+                    case HamkareMenu menu:
+                        // For HamkareMenu items, always open the submenu
                         menu._lastKeyboardActivation = DateTime.UtcNow;
                         menu._lastInteractionWasKeyboard = true;
                         await menu.OpenSubMenuAsync(EventArgs.Empty);
@@ -1048,8 +1048,8 @@ namespace MudBlazor
                 // Retrieves the cref ElementRef associated with a menu item or submenu to allow focus control.
                 ElementReference elementRef = item switch
                 {
-                    MudMenuItem menuItem => menuItem.ElementReference,
-                    MudMenu menu => menu._menuItemActivator?.ElementReference ?? default,
+                    HamkareMenuItem menuItem => menuItem.ElementReference,
+                    HamkareMenu menu => menu._menuItemActivator?.ElementReference ?? default,
                     _ => default
                 };
 
@@ -1068,7 +1068,7 @@ namespace MudBlazor
         {
             // Subscribe key interceptor to prevent default scrolling
             var options = new KeyInterceptorOptions(
-                "mud-list",
+                "hamkare-list",
                 [
                     // prevent scrolling page
                     new("ArrowDown", preventDown: "key+none"),
@@ -1113,7 +1113,7 @@ namespace MudBlazor
         /// <summary>
         /// Finds the submenu associated with a given menu item by checking the _subMenus collection.
         /// </summary>
-        private MudMenu? FindSubmenuForItem(MudMenuItem menuItem)
+        private HamkareMenu? FindSubmenuForItem(HamkareMenuItem menuItem)
         {
             return _subMenus.FirstOrDefault(submenu => submenu._menuItemActivator == menuItem);
         }

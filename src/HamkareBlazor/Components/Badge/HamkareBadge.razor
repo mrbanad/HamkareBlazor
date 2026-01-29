@@ -1,5 +1,5 @@
-﻿@namespace MudBlazor
-@inherits MudComponentBase
+﻿@namespace HamkareBlazor
+@inherits HamkareComponentBase
 
 <span @attributes="UserAttributes" class="@Classname" style="@Style">
     @ChildContent
@@ -11,7 +11,7 @@
                 {
                     @if (!string.IsNullOrEmpty(Icon))
                     {
-                        <MudIcon Icon="@Icon" Class="mud-icon-badge" />
+                        <HamkareIcon Icon="@Icon" Class="hamkare-icon-badge" />
                     }
                     else
                     {

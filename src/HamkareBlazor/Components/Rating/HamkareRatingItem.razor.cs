@@ -1,47 +1,47 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using MudBlazor.Extensions;
-using MudBlazor.Utilities;
+using HamkareBlazor.Extensions;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
 
     /// <summary>
-    /// A clickable item as part of a <see cref="MudRating"/>.
+    /// A clickable item as part of a <see cref="HamkareRating"/>.
     /// </summary>
-    /// <seealso cref="MudRating"/>
-    public partial class MudRatingItem : MudComponentBase
+    /// <seealso cref="HamkareRating"/>
+    public partial class HamkareRatingItem : HamkareComponentBase
     {
         /// <summary>
         /// The CSS classes applied to this component.
         /// </summary>
         protected string ClassName =>
-            new CssBuilder("mud-rating-item")
-                .AddClass("mud-ripple mud-ripple-icon", Ripple)
+            new CssBuilder("hamkare-rating-item")
+                .AddClass("hamkare-ripple hamkare-ripple-icon", Ripple)
                 .AddClass("yellow-text.text-darken-3", Color == Color.Default)
-                .AddClass($"mud-{Color.ToStringFast(true)}-text", Color != Color.Default)
-                .AddClass("mud-rating-item-active", Active)
-                .AddClass("mud-disabled", Disabled)
-                .AddClass("mud-readonly", ReadOnly)
+                .AddClass($"hamkare-{Color.ToStringFast(true)}-text", Color != Color.Default)
+                .AddClass("hamkare-rating-item-active", Active)
+                .AddClass("hamkare-disabled", Disabled)
+                .AddClass("hamkare-readonly", ReadOnly)
                 .AddClass(Class)
                 .Build();
 
         /// <summary>
-        /// The parent <see cref="MudRating"/> containing this item.
+        /// The parent <see cref="HamkareRating"/> containing this item.
         /// </summary>
         [CascadingParameter]
-        private MudRating? Rating { get; set; }
+        private HamkareRating? Rating { get; set; }
 
         /// <summary>
         /// The value for this item.
         /// </summary>
         /// <remarks>
-        /// Defaults to the index of this item in the parent <see cref="MudRating"/>.  (e.g. The 3rd item has a value of <c>3</c>.)
+        /// Defaults to the index of this item in the parent <see cref="HamkareRating"/>.  (e.g. The 3rd item has a value of <c>3</c>.)
         /// </remarks>
         [Parameter]
         public int ItemValue { get; set; }
@@ -50,7 +50,7 @@ namespace MudBlazor
         /// The size of this item.
         /// </summary>
         /// <remarks>
-        /// Defaults to <see cref="Size.Medium"/>.  Can be overridden by <see cref="MudRating.Size"/>.
+        /// Defaults to <see cref="Size.Medium"/>.  Can be overridden by <see cref="HamkareRating.Size"/>.
         /// </remarks>
         [Parameter]
         public Size Size { get; set; } = Size.Medium;
@@ -59,7 +59,7 @@ namespace MudBlazor
         /// The color of this item.
         /// </summary>
         /// <remarks>
-        /// Defaults to <see cref="Color.Default"/>.  Can be overridden by <see cref="MudRating.Color"/>.
+        /// Defaults to <see cref="Color.Default"/>.  Can be overridden by <see cref="HamkareRating.Color"/>.
         /// </remarks>
         [Parameter]
         public Color Color { get; set; } = Color.Default;
@@ -68,7 +68,7 @@ namespace MudBlazor
         /// Show a ripple effect when the user clicks the button.
         /// </summary>
         /// <remarks>
-        /// Defaults to <c>true</c>.  Can be overridden by <see cref="MudRating.Ripple"/>.
+        /// Defaults to <c>true</c>.  Can be overridden by <see cref="HamkareRating.Ripple"/>.
         /// </remarks>
         [Parameter]
         public bool Ripple { get; set; } = true;
@@ -95,7 +95,7 @@ namespace MudBlazor
         /// Occurs when this item is clicked.
         /// </summary>
         /// <remarks>
-        /// When clicked, the <see cref="MudRating.SelectedValue"/> is changed.
+        /// When clicked, the <see cref="HamkareRating.SelectedValue"/> is changed.
         /// </remarks>
         [Parameter]
         public EventCallback<int> ItemClicked { get; set; }
@@ -104,7 +104,7 @@ namespace MudBlazor
         /// Occurs when the user hovers over this item.
         /// </summary>
         /// <remarks>
-        /// When hovered, the <see cref="MudRating.HoveredValue"/> is changed.
+        /// When hovered, the <see cref="HamkareRating.HoveredValue"/> is changed.
         /// </remarks>
         [Parameter]
         public EventCallback<int?> ItemHovered { get; set; }

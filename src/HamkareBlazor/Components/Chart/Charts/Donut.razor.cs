@@ -2,10 +2,10 @@
 using System.Numerics;
 using System.Text;
 using Microsoft.AspNetCore.Components;
-using MudBlazor.Extensions;
+using HamkareBlazor.Extensions;
 
 #nullable enable
-namespace MudBlazor.Charts
+namespace HamkareBlazor.Charts
 {
     /// <summary>
     /// Represents a chart which displays values as a percentage of a circle.
@@ -16,7 +16,7 @@ namespace MudBlazor.Charts
     /// <seealso cref="Line{T}"/>
     /// <seealso cref="StackedBar{T}"/>
     /// <seealso cref="TimeSeries{T}"/>
-    public partial class Donut<T> : MudRadialChartBase<T, DonutChartOptions> where T : struct, INumber<T>, IMinMaxValue<T>, IFormattable
+    public partial class Donut<T> : HamkareRadialChartBase<T, DonutChartOptions> where T : struct, INumber<T>, IMinMaxValue<T>, IFormattable
     {
         protected override void OnInitialized()
         {

@@ -1,21 +1,21 @@
 ﻿using Microsoft.AspNetCore.Components;
-using MudBlazor.Utilities;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 #nullable enable
 
 /// <summary>
 /// A customizable piece of text.
 /// </summary>
-public partial class MudText : MudComponentBase
+public partial class HamkareText : HamkareComponentBase
 {
     protected string Classname =>
-        new CssBuilder("mud-typography")
-            .AddClass($"mud-typography-{Typo.ToStringFast(true)}")
-            .AddClass($"mud-{Color.ToStringFast(true)}-text", Color != Color.Default && Color != Color.Inherit)
-            .AddClass("mud-typography-gutterbottom", GutterBottom)
-            .AddClass($"mud-typography-align-{ConvertAlign(Align).ToStringFast(true)}", Align != Align.Inherit)
+        new CssBuilder("hamkare-typography")
+            .AddClass($"hamkare-typography-{Typo.ToStringFast(true)}")
+            .AddClass($"hamkare-{Color.ToStringFast(true)}-text", Color != Color.Default && Color != Color.Inherit)
+            .AddClass("hamkare-typography-gutterbottom", GutterBottom)
+            .AddClass($"hamkare-typography-align-{ConvertAlign(Align).ToStringFast(true)}", Align != Align.Inherit)
             .AddClass("d-inline", Inline)
             .AddClass(Class)
             .Build();

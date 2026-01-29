@@ -1,13 +1,13 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using NetEscapades.EnumGenerators;
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 /// <summary>
-/// Indicates the initial mode used by a <see cref="MudColorPicker"/>.
+/// Indicates the initial mode used by a <see cref="HamkareColorPicker"/>.
 /// </summary>
 [EnumExtensions]
 public enum ColorPickerMode

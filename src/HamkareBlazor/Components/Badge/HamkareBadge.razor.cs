@@ -1,33 +1,33 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using MudBlazor.Utilities;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
     /// <summary>
     /// Badges show notifications, counts, or status information on navigation items and icons.
     /// </summary>
-    public partial class MudBadge : MudComponentBase
+    public partial class HamkareBadge : HamkareComponentBase
     {
-        protected string Classname => new CssBuilder("mud-badge-root")
+        protected string Classname => new CssBuilder("hamkare-badge-root")
             .AddClass(Class)
             .Build();
 
-        protected string WrapperClass => new CssBuilder("mud-badge-wrapper")
-            .AddClass($"mud-badge-{Origin.ToStringFast(true).Replace("-", " ")}")
+        protected string WrapperClass => new CssBuilder("hamkare-badge-wrapper")
+            .AddClass($"hamkare-badge-{Origin.ToStringFast(true).Replace("-", " ")}")
             .Build();
 
-        protected string BadgeClassname => new CssBuilder("mud-badge")
-            .AddClass("mud-badge-dot", Dot)
-            .AddClass("mud-badge-bordered", Bordered)
-            .AddClass("mud-badge-icon", !string.IsNullOrEmpty(Icon) && !Dot)
-            .AddClass($"mud-badge-{Origin.ToStringFast(true).Replace("-", " ")}")
-            .AddClass($"mud-elevation-{Elevation.ToString()}")
-            .AddClass("mud-theme-" + Color.ToStringFast(true), Color != Color.Default)
-            .AddClass("mud-badge-default", Color == Color.Default)
-            .AddClass("mud-badge-overlap", Overlap)
+        protected string BadgeClassname => new CssBuilder("hamkare-badge")
+            .AddClass("hamkare-badge-dot", Dot)
+            .AddClass("hamkare-badge-bordered", Bordered)
+            .AddClass("hamkare-badge-icon", !string.IsNullOrEmpty(Icon) && !Dot)
+            .AddClass($"hamkare-badge-{Origin.ToStringFast(true).Replace("-", " ")}")
+            .AddClass($"hamkare-elevation-{Elevation.ToString()}")
+            .AddClass("hamkare-theme-" + Color.ToStringFast(true), Color != Color.Default)
+            .AddClass("hamkare-badge-default", Color == Color.Default)
+            .AddClass("hamkare-badge-overlap", Overlap)
             .AddClass(BadgeClass)
             .Build();
 

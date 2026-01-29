@@ -1,22 +1,22 @@
 ﻿using Microsoft.AspNetCore.Components;
-using MudBlazor.Utilities;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 #nullable enable
 
 /// <summary>
-/// A header cell which labels a column of data for a <see cref="MudTable{T}"/>.
+/// A header cell which labels a column of data for a <see cref="HamkareTable{T}"/>.
 /// </summary>
-public partial class MudTh : MudComponentBase
+public partial class HamkareTh : HamkareComponentBase
 {
-    protected string Classname => new CssBuilder("mud-table-cell")
+    protected string Classname => new CssBuilder("hamkare-table-cell")
         .AddClass(Context?.Table?.CellClass)
         .AddClass(Class)
         .Build();
 
     /// <summary>
-    /// The current state of the <see cref="MudTable{T}"/> containing this group.
+    /// The current state of the <see cref="HamkareTable{T}"/> containing this group.
     /// </summary>
     [CascadingParameter]
     public TableContext? Context { get; set; }

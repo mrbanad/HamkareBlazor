@@ -1,15 +1,15 @@
-﻿.mud-icon-default {
-  color: var(--mud-palette-text-secondary);
+﻿.hamkare-icon-default {
+  color: var(--hamkare-palette-text-secondary);
 }
 
 
-.mud-disabled {
-  .mud-icon-root, .mud-svg-icon, .mud-icon-default {
-    color: var(--mud-palette-text-disabled);
+.hamkare-disabled {
+  .hamkare-icon-root, .hamkare-svg-icon, .hamkare-icon-default {
+    color: var(--hamkare-palette-text-disabled);
   }
 }
 
-.mud-icon-root {
+.hamkare-icon-root {
   width: 1em;
   height: 1em;
   display: inline-block;
@@ -21,19 +21,19 @@
     outline: none;
   }
 
-  &.mud-svg-icon {
+  &.hamkare-svg-icon {
     fill: currentColor;
   }
 }
 
-.mud-icon-size-small {
+.hamkare-icon-size-small {
   font-size: 1.25rem;
 }
 
-.mud-icon-size-medium {
+.hamkare-icon-size-medium {
   font-size: 1.5rem;
 }
 
-.mud-icon-size-large {
+.hamkare-icon-size-large {
   font-size: 2.25rem;
 }

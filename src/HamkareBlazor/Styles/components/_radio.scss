@@ -1,67 +1,67 @@
 @import '../abstracts/variables';
 
-.mud-radio {
+.hamkare-radio {
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   vertical-align: middle;
   -webkit-tap-highlight-color: transparent;
 
-  & > .mud-radio-content {
-    color: var(--mud-palette-text-primary);
+  & > .hamkare-radio-content {
+    color: var(--hamkare-palette-text-primary);
   }
 
   @media(hover: hover) and (pointer: fine) {
-    .mud-disabled:hover {
+    .hamkare-disabled:hover {
       cursor: default;
       background-color: transparent !important;
 
-      & > .mud-radio-content {
-        color: var(--mud-palette-text-disabled);
+      & > .hamkare-radio-content {
+        color: var(--hamkare-palette-text-disabled);
       }
 
       & * {
         cursor: default;
-        color: var(--mud-palette-text-disabled);
+        color: var(--hamkare-palette-text-disabled);
       }
     }
   }
 
-  &.mud-disabled, .mud-disabled:focus-visible, .mud-disabled:active {
+  &.hamkare-disabled, .hamkare-disabled:focus-visible, .hamkare-disabled:active {
     cursor: default;
     background-color: transparent !important;
 
-    & > .mud-radio-content {
-      color: var(--mud-palette-text-disabled);
+    & > .hamkare-radio-content {
+      color: var(--hamkare-palette-text-disabled);
     }
 
     & * {
       cursor: default;
-      color: var(--mud-palette-text-disabled);
+      color: var(--hamkare-palette-text-disabled);
     }
   }
 
-  &.mud-readonly, .mud-readonly:hover {
+  &.hamkare-readonly, .hamkare-readonly:hover {
     cursor: default;
     background-color: transparent !important;
   }
 
-  & .mud-radio-dense {
+  & .hamkare-radio-dense {
     padding: 4px;
   }
 
-  &.mud-checked {
-    color: var(--mud-palette-action-default);
+  &.hamkare-checked {
+    color: var(--hamkare-palette-action-default);
 
     @media(hover: hover) and (pointer: fine) {
       &:hover {
-        background-color: var(--mud-palette-action-default-hover);
+        background-color: var(--hamkare-palette-action-default-hover);
       }
     }
   }
 }
 
-.mud-radio-input {
+.hamkare-radio-input {
     top: 0;
     left: 0;
     width: 100%;
@@ -74,17 +74,17 @@
     position: absolute;
 }
 
-.mud-radio-icons {
+.hamkare-radio-icons {
     display: flex;
     position: relative;
 }
 
-.mud-radio-icons.mud-checked .mud-radio-icon-checked {
+.hamkare-radio-icons.hamkare-checked .hamkare-radio-icon-checked {
   transform: scale(1);
   transition: transform 150ms cubic-bezier(0.0, 0, 0.2, 1) 0ms;
 }
 
-.mud-radio-icon-checked {
+.hamkare-radio-icon-checked {
   left: 0;
   position: absolute;
   transform: scale(0);

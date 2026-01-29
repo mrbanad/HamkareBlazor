@@ -1,19 +1,19 @@
 ﻿// noinspection JSUnusedGlobalSymbols
-class MudSplitPanel {
+class HamkareSplitPanel {
     static build(containerId, horizontal, resetOnDoubleClick, minPanelSize, firstPanelInitialSize, panelGap) {
-        window.splitPanels[containerId] = new MudSplitPanel(containerId, horizontal, resetOnDoubleClick, minPanelSize, firstPanelInitialSize, panelGap);
+        window.splitPanels[containerId] = new HamkareSplitPanel(containerId, horizontal, resetOnDoubleClick, minPanelSize, firstPanelInitialSize, panelGap);
     }
 
     constructor(containerId, horizontal, resetOnDoubleClick, minPanelSize, firstPanelInitialSize, panelGap) {
         this.container = document.getElementById(containerId);
         if (!this.container) {
-            console.warn(`MudSplitPanel: Container with id '${containerId}' not found.`);
+            console.warn(`HamkareSplitPanel: Container with id '${containerId}' not found.`);
             return;
         }
 
         const children = this.container.children;
         if (children.length !== 3) {
-            console.warn(`MudSplitPanel: Invalid child count '${children.length}'.`);
+            console.warn(`HamkareSplitPanel: Invalid child count '${children.length}'.`);
             return;
         }
 
@@ -234,27 +234,27 @@ class MudSplitPanel {
     }
 }
 
-if (!window.mudSplitPanel) {
-    window.mudSplitPanel = MudSplitPanel;
+if (!window.hamkareSplitPanel) {
+    window.hamkareSplitPanel = HamkareSplitPanel;
     window.splitPanels = {};
 }
 
-window.mudSplitPanel_update = function (id, horizontal, resetOnDoubleClick, minPanelSize, panelGap) {
+window.hamkareSplitPanel_update = function (id, horizontal, resetOnDoubleClick, minPanelSize, panelGap) {
     window.splitPanels[id].update(horizontal, resetOnDoubleClick, minPanelSize, panelGap);
 };
 
-window.mudSplitPanel_resetDividerPosition = function (id) {
+window.hamkareSplitPanel_resetDividerPosition = function (id) {
     window.splitPanels[id].resetSizes();
 };
 
-window.mudSplitPanel_getDividerPosition = function (id) {
+window.hamkareSplitPanel_getDividerPosition = function (id) {
     return window.splitPanels[id].getDividerPosition();
 };
 
-window.mudSplitPanel_setDividerPosition = function (id, offset) {
+window.hamkareSplitPanel_setDividerPosition = function (id, offset) {
     window.splitPanels[id].setDividerPosition(offset);
 };
 
-window.mudSplitPanel_destroy = function (id) {
+window.hamkareSplitPanel_destroy = function (id) {
     window.splitPanels[id].destroy();
 };

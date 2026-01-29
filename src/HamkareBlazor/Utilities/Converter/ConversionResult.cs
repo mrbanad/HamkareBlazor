@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace MudBlazor.Utilities.Converter.Base;
+namespace HamkareBlazor.Utilities.Converter.Base;
 
 #nullable enable
 /// <summary>

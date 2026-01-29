@@ -1,24 +1,24 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using Microsoft.AspNetCore.Components;
-using MudBlazor.State;
-using MudBlazor.Utilities;
+using HamkareBlazor.State;
+using HamkareBlazor.Utilities;
 
 #nullable enable
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 /// <summary>
-/// Toggles the expansion state of a <see cref="MudTreeViewItem{T}"/>.
+/// Toggles the expansion state of a <see cref="HamkareTreeViewItem{T}"/>.
 /// </summary>
-/// <seealso cref="MudTreeView{T}"/>
-/// <seealso cref="MudTreeViewItem{T}"/>
-public partial class MudTreeViewItemToggleButton : MudComponentBase
+/// <seealso cref="HamkareTreeView{T}"/>
+/// <seealso cref="HamkareTreeViewItem{T}"/>
+public partial class HamkareTreeViewItemToggleButton : HamkareComponentBase
 {
     private readonly ParameterState<bool> _expandedState;
 
-    public MudTreeViewItemToggleButton()
+    public HamkareTreeViewItemToggleButton()
     {
         using var registerScope = CreateRegisterScope();
         _expandedState = registerScope.RegisterParameter<bool>(nameof(Expanded))
@@ -28,10 +28,10 @@ public partial class MudTreeViewItemToggleButton : MudComponentBase
 
     protected string Classname =>
         new CssBuilder(Class)
-            .AddClass("mud-treeview-item-expand-button")
-            .AddClass("mud-treeview-item-arrow-expand", !Loading)
-            .AddClass("mud-transform", _expandedState.Value && !Loading)
-            .AddClass("mud-treeview-item-arrow-load", Loading)
+            .AddClass("hamkare-treeview-item-expand-button")
+            .AddClass("hamkare-treeview-item-arrow-expand", !Loading)
+            .AddClass("hamkare-transform", _expandedState.Value && !Loading)
+            .AddClass("hamkare-treeview-item-arrow-load", Loading)
             .Build();
 
     /// <summary>

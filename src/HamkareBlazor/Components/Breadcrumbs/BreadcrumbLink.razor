@@ -1,5 +1,5 @@
-﻿@namespace MudBlazor
-@using MudBlazor.Utilities
+﻿@namespace HamkareBlazor
+@using HamkareBlazor.Utilities
 
 <li class="@Classname">
     @if (Parent?.ItemTemplate is null)
@@ -7,7 +7,7 @@
         <a href="@(Item?.Href ?? "#")">
             @if (Item?.Icon != null)
             {
-                <MudIcon Icon="@Item?.Icon" Size="Size.Small" />
+                <HamkareIcon Icon="@Item?.Icon" Size="Size.Small" />
             }
             @Item?.Text
         </a>

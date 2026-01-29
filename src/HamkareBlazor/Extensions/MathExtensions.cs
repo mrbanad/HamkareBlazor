@@ -1,6 +1,6 @@
 ﻿using System.Numerics;
 
-namespace MudBlazor.Extensions
+namespace HamkareBlazor.Extensions
 {
 #nullable enable
     public static class MathExtensions

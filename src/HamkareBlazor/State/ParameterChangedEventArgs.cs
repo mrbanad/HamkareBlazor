@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 
-namespace MudBlazor.State;
+namespace HamkareBlazor.State;
 
 #nullable enable
 /// <summary>

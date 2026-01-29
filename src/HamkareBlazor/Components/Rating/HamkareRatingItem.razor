@@ -1,5 +1,5 @@
-﻿@namespace MudBlazor
-@inherits MudComponentBase
+﻿@namespace HamkareBlazor
+@inherits HamkareComponentBase
 
 <span class="@ClassName"
       style="@Style"
@@ -7,7 +7,7 @@
       @onpointerout="HandlePointerOutAsync"
       @onclick="HandleClickAsync">
     <input @attributes="UserAttributes"
-           class="mud-rating-input"
+           class="hamkare-rating-input"
            type="radio"
            tabindex="-1"
            value="@ItemValue"
@@ -16,5 +16,5 @@
            checked="@Checked"
            aria-readonly="@(ReadOnly.ToString().ToLower())" />
 
-    <MudIcon Icon="@ItemIcon" Color="@ItemColor" Size="@Size" />
+    <HamkareIcon Icon="@ItemIcon" Color="@ItemColor" Size="@Size" />
 </span>

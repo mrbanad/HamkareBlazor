@@ -3,35 +3,35 @@
 
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using MudBlazor.Services;
-using MudBlazor.State;
-using MudBlazor.Utilities;
+using HamkareBlazor.Services;
+using HamkareBlazor.State;
+using HamkareBlazor.Utilities;
 
 #nullable enable
-namespace MudBlazor
+namespace HamkareBlazor
 {
     /// <summary>
-    /// An instance of a <see cref="MudDialog"/>.
+    /// An instance of a <see cref="HamkareDialog"/>.
     /// </summary>
     /// <remarks>
-    /// When a <see cref="MudDialog"/> is shown, a new instance is created.  This instance can then be used to perform actions such as hiding the dialog programmatically.
+    /// When a <see cref="HamkareDialog"/> is shown, a new instance is created.  This instance can then be used to perform actions such as hiding the dialog programmatically.
     /// </remarks>
-    /// <seealso cref="MudDialog"/>
-    /// <seealso cref="MudDialogProvider"/>
+    /// <seealso cref="HamkareDialog"/>
+    /// <seealso cref="HamkareDialogProvider"/>
     /// <seealso cref="DialogOptions"/>
     /// <seealso cref="DialogParameters{T}"/>
     /// <seealso cref="DialogReference"/>
     /// <seealso cref="DialogService"/>
-    public partial class MudDialogContainer : MudComponentBase, IMudDialogInstanceInternal, IAsyncDisposable
+    public partial class HamkareDialogContainer : HamkareComponentBase, IHamkareDialogInstanceInternal, IAsyncDisposable
     {
         private bool _disposed;
-        private MudDialog? _dialog;
+        private HamkareDialog? _dialog;
         private ElementReference _dialogContainerReference;
         private readonly ParameterState<DialogOptions> _dialogOptionsState;
         private readonly ParameterState<string?> _titleState;
         private readonly string _elementId = Identifier.Create("dialog");
 
-        public MudDialogContainer()
+        public HamkareDialogContainer()
         {
             var registerScope = CreateRegisterScope();
             _dialogOptionsState = registerScope.RegisterParameter<DialogOptions>(nameof(Options))
@@ -47,7 +47,7 @@ namespace MudBlazor
         public bool RightToLeft { get; set; }
 
         [CascadingParameter]
-        private MudDialogProvider Parent { get; set; } = null!;
+        private HamkareDialogProvider Parent { get; set; } = null!;
 
         [CascadingParameter]
         private DialogOptions GlobalDialogOptions { get; set; } = DialogOptions.Default;
@@ -56,7 +56,7 @@ namespace MudBlazor
         /// The options used for this dialog.
         /// </summary>
         /// <remarks>
-        /// Defaults to the options in the <see cref="MudDialog"/> or options passed during <see cref="DialogService.ShowAsync(Type)"/> methods.
+        /// Defaults to the options in the <see cref="HamkareDialog"/> or options passed during <see cref="DialogService.ShowAsync(Type)"/> methods.
         /// </remarks>
         [Parameter, ParameterState]
         [Category(CategoryTypes.Dialog.Misc)] // Behavior and Appearance
@@ -83,7 +83,7 @@ namespace MudBlazor
         /// The content within this dialog.
         /// </summary>
         /// <remarks>
-        /// Defaults to the content of the <see cref="MudDialog"/> being displayed.
+        /// Defaults to the content of the <see cref="HamkareDialog"/> being displayed.
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.Dialog.Behavior)]
@@ -105,23 +105,23 @@ namespace MudBlazor
         public string CloseIcon { get; set; } = Icons.Material.Filled.Close;
 
         protected string TitleClassname =>
-            new CssBuilder("mud-dialog-title")
+            new CssBuilder("hamkare-dialog-title")
                 .AddClass(_dialog?.TitleClass)
                 .Build();
 
         protected string Classname =>
-            new CssBuilder("mud-dialog")
+            new CssBuilder("hamkare-dialog")
                 .AddClass(GetMaxWidth(), !GetFullScreen())
-                .AddClass("mud-dialog-width-full", GetFullWidth() && !GetFullScreen())
-                .AddClass("mud-dialog-fullscreen", GetFullScreen())
-                .AddClass("mud-dialog-rtl", RightToLeft)
+                .AddClass("hamkare-dialog-width-full", GetFullWidth() && !GetFullScreen())
+                .AddClass("hamkare-dialog-fullscreen", GetFullScreen())
+                .AddClass("hamkare-dialog-rtl", RightToLeft)
                 .AddClass(_dialog?.Class)
                 .Build();
 
         protected string BackgroundClassname =>
-            new CssBuilder("mud-overlay-dialog")
-                .AddClass($"mud-skip-overlay-section") // dialog overlay remains outside of Section
-                .AddClass("mud-skip-overlay-positioning") // popovers try to position the overlay by zindex, this skips that behavior if a user puts the dialog provider above the popover provider
+            new CssBuilder("hamkare-overlay-dialog")
+                .AddClass($"hamkare-skip-overlay-section") // dialog overlay remains outside of Section
+                .AddClass("hamkare-skip-overlay-positioning") // popovers try to position the overlay by zindex, this skips that behavior if a user puts the dialog provider above the popover provider
                 .AddClass(GetDialogOptionsOrDefault.BackgroundClass)
                 .Build();
 
@@ -130,7 +130,7 @@ namespace MudBlazor
             if (firstRender)
             {
                 var options = new KeyInterceptorOptions(
-                    "mud-dialog",
+                    "hamkare-dialog",
                     [
                         new("/./", subscribeDown: true, subscribeUp: true)
                     ]);
@@ -147,7 +147,7 @@ namespace MudBlazor
                 case "Escape":
                     if (GetCloseOnEscapeKey())
                     {
-                        ((IMudDialogInstance)this).Cancel();
+                        ((IHamkareDialogInstance)this).Cancel();
                     }
                     break;
             }
@@ -236,7 +236,7 @@ namespace MudBlazor
             }
             else
             {
-                ((IMudDialogInstance)this).Cancel();
+                ((IHamkareDialogInstance)this).Cancel();
             }
         }
 
@@ -264,7 +264,7 @@ namespace MudBlazor
             {
                 position = DialogPosition.Center;
             }
-            return $"mud-dialog-{position.ToStringFast(true)}";
+            return $"hamkare-dialog-{position.ToStringFast(true)}";
         }
 
         private string GetMaxWidth()
@@ -283,7 +283,7 @@ namespace MudBlazor
             {
                 maxWidth = MaxWidth.Small;
             }
-            return $"mud-dialog-width-{maxWidth.ToStringFast(true)}";
+            return $"hamkare-dialog-width-{maxWidth.ToStringFast(true)}";
         }
 
         private bool GetFullWidth() => GetDialogOptionsOrDefault.FullWidth ?? GlobalDialogOptions.FullWidth ?? false;
@@ -314,52 +314,52 @@ namespace MudBlazor
         }
 
         /// <inheritdoc />
-        string IMudDialogInstance.ElementId => _elementId;
+        string IHamkareDialogInstance.ElementId => _elementId;
 
         /// <inheritdoc />
-        string? IMudDialogInstance.Title => _titleState.Value;
+        string? IHamkareDialogInstance.Title => _titleState.Value;
 
         /// <inheritdoc />
-        DialogOptions IMudDialogInstance.Options => GetDialogOptionsOrDefault;
+        DialogOptions IHamkareDialogInstance.Options => GetDialogOptionsOrDefault;
 
         /// <inheritdoc />
-        async Task IMudDialogInstance.SetOptionsAsync(DialogOptions options)
+        async Task IHamkareDialogInstance.SetOptionsAsync(DialogOptions options)
         {
             await _dialogOptionsState.SetValueAsync(options);
             await InvokeAsync(StateHasChanged);
         }
 
         /// <inheritdoc />
-        async Task IMudDialogInstance.SetTitleAsync(string? title)
+        async Task IHamkareDialogInstance.SetTitleAsync(string? title)
         {
             await _titleState.SetValueAsync(title);
             await InvokeAsync(StateHasChanged);
         }
 
         /// <inheritdoc />
-        void IMudDialogInstance.Close()
+        void IHamkareDialogInstance.Close()
         {
-            ((IMudDialogInstance)this).Close(DialogResult.Ok<object?>(null));
+            ((IHamkareDialogInstance)this).Close(DialogResult.Ok<object?>(null));
         }
 
         /// <inheritdoc />
-        void IMudDialogInstance.Close(DialogResult dialogResult)
+        void IHamkareDialogInstance.Close(DialogResult dialogResult)
         {
             Parent.DismissInstance(Id, dialogResult);
         }
 
         /// <inheritdoc />
-        void IMudDialogInstance.Close<T>(T returnValue)
+        void IHamkareDialogInstance.Close<T>(T returnValue)
         {
             var dialogResult = DialogResult.Ok<T>(returnValue);
             Parent.DismissInstance(Id, dialogResult);
         }
 
         /// <inheritdoc />
-        void IMudDialogInstance.Cancel() => ((IMudDialogInstance)this).Close(DialogResult.Cancel());
+        void IHamkareDialogInstance.Cancel() => ((IHamkareDialogInstance)this).Close(DialogResult.Cancel());
 
         /// <inheritdoc />
-        void IMudDialogInstanceInternal.Register(MudDialog dialog)
+        void IHamkareDialogInstanceInternal.Register(HamkareDialog dialog)
         {
             _dialog = dialog;
             Class = dialog.Class;
@@ -369,10 +369,10 @@ namespace MudBlazor
         }
 
         /// <inheritdoc />
-        void IMudDialogInstance.StateHasChanged() => StateHasChanged();
+        void IHamkareDialogInstance.StateHasChanged() => StateHasChanged();
 
         /// <inheritdoc />
-        void IMudDialogInstance.CancelAll()
+        void IHamkareDialogInstance.CancelAll()
         {
             Parent?.DismissAll();
         }

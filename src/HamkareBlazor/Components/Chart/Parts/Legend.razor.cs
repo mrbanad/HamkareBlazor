@@ -2,18 +2,18 @@
 using Microsoft.AspNetCore.Components;
 
 #nullable enable
-namespace MudBlazor.Charts
+namespace HamkareBlazor.Charts
 {
     /// <summary>
-    /// Represents a set of text labels which describe data values in a <see cref="MudChart{T}"/>.
+    /// Represents a set of text labels which describe data values in a <see cref="HamkareChart{T}"/>.
     /// </summary>
-    public partial class Legend<T> : MudChartBase<T, IChartOptions> where T : struct, INumber<T>, IMinMaxValue<T>, IFormattable
+    public partial class Legend<T> : HamkareChartBase<T, IChartOptions> where T : struct, INumber<T>, IMinMaxValue<T>, IFormattable
     {
         /// <summary>
         /// The chart, if any, containing this component.
         /// </summary>
         [CascadingParameter]
-        public MudChart<T>? ChartContainer { get; set; }
+        public HamkareChart<T>? ChartContainer { get; set; }
 
         /// <summary>
         /// The data labels for this legend.

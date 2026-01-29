@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using MudBlazor.State;
-using MudBlazor.Utilities;
+using HamkareBlazor.State;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
 
@@ -11,37 +11,37 @@ namespace MudBlazor
     /// A component which can be expanded to show more content or collapsed to show only its header.
     /// </summary>
     /// <remarks>
-    /// This component is always inside a <see cref="MudExpansionPanels"/> component.
+    /// This component is always inside a <see cref="HamkareExpansionPanels"/> component.
     /// </remarks>
-    /// <seealso cref="MudExpansionPanels"/>
-    /// <seealso cref="MudCollapse"/>
-    public partial class MudExpansionPanel : MudComponentBase, IDisposable
+    /// <seealso cref="HamkareExpansionPanels"/>
+    /// <seealso cref="HamkareCollapse"/>
+    public partial class HamkareExpansionPanel : HamkareComponentBase, IDisposable
     {
         internal readonly ParameterState<bool> _expandedState;
 
         [CascadingParameter]
-        private MudExpansionPanels? Parent { get; set; }
+        private HamkareExpansionPanels? Parent { get; set; }
 
         protected string Classname =>
-            new CssBuilder("mud-expand-panel")
-                .AddClass("mud-panel-expanded", _expandedState.Value)
-                .AddClass("mud-panel-next-expanded", NextPanelExpanded)
-                .AddClass("mud-disabled", Disabled)
-                .AddClass($"mud-elevation-{Parent?.Elevation.ToString()}")
-                .AddClass($"mud-expand-panel-border", Parent?.Outlined == true)
+            new CssBuilder("hamkare-expand-panel")
+                .AddClass("hamkare-panel-expanded", _expandedState.Value)
+                .AddClass("hamkare-panel-next-expanded", NextPanelExpanded)
+                .AddClass("hamkare-disabled", Disabled)
+                .AddClass($"hamkare-elevation-{Parent?.Elevation.ToString()}")
+                .AddClass($"hamkare-expand-panel-border", Parent?.Outlined == true)
                 .AddClass(Class)
                 .Build();
 
         protected string HeaderClassname =>
-            new CssBuilder("mud-expand-panel-header")
-                .AddClass("mud-expand-panel-header-gutters", Gutters && Parent?.Gutters != false)
+            new CssBuilder("hamkare-expand-panel-header")
+                .AddClass("hamkare-expand-panel-header-gutters", Gutters && Parent?.Gutters != false)
                 .AddClass(HeaderClass)
                 .Build();
 
         protected string PanelContentClassname =>
-            new CssBuilder("mud-expand-panel-content")
-                .AddClass("mud-expand-panel-gutters", Gutters && Parent?.Gutters != false)
-                .AddClass("mud-expand-panel-dense", Dense || Parent?.Dense == true)
+            new CssBuilder("hamkare-expand-panel-content")
+                .AddClass("hamkare-expand-panel-gutters", Gutters && Parent?.Gutters != false)
+                .AddClass("hamkare-expand-panel-dense", Dense || Parent?.Dense == true)
                 .Build();
 
         /// <summary>
@@ -169,7 +169,7 @@ namespace MudBlazor
         /// <summary>
         /// Creates a new instance.
         /// </summary>
-        public MudExpansionPanel()
+        public HamkareExpansionPanel()
         {
             using var registerScope = CreateRegisterScope();
             _expandedState = registerScope.RegisterParameter<bool>(nameof(Expanded))

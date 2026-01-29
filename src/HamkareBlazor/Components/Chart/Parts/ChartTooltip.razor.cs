@@ -4,7 +4,7 @@ using Microsoft.JSInterop;
 
 #nullable enable
 
-namespace MudBlazor.Charts;
+namespace HamkareBlazor.Charts;
 
 public partial class ChartTooltip : ComponentBase
 {
@@ -141,7 +141,7 @@ public partial class ChartTooltip : ComponentBase
         _previousSubtitle = Subtitle;
         _previousFontSize = FontSize;
 
-        var textBBox = await JsRuntime.InvokeAsync<BBox>("mudGetSvgBBox", _text);
+        var textBBox = await JsRuntime.InvokeAsync<BBox>("hamkareGetSvgBBox", _text);
         var textWidth = textBBox?.Width ?? 0;
         var textHeight = textBBox?.Height ?? 0;
 

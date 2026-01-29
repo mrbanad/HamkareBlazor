@@ -1,33 +1,33 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using Microsoft.AspNetCore.Components;
-using MudBlazor.Utilities;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 #nullable enable
 
 /// <summary>
-/// A portion of a <see cref="MudGrid"/>.
+/// A portion of a <see cref="HamkareGrid"/>.
 /// </summary>
-/// <seealso cref="MudGrid"/>
-public partial class MudItem : MudComponentBase
+/// <seealso cref="HamkareGrid"/>
+public partial class HamkareItem : HamkareComponentBase
 {
     protected string Classname =>
-        new CssBuilder("mud-grid-item")
-            .AddClass($"mud-grid-item-xs-{xs}", xs != 0)
-            .AddClass($"mud-grid-item-sm-{sm}", sm != 0)
-            .AddClass($"mud-grid-item-md-{md}", md != 0)
-            .AddClass($"mud-grid-item-lg-{lg}", lg != 0)
-            .AddClass($"mud-grid-item-xl-{xl}", xl != 0)
-            .AddClass($"mud-grid-item-xxl-{xxl}", xxl != 0)
+        new CssBuilder("hamkare-grid-item")
+            .AddClass($"hamkare-grid-item-xs-{xs}", xs != 0)
+            .AddClass($"hamkare-grid-item-sm-{sm}", sm != 0)
+            .AddClass($"hamkare-grid-item-md-{md}", md != 0)
+            .AddClass($"hamkare-grid-item-lg-{lg}", lg != 0)
+            .AddClass($"hamkare-grid-item-xl-{xl}", xl != 0)
+            .AddClass($"hamkare-grid-item-xxl-{xxl}", xxl != 0)
             .AddClass(Class)
             .Build();
 
     [CascadingParameter]
-    private MudGrid? Parent { get; set; }
+    private HamkareGrid? Parent { get; set; }
 
     /// <summary>
     /// Sets the number of columns to occupy at the 'extra small' breakpoint.

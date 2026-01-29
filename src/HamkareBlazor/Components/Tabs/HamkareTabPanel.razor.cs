@@ -1,19 +1,19 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using MudBlazor.Utilities;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 #nullable enable
 
 /// <summary>
-/// A tab as part of a <see cref="MudTabs"/> or <see cref="MudDynamicTabs"/> component.
+/// A tab as part of a <see cref="HamkareTabs"/> or <see cref="HamkareDynamicTabs"/> component.
 /// </summary>
-public partial class MudTabPanel : MudComponentBase
+public partial class HamkareTabPanel : HamkareComponentBase
 {
     private bool _disposed;
 
@@ -24,19 +24,19 @@ public partial class MudTabPanel : MudComponentBase
             .Build();
 
     internal string Classname =>
-        new CssBuilder("mud-tab-panel")
-            .AddClass("mud-tab-panel-hidden", !Visible)
+        new CssBuilder("hamkare-tab-panel")
+            .AddClass("hamkare-tab-panel-hidden", !Visible)
             .AddClass(Class)
             .Build();
 
     internal string PanelClassname =>
-        new CssBuilder("mud-tab-panel")
-            .AddClass("mud-tab-panel-hidden", !Visible)
+        new CssBuilder("hamkare-tab-panel")
+            .AddClass("hamkare-tab-panel-hidden", !Visible)
             .AddClass(PanelClass)
             .Build();
 
     [CascadingParameter]
-    private MudTabs? Parent { get; set; }
+    private HamkareTabs? Parent { get; set; }
 
     /// <summary>
     /// The reference to the underlying panel element.
@@ -67,7 +67,7 @@ public partial class MudTabPanel : MudComponentBase
     /// The color of this tab's icon.
     /// </summary>
     /// <remarks>
-    /// Defaults to <see cref="Color.Default" />. When set, overrides the <see cref="MudTabs.IconColor" /> property.
+    /// Defaults to <see cref="Color.Default" />. When set, overrides the <see cref="HamkareTabs.IconColor" /> property.
     /// </remarks>
     [Parameter]
     [Category(CategoryTypes.Tabs.Behavior)]
@@ -97,7 +97,7 @@ public partial class MudTabPanel : MudComponentBase
     /// For dynamic tabs, shows a "Close" icon for this tab.
     /// </summary>
     /// <remarks>
-    /// Defaults to <c>true</c>. Only applies within a <see cref="MudDynamicTabs"/> component.
+    /// Defaults to <c>true</c>. Only applies within a <see cref="HamkareDynamicTabs"/> component.
     /// </remarks>
     [Parameter]
     [Category(CategoryTypes.Tabs.Behavior)]
@@ -145,8 +145,8 @@ public partial class MudTabPanel : MudComponentBase
     /// </summary>
     /// <remarks>
     /// Defaults to <c>null</c>. Should be unique across tabs.<br />
-    /// Useful for activating tabs manually via the <c>ActivatePanel</c> method of the <see cref="MudTabs"/> and 
-    /// <see cref="MudDynamicTabs"/> components.
+    /// Useful for activating tabs manually via the <c>ActivatePanel</c> method of the <see cref="HamkareTabs"/> and 
+    /// <see cref="HamkareDynamicTabs"/> components.
     /// </remarks>
     [Parameter]
     [Category(CategoryTypes.Tabs.Behavior)]
@@ -196,7 +196,7 @@ public partial class MudTabPanel : MudComponentBase
     /// </summary>
     /// <remarks>
     /// Defaults to <c>null</c>. Typically used to wrap the entire tab content in other content, such 
-    /// as a <see cref="MudTooltip"/>, which wraps the content they refer to.
+    /// as a <see cref="HamkareTooltip"/>, which wraps the content they refer to.
     /// </remarks>
     [Parameter]
     [Category(CategoryTypes.Tabs.Behavior)]
@@ -213,7 +213,7 @@ public partial class MudTabPanel : MudComponentBase
     public string? ToolTip { get; set; }
 
     /// <summary>
-    /// Value to use when ordering tabs lexicographically, in place of <see cref="MudTabPanel.Text" />.
+    /// Value to use when ordering tabs lexicographically, in place of <see cref="HamkareTabPanel.Text" />.
     /// </summary>
     /// <remarks>
     /// Defaults to <c>null</c>.

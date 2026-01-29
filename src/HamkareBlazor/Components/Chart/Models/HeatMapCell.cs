@@ -1,12 +1,12 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Numerics;
 using Microsoft.AspNetCore.Components;
-using MudBlazor.Utilities;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor.Charts
+namespace HamkareBlazor.Charts
 {
 #nullable enable
     /// <summary>
@@ -33,7 +33,7 @@ namespace MudBlazor.Charts
         /// <summary>
         /// The color of the cell. If not set, the color will be determined based on the value and the chart's color palette.
         /// </summary>
-        public MudColor? MudColor { get; set; }
+        public HamkareColor? HamkareColor { get; set; }
 
         /// <summary>
         /// The width of the cell in pixels. If not set, a default width will be used.

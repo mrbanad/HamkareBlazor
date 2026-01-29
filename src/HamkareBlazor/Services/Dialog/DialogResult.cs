@@ -1,16 +1,16 @@
 ﻿// Copyright (c) 2020 Jonny Larsson
 // License: MIT
-// See https://github.com/MudBlazor/MudBlazor
+// See https://github.com/HamkareBlazor/HamkareBlazor
 // Modified version of Blazored Modal
 // Copyright (c) 2019 Blazored
 // License: MIT
 // See https://github.com/Blazored
 
 #nullable enable
-namespace MudBlazor
+namespace HamkareBlazor
 {
     /// <summary>
-    /// The result of a user's interaction with a <see cref="MudDialog"/>.
+    /// The result of a user's interaction with a <see cref="HamkareDialog"/>.
     /// </summary>
     public class DialogResult
     {

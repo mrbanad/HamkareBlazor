@@ -1,8 +1,8 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-class MudWindow {
+class HamkareWindow {
 
     copyToClipboard (text) {
         navigator.clipboard.writeText(text);
@@ -32,4 +32,4 @@ class MudWindow {
     }
 }
 
-window.mudWindow = new MudWindow();
+window.hamkareWindow = new HamkareWindow();

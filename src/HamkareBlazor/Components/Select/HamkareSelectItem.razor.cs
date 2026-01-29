@@ -1,19 +1,19 @@
 ﻿using Microsoft.AspNetCore.Components;
-using MudBlazor.Extensions;
-using MudBlazor.Utilities;
+using HamkareBlazor.Extensions;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
     /// <summary>
-    /// A selectable option displayed within a <see cref="MudSelect{T}"/> component.
+    /// A selectable option displayed within a <see cref="HamkareSelect{T}"/> component.
     /// </summary>
-    /// <typeparam name="T">The type of value linked to this item.  Must be the same type as the parent <see cref="MudSelect{T}"/>.</typeparam>
-    /// <seealso cref="MudSelect{T}"/>
-    public partial class MudSelectItem<T> : MudComponentBase, IDisposable
+    /// <typeparam name="T">The type of value linked to this item.  Must be the same type as the parent <see cref="HamkareSelect{T}"/>.</typeparam>
+    /// <seealso cref="HamkareSelect{T}"/>
+    public partial class HamkareSelectItem<T> : HamkareComponentBase, IDisposable
     {
-        private IMudSelect? _parent;
-        private IMudShadowSelect? _shadowParent;
+        private IHamkareSelect? _parent;
+        private IHamkareShadowSelect? _shadowParent;
 
         private string GetCssClasses() => new CssBuilder()
             .AddClass(Class)
@@ -22,10 +22,10 @@ namespace MudBlazor
         internal string ItemId { get; } = Identifier.Create();
 
         /// <summary>
-        /// The <see cref="MudSelect{T}"/> hosting this item.
+        /// The <see cref="HamkareSelect{T}"/> hosting this item.
         /// </summary>
         [CascadingParameter]
-        internal IMudSelect? IMudSelect
+        internal IHamkareSelect? IHamkareSelect
         {
             get => _parent;
             set
@@ -34,13 +34,13 @@ namespace MudBlazor
                 if (_parent == null)
                     return;
                 _parent.CheckGenericTypeMatch(this);
-                if (MudSelect == null)
+                if (HamkareSelect == null)
                     return;
-                var selected = MudSelect.Add(this);
+                var selected = HamkareSelect.Add(this);
                 if (_parent.MultiSelection)
                 {
-                    MudSelect.SelectionChangedFromOutside += OnUpdateSelectionStateFromOutside;
-                    InvokeAsync(() => OnUpdateSelectionStateFromOutside(MudSelect.GetState(x => x.SelectedValues)));
+                    HamkareSelect.SelectionChangedFromOutside += OnUpdateSelectionStateFromOutside;
+                    InvokeAsync(() => OnUpdateSelectionStateFromOutside(HamkareSelect.GetState(x => x.SelectedValues)));
                 }
                 else
                 {
@@ -50,13 +50,13 @@ namespace MudBlazor
         }
 
         [CascadingParameter]
-        internal IMudShadowSelect? IMudShadowSelect
+        internal IHamkareShadowSelect? IHamkareShadowSelect
         {
             get => _shadowParent;
             set
             {
                 _shadowParent = value;
-                ((MudSelect<T>?)_shadowParent)?.RegisterShadowItem(this);
+                ((HamkareSelect<T>?)_shadowParent)?.RegisterShadowItem(this);
             }
         }
 
@@ -67,7 +67,7 @@ namespace MudBlazor
         [CascadingParameter(Name = "HideContent")]
         internal bool HideContent { get; set; }
 
-        internal MudSelect<T>? MudSelect => (MudSelect<T>?)IMudSelect;
+        internal HamkareSelect<T>? HamkareSelect => (HamkareSelect<T>?)IHamkareSelect;
 
         private void OnUpdateSelectionStateFromOutside(IEnumerable<T?>? selection)
         {
@@ -104,9 +104,9 @@ namespace MudBlazor
         public RenderFragment? ChildContent { get; set; }
 
         /// <summary>
-        /// Whether multi-selection is enabled in the parent <see cref="MudSelect{T}"/>.
+        /// Whether multi-selection is enabled in the parent <see cref="HamkareSelect{T}"/>.
         /// </summary>
-        protected bool MultiSelection => MudSelect is { MultiSelection: true };
+        protected bool MultiSelection => HamkareSelect is { MultiSelection: true };
 
         /// <summary>
         /// Whether this item is selected.
@@ -137,7 +137,7 @@ namespace MudBlazor
             get
             {
                 // Use the parent's ConvertValueToString which delegates to ConvertSet (handles ToStringFunc)
-                return MudSelect?.ConvertValueToString(Value) ?? $"{Value}";
+                return HamkareSelect?.ConvertValueToString(Value) ?? $"{Value}";
             }
         }
 
@@ -148,8 +148,8 @@ namespace MudBlazor
                 Selected = !Selected;
             }
 
-            if (MudSelect != null)
-                await MudSelect.SelectOption(Value);
+            if (HamkareSelect != null)
+                await HamkareSelect.SelectOption(Value);
 
             await InvokeAsync(StateHasChanged);
         }
@@ -161,8 +161,8 @@ namespace MudBlazor
         {
             try
             {
-                MudSelect?.Remove(this);
-                ((MudSelect<T>?)_shadowParent)?.UnregisterShadowItem(this);
+                HamkareSelect?.Remove(this);
+                ((HamkareSelect<T>?)_shadowParent)?.UnregisterShadowItem(this);
             }
             catch (Exception)
             {

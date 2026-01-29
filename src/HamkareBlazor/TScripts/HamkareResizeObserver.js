@@ -1,8 +1,8 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-class MudResizeObserverFactory {
+class HamkareResizeObserverFactory {
     constructor() {
         this._maps = {};
     }
@@ -10,7 +10,7 @@ class MudResizeObserverFactory {
     connect(id, dotNetRef, elements, elementIds, options) {
         const existingEntry = this._maps[id];
         if (!existingEntry) {
-            const observer = new MudResizeObserver(dotNetRef, options);
+            const observer = new HamkareResizeObserver(dotNetRef, options);
             this._maps[id] = observer;
         }
 
@@ -39,7 +39,7 @@ class MudResizeObserverFactory {
     }
 }
 
-class MudResizeObserver {
+class HamkareResizeObserver {
 
     constructor(dotNetRef, options) {
         this.logger = options.enableLogging ? console.log : () => { };
@@ -53,11 +53,11 @@ class MudResizeObserver {
         const observervedElements = [];
         this._observervedElements = observervedElements;
 
-        this.logger('[MudBlazor | ResizeObserver] Observer initialized');
+        this.logger('[HamkareBlazor | ResizeObserver] Observer initialized');
 
         this._resizeObserver = new ResizeObserver(entries => {
             const changes = [];
-            this.logger('[MudBlazor | ResizeObserver] changes detected');
+            this.logger('[HamkareBlazor | ResizeObserver] changes detected');
             for (const entry of entries) {
                 const target = entry.target;
                 const affectedObservedElement = observervedElements.find((x) => x.element == target);
@@ -87,16 +87,16 @@ class MudResizeObserver {
 
     resizeHandler(changes) {
         try {
-            this.logger("[MudBlazor | ResizeObserver] OnSizeChanged handler invoked");
+            this.logger("[HamkareBlazor | ResizeObserver] OnSizeChanged handler invoked");
             this._dotNetRef.invokeMethodAsync("OnSizeChanged", changes);
         } catch (error) {
-            this.logger("[MudBlazor | ResizeObserver] Error in OnSizeChanged handler:", { error });
+            this.logger("[HamkareBlazor | ResizeObserver] Error in OnSizeChanged handler:", { error });
         }
     }
 
     connect(elements, ids) {
         const result = [];
-        this.logger('[MudBlazor | ResizeObserver] Start observing elements...');
+        this.logger('[HamkareBlazor | ResizeObserver] Start observing elements...');
 
         for (let i = 0; i < elements.length; i++) {
             const newEntry = {
@@ -105,7 +105,7 @@ class MudResizeObserver {
                 isInitialized: false,
             };
 
-            this.logger("[MudBlazor | ResizeObserver] Start observing element:", { newEntry });
+            this.logger("[HamkareBlazor | ResizeObserver] Start observing element:", { newEntry });
 
             result.push(elements[i].getBoundingClientRect());
 
@@ -117,14 +117,14 @@ class MudResizeObserver {
     }
 
     disconnect(elementId) {
-        this.logger('[MudBlazor | ResizeObserver] Try to unobserve element with id', { elementId });
+        this.logger('[HamkareBlazor | ResizeObserver] Try to unobserve element with id', { elementId });
 
         const affectedObservedElement = this._observervedElements.find((x) => x.id == elementId);
         if (affectedObservedElement) {
 
             const element = affectedObservedElement.element;
             this._resizeObserver.unobserve(element);
-            this.logger('[MudBlazor | ResizeObserver] Element found. Ubobserving size changes of element', { element });
+            this.logger('[HamkareBlazor | ResizeObserver] Element found. Ubobserving size changes of element', { element });
 
             const index = this._observervedElements.indexOf(affectedObservedElement);
             this._observervedElements.splice(index, 1);
@@ -132,7 +132,7 @@ class MudResizeObserver {
     }
 
     cancelListener() {
-        this.logger('[MudBlazor | ResizeObserver] Closing ResizeObserver. Detaching all observed elements');
+        this.logger('[HamkareBlazor | ResizeObserver] Closing ResizeObserver. Detaching all observed elements');
 
         this._resizeObserver.disconnect();
         this._dotNetRef = undefined;
@@ -140,4 +140,4 @@ class MudResizeObserver {
 }
 
 
-window.mudResizeObserver = new MudResizeObserverFactory();
+window.hamkareResizeObserver = new HamkareResizeObserverFactory();

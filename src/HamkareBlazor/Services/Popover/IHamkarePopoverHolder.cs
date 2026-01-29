@@ -1,16 +1,16 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using Microsoft.AspNetCore.Components;
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 #nullable enable
 /// <summary>
-/// This interface serves as a container for the values of a <see cref="IPopover"/> and is used by the <see cref="MudPopoverProvider"/> to render the popover.
+/// This interface serves as a container for the values of a <see cref="IPopover"/> and is used by the <see cref="HamkarePopoverProvider"/> to render the popover.
 /// </summary>
-public interface IMudPopoverHolder
+public interface IHamkarePopoverHolder
 {
     /// <summary>
     /// Gets the unique identifier of the popover.
@@ -67,10 +67,10 @@ public interface IMudPopoverHolder
     Dictionary<string, object?> UserAttributes { get; }
 
     /// <summary>
-    /// Gets or sets the element reference for the <see cref="MudRender"/>.
+    /// Gets or sets the element reference for the <see cref="HamkareRender"/>.
     /// It's used to re-render the component individually.
     /// </summary>
-    MudRender? ElementReference { get; set; }
+    HamkareRender? ElementReference { get; set; }
 
     /// <summary>
     /// Content of popover.

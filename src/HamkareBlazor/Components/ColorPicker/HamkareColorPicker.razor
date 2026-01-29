@@ -1,8 +1,8 @@
-﻿@namespace MudBlazor
-@using MudBlazor.Resources
-@using MudBlazor.Utilities
-@inherits MudPicker<MudColor>
-@inject InternalMudLocalizer Localizer
+﻿@namespace HamkareBlazor
+@using HamkareBlazor.Resources
+@using HamkareBlazor.Utilities
+@inherits HamkarePicker<HamkareColor>
+@inject InternalHamkareLocalizer Localizer
 
 @Render
 
@@ -10,65 +10,65 @@
 
     protected override RenderFragment PickerContent =>
     @<CascadingValue Value="@this" IsFixed="true">
-        <MudPickerToolbar ShowToolbar="@ShowToolbar" Class="mud-picker-color-toolbar">
+        <HamkarePickerToolbar ShowToolbar="@ShowToolbar" Class="hamkare-picker-color-toolbar">
             @if (PickerVariant != PickerVariant.Static)
             {
-                <MudIconButton Class="pa-1 mud-close-picker-button"
+                <HamkareIconButton Class="pa-1 hamkare-close-picker-button"
                                Size="Size.Small"
                                Color="Color.Inherit"
                                Icon="@CloseIcon"
                                OnClick="@GetEventCallback()"
-                               aria-label="@Localizer[LanguageResource.MudColorPicker_Close]" />
+                               aria-label="@Localizer[LanguageResource.HamkareColorPicker_Close]" />
             }
-            <MudSpacer />
+            <HamkareSpacer />
 
-        <MudTooltip Text="@((ShowTooltips ? Localizer[LanguageResource.MudColorPicker_SpectrumView] : string.Empty))">
-            <MudIconButton Class="pa-1"
+        <HamkareTooltip Text="@((ShowTooltips ? Localizer[LanguageResource.HamkareColorPicker_SpectrumView] : string.Empty))">
+            <HamkareIconButton Class="pa-1"
                            Size="Size.Small"
                            Color="GetButtonColor(ColorPickerView.Spectrum)"
                            Icon="@SpectrumIcon"
                            OnClick="() => ChangeViewAsync(ColorPickerView.Spectrum)"
-                           aria-label="@Localizer[LanguageResource.MudColorPicker_SpectrumView]" />
-        </MudTooltip>
+                           aria-label="@Localizer[LanguageResource.HamkareColorPicker_SpectrumView]" />
+        </HamkareTooltip>
 
-        <MudTooltip Text="@((ShowTooltips ? Localizer[LanguageResource.MudColorPicker_GridView] : string.Empty))">
-            <MudIconButton Class="pa-1 mx-1"
+        <HamkareTooltip Text="@((ShowTooltips ? Localizer[LanguageResource.HamkareColorPicker_GridView] : string.Empty))">
+            <HamkareIconButton Class="pa-1 mx-1"
                            Size="Size.Small"
                            Color="GetButtonColor(ColorPickerView.Grid)"
                            Icon="@GridIcon"
                            OnClick="() => ChangeViewAsync(ColorPickerView.Grid)"
-                           aria-label="@Localizer[LanguageResource.MudColorPicker_GridView]" />
-        </MudTooltip>
+                           aria-label="@Localizer[LanguageResource.HamkareColorPicker_GridView]" />
+        </HamkareTooltip>
 
-        <MudTooltip Text="@((ShowTooltips ? Localizer[LanguageResource.MudColorPicker_PaletteView] : string.Empty))">
-            <MudIconButton Class="pa-1"
+        <HamkareTooltip Text="@((ShowTooltips ? Localizer[LanguageResource.HamkareColorPicker_PaletteView] : string.Empty))">
+            <HamkareIconButton Class="pa-1"
                            Size="Size.Small"
                            Color="GetButtonColor(ColorPickerView.Palette)"
                            Icon="@PaletteIcon"
                            OnClick="() => ChangeViewAsync(ColorPickerView.Palette)"
-                           aria-label="@Localizer[LanguageResource.MudColorPicker_PaletteView]" />
-        </MudTooltip>
-        </MudPickerToolbar>
-        <MudPickerContent Class="mud-picker-color-content">
+                           aria-label="@Localizer[LanguageResource.HamkareColorPicker_PaletteView]" />
+        </HamkareTooltip>
+        </HamkarePickerToolbar>
+        <HamkarePickerContent Class="hamkare-picker-color-content">
             @if (ShowColorField)
             {
-                <div class="mud-picker-color-picker">
+                <div class="hamkare-picker-color-picker">
                     @if (_colorPickerViewState.Value == ColorPickerView.Spectrum)
                     {
-                        <div class="mud-picker-color-overlay" style="@($"background-color: {_baseColor?.ToString(MudColorOutputFormats.RGB)}")">
-                            <div class="mud-picker-color-overlay mud-picker-color-overlay-white">
-                                <div class="mud-picker-color-overlay mud-picker-color-overlay-black">
-                                    <div class="mud-picker-color-overlay"
+                        <div class="hamkare-picker-color-overlay" style="@($"background-color: {_baseColor?.ToString(HamkareColorOutputFormats.RGB)}")">
+                            <div class="hamkare-picker-color-overlay hamkare-picker-color-overlay-white">
+                                <div class="hamkare-picker-color-overlay hamkare-picker-color-overlay-black">
+                                    <div class="hamkare-picker-color-overlay"
                                          id="@_id"
                                          @onpointerdown="OnColorOverlayClick"
                                          @onpointerup="OnColorOverlayClick"
                                          @onpointermove="OnPointerMoveAsync">
-                                        <svg class="mud-picker-color-selector"
+                                        <svg class="hamkare-picker-color-selector"
                                              height="26"
                                              width="26"
                                              style="transform: @GetSelectorLocation()">
                                             <defs>
-                                                <filter id="mud-picker-color-selector-shadow" x="-50%" y="-50%" width="200%" height="200%">
+                                                <filter id="hamkare-picker-color-selector-shadow" x="-50%" y="-50%" width="200%" height="200%">
                                                     <feGaussianBlur in="SourceAlpha" stdDeviation="1" />
                                                     <feOffset dx="0" dy="5" result="offsetblur" />
                                                     <feOffset dx="0" dy="-5" result="offsetblur" />
@@ -78,7 +78,7 @@
                                                     </feMerge>
                                                 </filter>
                                             </defs>
-                                            <circle r="10" cx="13" cy="13" stroke="white" stroke-width="1" fill="transparent" style="filter: url(#mud-picker-color-selector-shadow)" />
+                                            <circle r="10" cx="13" cy="13" stroke="white" stroke-width="1" fill="transparent" style="filter: url(#hamkare-picker-color-selector-shadow)" />
                                             <circle r="11" cx="13" cy="13" stroke="white" stroke-width="1.5" fill="transparent" />
                                         </svg>
                                     </div>
@@ -88,13 +88,13 @@
                     }
                     @if (_colorPickerViewState.Value is ColorPickerView.Grid or ColorPickerView.GridCompact)
                     {
-                        <div class="mud-picker-color-grid">
+                        <div class="hamkare-picker-color-grid">
                             @foreach (var item in _gridList)
                             {
                                 <div class="@GetColorDotClass(item)"
-                                     style="@($"background: {item.ToString(MudColorOutputFormats.RGBA)};")"
+                                     style="@($"background: {item.ToString(HamkareColorOutputFormats.RGBA)};")"
                                      @onclick="@GetSelectPaletteColorCallback(item)"
-                                     aria-label="@item.ToString(MudColorOutputFormats.HexA)"></div>
+                                     aria-label="@item.ToString(HamkareColorOutputFormats.HexA)"></div>
                             }
                         </div>
                     }
@@ -104,24 +104,24 @@
             {
                 @if (ShowSliders || ShowInputs || ShowPreview)
                 {
-                    <div class="mud-picker-color-controls">
+                    <div class="hamkare-picker-color-controls">
                         @if (ShowSliders || ShowPreview)
                         {
-                            <div class="mud-picker-color-controls-row">
+                            <div class="hamkare-picker-color-controls-row">
                                 @if (ShowPreview)
                                 {
-                                    <div class="mud-picker-color-dot mud-picker-color-dot-current mud-ripple"
+                                    <div class="hamkare-picker-color-dot hamkare-picker-color-dot-current hamkare-ripple"
                                          @onclick="ToggleCollection"
-                                         aria-label="@(_collectionOpen ? @Localizer[LanguageResource.MudColorPicker_HideSwatches] : @Localizer[LanguageResource.MudColorPicker_ShowSwatches])">
-                                        <div class="mud-picker-color-fill" style="@($"background: {_valueState.Value?.ToString(MudColorOutputFormats.RGBA)};")"></div>
+                                         aria-label="@(_collectionOpen ? @Localizer[LanguageResource.HamkareColorPicker_HideSwatches] : @Localizer[LanguageResource.HamkareColorPicker_ShowSwatches])">
+                                        <div class="hamkare-picker-color-fill" style="@($"background: {_valueState.Value?.ToString(HamkareColorOutputFormats.RGBA)};")"></div>
                                     </div>
                                 }
                                 @if (ShowSliders && !_collectionOpen)
                                 {
-                                    <div class="mud-picker-color-sliders">
+                                    <div class="hamkare-picker-color-sliders">
                                         @if (_colorPickerViewState.Value != ColorPickerView.Grid)
                                         {
-                                            <MudSlider Class="mud-picker-color-slider hue"
+                                            <HamkareSlider Class="hamkare-picker-color-slider hue"
                                                        dir="ltr"
                                                        T="int"
                                                        Value="ReadHueInt"
@@ -129,11 +129,11 @@
                                                        Step="1"
                                                        Min="0"
                                                        Max="360"
-                                                       aria-label="@Localizer[LanguageResource.MudColorPicker_HueSlider]" />
+                                                       aria-label="@Localizer[LanguageResource.HamkareColorPicker_HueSlider]" />
                                         }
                                         @if (_alphaState.Value)
                                         {
-                                            <MudSlider Class="mud-picker-color-slider alpha"
+                                            <HamkareSlider Class="hamkare-picker-color-slider alpha"
                                                        Value="ReadAlpha"
                                                        ValueChanged="@SetAlphaAsync"
                                                        T="int"
@@ -141,19 +141,19 @@
                                                        Max="255"
                                                        Step="1"
                                                        Style="@AlphaSliderStyle"
-                                                       aria-label="@Localizer[LanguageResource.MudColorPicker_AlphaSlider]" />
+                                                       aria-label="@Localizer[LanguageResource.HamkareColorPicker_AlphaSlider]" />
                                         }
                                     </div>
                                 }
                                 @if (_collectionOpen)
                                 {
-                                    <div class="mud-picker-color-collection">
+                                    <div class="hamkare-picker-color-collection">
                                         @foreach (var item in Palette.Take(5))
                                         {
                                             <div class="@GetColorDotClass(item)"
-                                                 style="@($"background: {item.ToString(MudColorOutputFormats.RGBA)};")"
+                                                 style="@($"background: {item.ToString(HamkareColorOutputFormats.RGBA)};")"
                                                  @onclick="@GetSelectPaletteColorCallback(item)"
-                                                 aria-label="@item.ToString(MudColorOutputFormats.HexA)"></div>
+                                                 aria-label="@item.ToString(HamkareColorOutputFormats.HexA)"></div>
                                         }
                                     </div>
                                 }
@@ -161,35 +161,35 @@
                         }
                         @if (ShowInputs)
                         {
-                            <div class="mud-picker-color-controls-row">
-                                <div class="mud-picker-color-inputs">
+                            <div class="hamkare-picker-color-controls-row">
+                                <div class="hamkare-picker-color-inputs">
                                     @switch (ColorPickerMode)
                                     {
                                         case ColorPickerMode.RGB:
-                                            <MudNumericField T="int"
+                                            <HamkareNumericField T="int"
                                                              Value="ReadRed"
                                                              ValueChanged="@SetRedAsync"
-                                                             Class="mud-picker-color-inputfield"
+                                                             Class="hamkare-picker-color-inputfield"
                                                              HelperText="R"
                                                              Min="0"
                                                              Max="255"
                                                              Variant="Variant.Outlined"
                                                              HideSpinButtons="true"
                                                              Required="@Required" />
-                                            <MudNumericField T="int"
+                                            <HamkareNumericField T="int"
                                                              Value="ReadGreen"
                                                              ValueChanged="@SetGreenAsync"
-                                                             Class="mud-picker-color-inputfield"
+                                                             Class="hamkare-picker-color-inputfield"
                                                              HelperText="G"
                                                              Min="0"
                                                              Max="255"
                                                              Variant="Variant.Outlined"
                                                              HideSpinButtons="true"
                                                              Required="@Required" />
-                                            <MudNumericField T="int"
+                                            <HamkareNumericField T="int"
                                                              Value="ReadBlue"
                                                              ValueChanged="@SetBlueAsync"
-                                                             Class="mud-picker-color-inputfield"
+                                                             Class="hamkare-picker-color-inputfield"
                                                              HelperText="B"
                                                              Min="0"
                                                              Max="255"
@@ -198,10 +198,10 @@
                                                              Required="@Required" />
                                             break;
                                         case ColorPickerMode.HSL:
-                                            <MudNumericField T="double"
+                                            <HamkareNumericField T="double"
                                                              Value="ReadHue"
                                                              ValueChanged="@SetHueAsync"
-                                                             Class="mud-picker-color-inputfield"
+                                                             Class="hamkare-picker-color-inputfield"
                                                              HelperText="H"
                                                              Step="1"
                                                              Min="0"
@@ -209,10 +209,10 @@
                                                              Variant="Variant.Outlined"
                                                              HideSpinButtons="true"
                                                              Required="@Required" />
-                                            <MudNumericField T="double"
+                                            <HamkareNumericField T="double"
                                                              Value="@ReadSaturation"
                                                              ValueChanged="@SetSaturationAsync"
-                                                             Class="mud-picker-color-inputfield"
+                                                             Class="hamkare-picker-color-inputfield"
                                                              HelperText="S"
                                                              Step="0.01"
                                                              Min="0"
@@ -220,10 +220,10 @@
                                                              Variant="Variant.Outlined"
                                                              HideSpinButtons="true"
                                                              Required="@Required" />
-                                            <MudNumericField T="double"
+                                            <HamkareNumericField T="double"
                                                              Value="ReadLightness"
                                                              ValueChanged="@SetLightnessAsync"
-                                                             Class="mud-picker-color-inputfield"
+                                                             Class="hamkare-picker-color-inputfield"
                                                              HelperText="L"
                                                              Step="0.01"
                                                              Min="0"
@@ -233,11 +233,11 @@
                                                              Required="@Required" />
                                             break;
                                         case ColorPickerMode.HEX:
-                                            <MudTextField T="string"
+                                            <HamkareTextField T="string"
                                                           @key="@_inputResetKey"
                                                           Value="@GetColorTextValue(_valueState.Value)"
                                                           ValueChanged="SetInputStringAsync"
-                                                          Class="mud-picker-color-inputfield"
+                                                          Class="hamkare-picker-color-inputfield"
                                                           Variant="Variant.Outlined"
                                                           MaxLength="@GetHexColorInputMaxLength()"
                                                           HelperText="HEX"
@@ -247,10 +247,10 @@
 
                                     @if (_alphaState.Value && ColorPickerMode != ColorPickerMode.HEX)
                                     {
-                                        <MudNumericField T="double"
+                                        <HamkareNumericField T="double"
                                                          Value="ReadAlphaPercentage"
                                                          ValueChanged="@SetAlphaAsync"
-                                                         Class="mud-picker-color-inputfield input-field-alpha"
+                                                         Class="hamkare-picker-color-inputfield input-field-alpha"
                                                          HelperText="A"
                                                          Min="0"
                                                          Max="1"
@@ -262,13 +262,13 @@
                                 </div>
                                 @if (ShowModeSwitch)
                                 {
-                                    <div class="mud-picker-control-switch">
-                                        <MudTooltip Text="@((ShowTooltips ? Localizer[LanguageResource.MudColorPicker_ModeSwitch] : string.Empty))">
-                                            <MudIconButton OnClick="ChangeMode"
+                                    <div class="hamkare-picker-control-switch">
+                                        <HamkareTooltip Text="@((ShowTooltips ? Localizer[LanguageResource.HamkareColorPicker_ModeSwitch] : string.Empty))">
+                                            <HamkareIconButton OnClick="ChangeMode"
                                                            Icon="@ImportExportIcon"
                                                            Class="pa-1 me-n1"
-                                                           aria-label="@Localizer[LanguageResource.MudColorPicker_ModeSwitch]" />
-                                        </MudTooltip>
+                                                           aria-label="@Localizer[LanguageResource.HamkareColorPicker_ModeSwitch]" />
+                                        </HamkareTooltip>
                                     </div>
                                 }
                             </div>
@@ -277,19 +277,19 @@
                 }
                 @if (_colorPickerViewState.Value == ColorPickerView.Palette)
                 {
-                    <div class="mud-picker-color-view">
-                        <div class="mud-picker-color-view-collection">
+                    <div class="hamkare-picker-color-view">
+                        <div class="hamkare-picker-color-view-collection">
                             @foreach (var item in Palette)
                             {
                                 <div class="@GetColorDotClass(item)"
-                                     style="@($"background: {item.ToString(MudColorOutputFormats.RGBA)};")"
+                                     style="@($"background: {item.ToString(HamkareColorOutputFormats.RGBA)};")"
                                      @onclick="@GetSelectPaletteColorCallback(item)"
-                                     aria-label="@item.ToString(MudColorOutputFormats.HexA)"></div>
+                                     aria-label="@item.ToString(HamkareColorOutputFormats.HexA)"></div>
                             }
                         </div>
                     </div>
                 }
             }
-        </MudPickerContent>
+        </HamkarePickerContent>
     </CascadingValue>;
 }

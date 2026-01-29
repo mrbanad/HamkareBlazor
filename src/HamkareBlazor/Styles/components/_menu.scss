@@ -1,4 +1,4 @@
-.mud-menu {
+.hamkare-menu {
   display: inline-flex;
   align-self: center;
   position: relative;
@@ -7,7 +7,7 @@
     cursor: pointer;
   }
 
-  & > div.mud-disabled {
+  & > div.hamkare-disabled {
     cursor: default;
 
     & * {
@@ -15,32 +15,32 @@
     }
   }
 
-  & > div.mud-menu-activator {
+  & > div.hamkare-menu-activator {
     display: contents;
     user-select: none;
   }
 }
 
-.mud-menu-button-hidden {
+.hamkare-menu-button-hidden {
   /* this ensures that the menu div doesn't use any space in the layout */
   position: absolute;
 }
 
-.mud-menu-list {
+.hamkare-menu-list {
   padding: 4px 0;
   min-width: 112px;
 
-  > .mud-menu {
+  > .hamkare-menu {
     width: 100%;
     display: inline;
   }
 
-  > .mud-divider {
+  > .hamkare-divider {
     margin: 4px 0;
   }
 }
 
-.mud-menu-item {
+.hamkare-menu-item {
   width: 100%;
   display: flex;
   position: relative;
@@ -51,50 +51,50 @@
   text-decoration: none;
   padding: 8px 12px;
 
-  > .mud-icon-root {
-    color: var(--mud-palette-action-default);
+  > .hamkare-icon-root {
+    color: var(--hamkare-palette-action-default);
   }
 
-  .mud-menu-item-icon {
+  .hamkare-menu-item-icon {
     display: inline-flex;
     flex-shrink: 0;
     margin-inline-end: 12px;
   }
 
-  .mud-menu-item-text {
+  .hamkare-menu-item-text {
     flex: 1 1 auto;
     margin: 4px 0;
   }
 
-  &.mud-menu-item-dense {
+  &.hamkare-menu-item-dense {
     padding: 2px 12px;
   }
 
-  &.mud-disabled {
-    color: var(--mud-palette-action-disabled) !important;
+  &.hamkare-disabled {
+    color: var(--hamkare-palette-action-disabled) !important;
     cursor: default !important;
     pointer-events: none !important;
 
-    .mud-menu-item-icon {
-      color: var(--mud-palette-action-disabled) !important;
+    .hamkare-menu-item-icon {
+      color: var(--hamkare-palette-action-disabled) !important;
     }
   }
 }
 
 // If any menu item has an icon, then give the other ones the same gutters.
-.mud-menu-list:has(.mud-menu-item-icon) .mud-menu-item:not(:has(.mud-menu-item-icon)) .mud-menu-item-text {
+.hamkare-menu-list:has(.hamkare-menu-item-icon) .hamkare-menu-item:not(:has(.hamkare-menu-item-icon)) .hamkare-menu-item-text {
   margin-inline-start: 36px;
 }
 
-.mud-menu-list:has(.mud-menu-submenu-icon) .mud-menu-item:not(:has(.mud-menu-submenu-icon)) .mud-menu-item-text {
+.hamkare-menu-list:has(.hamkare-menu-submenu-icon) .hamkare-menu-item:not(:has(.hamkare-menu-submenu-icon)) .hamkare-menu-item-text {
   margin-inline-end: 36px;
 }
 
-.mud-popover:has(> .mud-menu-list) {
+.hamkare-popover:has(> .hamkare-menu-list) {
   // Prevent menu item hover effects peeking through rounded popovers.
   overflow: hidden;
   // Hide the menu if it doesn't have any content.
-  &:has(> .mud-menu-list:empty) {
+  &:has(> .hamkare-menu-list:empty) {
     visibility: hidden;
   }
 }

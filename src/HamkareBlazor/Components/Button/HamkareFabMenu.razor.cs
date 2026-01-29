@@ -1,32 +1,32 @@
 ﻿#nullable enable
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using MudBlazor.State;
-using MudBlazor.Utilities;
+using HamkareBlazor.State;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 /// <summary>
-/// A menu appearing from a <see cref="MudFab"/> that displays a list of items.
+/// A menu appearing from a <see cref="HamkareFab"/> that displays a list of items.
 /// </summary>
-/// <seealso cref="MudFabMenuItem" />
-public partial class MudFabMenu : MudFab
+/// <seealso cref="HamkareFabMenuItem" />
+public partial class HamkareFabMenu : HamkareFab
 {
-    private new string Classname => new CssBuilder("mud-fab-menu-container")
+    private new string Classname => new CssBuilder("hamkare-fab-menu-container")
         .AddClass("fixed", Fixed)
         .AddClass($"align-{AlignItems.ToStringFast(true)}")
         .AddClass(Class)
         .Build();
 
-    private string ClassnameMenu => new CssBuilder("mud-fab-menu")
-        .AddClass("mud-fab-menu-open", _openState.Value)
-        .AddClass("mud-fab-menu-dampen", DampenItemsBackgroundColor)
+    private string ClassnameMenu => new CssBuilder("hamkare-fab-menu")
+        .AddClass("hamkare-fab-menu-open", _openState.Value)
+        .AddClass("hamkare-fab-menu-dampen", DampenItemsBackgroundColor)
         .AddClass($"align-{AlignItems.ToStringFast(true)}")
-        .AddClass($"mud-fab-menu-{Size.ToString().ToLower()}", !string.IsNullOrEmpty(Label))
+        .AddClass($"hamkare-fab-menu-{Size.ToString().ToLower()}", !string.IsNullOrEmpty(Label))
         .AddClass(MenuClass)
         .Build();
 
-    private string ClassnameFab => new CssBuilder("mud-fab-menu-button")
+    private string ClassnameFab => new CssBuilder("hamkare-fab-menu-button")
         .AddClass("open", _openState.Value && string.IsNullOrEmpty(Label))
         .AddClass(ButtonClass)
         .Build();
@@ -67,10 +67,10 @@ public partial class MudFabMenu : MudFab
     public string? MenuStyle { get; set; }
 
     /// <summary>
-    /// The <see cref="MudFabMenuItem" /> components within this menu.
+    /// The <see cref="HamkareFabMenuItem" /> components within this menu.
     /// </summary>
     /// <remarks>
-    /// Note that you can add any component you like as long as it has the <c>mud-fab-menu-item</c> class.
+    /// Note that you can add any component you like as long as it has the <c>hamkare-fab-menu-item</c> class.
     /// </remarks>
     [Parameter, Category(CategoryTypes.Menu.PopupBehavior)]
     public RenderFragment? ChildContent { get; set; }
@@ -145,7 +145,7 @@ public partial class MudFabMenu : MudFab
     [Parameter, Category(CategoryTypes.Menu.Behavior)]
     public bool CloseOnMenuItemClicked { get; set; } = true;
 
-    public MudFabMenu()
+    public HamkareFabMenu()
     {
         using var registerScope = CreateRegisterScope();
         _openState = registerScope.RegisterParameter<bool>(nameof(Open))

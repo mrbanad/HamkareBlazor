@@ -5,12 +5,12 @@ using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Routing;
 using Microsoft.Extensions.Options;
-using MudBlazor.Components.Snackbar;
-using MudBlazor.Components.Snackbar.InternalComponents;
+using HamkareBlazor.Components.Snackbar;
+using HamkareBlazor.Components.Snackbar.InternalComponents;
 
 #nullable enable
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
     /// <summary>
     /// A service for managing snackbars.

@@ -1,5 +1,5 @@
-// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 (function () {
@@ -14,7 +14,7 @@
             return null;
         }
 
-        return event.target.closest('.mud-ripple');
+        return event.target.closest('.hamkare-ripple');
     }
 
     /**
@@ -34,7 +34,7 @@
         const x = event.clientX - rect.left;
         const y = event.clientY - rect.top;
 
-        ripple.className = 'mud-ripple-effect';
+        ripple.className = 'hamkare-ripple-effect';
         ripple.style.width = ripple.style.height = `${size}px`;
         ripple.style.left = `${x - size / 2}px`;
         ripple.style.top = `${y - size / 2}px`;
@@ -45,7 +45,7 @@
         ripple.getBoundingClientRect();
 
         // Start the expansion animation
-        ripple.classList.add('mud-ripple-effect-expanding');
+        ripple.classList.add('hamkare-ripple-effect-expanding');
 
         return ripple;
     }
@@ -65,7 +65,7 @@
 
         // Wait for minimum duration before starting fade out
         setTimeout(function () {
-            ripple.classList.add('mud-ripple-effect-fading');
+            ripple.classList.add('hamkare-ripple-effect-fading');
 
             // Remove the element after fade out animation completes
             setTimeout(function () {
@@ -93,10 +93,10 @@
         const startTime = Date.now();
 
         // Store ripple info on the element for cleanup
-        if (!target._mudRipples) {
-            target._mudRipples = new Map();
+        if (!target._hamkareRipples) {
+            target._hamkareRipples = new Map();
         }
-        target._mudRipples.set(event.pointerId, { ripple: ripple, startTime: startTime });
+        target._hamkareRipples.set(event.pointerId, { ripple: ripple, startTime: startTime });
     }
 
     /**
@@ -105,14 +105,14 @@
      */
     function handlePointerUp(event) {
         const target = getRippleTarget(event);
-        if (!target || !target._mudRipples) {
+        if (!target || !target._hamkareRipples) {
             return;
         }
 
-        const rippleInfo = target._mudRipples.get(event.pointerId);
+        const rippleInfo = target._hamkareRipples.get(event.pointerId);
         if (rippleInfo) {
             removeRipple(rippleInfo.ripple, rippleInfo.startTime);
-            target._mudRipples.delete(event.pointerId);
+            target._hamkareRipples.delete(event.pointerId);
         }
     }
 
@@ -123,15 +123,15 @@
      */
     function handlePointerLeave(event) {
         const target = getRippleTarget(event);
-        if (!target || !target._mudRipples) {
+        if (!target || !target._hamkareRipples) {
             return;
         }
 
         // Remove all active ripples for this element
-        target._mudRipples.forEach(function (rippleInfo) {
+        target._hamkareRipples.forEach(function (rippleInfo) {
             removeRipple(rippleInfo.ripple, rippleInfo.startTime);
         });
-        target._mudRipples.clear();
+        target._hamkareRipples.clear();
     }
 
     // Register event listeners

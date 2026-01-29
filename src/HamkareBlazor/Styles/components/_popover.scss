@@ -1,25 +1,25 @@
-.mud-popover {
+.hamkare-popover {
   outline: 0;
-  z-index: calc(var(--mud-zindex-popover) + 1);
+  z-index: calc(var(--hamkare-zindex-popover) + 1);
   position: absolute;
   opacity: 0;
   top: -9999px;
   left: -9999px;
 
-  &.mud-popover-fixed {
+  &.hamkare-popover-fixed {
     position: fixed;
   }
 
-  &.mud-popover-relative-width {
+  &.hamkare-popover-relative-width {
     width: 100%;
   }
 
-  &.mud-popover-open {
+  &.hamkare-popover-open {
     opacity: 1;
     transition: opacity;
   }
 
-  &:not(.mud-popover-open ) {
+  &:not(.hamkare-popover-open ) {
     pointer-events: none;
     transition-duration: 0ms !important;
     transition-delay: 0ms !important;
@@ -29,44 +29,44 @@
     box-shadow: none !important;
   }
 
-  .mud-list {
+  .hamkare-list {
     max-height: inherit;
     overflow-y: auto;
   }
 }
 
-.mud-popover .mud-popover {
+.hamkare-popover .hamkare-popover {
   z-index: auto; // javascript will handle nested z-indexes
 }
 
-.mud-appbar {
-  .mud-popover-cascading-value {
-    z-index: calc(var(--mud-zindex-appbar) + 2);
+.hamkare-appbar {
+  .hamkare-popover-cascading-value {
+    z-index: calc(var(--hamkare-zindex-appbar) + 2);
   }
 }
 
-.mud-drawer {
-  &:not(.mud-drawer-temporary) {
-    .mud-popover-cascading-value {
-      z-index: calc(var(--mud-zindex-drawer) + 2);
+.hamkare-drawer {
+  &:not(.hamkare-drawer-temporary) {
+    .hamkare-popover-cascading-value {
+      z-index: calc(var(--hamkare-zindex-drawer) + 2);
     }
   }
 
-  &.mud-drawer-temporary, &.mud-drawer-responsive {
-    .mud-popover-cascading-value {
-      z-index: calc(var(--mud-zindex-appbar) + 4);
+  &.hamkare-drawer-temporary, &.hamkare-drawer-responsive {
+    .hamkare-popover-cascading-value {
+      z-index: calc(var(--hamkare-zindex-appbar) + 4);
     }
   }
 }
 
-.mud-dialog {
-  .mud-popover-cascading-value {
-    z-index: calc(var(--mud-zindex-dialog) + 3);
+.hamkare-dialog {
+  .hamkare-popover-cascading-value {
+    z-index: calc(var(--hamkare-zindex-dialog) + 3);
   }
 }
 
-.mud-select {
-  .mud-popover-cascading-value {
-    z-index: calc(var(--mud-zindex-select) + 5);
+.hamkare-select {
+  .hamkare-popover-cascading-value {
+    z-index: calc(var(--hamkare-zindex-select) + 5);
   }
 }

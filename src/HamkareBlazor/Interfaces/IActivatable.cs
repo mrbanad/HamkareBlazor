@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components.Web;
 
-namespace MudBlazor.Interfaces
+namespace HamkareBlazor.Interfaces
 {
 #nullable enable
     public interface IActivatable

@@ -1,56 +1,56 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-class MudJsEventFactory {
+class HamkareJsEventFactory {
     connect(dotNetRef, elementId, options) {
-        //console.log('[MudBlazor | MudJsEventFactory] connect ', { dotNetRef, elementId, options });
+        //console.log('[HamkareBlazor | HamkareJsEventFactory] connect ', { dotNetRef, elementId, options });
         if (!elementId)
-            throw "[MudBlazor | JsEvent] elementId: expected element id!";
+            throw "[HamkareBlazor | JsEvent] elementId: expected element id!";
         const element = document.getElementById(elementId);
         if (!element)
-            throw "[MudBlazor | JsEvent] no element found for id: " + elementId;
-        if (!element.mudJsEvent)
-            element.mudJsEvent = new MudJsEvent(dotNetRef, options);
-        element.mudJsEvent.connect(element);
+            throw "[HamkareBlazor | JsEvent] no element found for id: " + elementId;
+        if (!element.hamkareJsEvent)
+            element.hamkareJsEvent = new HamkareJsEvent(dotNetRef, options);
+        element.hamkareJsEvent.connect(element);
     }
 
     disconnect(elementId) {
         const element = document.getElementById(elementId);
-        if (!element || !element.mudJsEvent)
+        if (!element || !element.hamkareJsEvent)
             return;
-        element.mudJsEvent.disconnect();
+        element.hamkareJsEvent.disconnect();
     }
 
     subscribe(elementId, eventName) {
-        //console.log('[MudBlazor | MudJsEventFactory] subscribe ', { elementId, eventName});
+        //console.log('[HamkareBlazor | HamkareJsEventFactory] subscribe ', { elementId, eventName});
         if (!elementId)
-            throw "[MudBlazor | JsEvent] elementId: expected element id!";
+            throw "[HamkareBlazor | JsEvent] elementId: expected element id!";
         const element = document.getElementById(elementId);
         if (!element)
-            throw "[MudBlazor | JsEvent] no element found for id: " +elementId;
-        if (!element.mudJsEvent)
-            throw "[MudBlazor | JsEvent] please connect before subscribing";
-        element.mudJsEvent.subscribe(eventName);
+            throw "[HamkareBlazor | JsEvent] no element found for id: " +elementId;
+        if (!element.hamkareJsEvent)
+            throw "[HamkareBlazor | JsEvent] please connect before subscribing";
+        element.hamkareJsEvent.subscribe(eventName);
     }
 
     unsubscribe(elementId, eventName) {
         const element = document.getElementById(elementId);
-        if (!element || !element.mudJsEvent)
+        if (!element || !element.hamkareJsEvent)
             return;
-        element.mudJsEvent.unsubscribe(element, eventName);
+        element.hamkareJsEvent.unsubscribe(element, eventName);
     }
 }
-window.mudJsEvent = new MudJsEventFactory();
+window.hamkareJsEvent = new HamkareJsEventFactory();
 
 
-class MudJsEvent {
+class HamkareJsEvent {
 
     constructor(dotNetRef, options) {
         this._dotNetRef = dotNetRef;
         this._options = options || {};
         this.logger = options.enableLogging ? console.log : () => { };
-        this.logger('[MudBlazor | JsEvent] Initialized', { options });
+        this.logger('[HamkareBlazor | JsEvent] Initialized', { options });
         this._subscribedEvents = {};
     }
 
@@ -64,10 +64,10 @@ class MudJsEvent {
             return;
         }
         const targetClass = this._options.targetClass;
-        this.logger('[MudBlazor | JsEvent] Start observing DOM of element for changes to child with class ', { element, targetClass });
+        this.logger('[HamkareBlazor | JsEvent] Start observing DOM of element for changes to child with class ', { element, targetClass });
         this._element = element;
         this._observer = new MutationObserver(this.onDomChanged);
-        this._observer.mudJsEvent = this;
+        this._observer.hamkareJsEvent = this;
         this._observer.observe(this._element, { attributes: false, childList: true, subtree: true });
         this._observedChildren = [];
     }
@@ -75,7 +75,7 @@ class MudJsEvent {
     disconnect() {
         if (!this._observer)
             return;
-        this.logger('[MudBlazor | JsEvent] disconnect mutation observer and event handler ');
+        this.logger('[HamkareBlazor | JsEvent] disconnect mutation observer and event handler ');
         this._observer.disconnect();
         this._observer = null;
         for (const child of this._observedChildren)
@@ -90,7 +90,7 @@ class MudJsEvent {
         }
         const element = this._element;
         const targetClass = this._options.targetClass;
-        //this.logger('[MudBlazor | JsEvent] Subscribe event ' + eventName, { element, targetClass });
+        //this.logger('[HamkareBlazor | JsEvent] Subscribe event ' + eventName, { element, targetClass });
         this._subscribedEvents[eventName]=true;
         for (const child of element.getElementsByClassName(targetClass)) {
             this.attachHandlers(child);
@@ -100,7 +100,7 @@ class MudJsEvent {
     unsubscribe(eventName) {
         if (!this._observer)
             return;
-        this.logger('[MudBlazor | JsEvent] unsubscribe event handler ' + eventName );
+        this.logger('[HamkareBlazor | JsEvent] unsubscribe event handler ' + eventName );
         this._observer.disconnect();
         this._observer = null;
         this._subscribedEvents[eventName] = false;
@@ -110,13 +110,13 @@ class MudJsEvent {
     }
 
     attachHandlers(child) {
-        child.mudJsEvent = this;
-        //this.logger('[MudBlazor | JsEvent] attachHandlers ', this._subscribedEvents, child);
+        child.hamkareJsEvent = this;
+        //this.logger('[HamkareBlazor | JsEvent] attachHandlers ', this._subscribedEvents, child);
         for (const eventName of Object.getOwnPropertyNames(this._subscribedEvents)) {
             if (!this._subscribedEvents[eventName])
                 continue;
             // note: multiple registration of the same event not possible due to the use of the same handler func
-            this.logger('[MudBlazor | JsEvent] attaching event ' + eventName, child);
+            this.logger('[HamkareBlazor | JsEvent] attaching event ' + eventName, child);
             child.addEventListener(eventName, this.eventHandler);
         }
         if(this._observedChildren.indexOf(child) < 0)
@@ -124,12 +124,12 @@ class MudJsEvent {
     }
 
     detachHandler(child, eventName) {
-        this.logger('[MudBlazor | JsEvent] detaching handler ' + eventName, child);
+        this.logger('[HamkareBlazor | JsEvent] detaching handler ' + eventName, child);
         child.removeEventListener(eventName, this.eventHandler);
     }
 
     detachHandlers(child) {
-        this.logger('[MudBlazor | JsEvent] detaching handlers ', child);
+        this.logger('[HamkareBlazor | JsEvent] detaching handlers ', child);
         for (const eventName of Object.getOwnPropertyNames(this._subscribedEvents)) {
             if (!this._subscribedEvents[eventName])
                 continue;
@@ -139,11 +139,11 @@ class MudJsEvent {
     }
 
     onDomChanged(mutationsList, _) {
-        const self = this.mudJsEvent; // func is invoked with this == _observer
-        //self.logger('[MudBlazor | JsEvent] onDomChanged: ', { self });
+        const self = this.hamkareJsEvent; // func is invoked with this == _observer
+        //self.logger('[HamkareBlazor | JsEvent] onDomChanged: ', { self });
         const targetClass = self._options.targetClass;
         for (const mutation of mutationsList) {
-            //self.logger('[MudBlazor | JsEvent] Subtree mutation: ', { mutation });
+            //self.logger('[HamkareBlazor | JsEvent] Subtree mutation: ', { mutation });
             for (const element of mutation.addedNodes) {
                 if (element.classList && element.classList.contains(targetClass)) {
                     if (!self._options.TagName || element.tagName == self._options.TagName)
@@ -160,9 +160,9 @@ class MudJsEvent {
     }
 
     eventHandler(e) {
-        const self = this.mudJsEvent; // func is invoked with this == child
+        const self = this.hamkareJsEvent; // func is invoked with this == child
         const eventName = e.type;
-        self.logger('[MudBlazor | JsEvent] "' + eventName + '"', e);
+        self.logger('[HamkareBlazor | JsEvent] "' + eventName + '"', e);
         // call specific handler
         self["on" + eventName](self, e);
     }
@@ -171,7 +171,7 @@ class MudJsEvent {
         const caretPosition = e.target.selectionStart;
         const invoke = self._subscribedEvents["keyup"];
         if (invoke) {
-            //self.logger('[MudBlazor | JsEvent] caret pos: ' + caretPosition);
+            //self.logger('[HamkareBlazor | JsEvent] caret pos: ' + caretPosition);
             self._dotNetRef.invokeMethodAsync('OnCaretPositionChanged', caretPosition);
         }
     }
@@ -180,7 +180,7 @@ class MudJsEvent {
         const caretPosition = e.target.selectionStart;
         const invoke = self._subscribedEvents["click"];
         if (invoke) {
-            //self.logger('[MudBlazor | JsEvent] caret pos: ' + caretPosition);
+            //self.logger('[HamkareBlazor | JsEvent] caret pos: ' + caretPosition);
             self._dotNetRef.invokeMethodAsync('OnCaretPositionChanged', caretPosition);
         }
     }
@@ -188,7 +188,7 @@ class MudJsEvent {
     //oncopy(self, e) {
     //    const invoke = self._subscribedEvents["copy"];
     //    if (invoke) {
-    //        //self.logger('[MudBlazor | JsEvent] copy (preventing default and stopping propagation)');
+    //        //self.logger('[HamkareBlazor | JsEvent] copy (preventing default and stopping propagation)');
     //        e.preventDefault();
     //        e.stopPropagation();
     //        self._dotNetRef.invokeMethodAsync('OnCopy');
@@ -198,12 +198,12 @@ class MudJsEvent {
     onpaste(self, e) {
         const invoke = self._subscribedEvents["paste"];
         if (invoke) {
-            //self.logger('[MudBlazor | JsEvent] paste (preventing default and stopping propagation)');
+            //self.logger('[HamkareBlazor | JsEvent] paste (preventing default and stopping propagation)');
             e.preventDefault();
             e.stopPropagation();
             const clipboardData = ((e.originalEvent || e).clipboardData || window.clipboardData);
             if (!clipboardData) {
-                self.logger('[MudBlazor | JsEvent] clipboardData is null', e);
+                self.logger('[HamkareBlazor | JsEvent] clipboardData is null', e);
                 return;
             }
             const text = clipboardData.getData('text/plain');
@@ -218,7 +218,7 @@ class MudJsEvent {
             const end = e.target.selectionEnd;
             if (start === end)
                 return; // <-- we have caret position changed for that.
-            //self.logger('[MudBlazor | JsEvent] select ' + start + "-" + end);
+            //self.logger('[HamkareBlazor | JsEvent] select ' + start + "-" + end);
             self._dotNetRef.invokeMethodAsync('OnSelect', start, end);
         }
     }

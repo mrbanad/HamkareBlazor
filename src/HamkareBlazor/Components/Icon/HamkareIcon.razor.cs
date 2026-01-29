@@ -1,9 +1,9 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Components;
-using MudBlazor.Utilities;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
 
@@ -11,17 +11,17 @@ namespace MudBlazor
     /// A picture displayed via an SVG path or font.
     /// </summary>
     /// <remarks>
-    /// You can use the <see cref="Icons"/> class and <see href="https://mudblazor.com/features/icons#icons">Icons Reference</see> for SVG paths, or a <see href="https://fontawesome.com/icons">Font Awesome CSS Class</see>.
+    /// You can use the <see cref="Icons"/> class and <see href="https://hamkareblazor.com/features/icons#icons">Icons Reference</see> for SVG paths, or a <see href="https://fontawesome.com/icons">Font Awesome CSS Class</see>.
     /// </remarks>
-    /// <seealso cref="MudIconButton"/>
-    public partial class MudIcon : MudComponentBase
+    /// <seealso cref="HamkareIconButton"/>
+    public partial class HamkareIcon : HamkareComponentBase
     {
         protected string Classname =>
-            new CssBuilder("mud-icon-root")
-                .AddClass("mud-icon-default", Color == Color.Default && !Disabled)
-                .AddClass("mud-svg-icon", !string.IsNullOrEmpty(Icon) && Icon.Trim().StartsWith("<"))
-                .AddClass($"mud-{Color.ToStringFast(true)}-text", Color != Color.Default && Color != Color.Inherit && !Disabled)
-                .AddClass($"mud-icon-size-{Size.ToStringFast(true)}")
+            new CssBuilder("hamkare-icon-root")
+                .AddClass("hamkare-icon-default", Color == Color.Default && !Disabled)
+                .AddClass("hamkare-svg-icon", !string.IsNullOrEmpty(Icon) && Icon.Trim().StartsWith("<"))
+                .AddClass($"hamkare-{Color.ToStringFast(true)}-text", Color != Color.Default && Color != Color.Inherit && !Disabled)
+                .AddClass($"hamkare-icon-size-{Size.ToStringFast(true)}")
                 .AddClass(Class)
                 .Build();
 
@@ -29,7 +29,7 @@ namespace MudBlazor
         /// The SVG path or Font Awesome font icon to display.
         /// </summary>
         /// <remarks>
-        /// You can use the <see cref="Icons"/> class and <see href="https://mudblazor.com/features/icons#icons">Icons Reference</see> for SVG paths, or a <see href="https://fontawesome.com/icons">Font Awesome CSS Class</see>.
+        /// You can use the <see cref="Icons"/> class and <see href="https://hamkareblazor.com/features/icons#icons">Icons Reference</see> for SVG paths, or a <see href="https://fontawesome.com/icons">Font Awesome CSS Class</see>.
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.Icon.Behavior)]

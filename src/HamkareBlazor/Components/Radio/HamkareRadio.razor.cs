@@ -1,13 +1,13 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using MudBlazor.Services;
-using MudBlazor.Utilities;
+using HamkareBlazor.Services;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
 
@@ -15,36 +15,36 @@ namespace MudBlazor
     /// Allows the user to select a single choice from a group of options. Use radio buttons (not switches) when only one item can be selected from a list.
     /// </summary>
     /// <typeparam name="T">The type of value being selected, often a <c>bool</c>.</typeparam>
-    /// <seealso cref="MudCheckBox{T}" />
-    /// <seealso cref="MudRadioGroup{T}" />
-    /// <seealso cref="MudSwitch{T}"/>
-    public partial class MudRadio<T> : MudBooleanInput<T>
+    /// <seealso cref="HamkareCheckBox{T}" />
+    /// <seealso cref="HamkareRadioGroup{T}" />
+    /// <seealso cref="HamkareSwitch{T}"/>
+    public partial class HamkareRadio<T> : HamkareBooleanInput<T>
     {
-        private IMudRadioGroup? _parent;
+        private IHamkareRadioGroup? _parent;
         private string _elementId = Identifier.Create("radio");
 
-        protected override string Classname => new CssBuilder("mud-input-control-boolean-input")
-            .AddClass("mud-disabled", GetDisabledState())
-            .AddClass("mud-readonly", GetReadOnlyState())
-            .AddClass("mud-input-with-content", ChildContent is not null)
+        protected override string Classname => new CssBuilder("hamkare-input-control-boolean-input")
+            .AddClass("hamkare-disabled", GetDisabledState())
+            .AddClass("hamkare-readonly", GetReadOnlyState())
+            .AddClass("hamkare-input-with-content", ChildContent is not null)
             .AddClass(Class)
             .Build();
 
-        protected override string LabelClassname => new CssBuilder("mud-radio")
-            .AddClass($"mud-disabled", GetDisabledState())
-            .AddClass($"mud-readonly", GetReadOnlyState())
-            .AddClass($"mud-input-content-placement-{ConvertPlacement(LabelPlacement).ToStringFast(true)}")
+        protected override string LabelClassname => new CssBuilder("hamkare-radio")
+            .AddClass($"hamkare-disabled", GetDisabledState())
+            .AddClass($"hamkare-readonly", GetReadOnlyState())
+            .AddClass($"hamkare-input-content-placement-{ConvertPlacement(LabelPlacement).ToStringFast(true)}")
             .Build();
 
-        protected override string IconClassname => new CssBuilder("mud-button-root mud-icon-button")
-            .AddClass("mud-ripple mud-ripple-radio", Ripple && !GetDisabledState() && !GetReadOnlyState())
-            .AddClass($"mud-{Color.ToStringFast(true)}-text hover:mud-{Color.ToStringFast(true)}-hover", !GetReadOnlyState() && !GetDisabledState() && (UncheckedColor == null || (UncheckedColor != null && Checked)))
-            .AddClass($"mud-{UncheckedColor?.ToStringFast(true)}-text hover:mud-{UncheckedColor?.ToStringFast(true)}-hover", !GetReadOnlyState() && !GetDisabledState() && UncheckedColor != null && Checked == false)
-            .AddClass("mud-radio-dense", Dense)
-            .AddClass("mud-disabled", GetDisabledState())
-            .AddClass("mud-readonly", GetReadOnlyState())
-            .AddClass("mud-checked", Checked)
-            .AddClass("mud-error-text", MudRadioGroup?.HasErrors)
+        protected override string IconClassname => new CssBuilder("hamkare-button-root hamkare-icon-button")
+            .AddClass("hamkare-ripple hamkare-ripple-radio", Ripple && !GetDisabledState() && !GetReadOnlyState())
+            .AddClass($"hamkare-{Color.ToStringFast(true)}-text hover:hamkare-{Color.ToStringFast(true)}-hover", !GetReadOnlyState() && !GetDisabledState() && (UncheckedColor == null || (UncheckedColor != null && Checked)))
+            .AddClass($"hamkare-{UncheckedColor?.ToStringFast(true)}-text hover:hamkare-{UncheckedColor?.ToStringFast(true)}-hover", !GetReadOnlyState() && !GetDisabledState() && UncheckedColor != null && Checked == false)
+            .AddClass("hamkare-radio-dense", Dense)
+            .AddClass("hamkare-disabled", GetDisabledState())
+            .AddClass("hamkare-readonly", GetReadOnlyState())
+            .AddClass("hamkare-checked", Checked)
+            .AddClass("hamkare-error-text", HamkareRadioGroup?.HasErrors)
             .Build();
 
         [Inject]
@@ -54,7 +54,7 @@ namespace MudBlazor
         /// The parent Radio Group
         /// </summary>
         [CascadingParameter]
-        internal IMudRadioGroup? IMudRadioGroup
+        internal IHamkareRadioGroup? IHamkareRadioGroup
         {
             get => _parent;
             set
@@ -125,7 +125,7 @@ namespace MudBlazor
 
         internal bool Checked { get; private set; }
 
-        internal MudRadioGroup<T>? MudRadioGroup => (MudRadioGroup<T>?)IMudRadioGroup;
+        internal HamkareRadioGroup<T>? HamkareRadioGroup => (HamkareRadioGroup<T>?)IHamkareRadioGroup;
 
         internal void SetChecked(bool value)
         {
@@ -140,13 +140,13 @@ namespace MudBlazor
         /// Checks this radio button.
         /// </summary>
         /// <remarks>
-        /// When part of a <see cref="MudRadioGroup{T}"/>, other values will be unchecked.
+        /// When part of a <see cref="HamkareRadioGroup{T}"/>, other values will be unchecked.
         /// </remarks>
         public Task SelectAsync()
         {
-            if (MudRadioGroup is not null)
+            if (HamkareRadioGroup is not null)
             {
-                return MudRadioGroup.SetSelectedRadioAsync(this);
+                return HamkareRadioGroup.SetSelectedRadioAsync(this);
             }
 
             return Task.CompletedTask;
@@ -154,14 +154,14 @@ namespace MudBlazor
 
         internal Task OnClickAsync()
         {
-            if (GetDisabledState() || GetReadOnlyState() || (MudRadioGroup?.GetReadOnlyState() ?? false))
+            if (GetDisabledState() || GetReadOnlyState() || (HamkareRadioGroup?.GetReadOnlyState() ?? false))
             {
                 return Task.CompletedTask;
             }
 
-            if (MudRadioGroup != null)
+            if (HamkareRadioGroup != null)
             {
-                return MudRadioGroup.SetSelectedRadioAsync(this);
+                return HamkareRadioGroup.SetSelectedRadioAsync(this);
             }
 
             return Task.CompletedTask;
@@ -169,7 +169,7 @@ namespace MudBlazor
 
         protected internal async Task HandleKeyDownAsync(KeyboardEventArgs keyboardEventArgs)
         {
-            if (GetDisabledState() || GetReadOnlyState() || (MudRadioGroup?.GetReadOnlyState() ?? false))
+            if (GetDisabledState() || GetReadOnlyState() || (HamkareRadioGroup?.GetReadOnlyState() ?? false))
             {
                 return;
             }
@@ -181,9 +181,9 @@ namespace MudBlazor
                     break;
                 case "Backspace":
                     {
-                        if (MudRadioGroup is not null)
+                        if (HamkareRadioGroup is not null)
                         {
-                            await MudRadioGroup.ResetAsync();
+                            await HamkareRadioGroup.ResetAsync();
                         }
 
                         break;
@@ -196,9 +196,9 @@ namespace MudBlazor
         {
             await base.OnInitializedAsync();
 
-            if (MudRadioGroup is not null)
+            if (HamkareRadioGroup is not null)
             {
-                await MudRadioGroup.RegisterRadioAsync(this);
+                await HamkareRadioGroup.RegisterRadioAsync(this);
             }
         }
 
@@ -208,7 +208,7 @@ namespace MudBlazor
             if (firstRender)
             {
                 var options = new KeyInterceptorOptions(
-                    "mud-button-root",
+                    "hamkare-button-root",
                     [
                         // prevent scrolling page
                         new(" ", preventDown: "key+none", preventUp: "key+none"),
@@ -227,7 +227,7 @@ namespace MudBlazor
         protected override async ValueTask DisposeAsyncCore()
         {
             await base.DisposeAsyncCore();
-            MudRadioGroup?.UnregisterRadio(this);
+            HamkareRadioGroup?.UnregisterRadio(this);
             if (IsJSRuntimeAvailable)
             {
                 await KeyInterceptorService.UnsubscribeAsync(_elementId);

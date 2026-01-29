@@ -1,15 +1,15 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using MudBlazor.Interfaces;
+using HamkareBlazor.Interfaces;
 using static System.String;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
     /// <summary>
     /// Represents a base class for designing button components.
     /// </summary>
-    public abstract class MudBaseButton : MudComponentBase
+    public abstract class HamkareBaseButton : HamkareComponentBase
     {
         /// <summary>
         /// The custom activation behavior.

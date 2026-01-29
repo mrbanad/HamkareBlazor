@@ -1,23 +1,23 @@
 ﻿// Copyright (c) 2019 Blazored (https://github.com/Blazored)
 // See https://github.com/Blazored
 // License: MIT
-// Copyright (c) 2020 Adapted by MudBlazor
+// Copyright (c) 2020 Adapted by HamkareBlazor
 
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Components;
 
 #nullable enable
-namespace MudBlazor
+namespace HamkareBlazor
 {
     /// <summary>
-    /// A service for managing <see cref="MudDialog"/> components.
+    /// A service for managing <see cref="HamkareDialog"/> components.
     /// </summary>
     /// <remarks>
-    /// This service requires a <see cref="MudDialogProvider"/> in your layout page.
+    /// This service requires a <see cref="HamkareDialogProvider"/> in your layout page.
     /// </remarks>
-    /// <seealso cref="MudDialog"/>
-    /// <seealso cref="MudDialogContainer"/>
-    /// <seealso cref="MudDialogProvider"/>
+    /// <seealso cref="HamkareDialog"/>
+    /// <seealso cref="HamkareDialogContainer"/>
+    /// <seealso cref="HamkareDialogProvider"/>
     /// <seealso cref="DialogOptions"/>
     /// <seealso cref="DialogParameters{T}"/>
     /// <seealso cref="DialogReference"/>
@@ -25,7 +25,7 @@ namespace MudBlazor
     {
         /// <summary>
         /// This internal wrapper component prevents overwriting parameters of once instantiated dialog instances.
-        /// See: https://github.com/MudBlazor/MudBlazor/issues/10659#issuecomment-2602911059
+        /// See: https://github.com/HamkareBlazor/HamkareBlazor/issues/10659#issuecomment-2602911059
         /// </summary>
         private class DialogHelperComponent : IComponent
         {
@@ -172,7 +172,7 @@ namespace MudBlazor
                 [nameof(MessageBoxOptions.NoText)] = messageBoxOptions.NoText,
                 [nameof(MessageBoxOptions.YesText)] = messageBoxOptions.YesText,
             };
-            var reference = await ShowAsync<MudMessageBox>(title: messageBoxOptions.Title, parameters: parameters, options: options);
+            var reference = await ShowAsync<HamkareMessageBox>(title: messageBoxOptions.Title, parameters: parameters, options: options);
             var result = await reference.Result;
 
             if (result is null)
@@ -230,12 +230,12 @@ namespace MudBlazor
             });
             var dialogInstance = new RenderFragment(builder =>
             {
-                builder.OpenComponent<MudDialogContainer>(0);
+                builder.OpenComponent<HamkareDialogContainer>(0);
                 builder.SetKey(dialogReference.Id);
-                builder.AddComponentParameter(1, nameof(MudDialogContainer.Options), options);
-                builder.AddComponentParameter(2, nameof(MudDialogContainer.Title), title);
-                builder.AddComponentParameter(3, nameof(MudDialogContainer.Content), dialogContent);
-                builder.AddComponentParameter(4, nameof(MudDialogContainer.Id), dialogReference.Id);
+                builder.AddComponentParameter(1, nameof(HamkareDialogContainer.Options), options);
+                builder.AddComponentParameter(2, nameof(HamkareDialogContainer.Title), title);
+                builder.AddComponentParameter(3, nameof(HamkareDialogContainer.Content), dialogContent);
+                builder.AddComponentParameter(4, nameof(HamkareDialogContainer.Id), dialogReference.Id);
                 builder.CloseComponent();
             });
             dialogReference.InjectRenderFragment(dialogInstance);

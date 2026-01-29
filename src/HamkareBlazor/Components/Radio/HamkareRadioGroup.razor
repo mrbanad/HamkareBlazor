@@ -1,15 +1,15 @@
-﻿@namespace MudBlazor
-@using MudBlazor.Interfaces
+﻿@namespace HamkareBlazor
+@using HamkareBlazor.Interfaces
 @typeparam T
-@inherits MudFormComponent<T, T>
+@inherits HamkareFormComponent<T, T>
 
 @{
 #pragma warning disable CS0618 // Type or member is obsolete
 }
 
-<MudInputControl Class="@Classname" Style="@Style" Error="@HasErrors" ErrorText="@GetErrorText()" Required="@Required">
+<HamkareInputControl Class="@Classname" Style="@Style" Error="@HasErrors" ErrorText="@GetErrorText()" Required="@Required">
     <InputContent>
-        <CascadingValue Value="@((IMudRadioGroup)this)" IsFixed="false">
+        <CascadingValue Value="@((IHamkareRadioGroup)this)" IsFixed="false">
             @* Form should be cascaded as null so the childs are not registered to the Form *@
             <CascadingValue TValue="IForm" Value="null">
                 <CascadingValue TValue="bool" Name="ParentDisabled" Value="@GetDisabledState()">
@@ -22,4 +22,4 @@
             </CascadingValue>
         </CascadingValue>
     </InputContent>
-</MudInputControl>
+</HamkareInputControl>

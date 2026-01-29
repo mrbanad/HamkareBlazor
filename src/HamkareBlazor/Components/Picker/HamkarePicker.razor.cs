@@ -1,22 +1,22 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using MudBlazor.Services;
-using MudBlazor.Utilities;
+using HamkareBlazor.Services;
+using HamkareBlazor.Utilities;
 
 #nullable enable
-namespace MudBlazor
+namespace HamkareBlazor
 {
     /// <summary>
     /// A component for selecting date, time, and color values.
     /// </summary>
     /// <typeparam name="T">The type of value being chosen.</typeparam>
-    /// <seealso cref="MudPickerContent" />
-    /// <seealso cref="MudPickerToolbar" />
-    public abstract partial class MudPicker<T> : MudFormComponent<T, string>
+    /// <seealso cref="HamkarePickerContent" />
+    /// <seealso cref="HamkarePickerToolbar" />
+    public abstract partial class HamkarePicker<T> : HamkareFormComponent<T, string>
     {
         private string? _text;
         private bool _pickerSquare;
@@ -31,24 +31,24 @@ namespace MudBlazor
         private IPopoverService PopoverService { get; set; } = null!;
 
         protected string PickerClassname =>
-            new CssBuilder("mud-picker")
-                .AddClass("mud-picker-inline", PickerVariant != PickerVariant.Static)
-                .AddClass("mud-picker-static", PickerVariant == PickerVariant.Static)
-                .AddClass("mud-rounded", PickerVariant == PickerVariant.Static && !_pickerSquare)
-                .AddClass($"mud-elevation-{Elevation ?? 0}", PickerVariant != PickerVariant.Inline)
-                .AddClass("mud-picker-input-button", !Editable && PickerVariant != PickerVariant.Static)
-                .AddClass("mud-picker-input-text", Editable && PickerVariant != PickerVariant.Static)
-                .AddClass("mud-disabled", GetDisabledState())
+            new CssBuilder("hamkare-picker")
+                .AddClass("hamkare-picker-inline", PickerVariant != PickerVariant.Static)
+                .AddClass("hamkare-picker-static", PickerVariant == PickerVariant.Static)
+                .AddClass("hamkare-rounded", PickerVariant == PickerVariant.Static && !_pickerSquare)
+                .AddClass($"hamkare-elevation-{Elevation ?? 0}", PickerVariant != PickerVariant.Inline)
+                .AddClass("hamkare-picker-input-button", !Editable && PickerVariant != PickerVariant.Static)
+                .AddClass("hamkare-picker-input-text", Editable && PickerVariant != PickerVariant.Static)
+                .AddClass("hamkare-disabled", GetDisabledState())
                 .AddClass(Class)
                 .Build();
 
         protected string PickerPaperClassname =>
-            new CssBuilder("mud-picker")
-                .AddClass("mud-picker-paper")
-                .AddClass("mud-picker-view", PickerVariant == PickerVariant.Inline)
-                .AddClass("mud-picker-open", Open && PickerVariant == PickerVariant.Inline)
-                .AddClass("mud-picker-popover-paper", PickerVariant == PickerVariant.Inline)
-                .AddClass("mud-dialog", PickerVariant == PickerVariant.Dialog)
+            new CssBuilder("hamkare-picker")
+                .AddClass("hamkare-picker-paper")
+                .AddClass("hamkare-picker-view", PickerVariant == PickerVariant.Inline)
+                .AddClass("hamkare-picker-open", Open && PickerVariant == PickerVariant.Inline)
+                .AddClass("hamkare-picker-popover-paper", PickerVariant == PickerVariant.Inline)
+                .AddClass("hamkare-dialog", PickerVariant == PickerVariant.Dialog)
                 .Build();
 
         protected string PickerPaperStylename =>
@@ -62,29 +62,29 @@ namespace MudBlazor
                 .Build();
 
         protected string PickerInlineClassname =>
-            new CssBuilder("mud-picker-inline-paper")
+            new CssBuilder("hamkare-picker-inline-paper")
                 .Build();
 
         protected string PickerContainerClassname =>
-            new CssBuilder("mud-picker-container")
-                .AddClass("mud-paper-square", _pickerSquare)
-                .AddClass("mud-picker-container-landscape",
+            new CssBuilder("hamkare-picker-container")
+                .AddClass("hamkare-paper-square", _pickerSquare)
+                .AddClass("hamkare-picker-container-landscape",
                     Orientation == Orientation.Landscape && PickerVariant == PickerVariant.Static)
                 .Build();
 
         protected string PickerInputClassname =>
-            new CssBuilder("mud-input-input-control")
+            new CssBuilder("hamkare-input-input-control")
                 .AddClass(Class)
                 .Build();
 
         protected string PopoverClassname =>
-            new CssBuilder("mud-picker-popover")
+            new CssBuilder("hamkare-picker-popover")
                 // We can't use the Elevation parameter because it requires Paper=true; Instead we define the class explicitly.
-                .AddClass($"mud-elevation-{Elevation ?? 8}")
+                .AddClass($"hamkare-elevation-{Elevation ?? 8}")
                 .Build();
 
         protected string ActionsClassname =>
-            new CssBuilder("mud-picker-actions")
+            new CssBuilder("hamkare-picker-actions")
                 .AddClass(ActionsClass)
                 .Build();
 
@@ -409,7 +409,7 @@ namespace MudBlazor
         /// </summary>
         [Parameter]
         [Category(CategoryTypes.FormComponent.PickerBehavior)]
-        public RenderFragment<MudPicker<T>>? PickerActions { get; set; }
+        public RenderFragment<HamkarePicker<T>>? PickerActions { get; set; }
 
         /// <summary>
         /// The amount of vertical spacing for the text input.
@@ -581,7 +581,7 @@ namespace MudBlazor
             await base.ResetValueAsync();
         }
 
-        protected internal MudTextField<string>? _inputReference;
+        protected internal HamkareTextField<string>? _inputReference;
 
         /// <summary>
         /// Focuses the input.
@@ -636,7 +636,7 @@ namespace MudBlazor
 
             _keyInterceptorObserving = true;
             var options = new KeyInterceptorOptions(
-                "mud-input-slot",
+                "hamkare-input-slot",
                 [
                     new(" ", preventDown: "key+none"),
                     new("ArrowUp", preventDown: "key+none"),
@@ -695,7 +695,7 @@ namespace MudBlazor
 
             if (PickerVariant == PickerVariant.Inline)
             {
-                await _pickerInlineRef.MudChangeCssAsync(PickerInlineClassname);
+                await _pickerInlineRef.HamkareChangeCssAsync(PickerInlineClassname);
             }
 
             await EnsureKeyInterceptorAsync();
@@ -715,12 +715,12 @@ namespace MudBlazor
         protected virtual Task OnPickerClosedAsync() => PickerClosed.InvokeAsync(this);
 
         // A proxy for components that will utilize ParameterState
-        // Since for ParameterState we don't want to read directly from the Text property, but we have other components that inherit from MudPicker
+        // Since for ParameterState we don't want to read directly from the Text property, but we have other components that inherit from HamkarePicker
         // In future when all Pickers will use ParameterState, we can remove this.
         protected virtual string? ReadText => Text;
 
         // A proxy for components that will utilize ParameterState
-        // Since for ParameterState we don't want to write directly from the Text property, but we have other components that inherit from MudPicker
+        // Since for ParameterState we don't want to write directly from the Text property, but we have other components that inherit from HamkarePicker
         // In future when all Pickers will use ParameterState, we can remove this.
         protected virtual Task WriteTextAsync(string? value)
         {

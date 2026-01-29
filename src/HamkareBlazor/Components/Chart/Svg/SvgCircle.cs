@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 
 #nullable enable
-namespace MudBlazor
+namespace HamkareBlazor
 {
     /// <summary>
     /// Represents a circular shape drawn as an SVG path.

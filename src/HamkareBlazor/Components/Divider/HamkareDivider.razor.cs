@@ -1,26 +1,26 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using Microsoft.AspNetCore.Components;
-using MudBlazor.Utilities;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 #nullable enable
 
 /// <summary>
 /// A thin line that groups content in lists and layouts. Only use dividers if items can't be grouped with open space. Use dividers to group things, not separate individual items.
 /// </summary>
-public partial class MudDivider : MudComponentBase
+public partial class HamkareDivider : HamkareComponentBase
 {
     protected string Classname =>
-        new CssBuilder("mud-divider")
-            .AddClass("mud-divider-absolute", Absolute)
-            .AddClass("mud-divider-flexitem", FlexItem)
-            .AddClass("mud-divider-light", Light)
-            .AddClass("mud-divider-vertical", Vertical)
-            .AddClass($"mud-divider-{DividerType.ToStringFast(true)}", DividerType != DividerType.FullWidth || (DividerType == DividerType.FullWidth && Vertical == false))
+        new CssBuilder("hamkare-divider")
+            .AddClass("hamkare-divider-absolute", Absolute)
+            .AddClass("hamkare-divider-flexitem", FlexItem)
+            .AddClass("hamkare-divider-light", Light)
+            .AddClass("hamkare-divider-vertical", Vertical)
+            .AddClass($"hamkare-divider-{DividerType.ToStringFast(true)}", DividerType != DividerType.FullWidth || (DividerType == DividerType.FullWidth && Vertical == false))
             .AddClass(Class)
             .Build();
 

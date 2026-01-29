@@ -1,34 +1,34 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 #nullable enable
 /// <summary>
-/// The <see cref="InternalMudLocalizer"/> service forwards translations to the <see cref="ILocalizationInterceptor"/> service.
+/// The <see cref="InternalHamkareLocalizer"/> service forwards translations to the <see cref="ILocalizationInterceptor"/> service.
 /// By default, the <see cref="DefaultLocalizationInterceptor"/> is used, though custom implementations can be provided.
 /// </summary>
-internal sealed class InternalMudLocalizer
+internal sealed class InternalHamkareLocalizer
 {
     private readonly ILocalizationInterceptor _interceptor;
     private readonly ILocalizationEnumInterceptor _enumInterceptor;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="InternalMudLocalizer"/> class.
+    /// Initializes a new instance of the <see cref="InternalHamkareLocalizer"/> class.
     /// </summary>
     /// <param name="interceptor">The localization interceptor to use for handling translations.</param>
-    public InternalMudLocalizer(ILocalizationInterceptor interceptor)
+    public InternalHamkareLocalizer(ILocalizationInterceptor interceptor)
         : this(interceptor, new DefaultLocalizationEnumInterceptor(interceptor))
     {
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="InternalMudLocalizer"/> class.
+    /// Initializes a new instance of the <see cref="InternalHamkareLocalizer"/> class.
     /// </summary>
     /// <param name="interceptor">The localization interceptor to use for handling translations.</param>
     /// <param name="enumInterceptor">The localization interceptor to use for handling enumeration translations.</param>
     [ActivatorUtilitiesConstructor]
-    public InternalMudLocalizer(ILocalizationInterceptor interceptor, ILocalizationEnumInterceptor enumInterceptor)
+    public InternalHamkareLocalizer(ILocalizationInterceptor interceptor, ILocalizationEnumInterceptor enumInterceptor)
     {
         ArgumentNullException.ThrowIfNull(interceptor);
         ArgumentNullException.ThrowIfNull(enumInterceptor);

@@ -1,19 +1,19 @@
 ﻿using Microsoft.AspNetCore.Components;
-using MudBlazor.Utilities;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
 
     /// <summary>
     /// Displays a placeholder preview of content before the data gets loaded, reducing load-time frustration.
     /// </summary>
-    public partial class MudSkeleton : MudComponentBase
+    public partial class HamkareSkeleton : HamkareComponentBase
     {
         protected string Classname =>
-            new CssBuilder("mud-skeleton")
-                .AddClass($"mud-skeleton-{SkeletonType.ToStringFast(true)}")
-                .AddClass($"mud-skeleton-{Animation.ToStringFast(true)}")
+            new CssBuilder("hamkare-skeleton")
+                .AddClass($"hamkare-skeleton-{SkeletonType.ToStringFast(true)}")
+                .AddClass($"hamkare-skeleton-{Animation.ToStringFast(true)}")
                 .AddClass(Class)
                 .Build();
 

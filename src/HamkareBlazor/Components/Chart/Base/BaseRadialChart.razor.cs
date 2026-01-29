@@ -1,22 +1,22 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Numerics;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using MudBlazor.Extensions;
-using MudBlazor.Utilities;
+using HamkareBlazor.Extensions;
+using HamkareBlazor.Utilities;
 
 #nullable enable
-namespace MudBlazor.Charts;
+namespace HamkareBlazor.Charts;
 
 /// <summary>
 /// Represents a base component for radial charts.
 /// </summary>
 /// <typeparam name="T">The data type of the chart.</typeparam>
 /// <typeparam name="TChartOptions">The type of chart options.</typeparam>
-public partial class BaseRadialChart<T, TChartOptions> : MudComponentBase
+public partial class BaseRadialChart<T, TChartOptions> : HamkareComponentBase
     where T : struct, INumber<T>, IMinMaxValue<T>, IFormattable
     where TChartOptions : IRadialChartOptions, new()
 {

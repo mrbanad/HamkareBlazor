@@ -1,13 +1,13 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using Microsoft.AspNetCore.Components;
-using MudBlazor.State.Comparer;
+using HamkareBlazor.State.Comparer;
 
-namespace MudBlazor.State.Builder;
+namespace HamkareBlazor.State.Builder;
 
 #nullable enable
 /// <summary>
@@ -15,7 +15,7 @@ namespace MudBlazor.State.Builder;
 /// </summary>
 /// <remarks>
 /// You don't need to create this object directly.
-/// Instead, use the "MudComponentBase.RegisterParameter" method from within the component's constructor.
+/// Instead, use the "HamkareComponentBase.RegisterParameter" method from within the component's constructor.
 /// </remarks>
 /// <typeparam name="T">The type of the component's property value.</typeparam>
 [ExcludeFromCodeCoverage]

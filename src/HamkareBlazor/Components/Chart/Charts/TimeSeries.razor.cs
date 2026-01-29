@@ -1,16 +1,16 @@
 ﻿using System.Globalization;
 using System.Numerics;
 using Microsoft.AspNetCore.Components;
-using MudBlazor.Interpolation;
+using HamkareBlazor.Interpolation;
 
 #nullable enable
 
-namespace MudBlazor.Charts;
+namespace HamkareBlazor.Charts;
 
 /// <summary>
 /// A chart which displays values over time.
 /// </summary>
-partial class TimeSeries<T> : MudAxisLineChartBase<T, TimeSeriesChartOptions> where T : struct, INumber<T>, IMinMaxValue<T>, IFormattable
+partial class TimeSeries<T> : HamkareAxisLineChartBase<T, TimeSeriesChartOptions> where T : struct, INumber<T>, IMinMaxValue<T>, IFormattable
 {
     public override RenderFragment? OverlayContent { get; set; }
 
@@ -29,7 +29,7 @@ partial class TimeSeries<T> : MudAxisLineChartBase<T, TimeSeriesChartOptions> wh
         ChartType = ChartType.Timeseries;
         ChartOptions ??= new TimeSeriesChartOptions();
 
-        if (ChartReference is IMudAxisChart<T> axisChart)
+        if (ChartReference is IHamkareAxisChart<T> axisChart)
         {
             _generateChartLines = true;
             axisChart.OverlayChart = this;
@@ -43,7 +43,7 @@ partial class TimeSeries<T> : MudAxisLineChartBase<T, TimeSeriesChartOptions> wh
     {
         if (IsOverlayChart && SharedData is null) return;
 
-        Series = (ChartContainer != null && ChartReference is MudChart<T>)
+        Series = (ChartContainer != null && ChartReference is HamkareChart<T>)
             ? ChartContainer.ChartSeries
             : ChartSeries;
 
@@ -57,7 +57,7 @@ partial class TimeSeries<T> : MudAxisLineChartBase<T, TimeSeriesChartOptions> wh
         if (!IsOverlayChart)
         {
             // If this is not an overlay chart, we generate the shared plot points if an overlay exists
-            SharedData = OverlayChart is IMudAxisChart<T> ? new AxisGridData<T>(lowestHorizontalLine, numHorizontalLines, gridYUnits, _boundWidth, _boundHeight) : null;
+            SharedData = OverlayChart is IHamkareAxisChart<T> ? new AxisGridData<T>(lowestHorizontalLine, numHorizontalLines, gridYUnits, _boundWidth, _boundHeight) : null;
         }
         else
         {

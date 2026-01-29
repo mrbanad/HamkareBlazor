@@ -1,12 +1,12 @@
-﻿namespace MudBlazor.Services
+﻿namespace HamkareBlazor.Services
 {
 #nullable enable
     // Add additional configuration objects here when adding new services
 
     /// <summary>
-    /// Common services configuration required by MudBlazor components
+    /// Common services configuration required by HamkareBlazor components
     /// </summary>
-    public class MudServicesConfiguration
+    public class HamkareServicesConfiguration
     {
         public SnackbarConfiguration SnackbarConfiguration { get; set; } = new SnackbarConfiguration();
 

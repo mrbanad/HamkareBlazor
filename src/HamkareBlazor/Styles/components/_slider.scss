@@ -1,23 +1,23 @@
 @import '../abstracts/variables';
 
-.mud-slider {
-  color: var(--mud-palette-text-primary);
+.hamkare-slider {
+  color: var(--hamkare-palette-text-primary);
   display: inline-block;
   width: 100%;
   user-select: none;
   touch-action: pinch-zoom;
 
-  & > .mud-typography {
+  & > .hamkare-typography {
     margin-top: 10px;
   }
 
-  &.mud-slider-vertical {
+  &.hamkare-slider-vertical {
     transform: rotate(270deg);
     height: 100%;
     width: unset;
   }
 
-  .mud-slider-input {
+  .hamkare-slider-input {
     appearance: none;
     position: relative;
     display: block;
@@ -30,13 +30,13 @@
     }
 
     &:active {
-      & + .mud-slider-value-label {
+      & + .hamkare-slider-value-label {
         opacity: 1;
       }
     }
 
     @include slider-track {
-      border-radius: var(--mud-default-borderradius);
+      border-radius: var(--hamkare-default-borderradius);
       width: 100%;
     }
 
@@ -54,7 +54,7 @@
       opacity: 0.38;
 
       @include slider-track {
-        background-color: var(--mud-palette-text-disabled);
+        background-color: var(--hamkare-palette-text-disabled);
       }
 
       @include slider-thumb {
@@ -72,36 +72,36 @@
     }
   }
 
-  @each $color in $mud-palette-colors {
-    &.mud-slider-#{$color} {
-      .mud-slider-filled {
-        background-color: var(--mud-palette-#{$color});
+  @each $color in $hamkare-palette-colors {
+    &.hamkare-slider-#{$color} {
+      .hamkare-slider-filled {
+        background-color: var(--hamkare-palette-#{$color});
       }
 
-      .mud-slider-track-tick {
-        background-color: var(--mud-palette-#{$color});
+      .hamkare-slider-track-tick {
+        background-color: var(--hamkare-palette-#{$color});
       }
 
-      .mud-slider-value-label {
-        color: var(--mud-palette-#{$color}-text);
-        background-color: var(--mud-palette-#{$color});
+      .hamkare-slider-value-label {
+        color: var(--hamkare-palette-#{$color}-text);
+        background-color: var(--hamkare-palette-#{$color});
       }
 
 
-      .mud-slider-input {
+      .hamkare-slider-input {
         @include slider-track {
-          background-color: rgba(var(--mud-palette-#{$color}-rgb), 0.30);
+          background-color: rgba(var(--hamkare-palette-#{$color}-rgb), 0.30);
         }
 
         @include slider-thumb {
-          background-color: var(--mud-palette-#{$color});
-          box-shadow: 0px 1px 2px -1px rgba(var(--mud-palette-#{$color}-rgb),0.3);
+          background-color: var(--hamkare-palette-#{$color});
+          box-shadow: 0px 1px 2px -1px rgba(var(--hamkare-palette-#{$color}-rgb),0.3);
         }
 
         @include slider-thumb {
           @media(hover: hover) and (pointer: fine) {
             &:hover {
-              box-shadow: 0px 1px 2px -1px rgba(var(--mud-palette-#{$color}-rgb),0.3),0 0 0 1px rgba(var(--mud-palette-#{$color}-rgb), 0.24);
+              box-shadow: 0px 1px 2px -1px rgba(var(--hamkare-palette-#{$color}-rgb),0.3),0 0 0 1px rgba(var(--hamkare-palette-#{$color}-rgb), 0.24);
             }
           }
         }
@@ -109,7 +109,7 @@
 
         &:focus-visible, &:active {
           @include slider-thumb {
-            box-shadow: 0px 1px 2px -1px rgba(var(--mud-palette-#{$color}-rgb),0.3),0 0 0 2px rgba(var(--mud-palette-#{$color}-rgb), 0.24);
+            box-shadow: 0px 1px 2px -1px rgba(var(--hamkare-palette-#{$color}-rgb),0.3),0 0 0 2px rgba(var(--hamkare-palette-#{$color}-rgb), 0.24);
           }
         }
       }
@@ -122,21 +122,21 @@
   $thumbscale: 6;
 
   @each $size, $value in $slider-sizes {
-    &.mud-slider-#{$size} {
-      .mud-slider-filled {
+    &.hamkare-slider-#{$size} {
+      .hamkare-slider-filled {
         height: #{$value}px;
       }
 
-      .mud-slider-track-tick {
+      .hamkare-slider-track-tick {
         width: #{$value}px;
         height: #{$value}px;
       }
 
-      .mud-slider-track-tick-label {
+      .hamkare-slider-track-tick-label {
         transform: translateX(-50%) translateY(#{$tickcount + "%"});
       }
 
-      .mud-slider-input {
+      .hamkare-slider-input {
         @include slider-track {
           height: #{$value}px;
           margin: #{$margincount}px 0;
@@ -157,18 +157,18 @@
 
 
 
-  .mud-slider-container {
+  .hamkare-slider-container {
     position: relative;
     width: 100%;
     display: flex;
     align-content: center;
   }
 
-  .mud-slider-filled {
-    border-radius: var(--mud-default-borderradius);
+  .hamkare-slider-filled {
+    border-radius: var(--hamkare-default-borderradius);
   }
 
-  .mud-slider-inner-container {
+  .hamkare-slider-inner-container {
     position: absolute;
     top: 0;
     left: 0;
@@ -178,7 +178,7 @@
     align-items: center;
   }
 
-  .mud-slider-value-label {
+  .hamkare-slider-value-label {
     position: absolute;
     top: 0;
     transform: translateX(-50%) translateY(-125%);
@@ -195,18 +195,18 @@
     user-select: none;
   }
 
-  .mud-slider-tickmarks {
+  .hamkare-slider-tickmarks {
     display: flex;
     justify-content: space-between;
     flex-grow: 1;
   }
 
-  .mud-slider-track-tick {
+  .hamkare-slider-track-tick {
     border-radius: 9999%;
-    background-color: var(--mud-palette-primary);
+    background-color: var(--hamkare-palette-primary);
   }
 
-  .mud-slider-track-tick-label {
+  .hamkare-slider-track-tick-label {
     position: absolute;
     top: 0;
     left: 50%;

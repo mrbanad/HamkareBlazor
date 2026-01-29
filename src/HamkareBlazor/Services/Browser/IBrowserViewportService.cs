@@ -1,10 +1,10 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using MudBlazor.Services;
+using HamkareBlazor.Services;
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 #nullable enable
 /// <summary>
@@ -33,7 +33,7 @@ public interface IBrowserViewportService : IAsyncDisposable
     /// </summary>
     /// <param name="observerId">The unique ID associated with the observer. Use this ID to later <see cref="UnsubscribeAsync(Guid)"/>.</param>
     /// <param name="lambda">The lambda function to subscribe.</param>
-    /// <param name="options">The resize options for the observer. When set to null, the global options provided during AddMudServices/AddMudBlazorResizeListener will be used.
+    /// <param name="options">The resize options for the observer. When set to null, the global options provided during AddHamkareServices/AddHamkareBlazorResizeListener will be used.
     /// When specific options are provided, they will be used to observe the changes.
     /// The <see cref="Action{BrowserViewportEventArgs}"/> won't be invoked if such <see cref="IBrowserViewportObserver.Id"/> already exist, for example when you re-subscribe.
     /// After you pass the options, modifying the instance won't have any effect, including re-subscription, as C# and JS side doesn't support this, you need to <see cref="UnsubscribeAsync(Guid)"/> and subscribe again.
@@ -47,7 +47,7 @@ public interface IBrowserViewportService : IAsyncDisposable
     /// </summary>
     /// <param name="observerId">The unique ID associated with the observer. Use this ID to later <see cref="UnsubscribeAsync(Guid)"/>.</param>
     /// <param name="lambda">The lambda function to subscribe.</param>
-    /// <param name="options">The resize options for the observer. When set to null, the global options provided during AddMudServices/AddMudBlazorResizeListener will be used.
+    /// <param name="options">The resize options for the observer. When set to null, the global options provided during AddHamkareServices/AddHamkareBlazorResizeListener will be used.
     /// When specific options are provided, they will be used to observe the changes.
     /// The <see cref="Func{BrowserViewportEventArgs, Task}"/> won't be invoked if such <see cref="IBrowserViewportObserver.Id"/> already exist, for example when you re-subscribe.
     /// After you pass the options, modifying the instance won't have any effect, including re-subscription, as C# and JS side doesn't support this, you need to <see cref="UnsubscribeAsync(Guid)"/> and subscribe again.

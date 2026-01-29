@@ -1,24 +1,24 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Components;
-using MudBlazor.State.Comparer;
-using MudBlazor.State.Invocation;
-using MudBlazor.State.Rule;
+using HamkareBlazor.State.Comparer;
+using HamkareBlazor.State.Invocation;
+using HamkareBlazor.State.Rule;
 
-namespace MudBlazor.State;
+namespace HamkareBlazor.State;
 
 #nullable enable
 /// <summary>
 /// The <see cref="ParameterState{T}"/> automatically manages parameter value changes for <see cref="ParameterAttribute"/> as part of
-/// MudBlazor's ParameterState framework. For details and usage please read CONTRIBUTING.md
+/// HamkareBlazor's ParameterState framework. For details and usage please read CONTRIBUTING.md
 /// </summary>
 /// <remarks>
 /// You don't need to create this object directly.
-/// Instead, use the "MudComponentBase.RegisterParameter" method from within the component's constructor.
+/// Instead, use the "HamkareComponentBase.RegisterParameter" method from within the component's constructor.
 /// </remarks>
 /// <typeparam name="T">The type of the component's property value.</typeparam>
 [DebuggerDisplay("ParameterName = {Metadata.ParameterName}, Value = {_value}")]
@@ -85,12 +85,12 @@ internal class ParameterStateInternal<T> : ParameterState<T>, IParameterComponen
     /// incorrect state being read. For example:
     /// </para>
     /// <code>
-    ///      var panels = Context.RenderComponent&lt;MudExpansionPanels&gt;();
-    ///      var panel = new MudExpansionPanel();
+    ///      var panels = Context.RenderComponent&lt;HamkareExpansionPanels&gt;();
+    ///      var panel = new HamkareExpansionPanel();
     ///      panels.Instance.AddPanelAsync(panel);
     /// </code>
     /// <para>
-    /// In this scenario, MudExpansionPanel is created outside Blazor's lifecycle, so
+    /// In this scenario, HamkareExpansionPanel is created outside Blazor's lifecycle, so
     /// AddPanelAsync receives an invalid _expandedState.Value.
     /// Such test patterns should be avoided—rewrite the tests to follow normal Blazor usage.
     /// </para>
@@ -135,7 +135,7 @@ internal class ParameterStateInternal<T> : ParameterState<T>, IParameterComponen
             _value = value;
             if (!TreatAsInitialized)
             {
-                // https://github.com/MudBlazor/MudBlazor/pull/12241
+                // https://github.com/HamkareBlazor/HamkareBlazor/pull/12241
                 // Workaround for components that read parameter values before OnInitialized is called aka Select and Autocomplete.
                 // Can be removed in future major versions when such components are fixed.
                 TreatAsInitialized = true;
@@ -239,9 +239,9 @@ internal class ParameterStateInternal<T> : ParameterState<T>, IParameterComponen
     }
 
     ///  <summary>
-    ///  Creates a <see cref="ParameterState{T}"/> object which automatically manages parameter value changes as part of MudBlazor's ParameterState framework.
+    ///  Creates a <see cref="ParameterState{T}"/> object which automatically manages parameter value changes as part of HamkareBlazor's ParameterState framework.
     /// <para />
-    ///  <b>NB!</b> Usually you don't need to call this directly. Instead, use the RegisterParameter method (<see cref="MudComponentBase"/>) from within the
+    ///  <b>NB!</b> Usually you don't need to call this directly. Instead, use the RegisterParameter method (<see cref="HamkareComponentBase"/>) from within the
     ///  component's constructor.  
     ///  </summary>
     ///  <param name="metadata">The parameter's metadata.</param>

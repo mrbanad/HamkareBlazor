@@ -1,5 +1,5 @@
-﻿@namespace MudBlazor
-@inherits MudComponentBase
+﻿@namespace HamkareBlazor
+@inherits HamkareComponentBase
 
 <div role="group" @attributes="UserAttributes" class="@Classname" style="@Style">
     <CascadingValue Value="this" IsFixed="true">
@@ -13,9 +13,9 @@
         }
         else
         {
-           <MudAvatar Class="@MaxAvatarClassname" Color="@MaxColor" Size="@MaxSize" Variant="@MaxVariant" Rounded="@MaxRounded" Square="@MaxSquare" Elevation="@MaxElevation">
+           <HamkareAvatar Class="@MaxAvatarClassname" Color="@MaxColor" Size="@MaxSize" Variant="@MaxVariant" Rounded="@MaxRounded" Square="@MaxSquare" Elevation="@MaxElevation">
                 @($"+{_avatars.Count - Max}")
-           </MudAvatar>
+           </HamkareAvatar>
         }
     }
 </div>

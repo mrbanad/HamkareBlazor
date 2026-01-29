@@ -1,12 +1,12 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Diagnostics.CodeAnalysis;
-using MudBlazor.Utilities.Converter.Dispatcher;
-using static MudBlazor.BoolConverter;
+using HamkareBlazor.Utilities.Converter.Dispatcher;
+using static HamkareBlazor.BoolConverter;
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 #nullable enable
 public sealed class BoolConverter<T> : IReversibleConverter<T?, bool?>

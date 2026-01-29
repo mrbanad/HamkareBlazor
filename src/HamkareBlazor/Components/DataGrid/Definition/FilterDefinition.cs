@@ -1,15 +1,15 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System;
 using System.Diagnostics.CodeAnalysis;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
     /// <summary>
-    /// Represents the logic of a filter applied to <see cref="MudGrid"/> data.
+    /// Represents the logic of a filter applied to <see cref="HamkareGrid"/> data.
     /// </summary>
     /// <typeparam name="T">The type of object being filtered.</typeparam>
     public class FilterDefinition<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)] T> : IFilterDefinition<T>

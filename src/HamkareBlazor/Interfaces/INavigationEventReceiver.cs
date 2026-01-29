@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace MudBlazor.Interfaces
+namespace HamkareBlazor.Interfaces
 {
 #nullable enable
     public interface INavigationEventReceiver

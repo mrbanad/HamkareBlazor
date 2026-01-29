@@ -1,14 +1,14 @@
 ﻿using Microsoft.AspNetCore.Components;
-using MudBlazor.Interfaces;
-using MudBlazor.Utilities;
+using HamkareBlazor.Interfaces;
+using HamkareBlazor.Utilities;
 
 #nullable enable
-namespace MudBlazor
+namespace HamkareBlazor
 {
     /// <summary>
-    /// Collects and validates user input, monitoring and validating every input derived from MudFormComponent within it.
+    /// Collects and validates user input, monitoring and validating every input derived from HamkareFormComponent within it.
     /// </summary>
-    public partial class MudForm : MudComponentBase, IDisposable, IForm
+    public partial class HamkareForm : HamkareComponentBase, IDisposable, IForm
     {
         // Note: w/o any children the form is automatically valid.
         // It stays valid, as long as non-required fields are added or
@@ -20,13 +20,13 @@ namespace MudBlazor
         private bool _shouldRender = true;
 
         protected string Classname =>
-            new CssBuilder("mud-form")
+            new CssBuilder("hamkare-form")
                 .AddClass($"gap-{Spacing}", Spacing >= 0)
                 .AddClass(Class)
                 .Build();
 
         [CascadingParameter]
-        private MudForm? ParentMudForm { get; set; }
+        private HamkareForm? ParentHamkareForm { get; set; }
 
         [CascadingParameter(Name = "ParentDisabled")]
         private bool ParentDisabled { get; set; }
@@ -93,7 +93,7 @@ namespace MudBlazor
         /// The delay, in milliseconds, before performing validation.
         /// </summary>
         /// <remarks>
-        /// Defaults to <c>300</c> (300 milliseconds).  This delay can improve rendering performance for larger forms with inputs which set <see cref="MudBaseInput{T}.Immediate"/> to <c>true</c>.
+        /// Defaults to <c>300</c> (300 milliseconds).  This delay can improve rendering performance for larger forms with inputs which set <see cref="HamkareBaseInput{T}.Immediate"/> to <c>true</c>.
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.Form.Behavior)]
@@ -204,7 +204,7 @@ namespace MudBlazor
         /// The model populated by this form.
         /// </summary>
         /// <remarks>
-        /// Properties of this model are typically linked to form input components via their <see cref="MudFormComponent{T, U}.For"/>.
+        /// Properties of this model are typically linked to form input components via their <see cref="HamkareFormComponent{T, U}.For"/>.
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.Form.ValidatedData)]
@@ -218,7 +218,7 @@ namespace MudBlazor
 
         protected bool GetReadOnlyState() => ReadOnly || ParentReadOnly;
 
-        protected HashSet<MudForm> ChildForms { get; } = [];
+        protected HashSet<HamkareForm> ChildForms { get; } = [];
 
         protected async Task OnEvaluateForm()
         {
@@ -242,9 +242,9 @@ namespace MudBlazor
                 if (oldTouched != _touched)
                 {
                     await IsTouchedChanged.InvokeAsync(_touched);
-                    if (ParentMudForm != null)
+                    if (ParentHamkareForm != null)
                     {
-                        await ParentMudForm.IsTouchedChanged.InvokeAsync(_touched);
+                        await ParentHamkareForm.IsTouchedChanged.InvokeAsync(_touched);
                     }
                 }
             }
@@ -277,7 +277,7 @@ namespace MudBlazor
 
         protected override void OnInitialized()
         {
-            ParentMudForm?.ChildForms.Add(this);
+            ParentHamkareForm?.ChildForms.Add(this);
 
             base.OnInitialized();
         }
@@ -421,10 +421,10 @@ namespace MudBlazor
             if (disposing)
             {
                 _timer?.Dispose();
-                if (ParentMudForm != null)
+                if (ParentHamkareForm != null)
                 {
-                    ParentMudForm.ChildForms.Remove(this);
-                    ParentMudForm.EvaluateForm(); // Need this to refresh the form state
+                    ParentHamkareForm.ChildForms.Remove(this);
+                    ParentHamkareForm.EvaluateForm(); // Need this to refresh the form state
                 }
             }
         }

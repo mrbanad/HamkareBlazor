@@ -1,11 +1,11 @@
 ﻿//Copyright(c) Alessandro Ghidini.All rights reserved.
-//Changes and improvements Copyright (c) The MudBlazor Team.
+//Changes and improvements Copyright (c) The HamkareBlazor Team.
 
-using MudBlazor.Components.Snackbar;
+using HamkareBlazor.Components.Snackbar;
 
 #nullable enable
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
     /// <summary>
     /// The service used to display snackbar messages.

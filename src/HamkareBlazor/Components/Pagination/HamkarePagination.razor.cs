@@ -1,18 +1,18 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using Microsoft.AspNetCore.Components;
-using MudBlazor.State;
-using MudBlazor.Utilities;
+using HamkareBlazor.State;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
     /// <summary>
     /// A list of clickable page numbers along with navigation buttons.
     /// </summary>
-    public partial class MudPagination : MudComponentBase
+    public partial class HamkarePagination : HamkareComponentBase
     {
         private ParameterState<int> _countState;
         private ParameterState<int> _selectedState;
@@ -20,25 +20,25 @@ namespace MudBlazor
         private ParameterState<int> _boundaryCountState;
 
         private string Classname =>
-            new CssBuilder("mud-pagination")
-                .AddClass($"mud-pagination-{Variant.ToStringFast(true)}")
-                .AddClass($"mud-pagination-{Size.ToStringFast(true)}")
-                .AddClass("mud-pagination-disable-elevation", !DropShadow)
-                .AddClass("mud-pagination-rtl", RightToLeft)
+            new CssBuilder("hamkare-pagination")
+                .AddClass($"hamkare-pagination-{Variant.ToStringFast(true)}")
+                .AddClass($"hamkare-pagination-{Size.ToStringFast(true)}")
+                .AddClass("hamkare-pagination-disable-elevation", !DropShadow)
+                .AddClass("hamkare-pagination-rtl", RightToLeft)
                 .AddClass(Class)
                 .Build();
 
         private string ItemClassname =>
-            new CssBuilder("mud-pagination-item")
-                .AddClass("mud-pagination-item-rectangular", Rectangular)
+            new CssBuilder("hamkare-pagination-item")
+                .AddClass("hamkare-pagination-item-rectangular", Rectangular)
                 .Build();
 
         private string SelectedItemClassname =>
             new CssBuilder(ItemClassname)
-                .AddClass("mud-pagination-item-selected")
+                .AddClass("hamkare-pagination-item-selected")
                 .Build();
 
-        public MudPagination()
+        public HamkarePagination()
         {
             using var register = CreateRegisterScope();
             _selectedState = register.RegisterParameter<int>(nameof(Selected))
@@ -60,7 +60,7 @@ namespace MudBlazor
         /// Displays text right-to-left.
         /// </summary>
         /// <remarks>
-        /// Defaults to <c>false</c>. Controlled via the <see cref="MudRTLProvider"/>.
+        /// Defaults to <c>false</c>. Controlled via the <see cref="HamkareRTLProvider"/>.
         /// </remarks>
         [CascadingParameter(Name = "RightToLeft")]
         public bool RightToLeft { get; set; }

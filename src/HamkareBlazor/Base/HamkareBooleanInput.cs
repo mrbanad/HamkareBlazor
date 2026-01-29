@@ -1,22 +1,22 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using Microsoft.AspNetCore.Components;
-using MudBlazor.State;
+using HamkareBlazor.State;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
     /// <summary>
     /// Represents a form input component which stores a boolean value.
     /// </summary>
     /// <typeparam name="T">The type of item managed by this component.</typeparam>
-    public class MudBooleanInput<T> : MudFormComponent<T?, bool?>
+    public class HamkareBooleanInput<T> : HamkareFormComponent<T?, bool?>
     {
         private readonly ParameterState<T?> _valueState;
 
-        public MudBooleanInput()
+        public HamkareBooleanInput()
         {
             using var registerScope = CreateRegisterScope();
             _valueState = registerScope.RegisterParameter<T?>(nameof(Value))

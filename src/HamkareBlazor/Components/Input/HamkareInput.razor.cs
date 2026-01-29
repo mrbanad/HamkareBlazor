@@ -2,51 +2,51 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
-using MudBlazor.Utilities;
+using HamkareBlazor.Utilities;
 
 #nullable enable
-namespace MudBlazor
+namespace HamkareBlazor
 {
     /// <summary>
     /// A component for collecting an input value.
     /// </summary>
     /// <typeparam name="T">The type of object managed by this input.</typeparam>
-    public partial class MudInput<T> : MudBaseInput<T>
+    public partial class HamkareInput<T> : HamkareBaseInput<T>
     {
         private string? _internalText;
         private string? _oldText = null;
         private bool _shouldInitSizing;
         private ElementReference _elementReference1;
-        private readonly Lazy<DotNetObjectReference<MudInput<T>>> _dotNetReferenceLazy;
+        private readonly Lazy<DotNetObjectReference<HamkareInput<T>>> _dotNetReferenceLazy;
 
         [DynamicDependency(nameof(CallOnBlurredAsync))]
-        public MudInput()
+        public HamkareInput()
         {
-            _dotNetReferenceLazy = new Lazy<DotNetObjectReference<MudInput<T>>>(DotNetObjectReference.Create(this));
+            _dotNetReferenceLazy = new Lazy<DotNetObjectReference<HamkareInput<T>>>(DotNetObjectReference.Create(this));
         }
 
         protected string Classname =>
             new CssBuilder(
-                    MudInputCssHelper.GetClassname(this,
+                    HamkareInputCssHelper.GetClassname(this,
                         () => HasNativeHtmlPlaceholder() ||
                               !string.IsNullOrEmpty(ReadText) ||
                               Adornment == Adornment.Start ||
                               !string.IsNullOrWhiteSpace(Placeholder) ||
                               ShrinkLabel))
-                .AddClass($"mud-input-sizing-{Sizing.ToStringFast(true)}")
+                .AddClass($"hamkare-input-sizing-{Sizing.ToStringFast(true)}")
                 .Build();
 
-        protected string InputClassname => MudInputCssHelper.GetInputClassname(this);
+        protected string InputClassname => HamkareInputCssHelper.GetInputClassname(this);
 
-        protected string AdornmentClassname => MudInputCssHelper.GetAdornmentClassname(this);
+        protected string AdornmentClassname => HamkareInputCssHelper.GetAdornmentClassname(this);
 
         protected string ClearButtonClassname =>
-            new CssBuilder("mud-input-clear-button")
+            new CssBuilder("hamkare-input-clear-button")
                 .AddClass("me-n1", Adornment == Adornment.End && HideSpinButtons == false)
-                .AddClass("mud-icon-button-edge-end", Adornment == Adornment.End && HideSpinButtons)
+                .AddClass("hamkare-icon-button-edge-end", Adornment == Adornment.End && HideSpinButtons)
                 .AddClass("me-6", Adornment != Adornment.End && HideSpinButtons == false)
-                .AddClass("mud-icon-button-edge-margin-end", Adornment != Adornment.End && HideSpinButtons)
-                .AddClass("mud-no-activator")
+                .AddClass("hamkare-icon-button-edge-margin-end", Adornment != Adornment.End && HideSpinButtons)
+                .AddClass("hamkare-no-activator")
                 .Build();
 
         protected internal override InputType GetInputType() => InputType;
@@ -80,7 +80,7 @@ namespace MudBlazor
         /// Occurs when the <c>Up</c> arrow button is clicked.
         /// </summary>
         /// <remarks>
-        /// Only occurs when <see cref="InputType"/> is <see cref="InputType.Number"/>.  For numeric inputs, use the <see cref="MudNumericField{T}"/> component.
+        /// Only occurs when <see cref="InputType"/> is <see cref="InputType.Number"/>.  For numeric inputs, use the <see cref="HamkareNumericField{T}"/> component.
         /// </remarks>
         [Parameter]
         public EventCallback OnIncrement { get; set; }
@@ -89,13 +89,13 @@ namespace MudBlazor
         /// Occurs when the <c>Down</c> arrow button is clicked.
         /// </summary>
         /// <remarks>
-        /// Only occurs when <see cref="InputType"/> is <see cref="InputType.Number"/>.  For numeric inputs, use the <see cref="MudNumericField{T}"/> component.
+        /// Only occurs when <see cref="InputType"/> is <see cref="InputType.Number"/>.  For numeric inputs, use the <see cref="HamkareNumericField{T}"/> component.
         /// </remarks>
         [Parameter]
         public EventCallback OnDecrement { get; set; }
 
         /// <summary>
-        /// For <see cref="MudNumericField{T}"/>, hides the spin buttons.
+        /// For <see cref="HamkareNumericField{T}"/>, hides the spin buttons.
         /// </summary>
         /// <remarks>
         /// Defaults to <c>true</c>.
@@ -116,7 +116,7 @@ namespace MudBlazor
         /// Occurs when the clear button is clicked.
         /// </summary>
         /// <remarks>
-        /// When clicked, the <see cref="MudBaseInput{T}.Text"/> and <see cref="MudBaseInput{T}.Value"/> properties are reset.
+        /// When clicked, the <see cref="HamkareBaseInput{T}.Text"/> and <see cref="HamkareBaseInput{T}.Value"/> properties are reset.
         /// </remarks>
         [Parameter]
         public EventCallback<MouseEventArgs> OnClearButtonClick { get; set; }
@@ -214,26 +214,26 @@ namespace MudBlazor
             }
             catch (Exception e)
             {
-                Console.WriteLine($@"MudInput.FocusAsync: {e.Message}");
+                Console.WriteLine($@"HamkareInput.FocusAsync: {e.Message}");
             }
         }
 
         /// <inheritdoc />
         public override ValueTask BlurAsync()
         {
-            return ElementReference.MudBlurAsync();
+            return ElementReference.HamkareBlurAsync();
         }
 
         /// <inheritdoc />
         public override ValueTask SelectAsync()
         {
-            return ElementReference.MudSelectAsync();
+            return ElementReference.HamkareSelectAsync();
         }
 
         /// <inheritdoc />
         public override ValueTask SelectRangeAsync(int pos1, int pos2)
         {
-            return ElementReference.MudSelectRangeAsync(pos1, pos2);
+            return ElementReference.HamkareSelectRangeAsync(pos1, pos2);
         }
 
         private Size GetButtonSize() => Margin == Margin.Dense ? Size.Small : Size.Medium;
@@ -301,14 +301,14 @@ namespace MudBlazor
                 {
                     // Disable dynamic sizing.
                     _shouldInitSizing = false;
-                    await JsRuntime.InvokeVoidAsyncWithErrorHandling("mudInputSizing.destroy", ElementReference);
+                    await JsRuntime.InvokeVoidAsyncWithErrorHandling("hamkareInputSizing.destroy", ElementReference);
                 }
                 else if (oldLines != Lines || oldMaxLines != MaxLines || oldSizing != newSizing)
                 {
                     if (newSizing != InputSizing.Fixed && !_shouldInitSizing)
                     {
                         // Update dynamic sizing parameters (if it was already enabled).
-                        await JsRuntime.InvokeVoidAsyncWithErrorHandling("mudInputSizing.updateParams", ElementReference, MaxLines);
+                        await JsRuntime.InvokeVoidAsyncWithErrorHandling("hamkareInputSizing.updateParams", ElementReference, MaxLines);
                     }
                 }
             }
@@ -324,12 +324,12 @@ namespace MudBlazor
                 if (firstRender || _shouldInitSizing)
                 {
                     _shouldInitSizing = false;
-                    await JsRuntime.InvokeVoidAsyncWithErrorHandling("mudInputSizing.init", ElementReference, MaxLines);
+                    await JsRuntime.InvokeVoidAsyncWithErrorHandling("hamkareInputSizing.init", ElementReference, MaxLines);
                     _oldText = _internalText;
                 }
                 else if (_oldText != _internalText)
                 {
-                    await JsRuntime.InvokeVoidAsyncWithErrorHandling("mudInputSizing.adjustHeight", ElementReference);
+                    await JsRuntime.InvokeVoidAsyncWithErrorHandling("hamkareInputSizing.adjustHeight", ElementReference);
                     _oldText = _internalText;
                 }
             }
@@ -337,14 +337,14 @@ namespace MudBlazor
             {
                 // add onblur event through javascript which will trigger CallOnBlurredAsync
                 // must do in javascript or it won't detect ios Keyboard button - limitation of Blazor/React/other frameworks of the DOM
-                await ElementReference.MudAttachBlurEventWithJS(_dotNetReferenceLazy.Value);
+                await ElementReference.HamkareAttachBlurEventWithJS(_dotNetReferenceLazy.Value);
             }
 
             await base.OnAfterRenderAsync(firstRender);
         }
 
         /// <summary>
-        /// Set the <see cref="MudBaseInput{T}.Text"/> to the specified value.
+        /// Set the <see cref="HamkareBaseInput{T}.Text"/> to the specified value.
         /// </summary>
         /// <param name="text">The new value.</param>
         public Task SetText(string? text)
@@ -370,10 +370,10 @@ namespace MudBlazor
         {
             if (IsJSRuntimeAvailable)
             {
-                await JsRuntime.InvokeVoidAsyncWithErrorHandling("mudElementRef.removeOnBlurEvent", ElementReference);
+                await JsRuntime.InvokeVoidAsyncWithErrorHandling("hamkareElementRef.removeOnBlurEvent", ElementReference);
                 if (Sizing != InputSizing.Fixed)
                 {
-                    await JsRuntime.InvokeVoidAsyncWithErrorHandling("mudInputSizing.destroy", ElementReference);
+                    await JsRuntime.InvokeVoidAsyncWithErrorHandling("hamkareInputSizing.destroy", ElementReference);
                 }
             }
 
@@ -399,5 +399,5 @@ namespace MudBlazor
     /// <summary>
     /// An input component for collecting alphanumeric values.
     /// </summary>
-    public class MudInputString : MudInput<string> { }
+    public class HamkareInputString : HamkareInput<string> { }
 }

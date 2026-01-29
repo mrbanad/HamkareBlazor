@@ -1,81 +1,81 @@
 ﻿@import '../abstracts/variables';
 
-.mud-appbar {
+.hamkare-appbar {
   width: 100%;
   display: flex;
-  z-index: var(--mud-zindex-appbar);
+  z-index: var(--hamkare-zindex-appbar);
   position: relative;
   box-sizing: border-box;
   flex-shrink: 0;
   flex-direction: column;
-  color: var(--mud-palette-appbar-text);
-  background-color: var(--mud-palette-appbar-background);
+  color: var(--hamkare-palette-appbar-text);
+  background-color: var(--hamkare-palette-appbar-background);
   transition: margin 225ms cubic-bezier(0.0, 0, 0.2, 1) 0ms,width 225ms cubic-bezier(0.0, 0, 0.2, 1) 0ms;
 
-  &.mud-appbar-fixed-top {
+  &.hamkare-appbar-fixed-top {
     position: fixed;
     top: 0;
     right: 0;
     left: 0;
 
-    .mud-popover-cascading-value {
+    .hamkare-popover-cascading-value {
       position: fixed;
     }
   }
 
-  &.mud-appbar-fixed-bottom {
+  &.hamkare-appbar-fixed-bottom {
     position: fixed;
     bottom: 0;
     right: 0;
     left: 0;
 
-    .mud-popover-cascading-value {
+    .hamkare-popover-cascading-value {
       position: fixed;
     }
   }
 
-  .mud-toolbar-appbar {
-    height: calc(var(--mud-appbar-height) - var(--mud-appbar-height) / 8);
+  .hamkare-toolbar-appbar {
+    height: calc(var(--hamkare-appbar-height) - var(--hamkare-appbar-height) / 8);
   }
 
   @media (min-width:$breakpoint-xs) and (orientation: landscape) {
-    .mud-toolbar-appbar {
-      height: calc(var(--mud-appbar-height) - var(--mud-appbar-height) / 4);
+    .hamkare-toolbar-appbar {
+      height: calc(var(--hamkare-appbar-height) - var(--hamkare-appbar-height) / 4);
     }
   }
 
   @media (min-width:$breakpoint-sm) {
-    .mud-toolbar-appbar {
-      height: var(--mud-appbar-height);
+    .hamkare-toolbar-appbar {
+      height: var(--hamkare-appbar-height);
     }
   }
 
-  &.mud-appbar-dense {
-    .mud-toolbar-appbar {
-      height: calc(var(--mud-appbar-height) - var(--mud-appbar-height) / 4);
+  &.hamkare-appbar-dense {
+    .hamkare-toolbar-appbar {
+      height: calc(var(--hamkare-appbar-height) - var(--hamkare-appbar-height) / 4);
     }
   }
 }
 
-.mud-drawer-open {
+.hamkare-drawer-open {
   &-responsive {
     @each $breakpoint in map-keys($breakpoints) {
       &-#{$breakpoint} {
         @media (min-width: map-get($breakpoints, $breakpoint)) {
-          &-left.mud-drawer-left-clipped-never .mud-appbar {
-            margin-left: var(--mud-drawer-width-left);
-            width: calc(100% - var(--mud-drawer-width-left));
+          &-left.hamkare-drawer-left-clipped-never .hamkare-appbar {
+            margin-left: var(--hamkare-drawer-width-left);
+            width: calc(100% - var(--hamkare-drawer-width-left));
           }
 
-          &-right.mud-drawer-right-clipped-never .mud-appbar {
-            margin-right: var(--mud-drawer-width-right);
-            width: calc(100% - var(--mud-drawer-width-right));
+          &-right.hamkare-drawer-right-clipped-never .hamkare-appbar {
+            margin-right: var(--hamkare-drawer-width-right);
+            width: calc(100% - var(--hamkare-drawer-width-right));
           }
 
-          &-left.mud-drawer-left-clipped-never#{&}-right.mud-drawer-right-clipped-never .mud-appbar {
-            margin-left: var(--mud-drawer-width-left);
-            margin-right: var(--mud-drawer-width-right);
-            width: calc(100% - var(--mud-drawer-width-left) - var(--mud-drawer-width-right));
+          &-left.hamkare-drawer-left-clipped-never#{&}-right.hamkare-drawer-right-clipped-never .hamkare-appbar {
+            margin-left: var(--hamkare-drawer-width-left);
+            margin-right: var(--hamkare-drawer-width-right);
+            width: calc(100% - var(--hamkare-drawer-width-left) - var(--hamkare-drawer-width-right));
           }
         }
       }
@@ -83,20 +83,20 @@
   }
 
   &-persistent {
-    &-left.mud-drawer-left-clipped-never .mud-appbar {
-      margin-left: var(--mud-drawer-width-left);
-      width: calc(100% - var(--mud-drawer-width-left));
+    &-left.hamkare-drawer-left-clipped-never .hamkare-appbar {
+      margin-left: var(--hamkare-drawer-width-left);
+      width: calc(100% - var(--hamkare-drawer-width-left));
     }
 
-    &-right.mud-drawer-right-clipped-never .mud-appbar {
-      margin-right: var(--mud-drawer-width-right);
-      width: calc(100% - var(--mud-drawer-width-right));
+    &-right.hamkare-drawer-right-clipped-never .hamkare-appbar {
+      margin-right: var(--hamkare-drawer-width-right);
+      width: calc(100% - var(--hamkare-drawer-width-right));
     }
 
-    &-left.mud-drawer-left-clipped-never#{&}-right.mud-drawer-right-clipped-never .mud-appbar {
-      margin-left: var(--mud-drawer-width-left);
-      margin-right: var(--mud-drawer-width-right);
-      width: calc(100% - var(--mud-drawer-width-left) - var(--mud-drawer-width-right));
+    &-left.hamkare-drawer-left-clipped-never#{&}-right.hamkare-drawer-right-clipped-never .hamkare-appbar {
+      margin-left: var(--hamkare-drawer-width-left);
+      margin-right: var(--hamkare-drawer-width-right);
+      width: calc(100% - var(--hamkare-drawer-width-left) - var(--hamkare-drawer-width-right));
     }
   }
 
@@ -104,20 +104,20 @@
     @each $breakpoint in map-keys($breakpoints) {
       &-#{$breakpoint} {
         @media (min-width: map-get($breakpoints, $breakpoint)) {
-          &-left.mud-drawer-left-clipped-never .mud-appbar {
-            margin-left: var(--mud-drawer-width-left);
-            width: calc(100% - var(--mud-drawer-width-left));
+          &-left.hamkare-drawer-left-clipped-never .hamkare-appbar {
+            margin-left: var(--hamkare-drawer-width-left);
+            width: calc(100% - var(--hamkare-drawer-width-left));
           }
 
-          &-right.mud-drawer-right-clipped-never .mud-appbar {
-            margin-right: var(--mud-drawer-width-right);
-            width: calc(100% - var(--mud-drawer-width-right));
+          &-right.hamkare-drawer-right-clipped-never .hamkare-appbar {
+            margin-right: var(--hamkare-drawer-width-right);
+            width: calc(100% - var(--hamkare-drawer-width-right));
           }
 
-          &-left.mud-drawer-left-clipped-never#{&}-right.mud-drawer-right-clipped-never .mud-appbar {
-            margin-left: var(--mud-drawer-width-left);
-            margin-right: var(--mud-drawer-width-right);
-            width: calc(100% - var(--mud-drawer-width-left) - var(--mud-drawer-width-right));
+          &-left.hamkare-drawer-left-clipped-never#{&}-right.hamkare-drawer-right-clipped-never .hamkare-appbar {
+            margin-left: var(--hamkare-drawer-width-left);
+            margin-right: var(--hamkare-drawer-width-right);
+            width: calc(100% - var(--hamkare-drawer-width-left) - var(--hamkare-drawer-width-right));
           }
         }
       }
@@ -125,40 +125,40 @@
   }
 }
 
-.mud-drawer-close-mini {
+.hamkare-drawer-close-mini {
   @each $breakpoint in map-keys($breakpoints) {
     &-#{$breakpoint} {
-      &-left.mud-drawer-left-clipped-never .mud-appbar {
-        margin-left: var(--mud-drawer-width-mini-left);
-        width: calc(100% - var(--mud-drawer-width-mini-left));
+      &-left.hamkare-drawer-left-clipped-never .hamkare-appbar {
+        margin-left: var(--hamkare-drawer-width-mini-left);
+        width: calc(100% - var(--hamkare-drawer-width-mini-left));
       }
 
-      &-right.mud-drawer-right-clipped-never .mud-appbar {
-        margin-right: var(--mud-drawer-width-mini-right);
-        width: calc(100% - var(--mud-drawer-width-mini-right));
+      &-right.hamkare-drawer-right-clipped-never .hamkare-appbar {
+        margin-right: var(--hamkare-drawer-width-mini-right);
+        width: calc(100% - var(--hamkare-drawer-width-mini-right));
       }
 
-      &-left.mud-drawer-left-clipped-never#{&}-right.mud-drawer-right-clipped-never .mud-appbar {
-        margin-left: var(--mud-drawer-width-mini-left);
-        margin-right: var(--mud-drawer-width-mini-right);
-        width: calc(100% - var(--mud-drawer-width-mini-left) - var(--mud-drawer-width-mini-right));
+      &-left.hamkare-drawer-left-clipped-never#{&}-right.hamkare-drawer-right-clipped-never .hamkare-appbar {
+        margin-left: var(--hamkare-drawer-width-mini-left);
+        margin-right: var(--hamkare-drawer-width-mini-right);
+        width: calc(100% - var(--hamkare-drawer-width-mini-left) - var(--hamkare-drawer-width-mini-right));
       }
 
       @media (max-width: map-get($breakpoints, $breakpoint)) {
-        &-left.mud-drawer-left-clipped-docked .mud-appbar {
-          margin-left: var(--mud-drawer-width-mini-left);
-          width: calc(100% - var(--mud-drawer-width-mini-left));
+        &-left.hamkare-drawer-left-clipped-docked .hamkare-appbar {
+          margin-left: var(--hamkare-drawer-width-mini-left);
+          width: calc(100% - var(--hamkare-drawer-width-mini-left));
         }
 
-        &-right.mud-drawer-right-clipped-docked .mud-appbar {
-          margin-right: var(--mud-drawer-width-mini-right);
-          width: calc(100% - var(--mud-drawer-width-mini-right));
+        &-right.hamkare-drawer-right-clipped-docked .hamkare-appbar {
+          margin-right: var(--hamkare-drawer-width-mini-right);
+          width: calc(100% - var(--hamkare-drawer-width-mini-right));
         }
 
-        &-left.mud-drawer-left-clipped-docked#{&}-right.mud-drawer-right-clipped-docked .mud-appbar {
-          margin-left: var(--mud-drawer-width-mini-left);
-          margin-right: var(--mud-drawer-width-mini-right);
-          width: calc(100% - var(--mud-drawer-width-mini-left) - var(--mud-drawer-width-mini-right));
+        &-left.hamkare-drawer-left-clipped-docked#{&}-right.hamkare-drawer-right-clipped-docked .hamkare-appbar {
+          margin-left: var(--hamkare-drawer-width-mini-left);
+          margin-right: var(--hamkare-drawer-width-mini-right);
+          width: calc(100% - var(--hamkare-drawer-width-mini-left) - var(--hamkare-drawer-width-mini-right));
         }
       }
     }

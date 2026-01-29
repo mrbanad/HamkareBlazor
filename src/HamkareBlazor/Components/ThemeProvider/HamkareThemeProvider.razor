@@ -1,18 +1,18 @@
-﻿@namespace MudBlazor
+﻿@namespace HamkareBlazor
 @inherits ComponentBaseWithState
 
 @if(!DefaultScrollbar)
 {
-    @((MarkupString)BuildMudBlazorScrollbar())
+    @((MarkupString)BuildHamkareBlazorScrollbar())
 }
 
 @*Needed for charts, maybe put in bool, IncludeCharts="true"??*@
 <style>
-    .mud-chart-serie:hover {
+    .hamkare-chart-serie:hover {
         filter: url(#lighten);
     }
 
-    .mud-chart-serie-hovered @*This is the class that is added to the path when hovered for when a datapoint circle is used to capture the mouse positioning*@
+    .hamkare-chart-serie-hovered @*This is the class that is added to the path when hovered for when a datapoint circle is used to capture the mouse positioning*@
     {
         filter: url(#lighten);
     }

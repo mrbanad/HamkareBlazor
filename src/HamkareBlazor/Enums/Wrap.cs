@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel;
 using NetEscapades.EnumGenerators;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
     /// <summary>
-    /// Indicates how items in a <see cref="MudStack"/> are wrapped.
+    /// Indicates how items in a <see cref="HamkareStack"/> are wrapped.
     /// </summary>
     [EnumExtensions]
     public enum Wrap
@@ -22,7 +22,7 @@ namespace MudBlazor
         /// Items are wrapped to fit the container.
         /// </summary>
         /// <remarks>
-        /// When <see cref="MudStack.Row"/> is <c>true</c>, items are wrapped to fit into the width of the container.<br />
+        /// When <see cref="HamkareStack.Row"/> is <c>true</c>, items are wrapped to fit into the width of the container.<br />
         /// When <c>false</c>, items are wrapped to fit into the height of the container.
         /// </remarks>
         [Description("wrap")]

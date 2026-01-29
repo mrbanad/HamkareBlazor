@@ -1,15 +1,15 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Collections;
 using System.Collections.Frozen;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Components;
-using MudBlazor.State.Comparer;
-using MudBlazor.State.Invocation;
+using HamkareBlazor.State.Comparer;
+using HamkareBlazor.State.Invocation;
 
-namespace MudBlazor.State;
+namespace HamkareBlazor.State;
 
 #nullable enable
 /// <summary>

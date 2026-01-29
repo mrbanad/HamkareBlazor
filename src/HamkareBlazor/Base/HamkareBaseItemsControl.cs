@@ -2,15 +2,15 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
     /// <summary>
     /// Represents a base class for designing components which contain items.
     /// </summary>
-    /// <typeparam name="TChildComponent">The type of <see cref="MudComponentBase"/> managed by this component.</typeparam>
-    public abstract class MudBaseItemsControl<TChildComponent> : MudComponentBase
-            where TChildComponent : MudComponentBase
+    /// <typeparam name="TChildComponent">The type of <see cref="HamkareComponentBase"/> managed by this component.</typeparam>
+    public abstract class HamkareBaseItemsControl<TChildComponent> : HamkareComponentBase
+            where TChildComponent : HamkareComponentBase
     {
         private int _selectedIndexField = -1;
 

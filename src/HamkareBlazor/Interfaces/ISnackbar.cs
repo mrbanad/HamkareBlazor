@@ -1,12 +1,12 @@
 ﻿//Copyright(c) Alessandro Ghidini.All rights reserved.
-//Changes and improvements Copyright (c) The MudBlazor Team.
+//Changes and improvements Copyright (c) The HamkareBlazor Team.
 
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Components;
 
 #nullable enable
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 /// <summary>
 /// Defines the snackbar service.

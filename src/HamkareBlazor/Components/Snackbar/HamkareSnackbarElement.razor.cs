@@ -1,13 +1,13 @@
 ﻿// Copyright (c) Alessandro Ghidini. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-// Changes and improvements Copyright (c) The MudBlazor Team
+// Changes and improvements Copyright (c) The HamkareBlazor Team
 using Microsoft.AspNetCore.Components;
-using MudBlazor.Components.Snackbar;
+using HamkareBlazor.Components.Snackbar;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
-    public partial class MudSnackbarElement : MudComponentBase, IDisposable
+    public partial class HamkareSnackbarElement : HamkareComponentBase, IDisposable
     {
         private RenderFragment? _css;
 

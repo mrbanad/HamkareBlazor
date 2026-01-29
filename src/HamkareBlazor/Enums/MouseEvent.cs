@@ -1,7 +1,7 @@
-﻿namespace MudBlazor;
+﻿namespace HamkareBlazor;
 
 /// <summary>
-/// Indicates the action which displays a <see cref="MudMenu"/>.
+/// Indicates the action which displays a <see cref="HamkareMenu"/>.
 /// </summary>
 public enum MouseEvent
 {

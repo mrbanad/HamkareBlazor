@@ -1,10 +1,10 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using MudBlazor.Charts;
+using HamkareBlazor.Charts;
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 #nullable enable
 /// <summary>
@@ -26,9 +26,9 @@ public class RadarChartOptions : DefaultRadialChartOptions, IRadialChartOptions,
 
     /// <summary>
     /// Sets the color of the grid lines.
-    /// Default is "var(--mud-palette-divider)".
+    /// Default is "var(--hamkare-palette-divider)".
     /// </summary>
-    public string GridLineColor { get; set; } = "var(--mud-palette-divider)";
+    public string GridLineColor { get; set; } = "var(--hamkare-palette-divider)";
 
     /// <summary>
     /// Sets the stroke width of the grid lines.
@@ -55,9 +55,9 @@ public class RadarChartOptions : DefaultRadialChartOptions, IRadialChartOptions,
 
     /// <summary>
     /// Sets the color of the axis lines.
-    /// Default is "var(--mud-palette-lines-inputs)".
+    /// Default is "var(--hamkare-palette-lines-inputs)".
     /// </summary>
-    public string AxisLineColor { get; set; } = "var(--mud-palette-lines-inputs)";
+    public string AxisLineColor { get; set; } = "var(--hamkare-palette-lines-inputs)";
 
     /// <summary>
     /// Sets the stroke width of the axis lines.

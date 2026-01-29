@@ -1,8 +1,8 @@
 ﻿"use strict";
 
 // noinspection JSUnusedGlobalSymbols
-/** This is the companion class for the MudBlazor.ScrollListener. */
-class MudScrollListener {
+/** This is the companion class for the HamkareBlazor.ScrollListener. */
+class HamkareScrollListener {
     constructor() {
         this.EVENT_TYPE = "scroll";
         this.throttleScrollHandlerIds = Object.create(null);
@@ -23,7 +23,7 @@ class MudScrollListener {
     _getElementBySelector(selector) {
         const element = selector ? document.querySelector(selector) : document;
         if (!element && selector) {
-            console.error(`[MudBlazor] MudScrollListener._getElementBySelector: Element not found: ${selector}`);
+            console.error(`[HamkareBlazor] HamkareScrollListener._getElementBySelector: Element not found: ${selector}`);
             return null;
         }
 
@@ -46,7 +46,7 @@ class MudScrollListener {
             // noinspection JSUnresolvedReference
             dotnetReference.invokeMethodAsync('RaiseOnScroll', scrollData);
         } catch (error) {
-            console.error('[MudBlazor] MudScrollListener.scrollHandler:', {error});
+            console.error('[HamkareBlazor] HamkareScrollListener.scrollHandler:', {error});
         }
     }
 
@@ -89,6 +89,6 @@ class MudScrollListener {
     }
 }
 
-if (!window.mudScrollListener) {
-    window.mudScrollListener = new MudScrollListener();
+if (!window.hamkareScrollListener) {
+    window.hamkareScrollListener = new HamkareScrollListener();
 }

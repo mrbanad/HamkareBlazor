@@ -17,6 +17,6 @@
   </ItemGroup>
   
   <ItemGroup>
-    <InternalsVisibleTo Include="MudBlazor.UnitTests" />
+    <InternalsVisibleTo Include="HamkareBlazor.UnitTests" />
   </ItemGroup>
 </Project>

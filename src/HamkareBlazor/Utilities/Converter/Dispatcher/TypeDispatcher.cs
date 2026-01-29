@@ -1,8 +1,8 @@
 ﻿using System.Reflection;
-using MudBlazor.Resources;
-using MudBlazor.Utilities.Exceptions;
+using HamkareBlazor.Resources;
+using HamkareBlazor.Utilities.Exceptions;
 
-namespace MudBlazor.Utilities.Converter.Dispatcher;
+namespace HamkareBlazor.Utilities.Converter.Dispatcher;
 
 #nullable enable
 /// <summary>

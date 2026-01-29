@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel;
 using NetEscapades.EnumGenerators;
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 /// <summary>
-/// Indicates the clipping behavior of a <see cref="MudDrawer"/> when inside of a <see cref="MudLayout"/>.
+/// Indicates the clipping behavior of a <see cref="HamkareDrawer"/> when inside of a <see cref="HamkareLayout"/>.
 /// </summary>
 [EnumExtensions]
 public enum DrawerClipMode

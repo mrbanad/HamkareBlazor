@@ -1,11 +1,11 @@
-﻿@namespace MudBlazor.Charts
+﻿@namespace HamkareBlazor.Charts
 
-@inherits MudComponentBase
+@inherits HamkareComponentBase
 
 @typeparam T
 @typeparam TChartOptions
 
-<svg @ref="_svgRef" @attributes="UserAttributes" class="@($"{ChartClass} mud-ltr")" width="@Width" height="@Height" viewBox="0 0 @(ToS(Radius * 2)) @(ToS(Radius * 2))" style="@HoveredStylename">
+<svg @ref="_svgRef" @attributes="UserAttributes" class="@($"{ChartClass} hamkare-ltr")" width="@Width" height="@Height" viewBox="0 0 @(ToS(Radius * 2)) @(ToS(Radius * 2))" style="@HoveredStylename">
     <Filters />
 
     <g transform="translate(@Radius.ToStr(), @Radius.ToStr())">
@@ -20,7 +20,7 @@
         @foreach (var item in Paths)
         {
             <path @onclick="() => OnPathClick.InvokeAsync(item.Index)"
-                  class="mud-chart-serie"
+                  class="hamkare-chart-serie"
                   fill-opacity="@ChartOptions.FillOpacity"
                   stroke="@GetColor(item.Index)"
                   stroke-width="@(ChartOptions is IHasDataPointOptions dataPoint ? dataPoint.StrokeWidth : 0)"
@@ -33,7 +33,7 @@
 
                 @if (ChartOptions is IHasValueLabelOptions { ShowValues: true  } && item is SvgPetal petal)
                 {
-                    <g class="mud-chart-labels">
+                    <g class="hamkare-chart-labels">
                         @if (!string.IsNullOrEmpty(item.LabelXValue) || !string.IsNullOrEmpty(item.LabelYValue))
                         {
                             @RenderValueLabel(petal);
@@ -60,7 +60,7 @@
 
         if (TooltipTemplate is not null)
         {
-            <g class="mud-chart-tooltip" transform="translate(@tooltipX.ToStr(), @tooltipY.ToStr())">
+            <g class="hamkare-chart-tooltip" transform="translate(@tooltipX.ToStr(), @tooltipY.ToStr())">
                 @TooltipTemplate((HoveredSegment, color))
             </g>
         }
@@ -82,7 +82,7 @@
         var y = ToS((path.LabelY * 0.8) + (path.LabelY * path.LabelOffset));
 
         builder.OpenElement(seq++, "text");
-        builder.AddAttribute(seq++, "class", "mud-chart-label-value");
+        builder.AddAttribute(seq++, "class", "hamkare-chart-label-value");
         builder.AddAttribute(seq++, "onclick", EventCallback.Factory.Create(this, () => OnPathClick.InvokeAsync(path.Index)));
         builder.AddAttribute(seq++, "x", x);
         builder.AddAttribute(seq++, "y", y);

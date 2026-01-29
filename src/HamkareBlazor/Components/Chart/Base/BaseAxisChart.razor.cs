@@ -1,22 +1,22 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Numerics;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
-using MudBlazor.Interop;
-using MudBlazor.Utilities;
+using HamkareBlazor.Interop;
+using HamkareBlazor.Utilities;
 
 #nullable enable
-namespace MudBlazor.Charts;
+namespace HamkareBlazor.Charts;
 
 /// <summary>
 /// Represents a base component for charts with axes.
 /// </summary>
 /// <typeparam name="T">The data type of the chart.</typeparam>
 /// <typeparam name="TChartOptions">The type of chart options.</typeparam>
-public partial class BaseAxisChart<T, TChartOptions> : MudComponentBase
+public partial class BaseAxisChart<T, TChartOptions> : HamkareComponentBase
     where T : struct, INumber<T>, IMinMaxValue<T>, IFormattable
     where TChartOptions : IAxisChartOptions, new()
 {
@@ -222,8 +222,8 @@ public partial class BaseAxisChart<T, TChartOptions> : MudComponentBase
         if (firstRender)
             await ElementRefChanged.InvokeAsync(_svgRef);
 
-        var yAxisLabelSize = _yAxisGroupElementReference != null ? await JsRuntime.InvokeAsync<ElementSize>("mudGetSvgBBox", _yAxisGroupElementReference) : null;
-        var xAxisLabelSize = _xAxisGroupElementReference != null ? await JsRuntime.InvokeAsync<ElementSize>("mudGetSvgBBox", _xAxisGroupElementReference) : null;
+        var yAxisLabelSize = _yAxisGroupElementReference != null ? await JsRuntime.InvokeAsync<ElementSize>("hamkareGetSvgBBox", _yAxisGroupElementReference) : null;
+        var xAxisLabelSize = _xAxisGroupElementReference != null ? await JsRuntime.InvokeAsync<ElementSize>("hamkareGetSvgBBox", _xAxisGroupElementReference) : null;
 
         var axisChanged = false;
         var comparer = new DoubleEpsilonEqualityComparer(0.01);

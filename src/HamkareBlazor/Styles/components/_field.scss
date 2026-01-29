@@ -1,30 +1,30 @@
-﻿.mud-input-control.mud-field {
-  .mud-input-slot {
+﻿.hamkare-input-control.hamkare-field {
+  .hamkare-input-slot {
     height: auto;
     min-height: 19px;
 
-    &.mud-input-root-outlined.mud-input-adorned-start {
+    &.hamkare-input-root-outlined.hamkare-input-adorned-start {
       padding-left: 0;
       padding-inline-start: 0;
       padding-inline-end: 14px;
     }
 
-    &.mud-input-root-filled.mud-input-adorned-start {
+    &.hamkare-input-root-filled.hamkare-input-adorned-start {
       padding-left: 0;
       padding-inline-start: 0;
       padding-inline-end: 12px;
     }
 
-    &.mud-input-slot-nopadding {
+    &.hamkare-input-slot-nopadding {
       padding-top: 0px;
       padding-bottom: 0px;
 
-      &.mud-input-root-filled {
+      &.hamkare-input-root-filled {
         padding-top: 21px;
         padding-bottom: 2px;
       }
 
-      &.mud-input-root-outlined {
+      &.hamkare-input-root-outlined {
         padding-top: 7px;
         padding-bottom: 2px;
       }

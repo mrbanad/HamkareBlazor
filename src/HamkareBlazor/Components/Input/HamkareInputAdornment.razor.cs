@@ -1,21 +1,21 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using MudBlazor.Utilities;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor.Internal;
+namespace HamkareBlazor.Internal;
 
 #nullable enable
 /// <summary>
 /// An icon displayed within an input component.
 /// </summary>
-public partial class MudInputAdornment
+public partial class HamkareInputAdornment
 {
     protected string Classname =>
-        new CssBuilder("mud-input-adornment")
+        new CssBuilder("hamkare-input-adornment")
             .AddClass(Class)
             .Build();
 

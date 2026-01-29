@@ -1,6 +1,6 @@
-﻿using MudBlazor.Charts;
+﻿using HamkareBlazor.Charts;
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 #nullable enable
 public class SankeyChartOptions : DefaultChartOptions
@@ -87,9 +87,9 @@ public class SankeyChartOptions : DefaultChartOptions
     /// The color used to highlight nodes and edges on hover.
     /// </summary>
     /// <remarks>
-    /// Defaults to <c>var(--mud-palette-text-primary)</c>.
+    /// Defaults to <c>var(--hamkare-palette-text-primary)</c>.
     /// </remarks>
-    public string HighlightColor { get; set; } = "var(--mud-palette-text-primary)";
+    public string HighlightColor { get; set; } = "var(--hamkare-palette-text-primary)";
 
     /// <summary>
     /// The aggregation function to use for the data.

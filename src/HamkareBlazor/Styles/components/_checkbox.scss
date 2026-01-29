@@ -1,4 +1,4 @@
-.mud-checkbox {
+.hamkare-checkbox {
   cursor: pointer;
   display: inline-flex;
   align-items: center;
@@ -6,38 +6,38 @@
   -webkit-tap-highlight-color: transparent;
 
   @media(hover: hover) and (pointer: fine) {
-    .mud-disabled:hover {
+    .hamkare-disabled:hover {
       cursor: default;
       background-color: transparent !important;
 
       & * {
         cursor: default;
-        color: var(--mud-palette-text-disabled);
+        color: var(--hamkare-palette-text-disabled);
       }
     }
   }
 
-  &.mud-disabled, .mud-disabled:focus-visible, .mud-disabled:active {
+  &.hamkare-disabled, .hamkare-disabled:focus-visible, .hamkare-disabled:active {
     cursor: default;
     background-color: transparent !important;
 
     & * {
       cursor: default;
-      color: var(--mud-palette-text-disabled);
+      color: var(--hamkare-palette-text-disabled);
     }
   }
 
-  &.mud-readonly, .mud-readonly:hover {
+  &.hamkare-readonly, .hamkare-readonly:hover {
     cursor: default;
     background-color: transparent !important;
   }
 
-  & .mud-checkbox-dense {
+  & .hamkare-checkbox-dense {
     padding: 4px;
   }
 }
 
-.mud-checkbox-input {
+.hamkare-checkbox-input {
   top: 0;
   left: 0;
   width: 100%;
@@ -50,12 +50,12 @@
   position: absolute;
 }
 
-.mud-checkbox-span {
+.hamkare-checkbox-span {
   display: inline-block;
   width: 100%;
   cursor: pointer;
 }
 
-.mud-chart-legend-checkbox .mud-checkbox svg path:last-child {
+.hamkare-chart-legend-checkbox .hamkare-checkbox svg path:last-child {
   fill: var(--checkbox-color) !important;
 }

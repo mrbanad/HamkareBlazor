@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel;
 using NetEscapades.EnumGenerators;
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 /// <summary>
-/// The color themes available in MudBlazor, allowing components to adapt their visual style based on the selected color.
+/// The color themes available in HamkareBlazor, allowing components to adapt their visual style based on the selected color.
 /// </summary>
 [EnumExtensions]
 public enum Color

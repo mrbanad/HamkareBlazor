@@ -1,6 +1,6 @@
-﻿using MudBlazor.State.Rule.Exclusion;
+﻿using HamkareBlazor.State.Rule.Exclusion;
 
-namespace MudBlazor.State.Rule;
+namespace HamkareBlazor.State.Rule;
 
 #nullable enable
 /// <summary>

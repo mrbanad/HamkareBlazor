@@ -1,20 +1,20 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Components;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
     /// <summary>
-    /// Represents the current state of a header in a <see cref="MudDataGrid{T}"/>.
+    /// Represents the current state of a header in a <see cref="HamkareDataGrid{T}"/>.
     /// </summary>
     /// <typeparam name="T">The kind of item being managed.</typeparam>
     public class HeaderContext<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)] T>
     {
-        private readonly MudDataGrid<T> _dataGrid;
+        private readonly HamkareDataGrid<T> _dataGrid;
 
         /// <summary>
         /// The items to apply to the header.
@@ -68,8 +68,8 @@ namespace MudBlazor
         /// <summary>
         /// Creates a new instance.
         /// </summary>
-        /// <param name="dataGrid">The <see cref="MudDataGrid{T}"/> which contains the header.</param>
-        public HeaderContext(MudDataGrid<T> dataGrid)
+        /// <param name="dataGrid">The <see cref="HamkareDataGrid{T}"/> which contains the header.</param>
+        public HeaderContext(HamkareDataGrid<T> dataGrid)
         {
             _dataGrid = dataGrid;
             Actions = new HeaderActions
@@ -80,7 +80,7 @@ namespace MudBlazor
         }
 
         /// <summary>
-        /// Represents the behaviors allowed for a <see cref="MudDataGrid{T}"/> header.
+        /// Represents the behaviors allowed for a <see cref="HamkareDataGrid{T}"/> header.
         /// </summary>
         public class HeaderActions
         {

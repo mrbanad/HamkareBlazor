@@ -6,7 +6,7 @@ function listener(e) {
     themeProvider.invokeMethodAsync('SystemDarkModeChangedAsync', e.matches);
 }
 
-window.mudThemeProvider = {
+window.hamkareThemeProvider = {
     isDarkMode() {
         return isDarkModeQuery.matches;
     },

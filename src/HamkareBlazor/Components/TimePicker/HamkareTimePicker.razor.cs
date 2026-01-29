@@ -1,5 +1,5 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Diagnostics.CodeAnalysis;
@@ -7,35 +7,35 @@ using System.Globalization;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
-using MudBlazor.Resources;
-using MudBlazor.Utilities;
+using HamkareBlazor.Resources;
+using HamkareBlazor.Utilities;
 
 #nullable enable
-namespace MudBlazor
+namespace HamkareBlazor
 {
     /// <summary>
     /// Provides a simple way to select time values.
     /// </summary>
-    /// <seealso cref="MudDatePicker"/>
-    /// <seealso cref="MudDateRangePicker"/>
-    public partial class MudTimePicker : MudPicker<TimeSpan?>
+    /// <seealso cref="HamkareDatePicker"/>
+    /// <seealso cref="HamkareDateRangePicker"/>
+    public partial class HamkareTimePicker : HamkarePicker<TimeSpan?>
     {
         private bool _amPm = false;
         private OpenTo _currentView;
         private string? _clockElementReferenceId;
         private readonly SetTime _timeSet = new();
         private string _timeFormat = string.Empty;
-        private readonly Lazy<DotNetObjectReference<MudTimePicker>> _dotNetReferenceLazy;
+        private readonly Lazy<DotNetObjectReference<HamkareTimePicker>> _dotNetReferenceLazy;
 
         [Inject]
         private IJSRuntime JsRuntime { get; set; } = null!;
 
         [DynamicDependency(nameof(OnStickClick))]
         [DynamicDependency(nameof(SelectTimeFromStick))]
-        public MudTimePicker()
+        public HamkareTimePicker()
         {
             AdornmentIcon = Icons.Material.Filled.AccessTime;
-            _dotNetReferenceLazy = new Lazy<DotNetObjectReference<MudTimePicker>>(CreateDotNetObjectReference);
+            _dotNetReferenceLazy = new Lazy<DotNetObjectReference<HamkareTimePicker>>(CreateDotNetObjectReference);
         }
 
         internal TimeSpan? TimeIntermediate { get; private set; }
@@ -315,43 +315,43 @@ namespace MudBlazor
         }
 
         protected string ToolbarClassname =>
-            new CssBuilder("mud-picker-timepicker-toolbar")
-                .AddClass("mud-picker-timepicker-toolbar-landscape", Orientation == Orientation.Landscape && PickerVariant == PickerVariant.Static)
+            new CssBuilder("hamkare-picker-timepicker-toolbar")
+                .AddClass("hamkare-picker-timepicker-toolbar-landscape", Orientation == Orientation.Landscape && PickerVariant == PickerVariant.Static)
                 .AddClass(Class)
                 .Build();
 
         protected string HoursButtonClassname =>
-            new CssBuilder("mud-timepicker-button")
-                .AddClass("mud-timepicker-toolbar-text", _currentView == OpenTo.Minutes)
+            new CssBuilder("hamkare-timepicker-button")
+                .AddClass("hamkare-timepicker-toolbar-text", _currentView == OpenTo.Minutes)
                 .Build();
 
         protected string MinuteButtonClassname =>
-            new CssBuilder("mud-timepicker-button")
-                .AddClass("mud-timepicker-toolbar-text", _currentView == OpenTo.Hours)
+            new CssBuilder("hamkare-timepicker-button")
+                .AddClass("hamkare-timepicker-toolbar-text", _currentView == OpenTo.Hours)
                 .Build();
 
         protected string AmButtonClassname =>
-            new CssBuilder("mud-timepicker-button")
-                .AddClass("mud-timepicker-toolbar-text", !IsAm) // gray it out.
+            new CssBuilder("hamkare-timepicker-button")
+                .AddClass("hamkare-timepicker-toolbar-text", !IsAm) // gray it out.
                 .Build();
 
         protected string PmButtonClassname =>
-            new CssBuilder("mud-timepicker-button")
-                .AddClass("mud-timepicker-toolbar-text", !IsPm) // gray it out.
+            new CssBuilder("hamkare-timepicker-button")
+                .AddClass("hamkare-timepicker-toolbar-text", !IsPm) // gray it out.
                 .Build();
 
         private string HourDialClassname =>
-            new CssBuilder("mud-time-picker-hour")
-                .AddClass("mud-time-picker-dial")
-                .AddClass("mud-time-picker-dial-out", _currentView != OpenTo.Hours)
-                .AddClass("mud-time-picker-dial-hidden", _currentView != OpenTo.Hours)
+            new CssBuilder("hamkare-time-picker-hour")
+                .AddClass("hamkare-time-picker-dial")
+                .AddClass("hamkare-time-picker-dial-out", _currentView != OpenTo.Hours)
+                .AddClass("hamkare-time-picker-dial-hidden", _currentView != OpenTo.Hours)
                 .Build();
 
         private string MinuteDialClassname =>
-            new CssBuilder("mud-time-picker-minute")
-                .AddClass("mud-time-picker-dial")
-                .AddClass("mud-time-picker-dial-out", _currentView != OpenTo.Minutes)
-                .AddClass("mud-time-picker-dial-hidden", _currentView != OpenTo.Minutes)
+            new CssBuilder("hamkare-time-picker-minute")
+                .AddClass("hamkare-time-picker-dial")
+                .AddClass("hamkare-time-picker-dial-out", _currentView != OpenTo.Minutes)
+                .AddClass("hamkare-time-picker-dial-hidden", _currentView != OpenTo.Minutes)
                 .Build();
 
         private bool IsAm => _timeSet.Hour is >= 00 and < 12; // AM is 00:00 to 11:59.
@@ -359,22 +359,22 @@ namespace MudBlazor
 
         private string GetClockPinColor()
         {
-            return $"mud-picker-time-clock-pin mud-{Color.ToStringFast(true)}";
+            return $"hamkare-picker-time-clock-pin hamkare-{Color.ToStringFast(true)}";
         }
 
         private string GetClockPointerColor()
         {
             return PointerMoving
-                ? $"mud-picker-time-clock-pointer mud-{Color.ToStringFast(true)}"
-                : $"mud-picker-time-clock-pointer mud-picker-time-clock-pointer-animation mud-{Color.ToStringFast(true)}";
+                ? $"hamkare-picker-time-clock-pointer hamkare-{Color.ToStringFast(true)}"
+                : $"hamkare-picker-time-clock-pointer hamkare-picker-time-clock-pointer-animation hamkare-{Color.ToStringFast(true)}";
         }
 
         private string GetClockPointerThumbColor()
         {
             var deg = GetDeg();
             return deg % 30 == 0
-                ? $"mud-picker-time-clock-pointer-thumb mud-onclock-text mud-onclock-primary mud-{Color.ToStringFast(true)}"
-                : $"mud-picker-time-clock-pointer-thumb mud-onclock-minute mud-{Color.ToStringFast(true)}-text";
+                ? $"hamkare-picker-time-clock-pointer-thumb hamkare-onclock-text hamkare-onclock-primary hamkare-{Color.ToStringFast(true)}"
+                : $"hamkare-picker-time-clock-pointer-thumb hamkare-onclock-minute hamkare-{Color.ToStringFast(true)}-text";
         }
 
         private string GetNumberColor(int value)
@@ -394,15 +394,15 @@ namespace MudBlazor
 
                 if (h == value)
                 {
-                    return $"mud-clock-number mud-theme-{Color.ToStringFast(true)}";
+                    return $"hamkare-clock-number hamkare-theme-{Color.ToStringFast(true)}";
                 }
             }
             else if (_currentView == OpenTo.Minutes && _timeSet.Minute == value)
             {
-                return $"mud-clock-number mud-theme-{Color.ToStringFast(true)}";
+                return $"hamkare-clock-number hamkare-theme-{Color.ToStringFast(true)}";
             }
 
-            return "mud-clock-number";
+            return "hamkare-clock-number";
         }
 
         private double GetDeg()
@@ -474,7 +474,7 @@ namespace MudBlazor
         protected override void OnInitialized()
         {
             base.OnInitialized();
-            AdornmentAriaLabel ??= Localizer[LanguageResource.MudTimePicker_Open];
+            AdornmentAriaLabel ??= Localizer[LanguageResource.HamkareTimePicker_Open];
             UpdateTimeSetFromTime();
             _currentView = OpenTo;
         }
@@ -491,7 +491,7 @@ namespace MudBlazor
             {
                 _clockElementReferenceId = ClockElementReference.Id;
 
-                await JsRuntime.InvokeVoidAsyncWithErrorHandling("mudTimePicker.initPointerEvents", ClockElementReference, _dotNetReferenceLazy.Value);
+                await JsRuntime.InvokeVoidAsyncWithErrorHandling("hamkareTimePicker.initPointerEvents", ClockElementReference, _dotNetReferenceLazy.Value);
             }
         }
 
@@ -619,7 +619,7 @@ namespace MudBlazor
             return value;
         }
 
-        private DotNetObjectReference<MudTimePicker> CreateDotNetObjectReference() => DotNetObjectReference.Create(this);
+        private DotNetObjectReference<HamkareTimePicker> CreateDotNetObjectReference() => DotNetObjectReference.Create(this);
 
         protected async Task SubmitAndCloseAsync()
         {
@@ -832,7 +832,7 @@ namespace MudBlazor
 
             if (IsJSRuntimeAvailable)
             {
-                await JsRuntime.InvokeVoidAsyncWithErrorHandling("mudTimePicker.destroyPointerEvents", ClockElementReference);
+                await JsRuntime.InvokeVoidAsyncWithErrorHandling("hamkareTimePicker.destroyPointerEvents", ClockElementReference);
             }
 
             if (_dotNetReferenceLazy.IsValueCreated)

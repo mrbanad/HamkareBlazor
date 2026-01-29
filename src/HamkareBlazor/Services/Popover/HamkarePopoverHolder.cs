@@ -1,13 +1,13 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using Microsoft.AspNetCore.Components;
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 #nullable enable
-internal class MudPopoverHolder : IMudPopoverHolder
+internal class HamkarePopoverHolder : IHamkarePopoverHolder
 {
     /// <inheritdoc />
     public Guid Id { get; }
@@ -40,13 +40,13 @@ internal class MudPopoverHolder : IMudPopoverHolder
     public Dictionary<string, object?> UserAttributes { get; set; } = new();
 
     /// <inheritdoc />
-    public MudRender? ElementReference { get; set; }
+    public HamkareRender? ElementReference { get; set; }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="MudPopoverHolder"/> class.
+    /// Initializes a new instance of the <see cref="HamkarePopoverHolder"/> class.
     /// </summary>
     /// <param name="id">The unique identifier of the popover.</param>
-    public MudPopoverHolder(Guid id)
+    public HamkarePopoverHolder(Guid id)
     {
         Id = id;
     }
@@ -55,8 +55,8 @@ internal class MudPopoverHolder : IMudPopoverHolder
     /// Sets the CSS class of the popover.
     /// </summary>
     /// <param name="class">The CSS class of the popover.</param>
-    /// <returns>The updated <see cref="MudPopoverHolder"/> instance.</returns>
-    public MudPopoverHolder SetClass(string @class)
+    /// <returns>The updated <see cref="HamkarePopoverHolder"/> instance.</returns>
+    public HamkarePopoverHolder SetClass(string @class)
     {
         Class = @class;
 
@@ -67,8 +67,8 @@ internal class MudPopoverHolder : IMudPopoverHolder
     /// Sets the inline styles of the popover.
     /// </summary>
     /// <param name="style">The inline styles of the popover.</param>
-    /// <returns>The updated <see cref="MudPopoverHolder"/> instance.</returns>
-    public MudPopoverHolder SetStyle(string style)
+    /// <returns>The updated <see cref="HamkarePopoverHolder"/> instance.</returns>
+    public HamkarePopoverHolder SetStyle(string style)
     {
         Style = style;
 
@@ -79,8 +79,8 @@ internal class MudPopoverHolder : IMudPopoverHolder
     /// Sets the visibility of the popover content.
     /// </summary>
     /// <param name="showContent">A value indicating whether the popover is visible.</param>
-    /// <returns>The updated <see cref="MudPopoverHolder"/> instance.</returns>
-    public MudPopoverHolder SetShowContent(bool showContent)
+    /// <returns>The updated <see cref="HamkarePopoverHolder"/> instance.</returns>
+    public HamkarePopoverHolder SetShowContent(bool showContent)
     {
         ShowContent = showContent;
         if (showContent)
@@ -99,8 +99,8 @@ internal class MudPopoverHolder : IMudPopoverHolder
     /// Sets the user-defined data object attached to the component.
     /// </summary>
     /// <param name="tag">The user-defined data object.</param>
-    /// <returns>The updated <see cref="MudPopoverHolder"/> instance.</returns>
-    public MudPopoverHolder SetTag(object? tag)
+    /// <returns>The updated <see cref="HamkarePopoverHolder"/> instance.</returns>
+    public HamkarePopoverHolder SetTag(object? tag)
     {
         Tag = tag;
 
@@ -111,8 +111,8 @@ internal class MudPopoverHolder : IMudPopoverHolder
     /// Sets the user-defined attributes added to the component.
     /// </summary>
     /// <param name="userAttributes">The user-defined attributes.</param>
-    /// <returns>The updated <see cref="MudPopoverHolder"/> instance.</returns>
-    public MudPopoverHolder SetUserAttributes(Dictionary<string, object?> userAttributes)
+    /// <returns>The updated <see cref="HamkarePopoverHolder"/> instance.</returns>
+    public HamkarePopoverHolder SetUserAttributes(Dictionary<string, object?> userAttributes)
     {
         UserAttributes = userAttributes;
 
@@ -123,8 +123,8 @@ internal class MudPopoverHolder : IMudPopoverHolder
     /// Sets the content of the popover.
     /// </summary>
     /// <param name="renderFragment">The new content of the popover.</param>
-    /// <returns>The updated <see cref="MudPopoverHolder"/> instance.</returns>
-    public MudPopoverHolder SetFragment(RenderFragment? renderFragment)
+    /// <returns>The updated <see cref="HamkarePopoverHolder"/> instance.</returns>
+    public HamkarePopoverHolder SetFragment(RenderFragment? renderFragment)
     {
         Fragment = renderFragment;
 

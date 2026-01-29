@@ -1,25 +1,25 @@
 ﻿using Microsoft.AspNetCore.Components;
-using MudBlazor.Utilities;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
     /// <summary>
-    /// Represents the primary content displayed within a <see cref="MudCard"/>.
+    /// Represents the primary content displayed within a <see cref="HamkareCard"/>.
     /// </summary>
-    /// <seealso cref="MudCard" />
-    /// <seealso cref="MudCardActions" />
-    /// <seealso cref="MudCardHeader" />
-    /// <seealso cref="MudCardMedia" />
-    public partial class MudCardContent : MudComponentBase
+    /// <seealso cref="HamkareCard" />
+    /// <seealso cref="HamkareCardActions" />
+    /// <seealso cref="HamkareCardHeader" />
+    /// <seealso cref="HamkareCardMedia" />
+    public partial class HamkareCardContent : HamkareComponentBase
     {
-        protected string Classname => new CssBuilder("mud-card-content")
-            .AddClass("mud-card-content-padding", ParentCard?.ContentPadding ?? true)
+        protected string Classname => new CssBuilder("hamkare-card-content")
+            .AddClass("hamkare-card-content-padding", ParentCard?.ContentPadding ?? true)
             .AddClass(Class)
             .Build();
 
         [CascadingParameter]
-        private MudCard? ParentCard { get; set; }
+        private HamkareCard? ParentCard { get; set; }
 
         /// <summary>
         /// The content within this component.

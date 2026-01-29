@@ -1,20 +1,20 @@
 ﻿//// Copyright (c) Steven Coco
 //// https://stackoverflow.com/questions/4087581/creating-a-c-sharp-color-from-hsl-values/4087601#4087601
-//// Stripped and adapted by Meinrad Recheis and Benjamin Kappel for MudBlazor
+//// Stripped and adapted by Meinrad Recheis and Benjamin Kappel for HamkareBlazor
 
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
-using MudBlazor.Extensions;
+using HamkareBlazor.Extensions;
 
-namespace MudBlazor.Utilities
+namespace HamkareBlazor.Utilities
 {
 #nullable enable
     /// <summary>
-    /// Specifies different output formats for <seealso cref="MudColor"/>.
+    /// Specifies different output formats for <seealso cref="HamkareColor"/>.
     /// </summary>
-    public enum MudColorOutputFormats
+    public enum HamkareColorOutputFormats
     {
         /// <summary>
         /// Output will be starting with a # and include r,g and b but no alpha values. Example #ab2a3d
@@ -38,7 +38,7 @@ namespace MudBlazor.Utilities
         ColorElements
     }
 
-    public enum MudColorComparison
+    public enum HamkareColorComparison
     {
         Rgba = 0,
         Hsl = 1,
@@ -49,7 +49,7 @@ namespace MudBlazor.Utilities
     /// Represents a color with methods to manipulate color values.
     /// </summary>
     [Serializable]
-    public partial class MudColor : ISerializable, IEquatable<MudColor>, IParsable<MudColor>, IFormattable
+    public partial class HamkareColor : ISerializable, IEquatable<HamkareColor>, IParsable<HamkareColor>, IFormattable
     {
         private readonly record struct HSL(double H, double S, double L);
         private readonly record struct RGBA(byte R, byte G, byte B, byte A);
@@ -115,43 +115,43 @@ namespace MudBlazor.Utilities
         public double S => _hsl.S;
 
         /// <summary>
-        /// Deserialization constructor for <see cref="MudColor"/>.
+        /// Deserialization constructor for <see cref="HamkareColor"/>.
         /// </summary>
         /// <param name="info">The <see cref="SerializationInfo"/>> containing the serialized data.</param>
         /// <param name="context">The <see cref="StreamingContext"/>>.</param>
-        protected MudColor(SerializationInfo info, StreamingContext context) :
+        protected HamkareColor(SerializationInfo info, StreamingContext context) :
             this(info.GetByte(nameof(R)), info.GetByte(nameof(G)), info.GetByte(nameof(B)), info.GetByte(nameof(A)))
         {
         }
 
         /// <summary>
-        /// Constructs a default instance of <see cref="MudColor"/> with default values (black with full opacity).
+        /// Constructs a default instance of <see cref="HamkareColor"/> with default values (black with full opacity).
         /// </summary>
-        public MudColor()
+        public HamkareColor()
         {
             _rgba = new RGBA(0, 0, 0, 255);
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MudColor"/> class with the specified hue, saturation, lightness, and alpha values.
+        /// Initializes a new instance of the <see cref="HamkareColor"/> class with the specified hue, saturation, lightness, and alpha values.
         /// </summary>
         /// <param name="h">The hue component value (0 to 360).</param>
         /// <param name="s">The saturation component value (0.0 to 1.0).</param>
         /// <param name="l">The lightness component value (0.0 to 1.0).</param>
         /// <param name="a">The alpha component value (0 to 1.0).</param>
-        public MudColor(double h, double s, double l, double a)
+        public HamkareColor(double h, double s, double l, double a)
             : this(h, s, l, (int)(a * 255.0).EnsureRange(255))
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MudColor"/> class with the specified hue, saturation, lightness, and alpha values.
+        /// Initializes a new instance of the <see cref="HamkareColor"/> class with the specified hue, saturation, lightness, and alpha values.
         /// </summary>
         /// <param name="h">The hue component value (0 to 360).</param>
         /// <param name="s">The saturation component value (0.0 to 1.0).</param>
         /// <param name="l">The lightness component value (0.0 to 1.0).</param>
         /// <param name="a">The alpha component value (0 to 255).</param>
-        public MudColor(double h, double s, double l, int a)
+        public HamkareColor(double h, double s, double l, int a)
         {
             h = Math.Round(h.EnsureRange(360), 0);
             s = Math.Round(s.EnsureRange(1), 2);
@@ -165,66 +165,66 @@ namespace MudBlazor.Utilities
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MudColor"/> class with the specified red, green, blue, and alpha values.
+        /// Initializes a new instance of the <see cref="HamkareColor"/> class with the specified red, green, blue, and alpha values.
         /// </summary>
         /// <param name="r">The red component value (0 to 255).</param>
         /// <param name="g">The green component value (0 to 255).</param>
         /// <param name="b">The blue component value (0 to 255).</param>
         /// <param name="a">The alpha component value (0 to 255).</param>
         [JsonConstructor]
-        public MudColor(byte r, byte g, byte b, byte a)
+        public HamkareColor(byte r, byte g, byte b, byte a)
         {
             _rgba = new RGBA(r, g, b, a);
             _hsl = RgbToHsl(r, g, b);
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MudColor"/> class with the specified color.
+        /// Initializes a new instance of the <see cref="HamkareColor"/> class with the specified color.
         /// </summary>
         /// <param name="rgba">the four bytes of this 32-bit unsigned integer contain the red, green, blue and alpha components</param>
-        public MudColor(uint rgba)
+        public HamkareColor(uint rgba)
             : this(r: (byte)(rgba >> 24), g: (byte)(rgba >> 16), b: (byte)(rgba >> 8), a: (byte)rgba)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MudColor"/> class with the specified red, green, blue, and alpha values, copying the hue value from the provided color.
+        /// Initializes a new instance of the <see cref="HamkareColor"/> class with the specified red, green, blue, and alpha values, copying the hue value from the provided color.
         /// </summary>
         /// <param name="r">The red component value (0 to 255).</param>
         /// <param name="g">The green component value (0 to 255).</param>
         /// <param name="b">The blue component value (0 to 255).</param>
         /// <param name="color">The existing color to copy the hue value from.</param>
-        public MudColor(byte r, byte g, byte b, MudColor color) : this(r, g, b, color.A)
+        public HamkareColor(byte r, byte g, byte b, HamkareColor color) : this(r, g, b, color.A)
         {
             _hsl = _hsl with { H = color.H };
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MudColor"/> class with the specified RGB values and alpha component.
+        /// Initializes a new instance of the <see cref="HamkareColor"/> class with the specified RGB values and alpha component.
         /// </summary>
         /// <param name="r">The red component value (0 to 255).</param>
         /// <param name="g">The green component value (0 to 255).</param>
         /// <param name="b">The blue component value (0 to 255).</param>
         /// <param name="alpha">The alpha component value (0.0 to 1.0).</param>
-        public MudColor(int r, int g, int b, double alpha)
+        public HamkareColor(int r, int g, int b, double alpha)
             : this(r, g, b, (byte)(alpha * 255.0).EnsureRange(255))
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MudColor"/> class with the specified RGB values and alpha component.
+        /// Initializes a new instance of the <see cref="HamkareColor"/> class with the specified RGB values and alpha component.
         /// </summary>
         /// <param name="r">The red component value (0 to 255).</param>
         /// <param name="g">The green component value (0 to 255).</param>
         /// <param name="b">The blue component value (0 to 255).</param>
         /// <param name="alpha">The alpha component value (0 to 255).</param>
-        public MudColor(int r, int g, int b, int alpha)
+        public HamkareColor(int r, int g, int b, int alpha)
             : this((byte)r.EnsureRange(255), (byte)g.EnsureRange(255), (byte)b.EnsureRange(255), (byte)alpha.EnsureRange(255))
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MudColor"/> class with the specified string representation of a color.
+        /// Initializes a new instance of the <see cref="HamkareColor"/> class with the specified string representation of a color.
         /// </summary>
         /// <param name="value">The string representation of a color.</param>
         /// <remarks>
@@ -234,7 +234,7 @@ namespace MudBlazor.Utilities
         /// - RGB format: "rgb(12,15,40)"
         /// - RGBA format: "rgba(12,15,40,0.42)"
         /// </remarks>
-        public MudColor(string value)
+        public HamkareColor(string value)
         {
             ArgumentException.ThrowIfNullOrEmpty(value);
 
@@ -244,134 +244,134 @@ namespace MudBlazor.Utilities
         }
 
         /// <summary>
-        /// Creates a new <see cref="MudColor"/> instance with the specified hue value while keeping the saturation, lightness, and alpha values unchanged.
+        /// Creates a new <see cref="HamkareColor"/> instance with the specified hue value while keeping the saturation, lightness, and alpha values unchanged.
         /// </summary>
         /// <param name="h">The hue component value (0 to 360).</param>
-        /// <returns>A new <see cref="MudColor"/> instance with the specified hue value.</returns>
-        public MudColor SetH(double h) => new(h, S, L, A);
+        /// <returns>A new <see cref="HamkareColor"/> instance with the specified hue value.</returns>
+        public HamkareColor SetH(double h) => new(h, S, L, A);
 
         /// <summary>
-        /// Creates a new <see cref="MudColor"/> instance with the specified saturation value while keeping the hue, lightness, and alpha values unchanged.
+        /// Creates a new <see cref="HamkareColor"/> instance with the specified saturation value while keeping the hue, lightness, and alpha values unchanged.
         /// </summary>
         /// <param name="s">The saturation component value (0.0 to 1.0).</param>
-        /// <returns>A new <see cref="MudColor"/> instance with the specified saturation value.</returns>
-        public MudColor SetS(double s) => new(H, s, L, A);
+        /// <returns>A new <see cref="HamkareColor"/> instance with the specified saturation value.</returns>
+        public HamkareColor SetS(double s) => new(H, s, L, A);
 
         /// <summary>
-        /// Creates a new <see cref="MudColor"/> instance with the specified lightness value while keeping the hue, saturation, and alpha values unchanged.
+        /// Creates a new <see cref="HamkareColor"/> instance with the specified lightness value while keeping the hue, saturation, and alpha values unchanged.
         /// </summary>
         /// <param name="l">The lightness component value (0.0 to 1.0).</param>
-        /// <returns>A new <see cref="MudColor"/> instance with the specified lightness value.</returns>
-        public MudColor SetL(double l) => new(H, S, l, A);
+        /// <returns>A new <see cref="HamkareColor"/> instance with the specified lightness value.</returns>
+        public HamkareColor SetL(double l) => new(H, S, l, A);
 
         /// <summary>
-        /// Creates a new <see cref="MudColor"/> instance with the specified red component value while keeping the green, blue, and alpha values unchanged.
+        /// Creates a new <see cref="HamkareColor"/> instance with the specified red component value while keeping the green, blue, and alpha values unchanged.
         /// </summary>
         /// <param name="r">The red component value (0 to 255).</param>
-        /// <returns>A new <see cref="MudColor"/> instance with the specified red component value.</returns>
-        public MudColor SetR(int r) => new(r, G, B, A);
+        /// <returns>A new <see cref="HamkareColor"/> instance with the specified red component value.</returns>
+        public HamkareColor SetR(int r) => new(r, G, B, A);
 
         /// <summary>
-        /// Creates a new <see cref="MudColor"/> instance with the specified green component value while keeping the red, blue, and alpha values unchanged.
+        /// Creates a new <see cref="HamkareColor"/> instance with the specified green component value while keeping the red, blue, and alpha values unchanged.
         /// </summary>
         /// <param name="g">The green component value (0 to 255).</param>
-        /// <returns>A new <see cref="MudColor"/> instance with the specified green component value.</returns>
-        public MudColor SetG(int g) => new(R, g, B, A);
+        /// <returns>A new <see cref="HamkareColor"/> instance with the specified green component value.</returns>
+        public HamkareColor SetG(int g) => new(R, g, B, A);
 
         /// <summary>
-        /// Creates a new <see cref="MudColor"/> instance with the specified blue component value while keeping the red, green, and alpha values unchanged.
+        /// Creates a new <see cref="HamkareColor"/> instance with the specified blue component value while keeping the red, green, and alpha values unchanged.
         /// </summary>
         /// <param name="b">The blue component value (0 to 255).</param>
-        /// <returns>A new <see cref="MudColor"/> instance with the specified blue component value.</returns>
-        public MudColor SetB(int b) => new(R, G, b, A);
+        /// <returns>A new <see cref="HamkareColor"/> instance with the specified blue component value.</returns>
+        public HamkareColor SetB(int b) => new(R, G, b, A);
 
         /// <summary>
-        /// Creates a new <see cref="MudColor"/> instance with the specified alpha value while keeping the red, green, blue values unchanged.
+        /// Creates a new <see cref="HamkareColor"/> instance with the specified alpha value while keeping the red, green, blue values unchanged.
         /// </summary>
         /// <param name="a">The alpha component value (0 to 255).</param>
-        /// <returns>A new <see cref="MudColor"/> instance with the specified alpha component value.</returns>
-        public MudColor SetAlpha(int a) => new(R, G, B, a);
+        /// <returns>A new <see cref="HamkareColor"/> instance with the specified alpha component value.</returns>
+        public HamkareColor SetAlpha(int a) => new(R, G, B, a);
 
         /// <summary>
-        /// Creates a new <see cref="MudColor"/> instance with the specified alpha value while keeping the red, green, blue values unchanged.
+        /// Creates a new <see cref="HamkareColor"/> instance with the specified alpha value while keeping the red, green, blue values unchanged.
         /// </summary>
         /// <param name="a">The alpha component value (0.0 to 1.0).</param>
-        /// <returns>A new <see cref="MudColor"/> instance with the specified alpha component value.</returns>
-        public MudColor SetAlpha(double a) => new(R, G, B, a);
+        /// <returns>A new <see cref="HamkareColor"/> instance with the specified alpha component value.</returns>
+        public HamkareColor SetAlpha(double a) => new(R, G, B, a);
 
         /// <summary>
-        /// Creates a new <see cref="MudColor"/> instance by adjusting the lightness component value by the specified amount.
+        /// Creates a new <see cref="HamkareColor"/> instance by adjusting the lightness component value by the specified amount.
         /// </summary>
         /// <param name="amount">The amount to adjust the lightness by (-1.0 to 1.0).</param>
-        /// <returns>A new <see cref="MudColor"/> instance with the adjusted lightness.</returns>
-        public MudColor ChangeLightness(double amount) => new(H, S, Math.Max(0, Math.Min(1, L + amount)), A);
+        /// <returns>A new <see cref="HamkareColor"/> instance with the adjusted lightness.</returns>
+        public HamkareColor ChangeLightness(double amount) => new(H, S, Math.Max(0, Math.Min(1, L + amount)), A);
 
         /// <summary>
-        /// Creates a new <see cref="MudColor"/> instance by lightening the color.
+        /// Creates a new <see cref="HamkareColor"/> instance by lightening the color.
         /// </summary>
         /// <param name="amount">The amount to lighten the color by.</param>
-        /// <returns>A new <see cref="MudColor"/> instance that is lighter than the original color.</returns>
-        public MudColor ColorLighten(double amount) => ChangeLightness(+amount);
+        /// <returns>A new <see cref="HamkareColor"/> instance that is lighter than the original color.</returns>
+        public HamkareColor ColorLighten(double amount) => ChangeLightness(+amount);
 
         /// <summary>
-        /// Creates a new <see cref="MudColor"/> instance by darkening the color.
+        /// Creates a new <see cref="HamkareColor"/> instance by darkening the color.
         /// </summary>
         /// <param name="amount">The amount to darken the color by.</param>
-        /// <returns>A new <see cref="MudColor"/> instance that is darker than the original color.</returns>
-        public MudColor ColorDarken(double amount) => ChangeLightness(-amount);
+        /// <returns>A new <see cref="HamkareColor"/> instance that is darker than the original color.</returns>
+        public HamkareColor ColorDarken(double amount) => ChangeLightness(-amount);
 
         /// <summary>
-        /// Creates a new <see cref="MudColor"/> instance by lightening the color using the RGB algorithm.
+        /// Creates a new <see cref="HamkareColor"/> instance by lightening the color using the RGB algorithm.
         /// </summary>
-        /// <returns>A new <see cref="MudColor"/> instance that is lighter than the original color.</returns>
-        public MudColor ColorRgbLighten() => ColorLighten(0.075);
+        /// <returns>A new <see cref="HamkareColor"/> instance that is lighter than the original color.</returns>
+        public HamkareColor ColorRgbLighten() => ColorLighten(0.075);
 
         /// <summary>
-        /// Creates a new <see cref="MudColor"/> instance by darkening the color using the RGB algorithm.
+        /// Creates a new <see cref="HamkareColor"/> instance by darkening the color using the RGB algorithm.
         /// </summary>
-        /// <returns>A new <see cref="MudColor"/> instance that is darker than the original color.</returns>
-        public MudColor ColorRgbDarken() => ColorDarken(0.075);
+        /// <returns>A new <see cref="HamkareColor"/> instance that is darker than the original color.</returns>
+        public HamkareColor ColorRgbDarken() => ColorDarken(0.075);
 
         /// <summary>
-        /// Checks whether the HSL (Hue, Saturation, Lightness) values of this <see cref="MudColor"/> instance are equal compared to another <see cref="MudColor"/> instance.
+        /// Checks whether the HSL (Hue, Saturation, Lightness) values of this <see cref="HamkareColor"/> instance are equal compared to another <see cref="HamkareColor"/> instance.
         /// </summary>
-        /// <param name="other">The <see cref="MudColor"/> instance to compare HSL values with.</param>
+        /// <param name="other">The <see cref="HamkareColor"/> instance to compare HSL values with.</param>
         /// <returns>True if the HSL are equal; otherwise, false.</returns>
-        public bool HslEquals(MudColor? other) => Equals(other, MudColorComparison.Hsl);
+        public bool HslEquals(HamkareColor? other) => Equals(other, HamkareColorComparison.Hsl);
 
         /// <summary>
-        /// Checks whether the RGBA (Red, Green, Blue, Alpha) values of this <see cref="MudColor"/> instance are equal compared to another <see cref="MudColor"/> instance.
+        /// Checks whether the RGBA (Red, Green, Blue, Alpha) values of this <see cref="HamkareColor"/> instance are equal compared to another <see cref="HamkareColor"/> instance.
         /// </summary>
-        /// <param name="other">The <see cref="MudColor"/> instance to compare HSL values with.</param>
+        /// <param name="other">The <see cref="HamkareColor"/> instance to compare HSL values with.</param>
         /// <returns>True if the RGBA are equal; otherwise, false.</returns>
-        public bool RgbaEquals(MudColor? other) => Equals(other, MudColorComparison.Rgba);
+        public bool RgbaEquals(HamkareColor? other) => Equals(other, HamkareColorComparison.Rgba);
 
         /// <inheritdoc />
-        public override bool Equals(object? obj) => obj is MudColor color && Equals(color);
+        public override bool Equals(object? obj) => obj is HamkareColor color && Equals(color);
 
         /// <summary>
-        /// Determines whether this <see cref="MudColor"/> instance is equal to another <see cref="MudColor"/> instance.
+        /// Determines whether this <see cref="HamkareColor"/> instance is equal to another <see cref="HamkareColor"/> instance.
         /// </summary>
-        /// <param name="other">The <see cref="MudColor"/> instance to compare.</param>
+        /// <param name="other">The <see cref="HamkareColor"/> instance to compare.</param>
         /// <returns>True if the instances are equal; otherwise, false.</returns>
-        public bool Equals(MudColor? other) => Equals(other, MudColorComparison.Rgba);
+        public bool Equals(HamkareColor? other) => Equals(other, HamkareColorComparison.Rgba);
 
         /// <summary>
-        /// Determines whether this <see cref="MudColor"/> instance is equal to another
-        /// <see cref="MudColor"/> instance using the specified comparison mode.
+        /// Determines whether this <see cref="HamkareColor"/> instance is equal to another
+        /// <see cref="HamkareColor"/> instance using the specified comparison mode.
         /// </summary>
-        /// <param name="other">The <see cref="MudColor"/> instance to compare with.</param>
+        /// <param name="other">The <see cref="HamkareColor"/> instance to compare with.</param>
         /// <param name="comparison">
         /// The comparison mode to use. Possible values:
-        /// <see cref="MudColorComparison.Rgba"/>,
-        /// <see cref="MudColorComparison.Hsl"/>,
-        /// <see cref="MudColorComparison.RgbaAndHsl"/>.
+        /// <see cref="HamkareColorComparison.Rgba"/>,
+        /// <see cref="HamkareColorComparison.Hsl"/>,
+        /// <see cref="HamkareColorComparison.RgbaAndHsl"/>.
         /// </param>
         /// <returns>
         /// <c>true</c> if the colors are considered equal according to the specified comparison mode;
         /// otherwise, <c>false</c>.
         /// </returns>
-        public bool Equals(MudColor? other, MudColorComparison comparison)
+        public bool Equals(HamkareColor? other, HamkareColorComparison comparison)
         {
             if (ReferenceEquals(other, null))
             {
@@ -380,9 +380,9 @@ namespace MudBlazor.Utilities
 
             return comparison switch
             {
-                MudColorComparison.Rgba => _rgba.Equals(other._rgba),
-                MudColorComparison.Hsl => _hsl.Equals(other._hsl),
-                MudColorComparison.RgbaAndHsl => RgbaEquals(other) && HslEquals(other),
+                HamkareColorComparison.Rgba => _rgba.Equals(other._rgba),
+                HamkareColorComparison.Hsl => _hsl.Equals(other._hsl),
+                HamkareColorComparison.RgbaAndHsl => RgbaEquals(other) && HslEquals(other),
                 _ => Equals(other)
             };
         }
@@ -391,20 +391,20 @@ namespace MudBlazor.Utilities
         public override int GetHashCode() => HashCode.Combine(_rgba);
 
         /// <inheritdoc />
-        public override string ToString() => ToString(MudColorOutputFormats.RGBA);
+        public override string ToString() => ToString(HamkareColorOutputFormats.RGBA);
 
         /// <summary>
         /// Returns the string representation of the color in the specified format.
         /// </summary>
         /// <param name="format">The format to represent the color.</param>
         /// <returns>A string representing the color.</returns>
-        public string ToString(MudColorOutputFormats format) => format switch
+        public string ToString(HamkareColorOutputFormats format) => format switch
         {
-            MudColorOutputFormats.Hex => Value.Substring(0, 7),
-            MudColorOutputFormats.HexA => Value,
-            MudColorOutputFormats.RGB => $"rgb({R},{G},{B})",
-            MudColorOutputFormats.RGBA => $"rgba({R},{G},{B},{(A / 255.0).ToString(CultureInfo.InvariantCulture)})",
-            MudColorOutputFormats.ColorElements => $"{R},{G},{B}",
+            HamkareColorOutputFormats.Hex => Value.Substring(0, 7),
+            HamkareColorOutputFormats.HexA => Value,
+            HamkareColorOutputFormats.RGB => $"rgb({R},{G},{B})",
+            HamkareColorOutputFormats.RGBA => $"rgba({R},{G},{B},{(A / 255.0).ToString(CultureInfo.InvariantCulture)})",
+            HamkareColorOutputFormats.ColorElements => $"{R},{G},{B}",
             _ => Value,
         };
 
@@ -445,17 +445,17 @@ namespace MudBlazor.Utilities
 
             return format.ToLowerInvariant() switch
             {
-                "rgb" => ToString(MudColorOutputFormats.RGB),
-                "rgba" => ToString(MudColorOutputFormats.RGBA),
-                "hex" => ToString(MudColorOutputFormats.Hex),
-                "hexa" => ToString(MudColorOutputFormats.HexA),
-                "colorelements" => ToString(MudColorOutputFormats.ColorElements),
+                "rgb" => ToString(HamkareColorOutputFormats.RGB),
+                "rgba" => ToString(HamkareColorOutputFormats.RGBA),
+                "hex" => ToString(HamkareColorOutputFormats.Hex),
+                "hexa" => ToString(HamkareColorOutputFormats.HexA),
+                "colorelements" => ToString(HamkareColorOutputFormats.ColorElements),
                 _ => Value
             };
         }
 
         /// <summary>
-        /// Deconstructs the <see cref="MudColor"/> into its red, green, and blue components.
+        /// Deconstructs the <see cref="HamkareColor"/> into its red, green, and blue components.
         /// </summary>
         /// <param name="r">The red component value (0 to 255).</param>
         /// <param name="g">The green component value (0 to 255).</param>
@@ -468,7 +468,7 @@ namespace MudBlazor.Utilities
         }
 
         /// <summary>
-        /// Deconstructs the <see cref="MudColor"/> into its red, green, blue, and alpha components.
+        /// Deconstructs the <see cref="HamkareColor"/> into its red, green, blue, and alpha components.
         /// </summary>
         /// <param name="r">The red component value (0 to 255).</param>
         /// <param name="g">The green component value (0 to 255).</param>
@@ -483,12 +483,12 @@ namespace MudBlazor.Utilities
         }
 
         /// <summary>
-        /// Determines whether two <see cref="MudColor"/> instances are equal.
+        /// Determines whether two <see cref="HamkareColor"/> instances are equal.
         /// </summary>
-        /// <param name="lhs">The first <see cref="MudColor"/> instance to compare.</param>
-        /// <param name="rhs">The second <see cref="MudColor"/> instance to compare.</param>
+        /// <param name="lhs">The first <see cref="HamkareColor"/> instance to compare.</param>
+        /// <param name="rhs">The second <see cref="HamkareColor"/> instance to compare.</param>
         /// <returns>True if the instances are equal; otherwise, false.</returns>
-        public static bool operator ==(MudColor? lhs, MudColor? rhs)
+        public static bool operator ==(HamkareColor? lhs, HamkareColor? rhs)
         {
             if (lhs is null && rhs is null)
             {
@@ -509,41 +509,41 @@ namespace MudBlazor.Utilities
         }
 
         /// <summary>
-        /// Determines whether two <see cref="MudColor"/> instances are not equal.
+        /// Determines whether two <see cref="HamkareColor"/> instances are not equal.
         /// </summary>
-        /// <param name="lhs">The first <see cref="MudColor"/> instance to compare.</param>
-        /// <param name="rhs">The second <see cref="MudColor"/> instance to compare.</param>
+        /// <param name="lhs">The first <see cref="HamkareColor"/> instance to compare.</param>
+        /// <param name="rhs">The second <see cref="HamkareColor"/> instance to compare.</param>
         /// <returns>True if the instances are not equal; otherwise, false.</returns>
-        public static bool operator !=(MudColor? lhs, MudColor? rhs) => !(lhs == rhs);
+        public static bool operator !=(HamkareColor? lhs, HamkareColor? rhs) => !(lhs == rhs);
 
         /// <summary>
-        /// Converts a string representation of a color to a <see cref="MudColor"/> instance.
+        /// Converts a string representation of a color to a <see cref="HamkareColor"/> instance.
         /// </summary>
         /// <param name="input">The string representation of the color.</param>
-        /// <returns>A new <see cref="MudColor"/> instance representing the color.</returns>
-        public static implicit operator MudColor(string input) => Parse(input);
+        /// <returns>A new <see cref="HamkareColor"/> instance representing the color.</returns>
+        public static implicit operator HamkareColor(string input) => Parse(input);
 
         /// <summary>
-        /// Converts a <see cref="MudColor"/> instance to its string representation.
+        /// Converts a <see cref="HamkareColor"/> instance to its string representation.
         /// </summary>
-        /// <param name="color">The MudColor instance to convert.</param>
+        /// <param name="color">The HamkareColor instance to convert.</param>
         /// <returns>The string representation of the color.</returns>
-        public static explicit operator string(MudColor? color) => color == null ? string.Empty : color.Value;
+        public static explicit operator string(HamkareColor? color) => color == null ? string.Empty : color.Value;
 
         /// <summary>
-        /// Converts a <see cref="MudColor"/> instance to a 32-bit unsigned integer.
+        /// Converts a <see cref="HamkareColor"/> instance to a 32-bit unsigned integer.
         /// </summary>
-        /// <param name="mudColor">The MudColor instance to convert.</param>
+        /// <param name="hamkareColor">The HamkareColor instance to convert.</param>
         /// <returns>The 32-bit unsigned integer representation of the color.</returns>
-        public static explicit operator uint(MudColor mudColor) => mudColor.UInt32;
+        public static explicit operator uint(HamkareColor hamkareColor) => hamkareColor.UInt32;
 
         /// <summary>
-        /// Represents an empty <see cref="MudColor"/> instance with default values (black with full opacity).
+        /// Represents an empty <see cref="HamkareColor"/> instance with default values (black with full opacity).
         /// </summary>
-        public static readonly MudColor Empty = new();
+        public static readonly HamkareColor Empty = new();
 
         /// <summary>
-        /// Parses a string representation of a color to a <see cref="MudColor"/> instance.
+        /// Parses a string representation of a color to a <see cref="HamkareColor"/> instance.
         /// </summary>
         /// <param name="s">The string representation of the color.</param>
         /// <param name="provider">An optional format provider.</param>
@@ -554,22 +554,22 @@ namespace MudBlazor.Utilities
         /// - RGB format: "rgb(12,15,40)"
         /// - RGBA format: "rgba(12,15,40,0.42)"
         /// </remarks>
-        /// <returns>A new <see cref="MudColor"/> instance representing the color.</returns>
+        /// <returns>A new <see cref="HamkareColor"/> instance representing the color.</returns>
         /// <exception cref="ArgumentException">Thrown when the input string is null, empty or invalid color format.</exception>
-        public static MudColor Parse(string s, IFormatProvider? provider = null)
+        public static HamkareColor Parse(string s, IFormatProvider? provider = null)
         {
             ArgumentException.ThrowIfNullOrEmpty(s);
             var (r, g, b, a) = ParseStringColorCore(s);
 
-            return new MudColor(r, g, b, a);
+            return new HamkareColor(r, g, b, a);
         }
 
         /// <summary>
-        /// Tries to parse a string representation of a color to a <see cref="MudColor"/> instance.
+        /// Tries to parse a string representation of a color to a <see cref="HamkareColor"/> instance.
         /// </summary>
         /// <param name="s">The string representation of the color.</param>
         /// <param name="provider">An optional format provider.</param>
-        /// <param name="result">When this method returns, contains the <see cref="MudColor"/> instance equivalent to the color contained in <paramref name="s"/>, if the conversion succeeded, or <c>null</c> if the conversion failed.</param>
+        /// <param name="result">When this method returns, contains the <see cref="HamkareColor"/> instance equivalent to the color contained in <paramref name="s"/>, if the conversion succeeded, or <c>null</c> if the conversion failed.</param>
         /// <remarks>
         /// The color can be represented in various formats, including hexadecimal (with or without alpha), RGB, and RGBA.
         /// Examples of valid color strings:
@@ -578,7 +578,7 @@ namespace MudBlazor.Utilities
         /// - RGBA format: "rgba(12,15,40,0.42)"
         /// </remarks>
         /// <returns><c>true</c> if the string was successfully parsed; otherwise, <c>false</c>.</returns>
-        public static bool TryParse([NotNullWhen(true)] string? s, IFormatProvider? provider, [MaybeNullWhen(false)] out MudColor result)
+        public static bool TryParse([NotNullWhen(true)] string? s, IFormatProvider? provider, [MaybeNullWhen(false)] out HamkareColor result)
         {
             if (string.IsNullOrEmpty(s))
             {
@@ -588,8 +588,8 @@ namespace MudBlazor.Utilities
 
             try
             {
-                var mudColor = Parse(s, provider);
-                result = mudColor;
+                var hamkareColor = Parse(s, provider);
+                result = hamkareColor;
                 return true;
             }
             catch (Exception)
@@ -600,10 +600,10 @@ namespace MudBlazor.Utilities
         }
 
         /// <summary>
-        /// Tries to parse a string representation of a color to a <see cref="MudColor"/> instance.
+        /// Tries to parse a string representation of a color to a <see cref="HamkareColor"/> instance.
         /// </summary>
         /// <param name="s">The string representation of the color.</param>
-        /// <param name="result">When this method returns, contains the <see cref="MudColor"/> instance equivalent to the color contained in <paramref name="s"/>, if the conversion succeeded, or <c>null</c> if the conversion failed.</param>
+        /// <param name="result">When this method returns, contains the <see cref="HamkareColor"/> instance equivalent to the color contained in <paramref name="s"/>, if the conversion succeeded, or <c>null</c> if the conversion failed.</param>
         /// <remarks>
         /// The color can be represented in various formats, including hexadecimal (with or without alpha), RGB, and RGBA.
         /// Examples of valid color strings:
@@ -612,7 +612,7 @@ namespace MudBlazor.Utilities
         /// - RGBA format: "rgba(12,15,40,0.42)"
         /// </remarks>
         /// <returns><c>true</c> if the string was successfully parsed; otherwise, <c>false</c>.</returns>
-        public static bool TryParse([NotNullWhen(true)] string? s, [MaybeNullWhen(false)] out MudColor result) => TryParse(s, null, out result);
+        public static bool TryParse([NotNullWhen(true)] string? s, [MaybeNullWhen(false)] out HamkareColor result) => TryParse(s, null, out result);
 
         private static double NormalizeAlpha(byte a, int digit = 2) => Math.Round(a / 255.0, digit);
 
@@ -805,27 +805,27 @@ namespace MudBlazor.Utilities
         }
 
         /// <summary>
-        /// Provides comparison and hashing capabilities for <see cref="MudColor"/> using the
-        /// specified <see cref="MudColorComparison"/> mode.
+        /// Provides comparison and hashing capabilities for <see cref="HamkareColor"/> using the
+        /// specified <see cref="HamkareColorComparison"/> mode.
         /// </summary>
-        public sealed class MudColorComparer : IEqualityComparer<MudColor?>
+        public sealed class HamkareColorComparer : IEqualityComparer<HamkareColor?>
         {
             /// <summary>
             /// Gets the comparison mode used by this comparer.
             /// </summary>
-            public MudColorComparison Comparison { get; }
+            public HamkareColorComparison Comparison { get; }
 
             /// <summary>
-            /// Initializes a new instance of the <see cref="MudColorComparer"/> class.
+            /// Initializes a new instance of the <see cref="HamkareColorComparer"/> class.
             /// </summary>
             /// <param name="comparison">The comparison mode to use.</param>
-            private MudColorComparer(MudColorComparison comparison)
+            private HamkareColorComparer(HamkareColorComparison comparison)
             {
                 Comparison = comparison;
             }
 
             /// <inheritdoc />
-            public bool Equals(MudColor? x, MudColor? y)
+            public bool Equals(HamkareColor? x, HamkareColor? y)
             {
                 if (ReferenceEquals(x, y))
                 {
@@ -839,47 +839,47 @@ namespace MudBlazor.Utilities
 
                 return Comparison switch
                 {
-                    MudColorComparison.Rgba => x.RgbaEquals(y),
-                    MudColorComparison.Hsl => x.HslEquals(y),
-                    MudColorComparison.RgbaAndHsl => x.RgbaEquals(y) && x.HslEquals(y),
+                    HamkareColorComparison.Rgba => x.RgbaEquals(y),
+                    HamkareColorComparison.Hsl => x.HslEquals(y),
+                    HamkareColorComparison.RgbaAndHsl => x.RgbaEquals(y) && x.HslEquals(y),
                     _ => x.Equals(y)
                 };
             }
 
             /// <inheritdoc />
-            public int GetHashCode(MudColor? mudColor)
+            public int GetHashCode(HamkareColor? hamkareColor)
             {
-                if (mudColor is null)
+                if (hamkareColor is null)
                 {
                     return 0;
                 }
 
                 return Comparison switch
                 {
-                    MudColorComparison.Rgba => mudColor._rgba.GetHashCode(),
-                    MudColorComparison.Hsl => mudColor._hsl.GetHashCode(),
-                    MudColorComparison.RgbaAndHsl => HashCode.Combine(mudColor._rgba, mudColor._hsl),
-                    _ => mudColor.GetHashCode()
+                    HamkareColorComparison.Rgba => hamkareColor._rgba.GetHashCode(),
+                    HamkareColorComparison.Hsl => hamkareColor._hsl.GetHashCode(),
+                    HamkareColorComparison.RgbaAndHsl => HashCode.Combine(hamkareColor._rgba, hamkareColor._hsl),
+                    _ => hamkareColor.GetHashCode()
                 };
             }
 
             /// <summary>
-            /// Gets an instance of <see cref="MudColorComparer"/> that compares colors using
+            /// Gets an instance of <see cref="HamkareColorComparer"/> that compares colors using
             /// their RGBA channel values only.
             /// </summary>
-            public static MudColorComparer Rgba { get; } = new(MudColorComparison.Rgba);
+            public static HamkareColorComparer Rgba { get; } = new(HamkareColorComparison.Rgba);
 
             /// <summary>
-            /// Gets an instance of <see cref="MudColorComparer"/> that compares colors using
+            /// Gets an instance of <see cref="HamkareColorComparer"/> that compares colors using
             /// their HSL values only.
             /// </summary>
-            public static MudColorComparer Hsl { get; } = new(MudColorComparison.Hsl);
+            public static HamkareColorComparer Hsl { get; } = new(HamkareColorComparison.Hsl);
 
             /// <summary>
-            /// Gets an instance of <see cref="MudColorComparer"/> that compares colors using
+            /// Gets an instance of <see cref="HamkareColorComparer"/> that compares colors using
             /// both RGBA and HSL values.
             /// </summary>
-            public static MudColorComparer RgbaAndHsl { get; } = new(MudColorComparison.RgbaAndHsl);
+            public static HamkareColorComparer RgbaAndHsl { get; } = new(HamkareColorComparison.RgbaAndHsl);
         }
     }
 }

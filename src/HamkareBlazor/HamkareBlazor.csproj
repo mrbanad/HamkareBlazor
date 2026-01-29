@@ -1,21 +1,21 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
-    <TargetFrameworks>net8.0;net9.0;net10.0</TargetFrameworks>
+    <TargetFrameworks>net9.0;net10.0</TargetFrameworks>
     <Nullable>enable</Nullable>
   </PropertyGroup>
-
+  
   <PropertyGroup>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageIcon>Nuget.png</PackageIcon>
-    <Company>MudBlazor</Company>
-    <Authors>Garderoben, Henon and Contributors</Authors>
-    <Copyright>Copyright 2026 MudBlazor</Copyright>
-    <PackageTags>Blazor, MudBlazor, Material, Material Design, Components, Blazor Components, Blazor Library</PackageTags>
-    <Description>Blazor Component Library based on Material Design principles with an emphasis on ease of use and extensibility</Description>
-    <PackageProjectUrl>https://mudblazor.com/</PackageProjectUrl>
+    <Company>Hamkare</Company>
+    <Authors>Mohammadreza Master</Authors>
+    <Copyright>Copyright 2026 HamkareBlazor</Copyright>
+    <PackageTags>Blazor, MudBlazor,HamkareBlazor, Material, Material Design, Components, Blazor Components, Blazor Library</PackageTags>
+    <Description>Blazor Component Library based on MudBlazor</Description>
+    <PackageProjectUrl>https://hamkare.com/</PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <RepositoryUrl>https://github.com/MudBlazor/MudBlazor</RepositoryUrl>
+    <RepositoryUrl>https://github.com/Mrbanad/HamkareBlazor</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
   </PropertyGroup>
   
@@ -49,8 +49,8 @@
 
   <!--Analyzer Config-->
   <PropertyGroup>
-    <MudAllowedAttributePattern>LowerCase</MudAllowedAttributePattern>
-    <MudDebugAnalyzer>false</MudDebugAnalyzer>
+    <HamkareAllowedAttributePattern>LowerCase</HamkareAllowedAttributePattern>
+    <HamkareDebugAnalyzer>false</HamkareDebugAnalyzer>
   </PropertyGroup>
 
   <!--Is this a rebuild - Dont clean generated files as this breaks rebuild behaviour-->
@@ -62,12 +62,12 @@
 
   <Target Name="CleanGeneratedFiles" BeforeTargets="Clean" Condition="'$(CleanGeneratedFiles)' != 'false'">
     <ItemGroup>
-      <FilesToClean Include="./TScripts/combined/MudBlazor.js" />
-      <FilesToClean Include="./wwwroot/MudBlazor.min.js" />
-      <FilesToClean Include="./wwwroot/MudBlazor.min.js.map" />
-      <FilesToClean Include="./wwwroot/MudBlazor.min.css" />
-      <FilesToClean Include="./wwwroot/MudBlazor.css" />
-      <FilesToClean Include="./wwwroot/css/MudBlazor.css" />
+      <FilesToClean Include="./TScripts/combined/HamkareBlazor.js" />
+      <FilesToClean Include="./wwwroot/HamkareBlazor.min.js" />
+      <FilesToClean Include="./wwwroot/HamkareBlazor.min.js.map" />
+      <FilesToClean Include="./wwwroot/HamkareBlazor.min.css" />
+      <FilesToClean Include="./wwwroot/HamkareBlazor.css" />
+      <FilesToClean Include="./wwwroot/css/HamkareBlazor.css" />
     </ItemGroup>
     <Delete Files="@(FilesToClean)" />
   </Target>
@@ -101,8 +101,8 @@
     <ScssAssetInputs Include="Styles/**/*.scss" />
     <WebAssetInputs Include="@(JsAssetInputs);@(ScssAssetInputs)" />
     <UpToDateCheckInput Include="@(WebAssetInputs)" />
-    <WebAssetOutputs Include="wwwroot/MudBlazor.min.js" />
-    <WebAssetOutputs Include="wwwroot/MudBlazor.min.js.map" />
+    <WebAssetOutputs Include="wwwroot/HamkareBlazor.min.js" />
+    <WebAssetOutputs Include="wwwroot/HamkareBlazor.min.js.map" />
     <WebAssetOutputs Include="wwwroot\HamkareBlazor.min.css" />
   </ItemGroup>
 
@@ -119,7 +119,7 @@
           Outputs="@(WebAssetOutputs)">
 
     <Message Importance="High"
-             Text="Building MudBlazor web assets (outer build)" />
+             Text="Building HamkareBlazor web assets (outer build)" />
 
     <Exec Command="$(BunWrapper) run build.mjs"
           WorkingDirectory="$(MSBuildProjectDirectory)" />
@@ -135,7 +135,7 @@
           Outputs="@(WebAssetOutputs)">
 
     <Message Importance="High"
-             Text="Building MudBlazor web assets (inner build, TFM: $(TargetFramework))" />
+             Text="Building HamkareBlazor web assets (inner build, TFM: $(TargetFramework))" />
 
     <Exec Command="$(BunWrapper) run build.mjs"
           WorkingDirectory="$(MSBuildProjectDirectory)" />
@@ -168,10 +168,10 @@
   
   <!--Add analyzer to build output so it works transitively -->
   <Target Name="_AddAnalyzersToOutput">
-    <!--Limit to one copy (MudBlazor is multi targeted) analyzers are .net standard 2.0 -->
+    <!--Limit to one copy (HamkareBlazor is multi targeted) analyzers are .net standard 2.0 -->
     <ItemGroup Condition=" '$(TargetFramework)' == 'net10.0' ">
-      <TfmSpecificPackageFile Include="..\MudBlazor.Analyzers\bin\$(Configuration)\netstandard2.0\$(AssemblyName).Analyzers.dll" PackagePath="analyzers/dotnet/cs" />
-      <TfmSpecificPackageFile Include="..\MudBlazor.Analyzers.CodeFixes\bin\$(Configuration)\netstandard2.0\$(AssemblyName).Analyzers.CodeFixes.dll" PackagePath="analyzers/dotnet/cs" />
+      <TfmSpecificPackageFile Include="..\HamkareBlazor.Analyzers\bin\$(Configuration)\netstandard2.0\$(AssemblyName).Analyzers.dll" PackagePath="analyzers/dotnet/cs" />
+      <TfmSpecificPackageFile Include="..\HamkareBlazor.Analyzers.CodeFixes\bin\$(Configuration)\netstandard2.0\$(AssemblyName).Analyzers.CodeFixes.dll" PackagePath="analyzers/dotnet/cs" />
       <!-- Add compiler visible properties to nuget for analyzers -->
       <TfmSpecificPackageFile Include="..\Directory.Build.targets" Pack="true" PackagePath="build\$(PackageId).targets" />
     </ItemGroup>
@@ -181,18 +181,18 @@
   <ItemGroup>
     <Content Remove="build.mjs" />
     <Content Remove="wwwroot/DoNotRemove.txt" />
-    <Content Remove="wwwroot/css/MudBlazor.css" />
+    <Content Remove="wwwroot/css/HamkareBlazor.css" />
     <!--macOS hidden file (causes problems with dotnet pack)-->
     <Content Remove="**/*/.DS_Store" />
   </ItemGroup>
 
   <ItemGroup>
-    <InternalsVisibleTo Include="MudBlazor.Docs" />
-    <InternalsVisibleTo Include="MudBlazor.UnitTests.Shared" />
-    <InternalsVisibleTo Include="MudBlazor.UnitTests" />
-    <InternalsVisibleTo Include="MudBlazor.UnitTests.Docs" />
-    <InternalsVisibleTo Include="MudBlazor.UnitTests.Viewer" />
-    <InternalsVisibleTo Include="MudBlazor.Benchmarks" />
+    <InternalsVisibleTo Include="HamkareBlazor.Docs" />
+    <InternalsVisibleTo Include="HamkareBlazor.UnitTests.Shared" />
+    <InternalsVisibleTo Include="HamkareBlazor.UnitTests" />
+    <InternalsVisibleTo Include="HamkareBlazor.UnitTests.Docs" />
+    <InternalsVisibleTo Include="HamkareBlazor.UnitTests.Viewer" />
+    <InternalsVisibleTo Include="HamkareBlazor.Benchmarks" />
     <!--We need to make internal types to be visible for mocking-->
     <InternalsVisibleTo Include="DynamicProxyGenAssembly2" />
   </ItemGroup>

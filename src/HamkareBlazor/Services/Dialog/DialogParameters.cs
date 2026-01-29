@@ -5,10 +5,10 @@ using System.Collections;
 using System.Collections.Generic;
 
 #nullable enable
-namespace MudBlazor
+namespace HamkareBlazor
 {
     /// <summary>
-    /// The parameters passed into a <see cref="MudDialog"/> instance.
+    /// The parameters passed into a <see cref="HamkareDialog"/> instance.
     /// </summary>
     public class DialogParameters : IEnumerable<KeyValuePair<string, object?>>
     {

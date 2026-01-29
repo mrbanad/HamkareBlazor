@@ -1,32 +1,32 @@
-.mud-collapse-container {
+.hamkare-collapse-container {
   overflow: hidden;
   display: grid;
   grid-template-rows: minmax(0, 0fr);
   transition: grid-template-rows 300ms ease-in-out;
 }
 
-.mud-collapse-entering {
+.hamkare-collapse-entering {
   grid-template-rows: minmax(0, 1fr);
 }
 
-.mud-collapse-entered {
+.hamkare-collapse-entered {
   overflow: initial;
   grid-template-rows: minmax(0, 1fr);
 
-  & .mud-collapse-wrapper {
+  & .hamkare-collapse-wrapper {
       overflow-y: auto;
   }
 }
 
-.mud-collapse-hidden {
+.hamkare-collapse-hidden {
   visibility: hidden;
 }
 
-.mud-collapse-wrapper {
+.hamkare-collapse-wrapper {
   overflow: hidden;
   display: flex;
 }
 
-.mud-collapse-wrapper-inner {
+.hamkare-collapse-wrapper-inner {
   width: 100%;
 }

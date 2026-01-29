@@ -1,10 +1,10 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using MudBlazor.Services;
+using HamkareBlazor.Services;
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 #nullable enable
 /// <summary>
@@ -19,7 +19,7 @@ public interface IBrowserViewportObserver
 
     /// <summary>
     /// Gets the resize options for the observer.
-    /// When set to null, the global options provided during AddMudServices / AddMudBlazorResizeListener will be used.
+    /// When set to null, the global options provided during AddHamkareServices / AddHamkareBlazorResizeListener will be used.
     /// When specific options are provided, they will be used to observe the changes.
     /// </summary>
     /// <remarks>

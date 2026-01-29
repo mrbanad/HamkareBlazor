@@ -1,9 +1,9 @@
 ﻿using System.Numerics;
 using Microsoft.AspNetCore.Components;
-using MudBlazor.Interpolation;
+using HamkareBlazor.Interpolation;
 
 #nullable enable
-namespace MudBlazor.Charts
+namespace HamkareBlazor.Charts
 {
     /// <summary>
     /// Represents a chart which displays series values as connected lines.
@@ -13,7 +13,7 @@ namespace MudBlazor.Charts
     /// <seealso cref="Pie{T}"/>
     /// <seealso cref="StackedBar{T}"/>
     /// <seealso cref="TimeSeries{T}"/>
-    partial class Line<T> : MudAxisLineChartBase<T, LineChartOptions> where T : struct, INumber<T>, IMinMaxValue<T>, IFormattable
+    partial class Line<T> : HamkareAxisLineChartBase<T, LineChartOptions> where T : struct, INumber<T>, IMinMaxValue<T>, IFormattable
     {
         public override RenderFragment? OverlayContent { get; set; }
 
@@ -24,7 +24,7 @@ namespace MudBlazor.Charts
             ChartType = ChartType.Line;
             ChartOptions ??= new LineChartOptions();
 
-            if (ChartReference is IMudAxisChart<T> axisChart)
+            if (ChartReference is IHamkareAxisChart<T> axisChart)
             {
                 axisChart.OverlayChart = this;
                 axisChart.OverlayContent = this.Chart;
@@ -37,7 +37,7 @@ namespace MudBlazor.Charts
         {
             if (IsOverlayChart && SharedData is null) return;
 
-            Series = (ChartContainer != null && ChartReference is MudChart<T>)
+            Series = (ChartContainer != null && ChartReference is HamkareChart<T>)
                 ? ChartContainer.ChartSeries
                 : ChartSeries;
 
@@ -46,7 +46,7 @@ namespace MudBlazor.Charts
             if (!IsOverlayChart)
             {
                 // If this is not an overlay chart, we generate the shared plot points if an overlay exists
-                SharedData = OverlayChart is IMudAxisChart<T> ? new AxisGridData<T>(lowestHorizontalLine, numHorizontalLines, gridYUnits, _boundWidth, _boundHeight) : null;
+                SharedData = OverlayChart is IHamkareAxisChart<T> ? new AxisGridData<T>(lowestHorizontalLine, numHorizontalLines, gridYUnits, _boundWidth, _boundHeight) : null;
             }
             else
             {

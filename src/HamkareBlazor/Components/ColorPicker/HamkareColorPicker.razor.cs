@@ -1,22 +1,22 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Globalization;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using MudBlazor.Extensions;
-using MudBlazor.State;
-using MudBlazor.Utilities;
-using MudBlazor.Utilities.Throttle;
+using HamkareBlazor.Extensions;
+using HamkareBlazor.State;
+using HamkareBlazor.Utilities;
+using HamkareBlazor.Utilities.Throttle;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
     /// <summary>
     /// Represents a sophisticated and customizable pop-up for choosing a color.
     /// </summary>
-    public partial class MudColorPicker : MudPicker<MudColor>
+    public partial class HamkareColorPicker : HamkarePicker<HamkareColor>
     {
         private const double MaxY = 250;
         private const double MaxX = 312;
@@ -25,18 +25,18 @@ namespace MudBlazor
         private double _selectorX;
         private double _selectorY;
         private bool _skipFeedback;
-        private MudColor? _baseColor;
+        private HamkareColor? _baseColor;
         private bool _collectionOpen;
         private readonly string _id = Identifier.Create();
         private ThrottleDispatcher? _throttleDispatcher;
         private readonly ParameterState<bool> _alphaState;
         private readonly ParameterState<string?> _textState;
-        private readonly ParameterState<MudColor?> _valueState;
+        private readonly ParameterState<HamkareColor?> _valueState;
         private readonly ParameterState<int> _throttleIntervalState;
         private readonly ParameterState<ColorPickerView> _colorPickerViewState;
         private int _inputResetKey = 0; // Used to force TextField re-render on invalid input
 
-        private readonly IReadOnlyList<MudColor> _gridList = new MudColor[]
+        private readonly IReadOnlyList<HamkareColor> _gridList = new HamkareColor[]
         {
             "#FFFFFF","#ebebeb","#d6d6d6","#c2c2c2","#adadad","#999999","#858586","#707070","#5c5c5c","#474747","#333333","#000000",
             "#133648","#071d53","#0f0638","#2a093b","#370c1b","#541107","#532009","#53350d","#523e0f","#65611b","#505518","#2b3d16",
@@ -53,17 +53,17 @@ namespace MudBlazor
         [Inject]
         private TimeProvider TimeProvider { get; set; } = null!;
 
-        public MudColorPicker()
+        public HamkareColorPicker()
         {
             AdornmentIcon = Icons.Material.Outlined.Palette;
             ShowToolbar = false;
 
             using var registerScope = CreateRegisterScope();
-            _valueState = registerScope.RegisterParameter<MudColor?>(nameof(Value))
+            _valueState = registerScope.RegisterParameter<HamkareColor?>(nameof(Value))
                 .WithParameter(() => Value)
                 .WithEventCallback(() => ValueChanged)
                 .WithChangeHandler(OnValueChangeHandlerAsync)
-                .WithComparer(MudColor.MudColorComparer.RgbaAndHsl);
+                .WithComparer(HamkareColor.HamkareColorComparer.RgbaAndHsl);
             _textState = registerScope.RegisterParameter<string?>(nameof(Text))
                 .WithParameter(() => Text)
                 .WithEventCallback(() => TextChanged);
@@ -90,7 +90,7 @@ namespace MudBlazor
             _selectorY = y;
         }
 
-        private Task OnValueChangeHandlerAsync(ParameterChangedEventArgs<MudColor?> args)
+        private Task OnValueChangeHandlerAsync(ParameterChangedEventArgs<HamkareColor?> args)
         {
             // TODO: Revisit this when the state of input components / validation improves, for now mimic old behavior
             var forceUpdate = _valueState.IsInitialized && HasRendered;
@@ -223,14 +223,14 @@ namespace MudBlazor
         public bool UpdateBindingIfOnlyHSLChanged { get; set; } = false;
 
         /// <summary>
-        /// The currently selected color as a <see cref="MudColor"/>.
+        /// The currently selected color as a <see cref="HamkareColor"/>.
         /// </summary>
         /// <remarks>
-        /// You can use properties in <see cref="MudColor"/> to get color channel values such as <c>RGB</c>, <c>HSL</c>, <c>HEX</c> and more.  When this value changes, the <see cref="ValueChanged"/> event occurs.
+        /// You can use properties in <see cref="HamkareColor"/> to get color channel values such as <c>RGB</c>, <c>HSL</c>, <c>HEX</c> and more.  When this value changes, the <see cref="ValueChanged"/> event occurs.
         /// </remarks>
         [Parameter, ParameterState]
         [Category(CategoryTypes.FormComponent.Data)]
-        public MudColor? Value { get; set; } = "#594ae2";
+        public HamkareColor? Value { get; set; } = "#594ae2";
 
         /// <summary>
         /// The currently selected value, as a string.
@@ -243,7 +243,7 @@ namespace MudBlazor
         /// Occurs when the <see cref="Value"/> property has changed.
         /// </summary>
         [Parameter]
-        public EventCallback<MudColor?> ValueChanged { get; set; }
+        public EventCallback<HamkareColor?> ValueChanged { get; set; }
 
         /// <summary>
         /// The list of quick colors to display.
@@ -253,7 +253,7 @@ namespace MudBlazor
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.FormComponent.PickerBehavior)]
-        public IEnumerable<MudColor> Palette { get; set; } = new MudColor[]
+        public IEnumerable<HamkareColor> Palette { get; set; } = new HamkareColor[]
         { "#424242", "#2196f3", "#00c853", "#ff9800", "#f44336",
           "#f6f9fb", "#9df1fa", "#bdffcf", "#fff0a3", "#ffd254",
           "#e6e9eb", "#27dbf5", "#7ef7a0", "#ffe273", "#ffb31f",
@@ -345,7 +345,7 @@ namespace MudBlazor
         {
             base.OnInitialized();
             SetThrottle(_throttleIntervalState.Value);
-            AdornmentAriaLabel ??= Localizer[Resources.LanguageResource.MudColorPicker_Open];
+            AdornmentAriaLabel ??= Localizer[Resources.LanguageResource.HamkareColorPicker_Open];
         }
 
         private void OnThrottleIntervalParameterChanged(ParameterChangedEventArgs<int> args) => SetThrottle(args.Value);
@@ -360,7 +360,7 @@ namespace MudBlazor
 
         private void ToggleCollection() => _collectionOpen = !_collectionOpen;
 
-        private async Task SelectPaletteColorAsync(MudColor color)
+        private async Task SelectPaletteColorAsync(HamkareColor color)
         {
             await SetColorAsync(color);
             _collectionOpen = false;
@@ -397,16 +397,16 @@ namespace MudBlazor
         }
 
         /// <inheritdoc />
-        protected override IConverter<MudColor?, string?> GetDefaultConverter()
+        protected override IConverter<HamkareColor?, string?> GetDefaultConverter()
         {
-            return new DefaultConverter<MudColor>
+            return new DefaultConverter<HamkareColor>
             {
                 Culture = GetCulture,
                 Format = GetFormat
             };
         }
 
-        private async Task SetColorAsync(MudColor? newColor, bool forceUpdate = false)
+        private async Task SetColorAsync(HamkareColor? newColor, bool forceUpdate = false)
         {
             if (newColor is null)
             {
@@ -458,9 +458,9 @@ namespace MudBlazor
 
         protected override Task WriteTextAsync(string? value) => SetInputStringAsync(value);
 
-        protected internal override MudColor? ReadValue => _valueState.Value;
+        protected internal override HamkareColor? ReadValue => _valueState.Value;
 
-        protected override Task SetValueCoreAsync(MudColor? value) => SetColorAsync(value);
+        protected override Task SetValueCoreAsync(HamkareColor? value) => SetColorAsync(value);
 
         protected override Task StringValueChangedAsync(string? value) => SetInputStringAsync(value);
 
@@ -475,7 +475,7 @@ namespace MudBlazor
             return SetHueAsync(value);
         }
 
-        private static MudColor UpdateBaseColor(MudColor newColor)
+        private static HamkareColor UpdateBaseColor(HamkareColor newColor)
         {
             var index = (int)newColor.H / 60;
             if (index == 6)
@@ -486,7 +486,7 @@ namespace MudBlazor
             var valueInDeg = (int)newColor.H - (index * 60);
             var value = (int)MathExtensions.Map(0, 60, 0, 255, valueInDeg);
             var (r, g, b, _) = _rgbToHueMapper[index];
-            var newBaseColor = new MudColor(r(value), g(value), b(value), 255);
+            var newBaseColor = new HamkareColor(r(value), g(value), b(value), 255);
             return newBaseColor;
         }
 
@@ -511,14 +511,14 @@ namespace MudBlazor
             //in this mode, H is expected to be stable, so copy H value
             if (_valueState.Value != null)
             {
-                var newColor = new MudColor((byte)r, (byte)g, (byte)b, _valueState.Value);
+                var newColor = new HamkareColor((byte)r, (byte)g, (byte)b, _valueState.Value);
                 await SetColorAsync(newColor);
             }
 
             _skipFeedback = false;
         }
 
-        private static (double x, double y) UpdateColorSelectorBasedOnRgb(MudColor newColor)
+        private static (double x, double y) UpdateColorSelectorBasedOnRgb(HamkareColor newColor)
         {
             var hueValue = (int)MathExtensions.Map(0, 360, 0, 6 * 255, newColor.H);
             var index = hueValue / 255;
@@ -593,15 +593,15 @@ namespace MudBlazor
             _selectorY = (offsetIsAbsolute ? e.OffsetY : e.OffsetY - (SelectorSize / 2.0) + _selectorY).EnsureRange(MaxY);
         }
 
-        private int ReadRed => _valueState.Value?.R ?? MudColor.Empty.R;
+        private int ReadRed => _valueState.Value?.R ?? HamkareColor.Empty.R;
 
-        private int ReadGreen => _valueState.Value?.G ?? MudColor.Empty.G;
+        private int ReadGreen => _valueState.Value?.G ?? HamkareColor.Empty.G;
 
-        private int ReadBlue => _valueState.Value?.B ?? MudColor.Empty.B;
+        private int ReadBlue => _valueState.Value?.B ?? HamkareColor.Empty.B;
 
-        private int ReadAlpha => _valueState.Value?.A ?? MudColor.Empty.A;
+        private int ReadAlpha => _valueState.Value?.A ?? HamkareColor.Empty.A;
 
-        private double ReadAlphaPercentage => _valueState.Value?.APercentage ?? MudColor.Empty.APercentage;
+        private double ReadAlphaPercentage => _valueState.Value?.APercentage ?? HamkareColor.Empty.APercentage;
 
         private Task SetRedAsync(int value) => SetColorAsync(_valueState.Value?.SetR(value));
 
@@ -613,13 +613,13 @@ namespace MudBlazor
 
         private Task SetAlphaAsync(double value) => SetColorAsync(_valueState.Value?.SetAlpha(value));
 
-        private double ReadHue => _valueState.Value?.H ?? MudColor.Empty.H;
+        private double ReadHue => _valueState.Value?.H ?? HamkareColor.Empty.H;
 
         private int ReadHueInt => (int)ReadHue;
 
-        private double ReadSaturation => _valueState.Value?.S ?? MudColor.Empty.S;
+        private double ReadSaturation => _valueState.Value?.S ?? HamkareColor.Empty.S;
 
-        private double ReadLightness => _valueState.Value?.L ?? MudColor.Empty.L;
+        private double ReadLightness => _valueState.Value?.L ?? HamkareColor.Empty.L;
 
         private Task SetHueAsync(double value) => SetColorAsync(_valueState.Value?.SetH(value));
 
@@ -635,7 +635,7 @@ namespace MudBlazor
         /// </param>
         private async Task SetInputStringAsync(string? input)
         {
-            if (MudColor.TryParse(input, out var result))
+            if (HamkareColor.TryParse(input, out var result))
             {
                 await SetColorAsync(result);
             }
@@ -651,9 +651,9 @@ namespace MudBlazor
 
         private string GetSelectorLocation() => $"translate({Math.Round(_selectorX, 2).ToString(CultureInfo.InvariantCulture)}px, {Math.Round(_selectorY, 2).ToString(CultureInfo.InvariantCulture)}px);";
 
-        private string? GetColorTextValue(MudColor? color) => !_alphaState.Value || _colorPickerViewState.Value is ColorPickerView.Palette or ColorPickerView.GridCompact
-            ? color?.ToString(MudColorOutputFormats.Hex)
-            : color?.ToString(MudColorOutputFormats.HexA);
+        private string? GetColorTextValue(HamkareColor? color) => !_alphaState.Value || _colorPickerViewState.Value is ColorPickerView.Palette or ColorPickerView.GridCompact
+            ? color?.ToString(HamkareColorOutputFormats.Hex)
+            : color?.ToString(HamkareColorOutputFormats.HexA);
 
         private int GetHexColorInputMaxLength() => !_alphaState.Value ? 7 : 9;
 
@@ -661,14 +661,14 @@ namespace MudBlazor
 
         private bool IsAnyControlVisible() => ShowPreview || ShowSliders || ShowInputs;
 
-        private EventCallback<MouseEventArgs> GetSelectPaletteColorCallback(MudColor color) => new EventCallbackFactory().Create(this, (MouseEventArgs _) => SelectPaletteColorAsync(color));
+        private EventCallback<MouseEventArgs> GetSelectPaletteColorCallback(HamkareColor color) => new EventCallbackFactory().Create(this, (MouseEventArgs _) => SelectPaletteColorAsync(color));
 
         private Color GetButtonColor(ColorPickerView view) => _colorPickerViewState.Value == view ? Color.Primary : Color.Inherit;
 
-        private string GetColorDotClass(MudColor color) => new CssBuilder("mud-picker-color-dot").AddClass("selected", color == _valueState.Value).ToString();
+        private string GetColorDotClass(HamkareColor color) => new CssBuilder("hamkare-picker-color-dot").AddClass("selected", color == _valueState.Value).ToString();
 
         private string AlphaSliderStyle => new StyleBuilder()
-            .AddStyle($"background-image: linear-gradient(to {(RightToLeft ? "left" : "right")}, transparent, {_valueState.Value?.ToString(MudColorOutputFormats.RGB)})")
+            .AddStyle($"background-image: linear-gradient(to {(RightToLeft ? "left" : "right")}, transparent, {_valueState.Value?.ToString(HamkareColorOutputFormats.RGB)})")
             .Build();
     }
 }

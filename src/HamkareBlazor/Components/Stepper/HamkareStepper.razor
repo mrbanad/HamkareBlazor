@@ -1,9 +1,9 @@
-﻿@namespace MudBlazor
-@using MudBlazor.Resources
-@using MudBlazor.Utilities
-@inherits MudComponentBase
+﻿@namespace HamkareBlazor
+@using HamkareBlazor.Resources
+@using HamkareBlazor.Utilities
+@inherits HamkareComponentBase
 
-@inject InternalMudLocalizer Localizer
+@inject InternalHamkareLocalizer Localizer
 
 <div @attributes="@UserAttributes" class="@Classname" style="@Style">
     <div class="@NavClassname" role="tablist">
@@ -11,13 +11,13 @@
         {
             bool isActive = ActiveStep == step;
             string stepClassname = new CssBuilder()
-                .AddClass("mud-step")
+                .AddClass("hamkare-step")
                 .AddClass("active", isActive)
-                .AddClass("mud-ripple", Ripple)
-                .AddClass("mud-clickable", NonLinear && !step.DisabledState.Value)
-                .AddClass("mud-step-error", step.HasErrorState.Value)
-                .AddClass("mud-step-completed", step.CompletedState.Value)
-                .AddClass("mud-step-skipped", step.SkippedState.Value)
+                .AddClass("hamkare-ripple", Ripple)
+                .AddClass("hamkare-clickable", NonLinear && !step.DisabledState.Value)
+                .AddClass("hamkare-step-error", step.HasErrorState.Value)
+                .AddClass("hamkare-step-completed", step.CompletedState.Value)
+                .AddClass("hamkare-step-skipped", step.SkippedState.Value)
                 .Build();
 
             <button class="@stepClassname" role="tab" type="button" aria-controls="@step.Title" aria-selected="@(isActive.ToString().ToLower())"
@@ -38,8 +38,8 @@
                 }
                 else
                 {
-                    <div class="mud-stepper-nav-connector">
-                        <div class="mud-stepper-nav-connector-line"></div>
+                    <div class="hamkare-stepper-nav-connector">
+                        <div class="hamkare-stepper-nav-connector-line"></div>
                     </div>
                 }
             }
@@ -48,7 +48,7 @@
 
     @if (IsCompleted && CompletedContent is not null)
     {
-        <div class="@StepClassname mud-stepper-complete">
+        <div class="@StepClassname hamkare-stepper-complete">
             @CompletedContent
         </div>
     }
@@ -60,49 +60,49 @@
         @ChildContent
     </CascadingValue>
 
-    <MudCardActions Class="mud-stepper-actions">
+    <HamkareCardActions Class="hamkare-stepper-actions">
         @if (ActionContent == null)
         {
             @if (ShowResetButton)
             {
                 @* Reset Button *@
-                <MudButton StartIcon="@ResetButtonIcon" Class="mud-stepper-button-reset" Disabled="@(!CanReset)" OnClick="@(async () => await ResetAsync())">
-                    @Localizer[LanguageResource.MudStepper_Reset]
-                </MudButton>
+                <HamkareButton StartIcon="@ResetButtonIcon" Class="hamkare-stepper-button-reset" Disabled="@(!CanReset)" OnClick="@(async () => await ResetAsync())">
+                    @Localizer[LanguageResource.HamkareStepper_Reset]
+                </HamkareButton>
             }
 
             @if (!IsCompleted)
             {
                 @* Previous Button *@
-                <MudButton StartIcon="@PreviousButtonIcon" Class="mud-stepper-button-previous" OnClick="PreviousStepAsync" Disabled="@(!PreviousStepEnabled)">
-                    @Localizer[LanguageResource.MudStepper_Previous]
-                </MudButton>
+                <HamkareButton StartIcon="@PreviousButtonIcon" Class="hamkare-stepper-button-previous" OnClick="PreviousStepAsync" Disabled="@(!PreviousStepEnabled)">
+                    @Localizer[LanguageResource.HamkareStepper_Previous]
+                </HamkareButton>
             }
 
-            <MudSpacer/>
+            <HamkareSpacer/>
 
             @if (!IsCompleted)
             {
                 @if (IsCurrentStepSkippable)
                 {
                     @* Skip Button *@
-                    <MudButton StartIcon="@SkipButtonIcon" Class="mud-stepper-button-skip" OnClick="SkipCurrentStepAsync">
-                        @Localizer[LanguageResource.MudStepper_Skip]
-                    </MudButton>
+                    <HamkareButton StartIcon="@SkipButtonIcon" Class="hamkare-stepper-button-skip" OnClick="SkipCurrentStepAsync">
+                        @Localizer[LanguageResource.HamkareStepper_Skip]
+                    </HamkareButton>
                 }
                 @if (ShowCompleteInsteadOfNext)
                 {
                     @* Complete Button *@
-                    <MudButton StartIcon="@CompleteButtonIcon" Class="mud-stepper-button-complete" OnClick="NextStepAsync" Color="Color.Primary">
-                        @Localizer[LanguageResource.MudStepper_Complete]
-                    </MudButton>
+                    <HamkareButton StartIcon="@CompleteButtonIcon" Class="hamkare-stepper-button-complete" OnClick="NextStepAsync" Color="Color.Primary">
+                        @Localizer[LanguageResource.HamkareStepper_Complete]
+                    </HamkareButton>
                 }
                 else 
                 {
                     @* Next Button *@
-                    <MudButton StartIcon="@NextButtonIcon" Class="mud-stepper-button-next" OnClick="NextStepAsync" Color="Color.Primary" Disabled="@(!CanGoToNextStep)">
-                        @Localizer[LanguageResource.MudStepper_Next]
-                    </MudButton>
+                    <HamkareButton StartIcon="@NextButtonIcon" Class="hamkare-stepper-button-next" OnClick="NextStepAsync" Color="Color.Primary" Disabled="@(!CanGoToNextStep)">
+                        @Localizer[LanguageResource.HamkareStepper_Next]
+                    </HamkareButton>
                 }
             }
         }
@@ -110,11 +110,11 @@
         {
             @ActionContent(this)
         }
-    </MudCardActions>
+    </HamkareCardActions>
 </div>
 
 @code {
-    private RenderFragment RenderStepLabel(MudStep step, bool isActive) =>
+    private RenderFragment RenderStepLabel(HamkareStep step, bool isActive) =>
         @<div class="@step.LabelClassname">
             @if (LabelTemplate is not null)
             {
@@ -125,19 +125,19 @@
                 <div class="@step.LabelIconClassname">
                     @if(step.HasErrorState.Value)
                     {
-                        <MudIcon Size="Size.Small" Icon="@StepErrorIcon" />
+                        <HamkareIcon Size="Size.Small" Icon="@StepErrorIcon" />
                     }
                     else if(step.SkippedState.Value && ShowSkip)
                     {
-                        <MudIcon Size="Size.Small" Icon="@StepSkippedIcon" />
+                        <HamkareIcon Size="Size.Small" Icon="@StepSkippedIcon" />
                     }
                     else if (step.CompletedState.Value)
                     {
-                        <MudIcon Size="Size.Small" Icon="@StepCompleteIcon" />
+                        <HamkareIcon Size="Size.Small" Icon="@StepCompleteIcon" />
                     }
                     else
                     {
-                        <MudText Typo="Typo.caption">@(_steps.IndexOf(step) + 1)</MudText>
+                        <HamkareText Typo="Typo.caption">@(_steps.IndexOf(step) + 1)</HamkareText>
                     }
                 </div>
             }
@@ -149,28 +149,28 @@
             else
             {
                 <div class="@step.LabelContentClassname">
-                    <MudText Typo="@(isActive ? Typo.subtitle2 : Typo.body2)" Class="mud-step-label-content-title">
+                    <HamkareText Typo="@(isActive ? Typo.subtitle2 : Typo.body2)" Class="hamkare-step-label-content-title">
                         @step.Title
-                    </MudText>
+                    </HamkareText>
 
                     @if (!string.IsNullOrEmpty(step.SecondaryText))
                     {
-                        <MudText Typo="Typo.caption" Class="mud-step-label-content-secondary-text">@step.SecondaryText</MudText>
+                        <HamkareText Typo="Typo.caption" Class="hamkare-step-label-content-secondary-text">@step.SecondaryText</HamkareText>
                     }
                 </div>
             }
         </div>;
 
-    private RenderFragment StepContent(MudStep step) =>
+    private RenderFragment StepContent(HamkareStep step) =>
         @<CascadingValue Value="@CreateStepContext(step)">
             <div @attributes="@step.UserAttributes" class="@step.Classname" style="@step.Styles" role="tabpanel" aria-labelledby="@step.Title" tabindex="0">
                 @if (step.ChildContent is not null)
                 {
                     if (Vertical)
                     {
-                        <MudCollapse Expanded="step == ActiveStep">
+                        <HamkareCollapse Expanded="step == ActiveStep">
                             @step.ChildContent
-                        </MudCollapse>
+                        </HamkareCollapse>
                     }
                     else
                     {
@@ -180,5 +180,5 @@
             </div>
         </CascadingValue>;
 
-    private MudStepContext CreateStepContext(MudStep step) => new(this, step);
+    private HamkareStepContext CreateStepContext(HamkareStep step) => new(this, step);
 }

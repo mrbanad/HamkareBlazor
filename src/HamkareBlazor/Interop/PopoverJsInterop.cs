@@ -1,10 +1,10 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using Microsoft.JSInterop;
 
-namespace MudBlazor.Interop;
+namespace HamkareBlazor.Interop;
 
 #nullable enable
 internal class PopoverJsInterop
@@ -18,26 +18,26 @@ internal class PopoverJsInterop
 
     public ValueTask<bool> Initialize(string containerClass, int flipMargin, int overflowPadding, CancellationToken cancellationToken = default)
     {
-        return _jsRuntime.InvokeVoidAsyncWithErrorHandling("mudPopover.initialize", cancellationToken, containerClass, flipMargin, overflowPadding);
+        return _jsRuntime.InvokeVoidAsyncWithErrorHandling("hamkarePopover.initialize", cancellationToken, containerClass, flipMargin, overflowPadding);
     }
 
     public ValueTask<bool> Connect(Guid id, CancellationToken cancellationToken = default)
     {
-        return _jsRuntime.InvokeVoidAsyncWithErrorHandling("mudPopover.connect", cancellationToken, id);
+        return _jsRuntime.InvokeVoidAsyncWithErrorHandling("hamkarePopover.connect", cancellationToken, id);
     }
 
     public ValueTask<bool> Disconnect(Guid id, CancellationToken cancellationToken = default)
     {
-        return _jsRuntime.InvokeVoidAsyncWithErrorHandling("mudPopover.disconnect", cancellationToken, id);
+        return _jsRuntime.InvokeVoidAsyncWithErrorHandling("hamkarePopover.disconnect", cancellationToken, id);
     }
 
     public ValueTask<(bool success, int value)> CountProviders(CancellationToken cancellationToken = default)
     {
-        return _jsRuntime.InvokeAsyncWithErrorHandling<int>("mudpopoverHelper.countProviders", cancellationToken);
+        return _jsRuntime.InvokeAsyncWithErrorHandling<int>("hamkarepopoverHelper.countProviders", cancellationToken);
     }
 
     public ValueTask Dispose(CancellationToken cancellationToken = default)
     {
-        return _jsRuntime.InvokeVoidAsyncIgnoreErrors("mudPopover.dispose", cancellationToken);
+        return _jsRuntime.InvokeVoidAsyncIgnoreErrors("hamkarePopover.dispose", cancellationToken);
     }
 }

@@ -1,21 +1,21 @@
-﻿@namespace MudBlazor
-@using MudBlazor.Resources
-@inherits MudComponentBase
-@inject InternalMudLocalizer Localizer
+﻿@namespace HamkareBlazor
+@using HamkareBlazor.Resources
+@inherits HamkareComponentBase
+@inject InternalHamkareLocalizer Localizer
 
 @{
 #nullable enable
 }
 
-<div @attributes="UserAttributes" id="@_elementId" class="mud-dialog-container @GetPosition()">
-    <MudOverlay Visible="true" OnClick="HandleBackgroundClickAsync" Class="@BackgroundClassname" DarkBackground="true" @onmouseup="OnMouseUpAsync" />
+<div @attributes="UserAttributes" id="@_elementId" class="hamkare-dialog-container @GetPosition()">
+    <HamkareOverlay Visible="true" OnClick="HandleBackgroundClickAsync" Class="@BackgroundClassname" DarkBackground="true" @onmouseup="OnMouseUpAsync" />
     <div @ref="_dialogContainerReference" id="_@Id.ToString("N")" role="dialog" class="@Classname" style="@Style" tabindex="-1">
         @if (!GetHideHeader())
         {
             <div class="@TitleClassname">
                 @if (TitleContent is null)
                 {
-                    <MudText Typo="Typo.h6">@_titleState.Value</MudText>
+                    <HamkareText Typo="Typo.h6">@_titleState.Value</HamkareText>
                 }
                 else
                 {
@@ -23,11 +23,11 @@
                 }
                 @if (GetCloseButton())
                 {
-                    <MudIconButton aria-label="@Localizer[LanguageResource.MudDialog_Close]" @onmousedown:preventDefault="true" Icon="@CloseIcon" @onclick="((IMudDialogInstance)this).Cancel" Class="mud-button-close" />
+                    <HamkareIconButton aria-label="@Localizer[LanguageResource.HamkareDialog_Close]" @onmousedown:preventDefault="true" Icon="@CloseIcon" @onclick="((IHamkareDialogInstance)this).Cancel" Class="hamkare-button-close" />
                 }
             </div>
          }
-        <CascadingValue Value="(IMudDialogInstanceInternal)this" IsFixed="true">
+        <CascadingValue Value="(IHamkareDialogInstanceInternal)this" IsFixed="true">
             @Content
         </CascadingValue>
     </div>

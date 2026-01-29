@@ -2,9 +2,9 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using MudBlazor.Utilities;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
 
@@ -14,7 +14,7 @@ namespace MudBlazor
     /// <remarks>
     /// Typically used within dialogs and other overlays.
     /// </remarks>
-    public partial class MudFocusTrap : IDisposable
+    public partial class HamkareFocusTrap : IDisposable
     {
         private bool _shiftDown;
         private bool _disabled;
@@ -23,7 +23,7 @@ namespace MudBlazor
         private bool _shouldRender = true;
 
         protected string Classname =>
-            new CssBuilder("mud-focus-trap")
+            new CssBuilder("hamkare-focus-trap")
                 .AddClass("outline-none")
                 .AddClass(Class)
                 .Build();
@@ -146,12 +146,12 @@ namespace MudBlazor
 
         private Task FocusFirstAsync()
         {
-            return _root.MudFocusFirstAsync(2, 4).AsTask();
+            return _root.HamkareFocusFirstAsync(2, 4).AsTask();
         }
 
         private Task FocusLastAsync()
         {
-            return _root.MudFocusLastAsync(2, 4).AsTask();
+            return _root.HamkareFocusLastAsync(2, 4).AsTask();
         }
 
         private void HandleKeyEvent(KeyboardEventArgs args)
@@ -165,12 +165,12 @@ namespace MudBlazor
 
         private Task RestoreFocusAsync()
         {
-            return _root.MudRestoreFocusAsync().AsTask();
+            return _root.HamkareRestoreFocusAsync().AsTask();
         }
 
         private Task SaveFocusAsync()
         {
-            return _root.MudSaveFocusAsync().AsTask();
+            return _root.HamkareSaveFocusAsync().AsTask();
         }
 
         protected override bool ShouldRender()

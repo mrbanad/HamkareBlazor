@@ -8,5 +8,5 @@
     <File Path="Directory.Build.props" />
     <File Path="Directory.Build.targets" />
   </Folder>
-  <Project Path="MudBlazor/HamkareBlazor.csproj" />
+  <Project Path="HamkareBlazor/HamkareBlazor.csproj" />
 </Solution>

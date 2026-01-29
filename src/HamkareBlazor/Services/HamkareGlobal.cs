@@ -1,54 +1,54 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 #nullable enable
 /// <summary>
 /// <para>
-/// Static properties that let you control the default behavior of some parts of MudBlazor.
+/// Static properties that let you control the default behavior of some parts of HamkareBlazor.
 /// </para>
 /// <para>
 /// <b>Warning:</b> This feature is under development and breaking changes to the API <b>will occur</b> between releases.
-/// See <see href="https://mudblazor.com/customization/globals#usage">our website</see> for more info including our support policy.
+/// See <see href="https://hamkareblazor.com/customization/globals#usage">our website</see> for more info including our support policy.
 /// </para>
 /// </summary>
-public static class MudGlobal
+public static class HamkareGlobal
 {
     /// <summary>
-    /// Default settings for <see cref="MudMenu"/>.
+    /// Default settings for <see cref="HamkareMenu"/>.
     /// <br/>
     /// <b>Warning:</b> This feature is under development and breaking changes to the API <b>will occur</b> between releases.
     /// </summary>
     public static class MenuDefaults
     {
         /// <summary>
-        /// The delay in milliseconds before a <see cref="MudMenu"/> is shown when hovered, or hidden after the cursor moves away.
+        /// The delay in milliseconds before a <see cref="HamkareMenu"/> is shown when hovered, or hidden after the cursor moves away.
         /// </summary>
         public static int HoverDelay { get; set; } = 300;
     }
 
     /// <summary>
-    /// Default settings for <see cref="MudTooltip"/>.
+    /// Default settings for <see cref="HamkareTooltip"/>.
     /// <br/>
     /// <b>Warning:</b> This feature is under development and breaking changes to the API <b>will occur</b> between releases.
     /// </summary>
     public static class TooltipDefaults
     {
         /// <summary>
-        /// The amount of time in milliseconds to wait from opening the <see cref="MudTooltip"/> before beginning to perform the transition.
+        /// The amount of time in milliseconds to wait from opening the <see cref="HamkareTooltip"/> before beginning to perform the transition.
         /// </summary>
         public static TimeSpan Delay { get; set; } = TimeSpan.Zero;
 
         /// <summary>
-        /// The length of time that the opening transition for <see cref="MudTooltip"/> takes to complete.
+        /// The length of time that the opening transition for <see cref="HamkareTooltip"/> takes to complete.
         /// </summary>
         public static TimeSpan Duration { get; set; } = TimeSpan.FromMilliseconds(251);
     }
 
     /// <summary>
-    /// The handler for unhandled MudBlazor component exceptions.
+    /// The handler for unhandled HamkareBlazor component exceptions.
     /// </summary>
     /// <remarks>
     /// Exceptions which use this handler are typically rare, such as errors which occur during a "fire-and-forget" <see cref="Task"/> which cannot be awaited.<br />

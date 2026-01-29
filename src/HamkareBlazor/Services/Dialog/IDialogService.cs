@@ -1,5 +1,5 @@
 ﻿// Copyright (c) 2019 Blazored (https://github.com/Blazored)
-// Copyright (c) 2020 Jonny Larsson (https://github.com/MudBlazor/MudBlazor)
+// Copyright (c) 2020 Jonny Larsson (https://github.com/HamkareBlazor/HamkareBlazor)
 // Copyright (c) 2021 improvements by Meinrad Recheis
 // See https://github.com/Blazored
 // License: MIT
@@ -8,13 +8,13 @@ using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Components;
 
 #nullable enable
-namespace MudBlazor
+namespace HamkareBlazor
 {
     /// <summary>
-    /// A service for managing <see cref="MudDialog"/> components.
+    /// A service for managing <see cref="HamkareDialog"/> components.
     /// </summary>
     /// <remarks>
-    /// This service requires a <see cref="MudDialogProvider"/> in your layout page.
+    /// This service requires a <see cref="HamkareDialogProvider"/> in your layout page.
     /// </remarks>
     public interface IDialogService
     {

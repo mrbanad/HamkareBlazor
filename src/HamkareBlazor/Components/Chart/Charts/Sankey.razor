@@ -1,8 +1,8 @@
 ﻿@using System.Globalization
 
-@namespace MudBlazor.Charts
+@namespace HamkareBlazor.Charts
 
-@inherits MudChartBase<T, SankeyChartOptions>
+@inherits HamkareChartBase<T, SankeyChartOptions>
 
 @typeparam T
 
@@ -10,8 +10,8 @@
     var glowName = $"glow_{Guid.NewGuid()}";
 }
 
-<div @ref="_elementReference" class="mud-chart-sankey" style="width:@Width; height:@Height">
-    <svg @attributes="UserAttributes" class="mud-chart-sankey mud-ltr" width="@Width" height="@Height" viewBox="0 0 @_boundWidth.ToStr() @_boundHeight.ToStr()">
+<div @ref="_elementReference" class="hamkare-chart-sankey" style="width:@Width; height:@Height">
+    <svg @attributes="UserAttributes" class="hamkare-chart-sankey hamkare-ltr" width="@Width" height="@Height" viewBox="0 0 @_boundWidth.ToStr() @_boundHeight.ToStr()">
         <defs>
             @foreach (var edge in EdgePaths)
             {
@@ -73,7 +73,7 @@
 
             if (TooltipTemplate is not null)
             {
-                <g class="mud-chart-tooltip" transform="translate(@tooltipX.ToStr(), @tooltipY.ToStr())">
+                <g class="hamkare-chart-tooltip" transform="translate(@tooltipX.ToStr(), @tooltipY.ToStr())">
                     @TooltipTemplate((edge, @NodeRects[edge.Source.Name].Color))
                 </g>
             }
@@ -89,7 +89,7 @@
                               PaddingSize="@ChartOptions.LabelPadding"/>
             }
         }
-        @MudChartParent?.CustomGraphics
+        @HamkareChartParent?.CustomGraphics
     </svg>
 </div>
 

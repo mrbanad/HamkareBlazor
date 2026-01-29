@@ -3,22 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
-using MudBlazor.Interfaces;
-using MudBlazor.State;
-using MudBlazor.Utilities;
+using HamkareBlazor.Interfaces;
+using HamkareBlazor.State;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 #nullable enable
 
 /// <summary>
-/// A collection of multiple <see cref="MudChip{T}"/> components that allows single or multi-selection.
+/// A collection of multiple <see cref="HamkareChip{T}"/> components that allows single or multi-selection.
 /// </summary>
 /// <typeparam name="T">The type of item managed by this component.</typeparam>
-/// <seealso cref="MudChip{T}"/>
-public partial class MudChipSet<T> : MudComponentBase, IDisposable
+/// <seealso cref="HamkareChip{T}"/>
+public partial class HamkareChipSet<T> : HamkareComponentBase, IDisposable
 {
-    public MudChipSet()
+    public HamkareChipSet()
     {
         using var registerScope = CreateRegisterScope();
         _selectedValue = registerScope.RegisterParameter<T?>(nameof(SelectedValue))
@@ -43,11 +43,11 @@ public partial class MudChipSet<T> : MudComponentBase, IDisposable
     private readonly ParameterState<IReadOnlyCollection<T>?> _selectedValues;
 
     private HashSet<T> _selection = new();
-    private HashSet<MudChip<T>> _chips = new();
+    private HashSet<HamkareChip<T>> _chips = new();
     private bool MultiSelection => SelectionMode == SelectionMode.MultiSelection;
     private bool Mandatory => SelectionMode == SelectionMode.SingleSelection;
 
-    protected string Classname => new CssBuilder("mud-chipset")
+    protected string Classname => new CssBuilder("hamkare-chipset")
         .AddClass(Class)
         .Build();
 
@@ -82,7 +82,7 @@ public partial class MudChipSet<T> : MudComponentBase, IDisposable
     /// The default variant for all chips in this set.
     /// </summary>
     /// <remarks>
-    /// Defaults to <see cref="Variant.Filled"/>.  Can be overridden by setting <see cref="MudChip{T}.Variant"/>.
+    /// Defaults to <see cref="Variant.Filled"/>.  Can be overridden by setting <see cref="HamkareChip{T}.Variant"/>.
     /// </remarks>
     [Parameter]
     [Category(CategoryTypes.Chip.Appearance)]
@@ -92,7 +92,7 @@ public partial class MudChipSet<T> : MudComponentBase, IDisposable
     /// The default color for all chips in this set.
     /// </summary>
     /// <remarks>
-    /// Defaults to <see cref="Color.Default"/>.  Can be overridden by setting <see cref="MudChip{T}.Color"/>.
+    /// Defaults to <see cref="Color.Default"/>.  Can be overridden by setting <see cref="HamkareChip{T}.Color"/>.
     /// </remarks>
     [Parameter]
     [Category(CategoryTypes.Chip.Appearance)]
@@ -102,7 +102,7 @@ public partial class MudChipSet<T> : MudComponentBase, IDisposable
     /// The default color for all selected chips in this set.
     /// </summary>
     /// <remarks>
-    /// Defaults to <see cref="Color.Inherit"/>.  Can be overridden by setting <see cref="MudChip{T}.SelectedColor"/>.
+    /// Defaults to <see cref="Color.Inherit"/>.  Can be overridden by setting <see cref="HamkareChip{T}.SelectedColor"/>.
     /// </remarks>
     [Parameter]
     [Category(CategoryTypes.Chip.Appearance)]
@@ -112,7 +112,7 @@ public partial class MudChipSet<T> : MudComponentBase, IDisposable
     /// The default icon color for all chips in this set.
     /// </summary>
     /// <remarks>
-    /// Defaults to <see cref="Color.Inherit"/>.  Can be overridden by setting <see cref="MudChip{T}.IconColor"/>.
+    /// Defaults to <see cref="Color.Inherit"/>.  Can be overridden by setting <see cref="HamkareChip{T}.IconColor"/>.
     /// </remarks>
     [Parameter]
     [Category(CategoryTypes.Chip.Appearance)]
@@ -122,7 +122,7 @@ public partial class MudChipSet<T> : MudComponentBase, IDisposable
     /// The default size for all chips in this set.
     /// </summary>
     /// <remarks>
-    /// Defaults to <see cref="Size.Medium"/>.  Can be overridden by setting <see cref="MudChip{T}.Size"/>.
+    /// Defaults to <see cref="Size.Medium"/>.  Can be overridden by setting <see cref="HamkareChip{T}.Size"/>.
     /// </remarks>
     [Parameter]
     [Category(CategoryTypes.Chip.Appearance)]
@@ -139,7 +139,7 @@ public partial class MudChipSet<T> : MudComponentBase, IDisposable
     /// The default icon shown for selected chips in this set.
     /// </summary>
     /// <remarks>
-    /// Defaults to <see cref="Icons.Material.Filled.Check"/>.  Can be overridden by setting <see cref="MudChip{T}.CheckedIcon"/>.
+    /// Defaults to <see cref="Icons.Material.Filled.Check"/>.  Can be overridden by setting <see cref="HamkareChip{T}.CheckedIcon"/>.
     /// </remarks>
     [Parameter]
     [Category(CategoryTypes.Chip.Appearance)]
@@ -149,7 +149,7 @@ public partial class MudChipSet<T> : MudComponentBase, IDisposable
     /// The default close icon shown for closeable chips in this set.
     /// </summary>
     /// <remarks>
-    /// Defaults to <see cref="Icons.Material.Filled.Cancel"/>.  Can be overridden by setting <see cref="MudChip{T}.CloseIcon"/>.
+    /// Defaults to <see cref="Icons.Material.Filled.Cancel"/>.  Can be overridden by setting <see cref="HamkareChip{T}.CloseIcon"/>.
     /// </remarks>
     [Parameter]
     [Category(CategoryTypes.Chip.Appearance)]
@@ -159,7 +159,7 @@ public partial class MudChipSet<T> : MudComponentBase, IDisposable
     /// Shows a ripple effect when a chip is clicked.
     /// </summary>
     /// <remarks>
-    /// Defaults to <c>true</c>.  Can be overridden by setting <see cref="MudChip{T}.Ripple"/>.
+    /// Defaults to <c>true</c>.  Can be overridden by setting <see cref="HamkareChip{T}.Ripple"/>.
     /// </remarks>
     [Parameter]
     [Category(CategoryTypes.Chip.Appearance)]
@@ -169,7 +169,7 @@ public partial class MudChipSet<T> : MudComponentBase, IDisposable
     /// Uses the theme border radius for chips in this set.
     /// </summary>
     /// <remarks>
-    /// Defaults to <c>false</c>.  When <c>true</c>, the <see cref="LayoutProperties.DefaultBorderRadius"/> is used for chip edges.  Can be overridden by setting <see cref="MudChip{T}.Label"/>.
+    /// Defaults to <c>false</c>.  When <c>true</c>, the <see cref="LayoutProperties.DefaultBorderRadius"/> is used for chip edges.  Can be overridden by setting <see cref="HamkareChip{T}.Label"/>.
     /// </remarks>
     [Parameter]
     [Category(CategoryTypes.Chip.Appearance)]
@@ -179,7 +179,7 @@ public partial class MudChipSet<T> : MudComponentBase, IDisposable
     /// Prevents the user from interacting with chips in this set.
     /// </summary>
     /// <remarks>
-    /// Defaults to <c>false</c>.  When <c>true</c>, the all chips are visibly disabled and interaction is not allowed.  Overrides any value set for <see cref="MudChip{T}.Disabled"/>.
+    /// Defaults to <c>false</c>.  When <c>true</c>, the all chips are visibly disabled and interaction is not allowed.  Overrides any value set for <see cref="HamkareChip{T}.Disabled"/>.
     /// </remarks>
     [Parameter]
     [Category(CategoryTypes.Chip.Behavior)]
@@ -189,7 +189,7 @@ public partial class MudChipSet<T> : MudComponentBase, IDisposable
     /// Prevents chips in this set from being clicked.
     /// </summary>
     /// <remarks>
-    /// Defaults to <c>false</c>.  When <c>true</c>, chips cannot be clicked even if <see cref="MudChip{T}.OnClick"/> is set.
+    /// Defaults to <c>false</c>.  When <c>true</c>, chips cannot be clicked even if <see cref="HamkareChip{T}.OnClick"/> is set.
     /// </remarks>
     [Parameter]
     [Category(CategoryTypes.ChipSet.Behavior)]
@@ -247,7 +247,7 @@ public partial class MudChipSet<T> : MudComponentBase, IDisposable
     /// Occurs when any chip has been closed.
     /// </summary>
     [Parameter]
-    public EventCallback<MudChip<T>> OnClose { get; set; }
+    public EventCallback<HamkareChip<T>> OnClose { get; set; }
 
     private Task OnSelectedValueChangedAsync(ParameterChangedEventArgs<T?> args)
     {
@@ -266,7 +266,7 @@ public partial class MudChipSet<T> : MudComponentBase, IDisposable
 
     private void OnCheckMarkChanged(ParameterChangedEventArgs<bool> args)
     {
-        foreach (IMudStateHasChanged chip in _chips)
+        foreach (IHamkareStateHasChanged chip in _chips)
             chip.StateHasChanged();
     }
 
@@ -314,7 +314,7 @@ public partial class MudChipSet<T> : MudComponentBase, IDisposable
         }
     }
 
-    internal async Task AddAsync(MudChip<T> chip)
+    internal async Task AddAsync(HamkareChip<T> chip)
     {
         if (!_chips.Add(chip))
             return;
@@ -345,7 +345,7 @@ public partial class MudChipSet<T> : MudComponentBase, IDisposable
             await chip.UpdateSelectionStateAsync(true);
     }
 
-    internal async Task RemoveAsync(MudChip<T> chip)
+    internal async Task RemoveAsync(HamkareChip<T> chip)
     {
         if (!_chips.Remove(chip))
             return;
@@ -360,7 +360,7 @@ public partial class MudChipSet<T> : MudComponentBase, IDisposable
         StateHasChanged();
     }
 
-    internal async Task OnChipSelectedChangedAsync(MudChip<T> chip, bool selected)
+    internal async Task OnChipSelectedChangedAsync(HamkareChip<T> chip, bool selected)
     {
         var value = chip.GetValue();
         if (!MultiSelection)
@@ -392,7 +392,7 @@ public partial class MudChipSet<T> : MudComponentBase, IDisposable
         await UpdateSelectedValuesAsync(newSelection);
     }
 
-    internal async Task OnChipDeletedAsync(MudChip<T> chip)
+    internal async Task OnChipDeletedAsync(HamkareChip<T> chip)
     {
         await RemoveAsync(chip);
         await OnClose.InvokeAsync(chip);

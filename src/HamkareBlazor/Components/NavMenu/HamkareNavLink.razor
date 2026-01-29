@@ -1,5 +1,5 @@
-﻿@namespace MudBlazor
-@inherits MudComponentBase
+﻿@namespace HamkareBlazor
+@inherits HamkareComponentBase
 @using Microsoft.AspNetCore.Components.Routing
 
 <div @attributes="UserAttributes" class="@Classname" disabled="@Disabled" style="@Style">
@@ -14,9 +14,9 @@
                     ActiveClass="@ActiveClass">
                 @if (!string.IsNullOrEmpty(Icon))
                 {
-                    <MudIcon Disabled="@Disabled" Icon="@Icon" Color="@IconColor" Class="@IconClassname"/>
+                    <HamkareIcon Disabled="@Disabled" Icon="@Icon" Color="@IconColor" Class="@IconClassname"/>
                 }
-                <div class="mud-nav-link-text">
+                <div class="hamkare-nav-link-text">
                     @ChildContent
                 </div>
             </NavLink>
@@ -28,9 +28,9 @@
                  tabindex="@TabIndex">
                 @if (!string.IsNullOrEmpty(Icon))
                 {
-                    <MudIcon Disabled="@Disabled" Icon="@Icon" Color="@IconColor" Class="@IconClassname" />
+                    <HamkareIcon Disabled="@Disabled" Icon="@Icon" Color="@IconColor" Class="@IconClassname" />
                 }
-                <div class="mud-nav-link-text">
+                <div class="hamkare-nav-link-text">
                     @ChildContent
                 </div>
             </div>

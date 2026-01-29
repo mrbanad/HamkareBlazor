@@ -1,16 +1,16 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using MudBlazor.Utilities;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
-    // note: the MudTable code is split. Everything that has nothing to do with the type parameter of MudTable<T> is here in MudTableBase
+    // note: the HamkareTable code is split. Everything that has nothing to do with the type parameter of HamkareTable<T> is here in HamkareTableBase
 
     /// <summary>
     /// A base class for designing table components.
     /// </summary>
-    public abstract class MudTableBase : MudComponentBase
+    public abstract class HamkareTableBase : HamkareComponentBase
     {
         private int _currentPage = 0;
         internal int? _rowsPerPage;
@@ -18,31 +18,31 @@ namespace MudBlazor
         internal bool Editing => _editingItem != null;
 
         protected string Classname =>
-            new CssBuilder("mud-table")
-                .AddClass("mud-xs-table", Breakpoint == Breakpoint.Xs)
-                .AddClass("mud-sm-table", Breakpoint == Breakpoint.Sm)
-                .AddClass("mud-md-table", Breakpoint == Breakpoint.Md)
-                .AddClass("mud-lg-table", Breakpoint is Breakpoint.Lg or Breakpoint.Always)
-                .AddClass("mud-xl-table", Breakpoint is Breakpoint.Xl or Breakpoint.Always)
-                .AddClass("mud-xxl-table", Breakpoint is Breakpoint.Xxl or Breakpoint.Always)
-                .AddClass("mud-table-dense", Dense)
-                .AddClass("mud-table-hover", Hover)
-                .AddClass("mud-table-bordered", Bordered)
-                .AddClass("mud-table-striped", Striped)
-                .AddClass("mud-table-outlined", Outlined)
-                .AddClass("mud-table-square", Square)
-                .AddClass("mud-table-sticky-header", FixedHeader)
-                .AddClass("mud-table-sticky-footer", FixedFooter)
-                .AddClass($"mud-elevation-{Elevation}", !Outlined)
+            new CssBuilder("hamkare-table")
+                .AddClass("hamkare-xs-table", Breakpoint == Breakpoint.Xs)
+                .AddClass("hamkare-sm-table", Breakpoint == Breakpoint.Sm)
+                .AddClass("hamkare-md-table", Breakpoint == Breakpoint.Md)
+                .AddClass("hamkare-lg-table", Breakpoint is Breakpoint.Lg or Breakpoint.Always)
+                .AddClass("hamkare-xl-table", Breakpoint is Breakpoint.Xl or Breakpoint.Always)
+                .AddClass("hamkare-xxl-table", Breakpoint is Breakpoint.Xxl or Breakpoint.Always)
+                .AddClass("hamkare-table-dense", Dense)
+                .AddClass("hamkare-table-hover", Hover)
+                .AddClass("hamkare-table-bordered", Bordered)
+                .AddClass("hamkare-table-striped", Striped)
+                .AddClass("hamkare-table-outlined", Outlined)
+                .AddClass("hamkare-table-square", Square)
+                .AddClass("hamkare-table-sticky-header", FixedHeader)
+                .AddClass("hamkare-table-sticky-footer", FixedFooter)
+                .AddClass($"hamkare-elevation-{Elevation}", !Outlined)
                 .AddClass(Class)
                 .Build();
 
-        protected string HeadClassname => new CssBuilder("mud-table-head")
+        protected string HeadClassname => new CssBuilder("hamkare-table-head")
             .AddClass(HeaderClass)
-            .AddClass("mud-table-dense", Dense)
+            .AddClass("hamkare-table-dense", Dense)
             .Build();
 
-        protected string FootClassname => new CssBuilder("mud-table-foot")
+        protected string FootClassname => new CssBuilder("hamkare-table-foot")
             .AddClass(FooterClass)
             .Build();
 
@@ -207,7 +207,7 @@ namespace MudBlazor
         /// The maximum rows to display per page.
         /// </summary>
         /// <remarks>
-        /// Defaults to <c>null</c>.  When set, rows beyond this number will overflow into separate pages.  Requires a <see cref="MudTablePager"/> in the <see cref="PagerContent"/>.
+        /// Defaults to <c>null</c>.  When set, rows beyond this number will overflow into separate pages.  Requires a <see cref="HamkareTablePager"/> in the <see cref="PagerContent"/>.
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.Table.Pagination)]
@@ -233,7 +233,7 @@ namespace MudBlazor
         /// The index of the current page.
         /// </summary>
         /// <remarks>
-        /// Defaults to <c>0</c> (the first page).  Requires a <see cref="MudTablePager"/> in the <see cref="PagerContent"/>.
+        /// Defaults to <c>0</c> (the first page).  Requires a <see cref="HamkareTablePager"/> in the <see cref="PagerContent"/>.
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.Table.Pagination)]
@@ -304,14 +304,14 @@ namespace MudBlazor
         /// Displays a loading animation while <c>ServerData</c> executes.
         /// </summary>
         /// <remarks>
-        /// Defaults to <c>false</c>.  Becomes <c>true</c> before <c>ServerData</c> is called, then becomes <c>false</c>.  When <c>true</c>, either a <see cref="MudProgressLinear"/> is displayed or custom content if <c>LoadingContent</c> or <c>LoadingContentBody</c> is set.
+        /// Defaults to <c>false</c>.  Becomes <c>true</c> before <c>ServerData</c> is called, then becomes <c>false</c>.  When <c>true</c>, either a <see cref="HamkareProgressLinear"/> is displayed or custom content if <c>LoadingContent</c> or <c>LoadingContentBody</c> is set.
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.Table.Data)]
         public bool Loading { get; set; }
 
         /// <summary>
-        /// The color of the <see cref="MudProgressLinear"/> while <see cref="Loading"/> is <c>true</c>.
+        /// The color of the <see cref="HamkareProgressLinear"/> while <see cref="Loading"/> is <c>true</c>.
         /// </summary>
         /// <remarks>
         /// Defaults to <see cref="Color.Info"/>.  Has no effect if <c>LoadingContent</c> or <c>LoadingContentBody</c> is set.
@@ -324,7 +324,7 @@ namespace MudBlazor
         /// The content of this table's header.
         /// </summary>
         /// <remarks>
-        /// For basic headers, add <see cref="MudTh"/> components here to describe each column.  For more customized headers (such as multi-row headers), set <see cref="CustomHeader"/> to <c>true</c> and use <see cref="MudTHeadRow"/> components here instead.
+        /// For basic headers, add <see cref="HamkareTh"/> components here to describe each column.  For more customized headers (such as multi-row headers), set <see cref="CustomHeader"/> to <c>true</c> and use <see cref="HamkareTHeadRow"/> components here instead.
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.Table.Header)]
@@ -374,7 +374,7 @@ namespace MudBlazor
         /// The content of this table's footer.
         /// </summary>
         /// <remarks>
-        /// For basic footers, add <see cref="MudTd"/> components here to describe each column.  For more customized footers (such as multi-row footers), set <see cref="CustomFooter"/> to <c>true</c> and use <see cref="MudTFootRow"/> components here instead.
+        /// For basic footers, add <see cref="HamkareTd"/> components here to describe each column.  For more customized footers (such as multi-row footers), set <see cref="CustomFooter"/> to <c>true</c> and use <see cref="HamkareTFootRow"/> components here instead.
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.Table.Footer)]
@@ -417,7 +417,7 @@ namespace MudBlazor
         /// The custom pagination content for this table.
         /// </summary>
         /// <remarks>
-        /// Add a <see cref="MudTablePager"/> here to navigate multiple pages of data.
+        /// Add a <see cref="HamkareTablePager"/> here to navigate multiple pages of data.
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.Table.Pagination)]
@@ -582,7 +582,7 @@ namespace MudBlazor
         /// The CSS classes applied to each row.
         /// </summary>
         /// <remarks>
-        /// Multiple classes must be separated by spaces.  Some CSS classes will be overridden by <see cref="MudTd"/>.
+        /// Multiple classes must be separated by spaces.  Some CSS classes will be overridden by <see cref="HamkareTd"/>.
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.Table.Rows)]
@@ -592,7 +592,7 @@ namespace MudBlazor
         /// The CSS styles applied to each row.
         /// </summary>
         /// <remarks>
-        /// Some CSS styles will be overridden by <see cref="MudTd"/>.
+        /// Some CSS styles will be overridden by <see cref="HamkareTd"/>.
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.Table.Rows)]
@@ -632,7 +632,7 @@ namespace MudBlazor
         /// The current state of this table.
         /// </summary>
         /// <remarks>
-        /// Typically used to interact with other components such as <see cref="MudTablePager"/>.
+        /// Typically used to interact with other components such as <see cref="HamkareTablePager"/>.
         /// </remarks>
         public abstract TableContext TableContext { get; }
 
@@ -681,7 +681,7 @@ namespace MudBlazor
             var currentPageHasChanged = false;
 
             // On intialization, don't reset CurrentPage
-            // https://github.com/MudBlazor/MudBlazor/issues/11727
+            // https://github.com/HamkareBlazor/HamkareBlazor/issues/11727
             if (_rowsPerPage.HasValue)
             {
                 currentPageHasChanged = _currentPage != 0;
@@ -753,11 +753,11 @@ namespace MudBlazor
 
         internal abstract Task InvokeServerLoadFunc();
 
-        internal abstract Task FireRowClickEventAsync(MouseEventArgs args, MudTr mudTr, object? item);
+        internal abstract Task FireRowClickEventAsync(MouseEventArgs args, HamkareTr hamkareTr, object? item);
 
-        internal abstract Task FireRowMouseEnterEventAsync(PointerEventArgs args, MudTr mudTr, object? item);
+        internal abstract Task FireRowMouseEnterEventAsync(PointerEventArgs args, HamkareTr hamkareTr, object? item);
 
-        internal abstract Task FireRowMouseLeaveEventAsync(PointerEventArgs args, MudTr mudTr, object? item);
+        internal abstract Task FireRowMouseLeaveEventAsync(PointerEventArgs args, HamkareTr hamkareTr, object? item);
 
         internal abstract void OnHeaderCheckboxClicked(bool checkedState);
 

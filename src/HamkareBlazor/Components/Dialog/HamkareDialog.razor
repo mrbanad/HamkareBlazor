@@ -1,16 +1,16 @@
-﻿@namespace MudBlazor
+﻿@namespace HamkareBlazor
 
-@inherits MudComponentBase
+@inherits HamkareComponentBase
 
 @{
 #nullable enable
 #pragma warning disable CS0618 // Type or member is obsolete
 }
 
-@*this makes dialog inlineable, it will only render inside a MudDialogInstance*@
+@*this makes dialog inlineable, it will only render inside a HamkareDialogInstance*@
 @if (!IsInline)
 {
-    <MudFocusTrap DefaultFocus="DefaultFocus ?? GlobalDialogOptions.DefaultFocus ?? MudBlazor.DefaultFocus.Element">
+    <HamkareFocusTrap DefaultFocus="DefaultFocus ?? GlobalDialogOptions.DefaultFocus ?? HamkareBlazor.DefaultFocus.Element">
 
         <div @attributes="UserAttributes" class="@ContentClassname" style="@ContentStyle">
             <CascadingValue Value="true" IsFixed Name="IsNested">
@@ -25,5 +25,5 @@
             </div>
         }
 
-    </MudFocusTrap>
+    </HamkareFocusTrap>
 }

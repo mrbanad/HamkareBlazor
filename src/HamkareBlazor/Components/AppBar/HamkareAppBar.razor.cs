@@ -1,31 +1,31 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Sections;
-using MudBlazor.Utilities;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 #nullable enable
 
 /// <summary>
 /// Displays actions, branding, navigation and screen titles. Keep the app bar persistent while browsing different pages to ease navigation and access to actions for users.
 /// </summary>
-/// <seealso cref="MudContextualActionBar"/>
-public partial class HamkareAppBar : MudComponentBase
+/// <seealso cref="HamkareContextualActionBar"/>
+public partial class HamkareAppBar : HamkareComponentBase
 {
     internal static SectionOutlet ContextualActionBar { get; } = new();
 
     protected string Classname =>
-        new CssBuilder("mud-appbar")
-            .AddClass($"mud-appbar-dense", Dense)
-            .AddClass($"mud-appbar-fixed-top", Fixed && !Bottom)
-            .AddClass($"mud-appbar-fixed-bottom", Fixed && Bottom)
-            .AddClass($"mud-elevation-{Elevation}")
-            .AddClass($"mud-theme-{Color.ToStringFast(true)}", Color != Color.Default)
+        new CssBuilder("hamkare-appbar")
+            .AddClass($"hamkare-appbar-dense", Dense)
+            .AddClass($"hamkare-appbar-fixed-top", Fixed && !Bottom)
+            .AddClass($"hamkare-appbar-fixed-bottom", Fixed && Bottom)
+            .AddClass($"hamkare-elevation-{Elevation}")
+            .AddClass($"hamkare-theme-{Color.ToStringFast(true)}", Color != Color.Default)
             .AddClass(Class)
             .Build();
 
     protected string ToolBarClassname =>
-        new CssBuilder("mud-toolbar-appbar")
+        new CssBuilder("hamkare-toolbar-appbar")
             .AddClass(ToolBarClass)
             .Build();
 
@@ -40,7 +40,7 @@ public partial class HamkareAppBar : MudComponentBase
     /// Allows the app bar to be overridden with page specific actions
     /// </summary>
     /// <remarks>
-    /// Defaults to <c>false</c>. When <c>true</c>, can be overridden by <see cref="MudContextualActionBar"/>
+    /// Defaults to <c>false</c>. When <c>true</c>, can be overridden by <see cref="HamkareContextualActionBar"/>
     /// </remarks>
     [Parameter]
     [Category(CategoryTypes.AppBar.Behavior)]

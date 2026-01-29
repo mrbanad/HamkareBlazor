@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
-using MudBlazor.Utilities;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
     /// <summary>
@@ -12,17 +12,17 @@ namespace MudBlazor
     /// or <see href="https://developer.mozilla.org/docs/Web/HTML/Element/a">anchor</see> if <c>Href</c> is set.<br/>
     /// You can directly add attributes like <c>title</c> or <c>aria-label</c>.
     /// </remarks>
-    /// <seealso cref="MudButton" />
-    /// <seealso cref="MudIconButton" />
-    /// <seealso cref="MudToggleIconButton" />
-    public partial class MudFab : MudBaseButton
+    /// <seealso cref="HamkareButton" />
+    /// <seealso cref="HamkareIconButton" />
+    /// <seealso cref="HamkareToggleIconButton" />
+    public partial class HamkareFab : HamkareBaseButton
     {
-        protected string Classname => new CssBuilder("mud-button-root mud-fab")
-            .AddClass($"mud-fab-extended", !string.IsNullOrEmpty(Label))
-            .AddClass($"mud-fab-{Color.ToStringFast(true)}")
-            .AddClass($"mud-fab-size-{Size.ToStringFast(true)}")
-            .AddClass($"mud-ripple", Ripple && !GetDisabledState())
-            .AddClass($"mud-fab-disable-elevation", !DropShadow)
+        protected string Classname => new CssBuilder("hamkare-button-root hamkare-fab")
+            .AddClass($"hamkare-fab-extended", !string.IsNullOrEmpty(Label))
+            .AddClass($"hamkare-fab-{Color.ToStringFast(true)}")
+            .AddClass($"hamkare-fab-size-{Size.ToStringFast(true)}")
+            .AddClass($"hamkare-ripple", Ripple && !GetDisabledState())
+            .AddClass($"hamkare-fab-disable-elevation", !DropShadow)
             .AddClass(Class)
             .Build();
 

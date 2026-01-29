@@ -1,5 +1,5 @@
 ﻿#nullable enable
-namespace MudBlazor.Interpolation
+namespace HamkareBlazor.Interpolation
 {
     internal interface ILineInterpolator
     {

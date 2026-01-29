@@ -1,8 +1,8 @@
-﻿@namespace MudBlazor
-@inherits MudComponentBase
+﻿@namespace HamkareBlazor
+@inherits HamkareComponentBase
 @typeparam T
 
-<MudElement HtmlTag="@HtmlTag"
+<HamkareElement HtmlTag="@HtmlTag"
             Class="@Classname"
             Style="@Style"
             tabindex="0"
@@ -15,14 +15,14 @@
 
     @if (AvatarContent is not null)
     {
-        <div class="mud-list-item-avatar">
+        <div class="hamkare-list-item-avatar">
             @AvatarContent
         </div>
     }
     else if (!string.IsNullOrWhiteSpace(Icon))
     {
-        <div class="mud-list-item-icon">
-            <MudIcon Icon="@Icon"
+        <div class="hamkare-list-item-icon">
+            <HamkareIcon Icon="@Icon"
                      Disabled="@GetDisabled()"
                      Color="@IconColor"
                      Size="@IconSize" />
@@ -31,10 +31,10 @@
 
     @if (MultiSelection && NestedList is null)
     {
-        <MudCheckBox T="bool?"
+        <HamkareCheckBox T="bool?"
                      TriState
                      ReadOnly="@ReadOnly"
-                     Class="mud-list-item-checkbox my-n2 ms-n2"
+                     Class="hamkare-list-item-checkbox my-n2 ms-n2"
                      Disabled="@GetDisabled()"
                      CheckedIcon="@GetCheckedIcon()"
                      UncheckedIcon="@GetUncheckedIcon()"
@@ -45,8 +45,8 @@
                      @bind-Value:set="@(x => OnCheckboxChangedAsync())" />
     }
 
-    <div class="mud-list-item-text@(Inset ? " mud-list-item-text-inset" : string.Empty)">
-        <MudText Typo="@TextTypo">
+    <div class="hamkare-list-item-text@(Inset ? " hamkare-list-item-text-inset" : string.Empty)">
+        <HamkareText Typo="@TextTypo">
             @if (ChildContent != null)
             {
                 @ChildContent
@@ -57,38 +57,38 @@
                 @if (!string.IsNullOrEmpty(SecondaryText))
                 {
                     <br />
-                    <MudText Class="mud-list-item-secondary-text" Typo="Typo.subtitle2">
+                    <HamkareText Class="hamkare-list-item-secondary-text" Typo="Typo.subtitle2">
                         @SecondaryText
-                    </MudText>
+                    </HamkareText>
                 }
             }
-        </MudText>
+        </HamkareText>
     </div>
 
     @if (NestedList != null)
     {
-        <MudIcon Disabled="@GetDisabled()"
+        <HamkareIcon Disabled="@GetDisabled()"
                  Icon="@($"{(_expandedState.Value ? ExpandLessIcon : ExpandMoreIcon)}")"
                  Size="@IconSize"
                  Color="@ExpandIconColor" />
     }
 
-</MudElement>
+</HamkareElement>
 
 @if (NestedList != null)
 {
-    <MudCollapse Expanded="@_expandedState.Value">
-        <MudList T="T"
-                Class="mud-nested-list"
+    <HamkareCollapse Expanded="@_expandedState.Value">
+        <HamkareList T="T"
+                Class="hamkare-nested-list"
                 Comparer="@Comparer"
                 SelectionMode="@SelectionMode"
                 ReadOnly="@ReadOnly"
-                Color="@(MudList?.Color ?? Color.Primary)"
+                Color="@(HamkareList?.Color ?? Color.Primary)"
                 Padding="false"
                 Disabled="@GetDisabled()"
                 Dense="@GetDense()"
-                Gutters="@(MudList?.Gutters ?? true)">
+                Gutters="@(HamkareList?.Gutters ?? true)">
             @NestedList
-        </MudList>
-    </MudCollapse>
+        </HamkareList>
+    </HamkareCollapse>
 }

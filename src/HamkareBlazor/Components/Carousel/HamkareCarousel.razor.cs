@@ -1,16 +1,16 @@
 ﻿using Microsoft.AspNetCore.Components;
-using MudBlazor.State;
-using MudBlazor.Utilities;
+using HamkareBlazor.State;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
     /// <summary>
     /// Represents a set of slides which transition after a delay.
     /// </summary>
     /// <typeparam name="TData">The kind of item to display.</typeparam>
-    /// <seealso cref="MudCarouselItem" />
-    public partial class MudCarousel<TData> : MudBaseBindableItemsControl<MudCarouselItem, TData>, IAsyncDisposable
+    /// <seealso cref="HamkareCarouselItem" />
+    public partial class HamkareCarousel<TData> : HamkareBaseBindableItemsControl<HamkareCarouselItem, TData>, IAsyncDisposable
     {
         private Timer? _timer;
         private bool _disposing;
@@ -18,14 +18,14 @@ namespace MudBlazor
         private readonly ParameterState<bool> _autoCycleState;
         private readonly ParameterState<TimeSpan> _cycleTimeoutState;
 
-        protected string Classname => new CssBuilder("mud-carousel")
-            .AddClass($"mud-carousel-{(BulletsColor ?? _currentColor).ToStringFast(true)}")
+        protected string Classname => new CssBuilder("hamkare-carousel")
+            .AddClass($"hamkare-carousel-{(BulletsColor ?? _currentColor).ToStringFast(true)}")
             .AddClass(Class)
             .Build();
 
         protected string NavigationButtonsClassName => new CssBuilder()
             .AddClass($"align-self-{ConvertPosition(ArrowsPosition).ToStringFast(true)}", !(NavigationButtonsClass ?? "").Contains("align-self-"))
-            .AddClass("mud-carousel-elements-rtl", RightToLeft)
+            .AddClass("hamkare-carousel-elements-rtl", RightToLeft)
             .AddClass(NavigationButtonsClass)
             .Build();
 
@@ -57,7 +57,7 @@ namespace MudBlazor
         public Position ArrowsPosition { get; set; } = Position.Center;
 
         /// <summary>
-        /// Displays a bullet for each <see cref="MudCarouselItem"/>.
+        /// Displays a bullet for each <see cref="HamkareCarouselItem"/>.
         /// </summary>
         /// <remarks>
         /// Defaults to <c>true</c>.
@@ -80,7 +80,7 @@ namespace MudBlazor
         /// The color of bullets when <see cref="ShowBullets"/> is <c>true</c>.
         /// </summary>
         /// <remarks>
-        /// Defaults to <c>null</c>.  When <c>null</c> the <see cref="MudCarouselItem.Color"/> property is used.
+        /// Defaults to <c>null</c>.  When <c>null</c> the <see cref="HamkareCarouselItem.Color"/> property is used.
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.Carousel.Appearance)]
@@ -90,14 +90,14 @@ namespace MudBlazor
         /// Automatically cycles items based on <see cref="AutoCycleTime"/>.
         /// </summary>
         /// <remarks>
-        /// Defaults to <c>false</c>.  When <c>true</c>, the <see cref="MudCarouselItem"/> items will be rotated after the delay specified in <see cref="AutoCycleTime" />.
+        /// Defaults to <c>false</c>.  When <c>true</c>, the <see cref="HamkareCarouselItem"/> items will be rotated after the delay specified in <see cref="AutoCycleTime" />.
         /// </remarks>
         [Parameter, ParameterState]
         [Category(CategoryTypes.Carousel.Behavior)]
         public bool AutoCycle { get; set; } = true;
 
         /// <summary>
-        /// The delay before displaying the next <see cref="MudCarouselItem"/> when <see cref="AutoCycle"/> is <c>true</c>.
+        /// The delay before displaying the next <see cref="HamkareCarouselItem"/> when <see cref="AutoCycle"/> is <c>true</c>.
         /// </summary>
         /// <remarks>
         /// Defaults to <see cref="TimeSpan.Zero"/>.
@@ -137,14 +137,14 @@ namespace MudBlazor
         public string PreviousIcon { get; set; } = Icons.Material.Filled.NavigateBefore;
 
         /// <summary>
-        /// The icon displayed for the current <see cref="MudCarouselItem"/> when no <see cref="BulletTemplate"/> is set.
+        /// The icon displayed for the current <see cref="HamkareCarouselItem"/> when no <see cref="BulletTemplate"/> is set.
         /// </summary>
         [Parameter]
         [Category(CategoryTypes.Carousel.Appearance)]
         public string CheckedIcon { get; set; } = Icons.Material.Filled.RadioButtonChecked;
 
         /// <summary>
-        /// The icon displayed for unselected <see cref="MudCarouselItem"/>s when no <see cref="BulletTemplate"/> is set.
+        /// The icon displayed for unselected <see cref="HamkareCarouselItem"/>s when no <see cref="BulletTemplate"/> is set.
         /// </summary>
         [Parameter]
         [Category(CategoryTypes.Carousel.Appearance)]
@@ -188,13 +188,13 @@ namespace MudBlazor
         /// Allows swipe gestures for touch devices.
         /// </summary>
         /// <remarks>
-        /// Defaults to <c>true</c>.  When <c>true</c>, swipe gestures on touch devices can be used to change the current <see cref="MudCarouselItem"/>.
+        /// Defaults to <c>true</c>.  When <c>true</c>, swipe gestures on touch devices can be used to change the current <see cref="HamkareCarouselItem"/>.
         /// </remarks>
         [Category(CategoryTypes.Carousel.Behavior)]
         [Parameter]
         public bool EnableSwipeGesture { get; set; } = true;
 
-        public MudCarousel()
+        public HamkareCarousel()
         {
             using var registerScope = CreateRegisterScope();
             _autoCycleState = registerScope.RegisterParameter<bool>(nameof(AutoCycle))
@@ -234,7 +234,7 @@ namespace MudBlazor
         }
 
         /// <inheritdoc />
-        public override void AddItem(MudCarouselItem item)
+        public override void AddItem(HamkareCarouselItem item)
         {
             Items.Add(item);
 
@@ -316,7 +316,7 @@ namespace MudBlazor
         }
 
         /// <summary>
-        /// Changes the selected <see cref="MudCarouselItem"/> to the next one, or restarts at <c>0</c>.
+        /// Changes the selected <see cref="HamkareCarouselItem"/> to the next one, or restarts at <c>0</c>.
         /// </summary>
         private async ValueTask TimerTickAsync()
         {

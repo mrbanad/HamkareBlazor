@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Localization;
-using MudBlazor.Services;
+using HamkareBlazor.Services;
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 #nullable enable
 /// <summary>

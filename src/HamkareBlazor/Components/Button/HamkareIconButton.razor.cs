@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
-using MudBlazor.Utilities;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
     /// <summary>
@@ -13,23 +13,23 @@ namespace MudBlazor
     /// or <see href="https://developer.mozilla.org/docs/Web/HTML/Element/a">anchor</see> if <c>Href</c> is set.<br/>
     /// You can directly add attributes like <c>title</c> or <c>aria-label</c>.
     /// </remarks>
-    /// <seealso cref="MudButton" />
-    /// <seealso cref="MudFab" />
-    /// <seealso cref="MudToggleIconButton" />
-    /// <seealso cref="MudIcon"/>
-    public partial class MudIconButton : MudBaseButton
+    /// <seealso cref="HamkareButton" />
+    /// <seealso cref="HamkareFab" />
+    /// <seealso cref="HamkareToggleIconButton" />
+    /// <seealso cref="HamkareIcon"/>
+    public partial class HamkareIconButton : HamkareBaseButton
     {
-        protected string Classname => new CssBuilder("mud-button-root mud-icon-button")
-            .AddClass("mud-button", when: AsButton)
-            .AddClass($"mud-{Color.ToStringFast(true)}-text hover:mud-{Color.ToStringFast(true)}-hover", !AsButton && Color != Color.Default)
-            .AddClass($"mud-button-{Variant.ToStringFast(true)}", AsButton)
-            .AddClass($"mud-button-{Variant.ToStringFast(true)}-{Color.ToStringFast(true)}", AsButton)
-            .AddClass($"mud-button-{Variant.ToStringFast(true)}-size-{Size.ToStringFast(true)}", AsButton)
-            .AddClass($"mud-ripple", Ripple)
-            .AddClass($"mud-ripple-icon", Ripple && !AsButton)
-            .AddClass($"mud-icon-button-size-{Size.ToStringFast(true)}", when: () => Size != Size.Medium)
-            .AddClass($"mud-icon-button-edge-{Edge.ToStringFast(true)}", when: () => Edge != Edge.False)
-            .AddClass($"mud-button-disable-elevation", !DropShadow)
+        protected string Classname => new CssBuilder("hamkare-button-root hamkare-icon-button")
+            .AddClass("hamkare-button", when: AsButton)
+            .AddClass($"hamkare-{Color.ToStringFast(true)}-text hover:hamkare-{Color.ToStringFast(true)}-hover", !AsButton && Color != Color.Default)
+            .AddClass($"hamkare-button-{Variant.ToStringFast(true)}", AsButton)
+            .AddClass($"hamkare-button-{Variant.ToStringFast(true)}-{Color.ToStringFast(true)}", AsButton)
+            .AddClass($"hamkare-button-{Variant.ToStringFast(true)}-size-{Size.ToStringFast(true)}", AsButton)
+            .AddClass($"hamkare-ripple", Ripple)
+            .AddClass($"hamkare-ripple-icon", Ripple && !AsButton)
+            .AddClass($"hamkare-icon-button-size-{Size.ToStringFast(true)}", when: () => Size != Size.Medium)
+            .AddClass($"hamkare-icon-button-edge-{Edge.ToStringFast(true)}", when: () => Edge != Edge.False)
+            .AddClass($"hamkare-button-disable-elevation", !DropShadow)
             .AddClass(Class)
             .Build();
 

@@ -1,20 +1,20 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using Microsoft.AspNetCore.Components;
-using MudBlazor.State;
-using MudBlazor.Utilities;
+using HamkareBlazor.State;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
 
     /// <summary>
     /// A line-shaped indicator of progress for an ongoing operation.
     /// </summary>
-    /// <seealso cref="MudProgressCircular"/>
-    public partial class MudProgressLinear : MudComponentBase
+    /// <seealso cref="HamkareProgressCircular"/>
+    public partial class HamkareProgressLinear : HamkareComponentBase
     {
         private readonly ParameterState<double> _minState;
         private readonly ParameterState<double> _maxState;
@@ -22,17 +22,17 @@ namespace MudBlazor
         private readonly ParameterState<double> _bufferValueState;
 
         protected string Classname =>
-            new CssBuilder("mud-progress-linear")
-                .AddClass("mud-progress-linear-rounded", Rounded)
-                .AddClass($"mud-progress-linear-striped", Striped)
-                .AddClass($"mud-progress-indeterminate", Indeterminate)
-                .AddClass($"mud-progress-linear-buffer", Buffer && !Indeterminate)
-                .AddClass($"mud-progress-linear-{Size.ToStringFast(true)}")
-                .AddClass($"mud-progress-linear-color-{Color.ToStringFast(true)}")
-                .AddClass("mud-progress-linear-background", ShowBackground)
+            new CssBuilder("hamkare-progress-linear")
+                .AddClass("hamkare-progress-linear-rounded", Rounded)
+                .AddClass($"hamkare-progress-linear-striped", Striped)
+                .AddClass($"hamkare-progress-indeterminate", Indeterminate)
+                .AddClass($"hamkare-progress-linear-buffer", Buffer && !Indeterminate)
+                .AddClass($"hamkare-progress-linear-{Size.ToStringFast(true)}")
+                .AddClass($"hamkare-progress-linear-color-{Color.ToStringFast(true)}")
+                .AddClass("hamkare-progress-linear-background", ShowBackground)
                 .AddClass("horizontal", !Vertical)
                 .AddClass("vertical", Vertical)
-                .AddClass("mud-flip-x-rtl")
+                .AddClass("hamkare-flip-x-rtl")
                 .AddClass(Class)
                 .Build();
 
@@ -164,7 +164,7 @@ namespace MudBlazor
         [Category(CategoryTypes.ProgressLinear.Appearance)]
         public bool ShowBackground { get; set; } = true;
 
-        public MudProgressLinear()
+        public HamkareProgressLinear()
         {
             using var registerScope = CreateRegisterScope();
             _valueState = registerScope.RegisterParameter<double>(nameof(Value))

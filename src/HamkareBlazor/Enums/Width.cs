@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using NetEscapades.EnumGenerators;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
     [EnumExtensions]
     public enum Width

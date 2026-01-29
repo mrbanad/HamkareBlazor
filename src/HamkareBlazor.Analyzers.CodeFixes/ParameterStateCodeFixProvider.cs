@@ -1,5 +1,5 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Collections.Immutable;
@@ -14,7 +14,7 @@ using Microsoft.CodeAnalysis.Editing;
 using Microsoft.CodeAnalysis.Formatting;
 using Microsoft.CodeAnalysis.Simplification;
 
-namespace MudBlazor.Analyzers;
+namespace HamkareBlazor.Analyzers;
 
 /// <summary>
 /// Code fix provider for MUD0012: External access of a parameter state property.
@@ -24,7 +24,7 @@ namespace MudBlazor.Analyzers;
 public sealed class ParameterStateCodeFixProvider : CodeFixProvider
 {
     private const string Title = "Use GetState to access ParameterState property";
-    private const string MudBlazorExtensionsNamespace = "MudBlazor.Extensions";
+    private const string HamkareBlazorExtensionsNamespace = "HamkareBlazor.Extensions";
 
     /// <inheritdoc/>
     public override ImmutableArray<string> FixableDiagnosticIds =>
@@ -161,12 +161,12 @@ public sealed class ParameterStateCodeFixProvider : CodeFixProvider
         if (root is CompilationUnitSyntax compilationUnit)
         {
             var hasUsingDirective = compilationUnit.Usings.Any(u =>
-                u.Name?.ToString() == MudBlazorExtensionsNamespace);
+                u.Name?.ToString() == HamkareBlazorExtensionsNamespace);
 
             if (!hasUsingDirective)
             {
                 // Create the namespace import using SyntaxGenerator
-                var namespaceImport = generator.NamespaceImportDeclaration(MudBlazorExtensionsNamespace);
+                var namespaceImport = generator.NamespaceImportDeclaration(HamkareBlazorExtensionsNamespace);
 
                 // Find the compilation unit and add the import
                 var newCompilationUnit = (CompilationUnitSyntax)generator.AddNamespaceImports(

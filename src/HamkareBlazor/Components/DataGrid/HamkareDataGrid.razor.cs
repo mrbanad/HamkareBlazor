@@ -1,5 +1,5 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Collections.Specialized;
@@ -10,11 +10,11 @@ using System.Reflection;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.Web.Virtualization;
-using MudBlazor.State;
-using MudBlazor.Utilities;
-using MudBlazor.Utilities.Clone;
+using HamkareBlazor.State;
+using HamkareBlazor.Utilities;
+using HamkareBlazor.Utilities.Clone;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
     /// <summary>
@@ -22,13 +22,13 @@ namespace MudBlazor
     /// </summary>
     /// <typeparam name="T">The type of data represented by each row in this grid.</typeparam>
     [CascadingTypeParameter(nameof(T))]
-    public partial class MudDataGrid<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)] T> : MudComponentBase, IDisposable
+    public partial class HamkareDataGrid<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)] T> : HamkareComponentBase, IDisposable
     {
-        private MudForm? _editForm;
+        private HamkareForm? _editForm;
         internal int? _rowsPerPage;
         private int _currentPage = 0;
         internal bool _groupInitialExpanded = true;
-        internal MudVirtualize<IndexBag<T>>? _mudVirtualize;
+        internal HamkareVirtualize<IndexBag<T>>? _hamkareVirtualize;
         private bool _isFirstRendered = false;
         private bool _filtersMenuVisible = false;
         private bool _columnsPanelVisible = false;
@@ -37,8 +37,8 @@ namespace MudBlazor
         private Func<T, bool>? _initialExpandedFunc = null;
         private Func<T, bool>? _buttonDisabledFunc = null;
         private string _columnsPanelSearch = string.Empty;
-        private MudDropContainer<Column<T>>? _dropContainer;
-        private MudDropContainer<Column<T>>? _columnsPanelDropContainer;
+        private HamkareDropContainer<Column<T>>? _dropContainer;
+        private HamkareDropContainer<Column<T>>? _columnsPanelDropContainer;
         private PropertyInfo[] _properties = typeof(T).GetProperties();
         private CancellationTokenSource? _serverDataCancellationTokenSource;
         private IEnumerable<T>? _currentRenderFilteredItemsCache = null;
@@ -61,7 +61,7 @@ namespace MudBlazor
             { "data-pc-y", _openPosition.Top.ToString(CultureInfo.InvariantCulture) }
         };
 
-        public MudDataGrid()
+        public HamkareDataGrid()
         {
             Selection = new HashSet<T>(Comparer);
             SelectedItems = new HashSet<T>(Comparer);
@@ -86,22 +86,22 @@ namespace MudBlazor
         }
 
         protected string Classname =>
-            new CssBuilder("mud-table")
-                .AddClass("mud-data-grid")
-                .AddClass("mud-xs-table", Breakpoint == Breakpoint.Xs)
-                .AddClass("mud-sm-table", Breakpoint == Breakpoint.Sm)
-                .AddClass("mud-md-table", Breakpoint == Breakpoint.Md)
-                .AddClass("mud-lg-table", Breakpoint == Breakpoint.Lg || Breakpoint == Breakpoint.Always)
-                .AddClass("mud-xl-table", Breakpoint == Breakpoint.Xl || Breakpoint == Breakpoint.Always)
-                .AddClass("mud-table-dense", Dense)
-                .AddClass("mud-table-hover", Hover)
-                .AddClass("mud-table-bordered", Bordered)
-                .AddClass("mud-table-striped", Striped)
-                .AddClass("mud-table-outlined", Outlined)
-                .AddClass("mud-table-square", Square)
-                .AddClass("mud-table-sticky-header", FixedHeader)
-                .AddClass("mud-table-sticky-footer", FixedFooter)
-                .AddClass($"mud-elevation-{Elevation}", !Outlined)
+            new CssBuilder("hamkare-table")
+                .AddClass("hamkare-data-grid")
+                .AddClass("hamkare-xs-table", Breakpoint == Breakpoint.Xs)
+                .AddClass("hamkare-sm-table", Breakpoint == Breakpoint.Sm)
+                .AddClass("hamkare-md-table", Breakpoint == Breakpoint.Md)
+                .AddClass("hamkare-lg-table", Breakpoint == Breakpoint.Lg || Breakpoint == Breakpoint.Always)
+                .AddClass("hamkare-xl-table", Breakpoint == Breakpoint.Xl || Breakpoint == Breakpoint.Always)
+                .AddClass("hamkare-table-dense", Dense)
+                .AddClass("hamkare-table-hover", Hover)
+                .AddClass("hamkare-table-bordered", Bordered)
+                .AddClass("hamkare-table-striped", Striped)
+                .AddClass("hamkare-table-outlined", Outlined)
+                .AddClass("hamkare-table-square", Square)
+                .AddClass("hamkare-table-sticky-header", FixedHeader)
+                .AddClass("hamkare-table-sticky-footer", FixedFooter)
+                .AddClass($"hamkare-elevation-{Elevation}", !Outlined)
                 .AddClass(Class)
                 .Build();
 
@@ -121,18 +121,18 @@ namespace MudBlazor
                 .Build();
 
         protected string TableClass =>
-            new CssBuilder("mud-table-container")
+            new CssBuilder("hamkare-table-container")
                 .AddClass("cursor-col-resize", when: IsResizing)
                 .Build();
 
         protected string HeadClassname =>
-            new CssBuilder("mud-table-head")
+            new CssBuilder("hamkare-table-head")
                 .AddClass(HeaderClass)
-                .AddClass("mud-table-dense", Dense)
+                .AddClass("hamkare-table-dense", Dense)
                 .Build();
 
         protected string FootClassname =>
-            new CssBuilder("mud-table-foot")
+            new CssBuilder("hamkare-table-foot")
                 .AddClass(FooterClass).Build();
 
         protected string HeaderFooterStyle =>
@@ -217,7 +217,7 @@ namespace MudBlazor
             (list[indexB], list[indexA]) = (list[indexA], list[indexB]);
         }
 
-        private Task ItemUpdatedAsync(MudItemDropInfo<Column<T>> dropItem)
+        private Task ItemUpdatedAsync(HamkareItemDropInfo<Column<T>> dropItem)
         {
             Debug.Assert(dropItem.Item is not null);
             dropItem.Item.Identifier = dropItem.DropzoneIdentifier;
@@ -611,7 +611,7 @@ namespace MudBlazor
         /// The template used to display each filter.
         /// </summary>
         [Parameter]
-        public RenderFragment<MudDataGrid<T>>? FilterTemplate { get; set; }
+        public RenderFragment<HamkareDataGrid<T>>? FilterTemplate { get; set; }
 
         /// <summary>
         /// The filter definitions for all columns.
@@ -667,7 +667,7 @@ namespace MudBlazor
         /// The CSS class applied to each row.
         /// </summary>
         /// <remarks>
-        /// Multiple classes must be separated by spaces.  Note that some CSS settings are overridden by other styles, such as those from <see cref="MudTd"/>.
+        /// Multiple classes must be separated by spaces.  Note that some CSS settings are overridden by other styles, such as those from <see cref="HamkareTd"/>.
         /// </remarks>
         [Parameter]
         public string? RowClass { get; set; }
@@ -676,7 +676,7 @@ namespace MudBlazor
         /// The CSS styles applied to each row.
         /// </summary>
         /// <remarks>
-        /// Some CSS settings are overridden by other styles, such as those from <see cref="MudTd"/>.
+        /// Some CSS settings are overridden by other styles, such as those from <see cref="HamkareTd"/>.
         /// </remarks>
         [Parameter]
         public string? RowStyle { get; set; }
@@ -1096,7 +1096,7 @@ namespace MudBlazor
         /// The content shown for pagination.
         /// </summary>
         /// <remarks>
-        /// A <see cref="MudTablePager"/> is typically added here to break up rows into multiple pages.
+        /// A <see cref="HamkareTablePager"/> is typically added here to break up rows into multiple pages.
         /// </remarks>
         [Parameter]
         public RenderFragment? PagerContent { get; set; }
@@ -1126,7 +1126,7 @@ namespace MudBlazor
         /// The number of rows displayed for each page.
         /// </summary>
         /// <remarks>
-        /// Defaults to <c>10</c>.  Applies when the <see cref="PagerContent"/> section contains a <see cref="MudTablePager"/>.  When this property changes, the <see cref="RowsPerPageChanged"/> event occurs.
+        /// Defaults to <c>10</c>.  Applies when the <see cref="PagerContent"/> section contains a <see cref="HamkareTablePager"/>.  When this property changes, the <see cref="RowsPerPageChanged"/> event occurs.
         /// </remarks>
         [Parameter]
         public int RowsPerPage
@@ -1149,7 +1149,7 @@ namespace MudBlazor
         /// The current page being displayed.
         /// </summary>
         /// <remarks>
-        /// Defaults to <c>0</c>.  Applies when the <see cref="PagerContent"/> section contains a <see cref="MudTablePager"/>.
+        /// Defaults to <c>0</c>.  Applies when the <see cref="PagerContent"/> section contains a <see cref="HamkareTablePager"/>.
         /// </remarks>
         [Parameter]
         public int CurrentPage
@@ -1350,7 +1350,7 @@ namespace MudBlazor
         public HashSet<T> Selection { get; set; }
 
         /// <summary>
-        /// Indicates if a <see cref="MudDataGridPager{T}"/> is present.
+        /// Indicates if a <see cref="HamkareDataGridPager{T}"/> is present.
         /// </summary>
         public bool HasPager { get; set; }
 
@@ -1599,11 +1599,11 @@ namespace MudBlazor
 
             if (VirtualizeServerData != null)
             {
-                if (_mudVirtualize != null)
+                if (_hamkareVirtualize != null)
                 {
                     // Cancel any prior request
                     CancelServerDataToken();
-                    await _mudVirtualize.RefreshDataAsync();
+                    await _hamkareVirtualize.RefreshDataAsync();
                 }
                 else
                 {
@@ -2007,7 +2007,7 @@ namespace MudBlazor
         }
 
         /// <summary>
-        /// Navigates to a page when this grid has a <see cref="MudDataGridPager{T}"/>.
+        /// Navigates to a page when this grid has a <see cref="HamkareDataGridPager{T}"/>.
         /// </summary>
         /// <param name="page">The page to navigate to.</param>
         public void NavigateTo(Page page)
@@ -2025,13 +2025,13 @@ namespace MudBlazor
         }
 
         /// <summary>
-        /// Sets the <see cref="RowsPerPage"/> when this grid contains a <see cref="MudDataGridPager{T}"/>.
+        /// Sets the <see cref="RowsPerPage"/> when this grid contains a <see cref="HamkareDataGridPager{T}"/>.
         /// </summary>
         /// <param name="size">The new page size.</param>
         public Task SetRowsPerPageAsync(int size) => SetRowsPerPageAsync(size, true);
 
         /// <summary>
-        /// Sets the <see cref="RowsPerPage"/> when this grid contains a <see cref="MudDataGridPager{T}"/>.
+        /// Sets the <see cref="RowsPerPage"/> when this grid contains a <see cref="HamkareDataGridPager{T}"/>.
         /// </summary>
         /// <param name="size">The new page size.</param>
         /// <param name="resetPage">When <c>true</c>, resets <see cref="CurrentPage"/> to 0.</param>
@@ -2292,7 +2292,7 @@ namespace MudBlazor
             StateHasChanged();
         }
 
-        private Task ColumnOrderUpdated(MudItemDropInfo<Column<T>> dropItem)
+        private Task ColumnOrderUpdated(HamkareItemDropInfo<Column<T>> dropItem)
         {
             Debug.Assert(dropItem.Item is not null);
             RenderedColumns.Remove(dropItem.Item);
@@ -2634,7 +2634,7 @@ namespace MudBlazor
 
         internal async Task<double> GetActualHeight()
         {
-            var gridRect = await _gridElement.MudGetBoundingClientRectAsync();
+            var gridRect = await _gridElement.HamkareGetBoundingClientRectAsync();
             var gridHeight = gridRect.Height;
             return gridHeight;
         }

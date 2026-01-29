@@ -1,27 +1,27 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Collections;
 using System.Globalization;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using MudBlazor.Interop;
-using MudBlazor.Services;
-using MudBlazor.State;
-using MudBlazor.Utilities;
-using MudBlazor.Utilities.Throttle;
+using HamkareBlazor.Interop;
+using HamkareBlazor.Services;
+using HamkareBlazor.State;
+using HamkareBlazor.Utilities;
+using HamkareBlazor.Utilities.Throttle;
 
 #nullable enable
-namespace MudBlazor
+namespace HamkareBlazor
 {
     /// <summary>
     /// Organizes content across multiple tab pages.
     /// </summary>
-    /// <seealso cref="MudTabPanel"/>
-    public partial class MudTabs : MudComponentBase, IAsyncDisposable
+    /// <seealso cref="HamkareTabPanel"/>
+    public partial class HamkareTabs : HamkareComponentBase, IAsyncDisposable
     {
-        internal List<MudTabPanel> _panels;
+        internal List<HamkareTabPanel> _panels;
         private bool _isDisposed;
         private string? _prevIcon;
         private string? _nextIcon;
@@ -39,12 +39,12 @@ namespace MudBlazor
         private double _allTabsSize;
         private double _scrollPosition;
         private IResizeObserver? _resizeObserver;
-        private MudDropContainer<MudTabPanel>? _dropContainer;
+        private HamkareDropContainer<HamkareTabPanel>? _dropContainer;
         private readonly Lazy<ThrottleDispatcher> _throttleDispatcher;
         private readonly ParameterState<int> _activePanelIndexState;
         private readonly Dictionary<ElementReference, BoundingClientRect> _tabSizes = [];
         /// <summary>
-        /// Unique identifier for this MudTabs component instance.
+        /// Unique identifier for this HamkareTabs component instance.
         /// Used to generate stable, unique IDs for tabs and panels to ensure ARIA compliance.
         /// Prevents ID conflicts when multiple tab components exist on the same page.
         /// </summary>
@@ -56,7 +56,7 @@ namespace MudBlazor
         /// Displays text right-to-left.
         /// </summary>
         /// <remarks>
-        /// Controlled via the <see cref="MudRTLProvider"/> component.
+        /// Controlled via the <see cref="HamkareRTLProvider"/> component.
         /// </remarks>
         [CascadingParameter(Name = "RightToLeft")]
         public bool RightToLeft { get; set; }
@@ -80,10 +80,10 @@ namespace MudBlazor
 
         /// <summary>
         /// When <see cref="EnableDragAndDrop" /> is set to true, this event will be raised when an item is dropped.
-        /// The dropped item is provided in the <see cref="MudItemDropInfo{T}"/> and will have already been moved to its new position.
+        /// The dropped item is provided in the <see cref="HamkareItemDropInfo{T}"/> and will have already been moved to its new position.
         /// </summary>
         [Parameter]
-        public EventCallback<MudItemDropInfo<MudTabPanel>> OnItemDropped { get; set; }
+        public EventCallback<HamkareItemDropInfo<HamkareTabPanel>> OnItemDropped { get; set; }
 
         /// <summary>
         /// Persists the content of tabs when they are not visible.
@@ -294,7 +294,7 @@ namespace MudBlazor
         /// The content within this component.
         /// </summary>
         /// <remarks>
-        /// Typically a set of <see cref="MudTabPanel"/> components.
+        /// Typically a set of <see cref="HamkareTabPanel"/> components.
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.Tabs.Behavior)]
@@ -307,7 +307,7 @@ namespace MudBlazor
         /// </summary>
         [Parameter]
         [Category(CategoryTypes.Tabs.Behavior)]
-        public RenderFragment<MudTabPanel>? PrePanelContent { get; set; }
+        public RenderFragment<HamkareTabPanel>? PrePanelContent { get; set; }
 
         /// <summary>
         /// The CSS classes applied to all tab buttons.
@@ -353,7 +353,7 @@ namespace MudBlazor
         /// <summary>
         /// The currently selected tab panel.
         /// </summary>
-        public MudTabPanel? ActivePanel => _activePanelIndexState.Value >= 0 && _activePanelIndexState.Value < _panels.Count ?
+        public HamkareTabPanel? ActivePanel => _activePanelIndexState.Value >= 0 && _activePanelIndexState.Value < _panels.Count ?
             _panels[_activePanelIndexState.Value] : null;
 
         /// <summary>
@@ -376,9 +376,9 @@ namespace MudBlazor
         /// A read-only list of the panels within this component.
         /// </summary>
         /// <remarks>
-        /// Tab panels are controlled by either adding more <see cref="MudTabPanel"/> components in the Razor page, or by using the <see cref="MudDynamicTabs"/> component instead.
+        /// Tab panels are controlled by either adding more <see cref="HamkareTabPanel"/> components in the Razor page, or by using the <see cref="HamkareDynamicTabs"/> component instead.
         /// </remarks>
-        public IReadOnlyList<MudTabPanel> Panels { get; private set; }
+        public IReadOnlyList<HamkareTabPanel> Panels { get; private set; }
 
         /// <summary>
         /// The custom content added before or after the list of tabs.
@@ -388,7 +388,7 @@ namespace MudBlazor
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.Tabs.Behavior)]
-        public RenderFragment<MudTabs>? Header { get; set; }
+        public RenderFragment<HamkareTabs>? Header { get; set; }
 
         /// <summary>
         /// The location of custom header content provided in <see cref="Header"/>.
@@ -408,7 +408,7 @@ namespace MudBlazor
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.Tabs.Behavior)]
-        public RenderFragment<MudTabPanel>? TabPanelHeader { get; set; }
+        public RenderFragment<HamkareTabPanel>? TabPanelHeader { get; set; }
 
         /// <summary>
         /// The location of custom tab panel content provided in <see cref="TabPanelHeader"/>.
@@ -429,7 +429,7 @@ namespace MudBlazor
         public Func<TabInteractionEventArgs, Task>? OnPreviewInteraction { get; set; }
 
         /// <summary>
-        /// Sort tab labels lexicographically by <see cref="MudTabPanel.Text"/> or <see cref="MudTabPanel.SortKey"/>. Ignored if <see cref="SortComparer" /> is set.
+        /// Sort tab labels lexicographically by <see cref="HamkareTabPanel.Text"/> or <see cref="HamkareTabPanel.SortKey"/>. Ignored if <see cref="SortComparer" /> is set.
         /// </summary>
         /// <remarks>
         /// Defaults to <see cref="SortDirection.None"/>.
@@ -446,7 +446,7 @@ namespace MudBlazor
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.Tabs.Appearance)]
-        public IComparer<MudTabPanel>? SortComparer { get; set; }
+        public IComparer<HamkareTabPanel>? SortComparer { get; set; }
 
         /// <summary>
         /// Can be used in derived class to add a class to the main container. If not overwritten return an empty string
@@ -456,9 +456,9 @@ namespace MudBlazor
         #region Life cycle management
 
         /// <inheritdoc />
-        public MudTabs()
+        public HamkareTabs()
         {
-            _panels = new List<MudTabPanel>();
+            _panels = new List<HamkareTabPanel>();
             Panels = _panels.AsReadOnly();
             _throttleDispatcher = new Lazy<ThrottleDispatcher>(() => new ThrottleDispatcher(500, TimeProvider));
             using var registerScope = CreateRegisterScope();
@@ -524,7 +524,7 @@ namespace MudBlazor
                 _resizeObserver.OnResized += OnResized;
 
                 // fix ActivePanelIndex on initial render
-                // https://github.com/MudBlazor/MudBlazor/issues/11519
+                // https://github.com/HamkareBlazor/HamkareBlazor/issues/11519
                 // must have an active panel to set scroll states                
 
                 var startingIndex = _activePanelIndexState.Value;
@@ -537,7 +537,7 @@ namespace MudBlazor
                 }
 
                 var options = new KeyInterceptorOptions(
-                    "mud-tab",
+                    "hamkare-tab",
                     [
                         // prevent scrolling page
                         new(" ", preventDown: "key+none", preventUp: "key+none"),
@@ -588,7 +588,7 @@ namespace MudBlazor
 
         #region Children
 
-        internal async Task AddPanelAsync(MudTabPanel tabPanel)
+        internal async Task AddPanelAsync(HamkareTabPanel tabPanel)
         {
             _panels.Add(tabPanel);
             SortPanels();
@@ -619,7 +619,7 @@ namespace MudBlazor
             await InvokeAsync(StateHasChanged);
         }
 
-        internal async Task RemovePanel(MudTabPanel tabPanel)
+        internal async Task RemovePanel(HamkareTabPanel tabPanel)
         {
             if (_isDisposed)
                 return;
@@ -732,7 +732,7 @@ namespace MudBlazor
         /// </summary>
         /// <param name="panel">The panel to activate. <c>null</c> to deactivate.</param>
         /// <param name="ignoreDisabledState">When <c>true</c>, the panel will be activated even if it is disabled.</param>
-        public async Task ActivatePanelAsync(MudTabPanel? panel, bool ignoreDisabledState = false)
+        public async Task ActivatePanelAsync(HamkareTabPanel? panel, bool ignoreDisabledState = false)
         {
             if (panel == null)
             {
@@ -758,7 +758,7 @@ namespace MudBlazor
             await InvokeAsync(StateHasChanged);
         }
 
-        private async Task ActivatePanelClickAsync(MudTabPanel panel, MouseEventArgs ev, bool ignoreDisabledState = false)
+        private async Task ActivatePanelClickAsync(HamkareTabPanel panel, MouseEventArgs ev, bool ignoreDisabledState = false)
         {
             await ActivatePanelAsync(panel, ignoreDisabledState);
             await panel.OnClick.InvokeAsync(ev);
@@ -772,7 +772,7 @@ namespace MudBlazor
             _panels.Sort(GetTabSortExpression);
         }
 
-        private int GetTabSortExpression(MudTabPanel a, MudTabPanel b)
+        private int GetTabSortExpression(HamkareTabPanel a, HamkareTabPanel b)
         {
             if (SortComparer is not null)
             {
@@ -783,38 +783,38 @@ namespace MudBlazor
             return Comparer.Default.Compare(GetTabSortKey(a), GetTabSortKey(b)) * dir;
         }
 
-        private static string? GetTabSortKey(MudTabPanel panel) => panel.SortKey ?? panel.Text;
+        private static string? GetTabSortKey(HamkareTabPanel panel) => panel.SortKey ?? panel.Text;
         #endregion
 
         #region Style and classes
 
         protected string TabsClassnames =>
-            new CssBuilder("mud-tabs")
-                .AddClass($"mud-tabs-rounded", ApplyEffectsToContainer && Rounded)
-                .AddClass($"mud-paper-outlined", ApplyEffectsToContainer && Outlined)
-                .AddClass($"mud-elevation-{Elevation}", ApplyEffectsToContainer && Elevation != 0)
-                .AddClass($"mud-tabs-reverse", Position == Position.Bottom)
-                .AddClass($"mud-tabs-vertical", _isVerticalTabs)
-                .AddClass($"mud-tabs-vertical-reverse", Position == Position.Right && !RightToLeft || (Position == Position.Left) && RightToLeft || Position == Position.End)
+            new CssBuilder("hamkare-tabs")
+                .AddClass($"hamkare-tabs-rounded", ApplyEffectsToContainer && Rounded)
+                .AddClass($"hamkare-paper-outlined", ApplyEffectsToContainer && Outlined)
+                .AddClass($"hamkare-elevation-{Elevation}", ApplyEffectsToContainer && Elevation != 0)
+                .AddClass($"hamkare-tabs-reverse", Position == Position.Bottom)
+                .AddClass($"hamkare-tabs-vertical", _isVerticalTabs)
+                .AddClass($"hamkare-tabs-vertical-reverse", Position == Position.Right && !RightToLeft || (Position == Position.Left) && RightToLeft || Position == Position.End)
                 .AddClass(InternalClassName)
                 .AddClass(Class)
                 .Build();
 
         protected string TabBarClassnames =>
-            new CssBuilder("mud-tabs-tabbar")
-                .AddClass($"mud-tabs-rounded", !ApplyEffectsToContainer && Rounded)
-                .AddClass($"mud-tabs-vertical", _isVerticalTabs)
-                .AddClass($"mud-tabs-tabbar-{Color.ToStringFast(true)}", Color != Color.Default)
-                .AddClass($"mud-tabs-border-{ConvertPosition(Position).ToStringFast(true)}", Border)
-                .AddClass($"mud-paper-outlined", !ApplyEffectsToContainer && Outlined)
-                .AddClass($"mud-elevation-{Elevation}", !ApplyEffectsToContainer && Elevation != 0)
+            new CssBuilder("hamkare-tabs-tabbar")
+                .AddClass($"hamkare-tabs-rounded", !ApplyEffectsToContainer && Rounded)
+                .AddClass($"hamkare-tabs-vertical", _isVerticalTabs)
+                .AddClass($"hamkare-tabs-tabbar-{Color.ToStringFast(true)}", Color != Color.Default)
+                .AddClass($"hamkare-tabs-border-{ConvertPosition(Position).ToStringFast(true)}", Border)
+                .AddClass($"hamkare-paper-outlined", !ApplyEffectsToContainer && Outlined)
+                .AddClass($"hamkare-elevation-{Elevation}", !ApplyEffectsToContainer && Elevation != 0)
                 .AddClass(TabHeaderClass)
                 .Build();
 
         protected string WrapperClassnames =>
-            new CssBuilder("mud-tabs-tabbar-wrapper")
-                .AddClass($"mud-tabs-centered", Centered)
-                .AddClass($"mud-tabs-vertical", _isVerticalTabs)
+            new CssBuilder("hamkare-tabs-tabbar-wrapper")
+                .AddClass($"hamkare-tabs-centered", Centered)
+                .AddClass($"hamkare-tabs-vertical", _isVerticalTabs)
                 .Build();
 
         /// <summary>
@@ -828,24 +828,24 @@ namespace MudBlazor
                 .Build();
 
         protected string PanelsClassnames =>
-            new CssBuilder("mud-tabs-panels")
-                .AddClass($"mud-tabs-vertical", _isVerticalTabs)
+            new CssBuilder("hamkare-tabs-panels")
+                .AddClass($"hamkare-tabs-vertical", _isVerticalTabs)
                 .AddClass(TabPanelsClass)
                 .Build();
 
         protected string SliderClass =>
-            new CssBuilder("mud-tab-slider")
-                .AddClass($"mud-{SliderColor.ToStringFast(true)}", SliderColor != Color.Inherit)
-                .AddClass($"mud-tab-slider-horizontal", Position is Position.Top or Position.Bottom)
-                .AddClass($"mud-tab-slider-vertical", _isVerticalTabs)
-                .AddClass($"mud-tab-slider-horizontal-reverse", Position == Position.Bottom)
-                .AddClass($"mud-tab-slider-vertical-reverse", Position == Position.Right || Position == Position.Start && RightToLeft || Position == Position.End && !RightToLeft)
+            new CssBuilder("hamkare-tab-slider")
+                .AddClass($"hamkare-{SliderColor.ToStringFast(true)}", SliderColor != Color.Inherit)
+                .AddClass($"hamkare-tab-slider-horizontal", Position is Position.Top or Position.Bottom)
+                .AddClass($"hamkare-tab-slider-vertical", _isVerticalTabs)
+                .AddClass($"hamkare-tab-slider-horizontal-reverse", Position == Position.Bottom)
+                .AddClass($"hamkare-tab-slider-vertical-reverse", Position == Position.Right || Position == Position.Start && RightToLeft || Position == Position.End && !RightToLeft)
                 .Build();
 
         protected string DropZoneClassnames =>
-            new CssBuilder("mud-tabs-dropzone")
+            new CssBuilder("hamkare-tabs-dropzone")
                 .AddClass("d-flex", !_isVerticalTabs)
-                .AddClass($"mud-tabs-vertical", _isVerticalTabs)
+                .AddClass($"hamkare-tabs-vertical", _isVerticalTabs)
                 .AddClass("flex-grow-1")
                 .Build();
 
@@ -882,12 +882,12 @@ namespace MudBlazor
             };
         }
 
-        private string GetTabClass(MudTabPanel panel)
+        private string GetTabClass(HamkareTabPanel panel)
         {
-            var tabClass = new CssBuilder("mud-tab")
-              .AddClass($"mud-tab-active", when: () => panel == ActivePanel)
-              .AddClass($"mud-disabled", panel.Disabled)
-              .AddClass($"mud-ripple", Ripple)
+            var tabClass = new CssBuilder("hamkare-tab")
+              .AddClass($"hamkare-tab-active", when: () => panel == ActivePanel)
+              .AddClass($"hamkare-disabled", panel.Disabled)
+              .AddClass($"hamkare-ripple", Ripple)
               .AddClass(ActiveTabClass, when: () => panel == ActivePanel)
               .AddClass(TabButtonsClass)
               .AddClass(panel.Classname)
@@ -907,7 +907,7 @@ namespace MudBlazor
             };
         }
 
-        private string GetTabStyle(MudTabPanel panel)
+        private string GetTabStyle(HamkareTabPanel panel)
         {
             var tabStyle = new StyleBuilder()
                 .AddStyle("min-width", MinimumTabWidth)
@@ -917,7 +917,7 @@ namespace MudBlazor
             return tabStyle;
         }
 
-        private Color GetPanelIconColor(MudTabPanel panel)
+        private Color GetPanelIconColor(HamkareTabPanel panel)
         {
             var iconColor = panel.Disabled ? Color.Inherit : panel.IconColor != default ? panel.IconColor : IconColor;
 
@@ -978,7 +978,7 @@ namespace MudBlazor
         }
 
         /// <summary>
-        /// this sets _tabBarContentSize to the total calculated width of the mud-tabs-tabbar-content
+        /// this sets _tabBarContentSize to the total calculated width of the hamkare-tabs-tabbar-content
         /// </summary>
         private double GetTabBarContentSize()
         {
@@ -990,7 +990,7 @@ namespace MudBlazor
             _tabSizes.Clear();
             var panelRefs = _panels.Select(x => x.PanelRef).ToList();
             panelRefs.Add(_tabsContentSize);
-            var tasks = panelRefs.Select(async panelRef => (panelRef, rect: await panelRef.MudGetBoundingClientRectAsync())).ToList();
+            var tasks = panelRefs.Select(async panelRef => (panelRef, rect: await panelRef.HamkareGetBoundingClientRectAsync())).ToList();
             var results = await Task.WhenAll(tasks);
             foreach (var result in results)
             {
@@ -1012,7 +1012,7 @@ namespace MudBlazor
 
         private double GetRelevantSize(ElementReference reference)
         {
-            // _tabSizes get current values using MudGetBoundingClientRectAsync
+            // _tabSizes get current values using HamkareGetBoundingClientRectAsync
             var success = _tabSizes.TryGetValue(reference, out var rect);
 
             var height = rect?.Height ?? 0.0;
@@ -1041,7 +1041,7 @@ namespace MudBlazor
         /// If inclusive is true, it returns the width or height of the panel item selected as well.
         /// For horizontal tabs, this is the width; for vertical tabs, this is the height.
         /// </remarks>
-        private double GetLengthOfPanelItems(MudTabPanel panel, bool inclusive = false)
+        private double GetLengthOfPanelItems(HamkareTabPanel panel, bool inclusive = false)
         {
             var value = 0.0;
             foreach (var item in _panels)
@@ -1062,9 +1062,9 @@ namespace MudBlazor
             return value;
         }
 
-        private double GetPanelLength(MudTabPanel? panel) => panel == null ? 0.0 : GetRelevantSize(panel.PanelRef);
+        private double GetPanelLength(HamkareTabPanel? panel) => panel == null ? 0.0 : GetRelevantSize(panel.PanelRef);
 
-        private bool IsFirstVisiblePanel(MudTabPanel? activePanel)
+        private bool IsFirstVisiblePanel(HamkareTabPanel? activePanel)
         {
             foreach (var panel in _panels)
             {
@@ -1112,9 +1112,9 @@ namespace MudBlazor
         }
 
         /// <summary>
-        /// Scrolls a <see cref="MudTabPanel" /> to the center of the tab content viewport. Will not scroll beyond the bounds of tabs.
+        /// Scrolls a <see cref="HamkareTabPanel" /> to the center of the tab content viewport. Will not scroll beyond the bounds of tabs.
         /// </summary>
-        private void ScrollToItem(MudTabPanel panel, bool isLast = false)
+        private void ScrollToItem(HamkareTabPanel panel, bool isLast = false)
         {
             // set start and max scroll
             double position;
@@ -1124,7 +1124,7 @@ namespace MudBlazor
             var maxScroll = _allTabsSize - _tabBarContentSize;
             if (isLast)
             {
-                // scroll so the right edge of the last tab is flush to the right edge of the mud-tabs-content (visible tab area)
+                // scroll so the right edge of the last tab is flush to the right edge of the hamkare-tabs-content (visible tab area)
                 position = maxScroll;
             }
             else
@@ -1211,7 +1211,7 @@ namespace MudBlazor
 
         #endregion
 
-        internal async Task ItemUpdated(MudItemDropInfo<MudTabPanel> dropItem)
+        internal async Task ItemUpdated(HamkareItemDropInfo<HamkareTabPanel> dropItem)
         {
             if (dropItem.Item is null)
             {
@@ -1249,7 +1249,7 @@ namespace MudBlazor
         /// Handles keyboard navigation for tabs according to W3C accessibility guidelines
         /// Supports Enter/Space for activation and arrow keys for navigation
         /// </summary>
-        protected virtual async Task HandleTabKeyDownAsync(KeyboardEventArgs e, MudTabPanel panel)
+        protected virtual async Task HandleTabKeyDownAsync(KeyboardEventArgs e, HamkareTabPanel panel)
         {
             switch (e.Key)
             {
@@ -1302,7 +1302,7 @@ namespace MudBlazor
         /// <summary>
         /// Allows the user to move to the previous tab using key arrow
         /// </summary>
-        private async Task MoveFocusToPreviousTab(MudTabPanel currentPanel)
+        private async Task MoveFocusToPreviousTab(HamkareTabPanel currentPanel)
         {
             var enabledPanels = _panels.Where(p => !p.Disabled).ToList();
             if (enabledPanels.Count <= 1) return;
@@ -1317,7 +1317,7 @@ namespace MudBlazor
         /// <summary>
         /// Allows the user to move to the next tab using KeyArrow
         /// </summary>
-        private async Task MoveFocusToNextTab(MudTabPanel currentPanel)
+        private async Task MoveFocusToNextTab(HamkareTabPanel currentPanel)
         {
             var enabledPanels = _panels.Where(p => !p.Disabled).ToList();
             if (enabledPanels.Count <= 1) return;
@@ -1332,7 +1332,7 @@ namespace MudBlazor
         /// <summary>
         /// Focuses user onto selected panel
         /// </summary>
-        private static async Task FocusPanel(MudTabPanel panel)
+        private static async Task FocusPanel(HamkareTabPanel panel)
         {
             if (panel.PanelRef.Context != null)
             {
@@ -1344,7 +1344,7 @@ namespace MudBlazor
         /// Generates a unique ID for a tab element using the tab panels field id.
         /// Required for aria-controls attribute to link tab to its panel.
         /// </summary>
-        internal string GetTabId(MudTabPanel panel)
+        internal string GetTabId(HamkareTabPanel panel)
         {
             return $"tablist-{_componentId}-tab-{panel.FieldId}";
         }
@@ -1353,7 +1353,7 @@ namespace MudBlazor
         /// Generates a unique ID for a tab panel element using the tab panels field id.
         /// Required for aria-controls attribute to link tab panel to its tab.
         /// </summary>
-        internal string GetTabPanelId(MudTabPanel panel)
+        internal string GetTabPanelId(HamkareTabPanel panel)
         {
             return $"tablist-{_componentId}-tabpanel-{panel.FieldId}";
         }

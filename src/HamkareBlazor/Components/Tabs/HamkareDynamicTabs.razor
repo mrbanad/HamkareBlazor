@@ -1,7 +1,7 @@
-﻿@namespace MudBlazor
+﻿@namespace HamkareBlazor
 @using Microsoft.AspNetCore.Components.Rendering
 @using Microsoft.AspNetCore.Components.CompilerServices
-@inherits MudTabs
+@inherits HamkareTabs
 
 @Render
 
@@ -14,8 +14,8 @@
     /// <inheritdoc />
     protected override void OnInitialized()
     {
-        Header = MudTabsHeader;
-        TabPanelHeader = MudTabPanelPanelHeader;
+        Header = HamkareTabsHeader;
+        TabPanelHeader = HamkareTabPanelPanelHeader;
     }
 
     /// <summary>
@@ -23,42 +23,42 @@
     /// </summary>
     public RenderFragment Render => base.BuildRenderTree;
 
-    private RenderFragment<MudTabPanel> MudTabPanelPanelHeader => context =>
-        @<MudRender>
+    private RenderFragment<HamkareTabPanel> HamkareTabPanelPanelHeader => context =>
+        @<HamkareRender>
             @if (context.ShowCloseIcon)
             {
                 if (!string.IsNullOrEmpty(CloseIconToolTip))
                 {
-                    <MudTooltip Text="@CloseIconToolTip">
-                        <MudIconButton Icon="@CloseTabIcon"
+                    <HamkareTooltip Text="@CloseIconToolTip">
+                        <HamkareIconButton Icon="@CloseTabIcon"
                                        Class="@CloseIconClass"
                                        Style="@CloseIconStyle"
                                        OnClick="() => CloseTab.InvokeAsync(context)"
                                        @onkeydown="@(e => HandleTabKeyDownAsync(e, context))"/>
-                    </MudTooltip>
+                    </HamkareTooltip>
                 }
                 else
                 {
-                    <MudIconButton Icon="@CloseTabIcon"
+                    <HamkareIconButton Icon="@CloseTabIcon"
                                    Class="@CloseIconClass"
                                    Style="@CloseIconStyle"
                                    OnClick="() => CloseTab.InvokeAsync(context)"
                                    @onkeydown="@(e => HandleTabKeyDownAsync(e, context))"/>
                 }
             }
-        </MudRender>;
+        </HamkareRender>;
 
-    private RenderFragment<MudTabs> MudTabsHeader => _ =>
-        @<MudRender>
+    private RenderFragment<HamkareTabs> HamkareTabsHeader => _ =>
+        @<HamkareRender>
             @if (!string.IsNullOrEmpty(AddIconToolTip))
             {
-                <MudTooltip Text="@AddIconToolTip">
-                    <MudIconButton Icon="@AddTabIcon" Class="@AddIconClass" Style="@AddIconStyle" OnClick="@AddTab"/>
-                </MudTooltip>
+                <HamkareTooltip Text="@AddIconToolTip">
+                    <HamkareIconButton Icon="@AddTabIcon" Class="@AddIconClass" Style="@AddIconStyle" OnClick="@AddTab"/>
+                </HamkareTooltip>
             }
             else
             {
-                <MudIconButton Icon="@AddTabIcon" Class="@AddIconClass" Style="@AddIconStyle" OnClick="@AddTab"/>
+                <HamkareIconButton Icon="@AddTabIcon" Class="@AddIconClass" Style="@AddIconStyle" OnClick="@AddTab"/>
             }
-        </MudRender>;
+        </HamkareRender>;
 }

@@ -1,10 +1,10 @@
-﻿namespace MudBlazor
+﻿namespace HamkareBlazor
 {
 #nullable enable
     /// <summary>
-    /// Represents the theme settings for the MudBlazor user interface.
+    /// Represents the theme settings for the HamkareBlazor user interface.
     /// </summary>
-    public class MudTheme
+    public class HamkareTheme
     {
         /// <summary>
         /// The palette for the light theme.
@@ -42,9 +42,9 @@
         public PseudoCss PseudoCss { get; set; }
 
         /// <summary>
-        /// Initializes the <see cref="MudTheme"/> class.
+        /// Initializes the <see cref="HamkareTheme"/> class.
         /// </summary>
-        public MudTheme()
+        public HamkareTheme()
         {
             PaletteLight = new PaletteLight();
             PaletteDark = new PaletteDark();

@@ -1,5 +1,5 @@
 
-.mud-snackbar {
+.hamkare-snackbar {
   display: flex;
   flex-grow: initial;
   padding: 6px 16px;
@@ -12,7 +12,7 @@
   margin-top: 16px;
   min-width: 288px;
   max-width: 500px;
-  border-radius: var(--mud-default-borderradius);
+  border-radius: var(--hamkare-default-borderradius);
   box-shadow: 0px 3px 5px -1px rgba(0,0,0,0.2), 0px 6px 10px 0px rgba(0,0,0,0.14), 0px 1px 18px 0px rgba(0,0,0,0.12);
   touch-action: pinch-zoom;
 
@@ -20,20 +20,20 @@
     cursor: pointer;
   }
 
-  &.mud-snackbar-blurred {
+  &.hamkare-snackbar-blurred {
     backdrop-filter: blur(18px);
   }
 
-  &.mud-snackbar-surface {
-    background: var(--mud-palette-surface);
+  &.hamkare-snackbar-surface {
+    background: var(--hamkare-palette-surface);
   }
 
-  .mud-snackbar-content-message {
+  .hamkare-snackbar-content-message {
     padding: 8px 0;
     overflow-wrap: anywhere;
   }
 
-  .mud-snackbar-content-action {
+  .hamkare-snackbar-content-action {
     display: flex;
     align-items: center;
     margin-left: auto;
@@ -50,7 +50,7 @@
   }
 }
 
-.mud-snackbar-location {
+.hamkare-snackbar-location {
   &-top {
 
     &-left {
@@ -90,13 +90,13 @@
   }
 }
 
-#mud-snackbar-container {
+#hamkare-snackbar-container {
   position: fixed;
-  z-index: var(--mud-zindex-snackbar);
+  z-index: var(--hamkare-zindex-snackbar);
   pointer-events: none
 }
 
-.mud-snackbar-icon {
+.hamkare-snackbar-icon {
   display: flex;
   opacity: 0.9;
   padding: 7px 0;

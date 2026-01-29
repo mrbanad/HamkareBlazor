@@ -1,8 +1,8 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-class MudPointerEventsNone {
+class HamkarePointerEventsNone {
     constructor() {
         this.dotnet = null;
         this.logger = () => { };
@@ -19,7 +19,7 @@ class MudPointerEventsNone {
         }
 
         if (options.enableLogging) {
-            this.logger = (msg, ...args) => console.log("[MudBlazor | PointerEventsNone]", msg, ...args);
+            this.logger = (msg, ...args) => console.log("[HamkareBlazor | PointerEventsNone]", msg, ...args);
         } else {
             this.logger = () => { };
         }
@@ -191,4 +191,4 @@ class MudPointerEventsNone {
     }
 }
 
-window.mudPointerEventsNone = new MudPointerEventsNone();
+window.hamkarePointerEventsNone = new HamkarePointerEventsNone();

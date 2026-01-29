@@ -1,4 +1,4 @@
-﻿@namespace MudBlazor
+﻿@namespace HamkareBlazor
 @inherits TemplateColumn<T>
 @typeparam T
 
@@ -8,7 +8,7 @@
     {
         if (ShowInHeader && context.IsMultiSelection)
         {
-            return @<MudCheckBox T="bool?"
+            return @<HamkareCheckBox T="bool?"
                                  Size="@Size"
                                  Value="@context.IsAllSelected"
                                  ValueChanged="@context.Actions.SetSelectAllAsync" />;
@@ -18,7 +18,7 @@
     };
 
     public RenderFragment<CellContext<T>> GetSelectCellTemplate() => context =>
-        @<MudCheckBox T="bool"
+        @<HamkareCheckBox T="bool"
                       Size="@Size"
                       Value="@context.Selected"
                       ValueChanged="@context.Actions.SetSelectedItemAsync"
@@ -29,7 +29,7 @@
     {
         if (ShowInFooter && context.IsMultiSelection)
         {
-            return @<MudCheckBox T="bool?"
+            return @<HamkareCheckBox T="bool?"
                                  Size="@Size"
                                  Value="@context.IsAllSelected"
                                  ValueChanged="@context.Actions.SetSelectAllAsync" />;

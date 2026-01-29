@@ -1,5 +1,5 @@
-﻿@namespace MudBlazor
-@inherits MudBaseDatePicker
+﻿@namespace HamkareBlazor
+@inherits HamkareBaseDatePicker
 
 @Render
 
@@ -7,11 +7,11 @@
 #nullable enable
 
     protected override RenderFragment InputContent=>
-        @<MudInputControl Label="@Label" Variant="@Variant" HelperText="@HelperText" Error="@ErrorState.Value"
+        @<HamkareInputControl Label="@Label" Variant="@Variant" HelperText="@HelperText" Error="@ErrorState.Value"
                           ErrorText="@ErrorTextState.Value" Disabled="@GetDisabledState()" Margin="@Margin" Required="@Required"
                           @onclick="async () => { if (!Editable) await ToggleStateAsync(); }" ForId="@FieldId">
                <InputContent>
-                   <MudRangeInput @ref="_rangeInput"
+                   <HamkareRangeInput @ref="_rangeInput"
                                   @attributes="UserAttributes"
                                   InputType="@InputType.Text"
                                   Class="@PickerInputClassname"
@@ -41,6 +41,6 @@
                                   ShrinkLabel="@ShrinkLabel"
                                   InputId="@InputId" />
                </InputContent>
-           </MudInputControl>;
+           </HamkareInputControl>;
 
 }

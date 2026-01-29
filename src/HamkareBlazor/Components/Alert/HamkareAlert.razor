@@ -1,25 +1,25 @@
-﻿@namespace MudBlazor
-@using MudBlazor.Resources
-@inherits MudComponentBase
-@inject InternalMudLocalizer Localizer
+﻿@namespace HamkareBlazor
+@using HamkareBlazor.Resources
+@inherits HamkareComponentBase
+@inject InternalHamkareLocalizer Localizer
 
 <div @attributes="UserAttributes" class="@Classname" Style="@Style" @onclick="this.AsNonRenderingEventHandler<MouseEventArgs>(OnClickHandler)">
 <div class="@ClassPosition">
     @if (!NoIcon)
     {
-        <div class="mud-alert-icon mud-alert-icon-left">
-            <MudIcon Icon="@_icon" />
+        <div class="hamkare-alert-icon hamkare-alert-icon-left">
+            <HamkareIcon Icon="@_icon" />
         </div>
     }
-    <div class="mud-alert-message">
+    <div class="hamkare-alert-message">
         @ChildContent
     </div>
 </div>
 @if (ShowCloseIcon)
 {
-    <div class="mud-alert-close">
-        <MudIconButton Class="mud-alert-close-button" Icon="@CloseIcon" @onclick="OnCloseIconClickAsync" Size="Size.Small"
-                        aria-label="@Localizer[LanguageResource.MudAlert_Close]" />
+    <div class="hamkare-alert-close">
+        <HamkareIconButton Class="hamkare-alert-close-button" Icon="@CloseIcon" @onclick="OnCloseIconClickAsync" Size="Size.Small"
+                        aria-label="@Localizer[LanguageResource.HamkareAlert_Close]" />
     </div>
 }
 </div>

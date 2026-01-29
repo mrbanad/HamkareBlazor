@@ -2,23 +2,23 @@
 
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
-using MudBlazor.Utilities;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 /// <summary>
 /// Allows users to dynamically resize content with a draggable splitter.
 /// </summary>
-public partial class MudSplitPanel : MudComponentBase, IAsyncDisposable
+public partial class HamkareSplitPanel : HamkareComponentBase, IAsyncDisposable
 {
-    private string Classname => new CssBuilder("mud-split-panel")
+    private string Classname => new CssBuilder("hamkare-split-panel")
         .AddClass("flex-column", Horizontal)
         .AddClass("absolute", UseAsOverlay)
         .AddClass(Class)
         .Build();
 
     private string ClassnameFirstPanel => new CssBuilder("child-panel")
-        .AddClass($"mud-elevation-{Elevation}", Elevation != 0 && FirstPanel != null)
+        .AddClass($"hamkare-elevation-{Elevation}", Elevation != 0 && FirstPanel != null)
         .AddClass("transparent", FirstPanel == null || Transparent)
         .AddClass($"pa-{Padding}", Padding != 0)
         .AddClass("rounded", Rounded)
@@ -26,7 +26,7 @@ public partial class MudSplitPanel : MudComponentBase, IAsyncDisposable
         .Build();
 
     private string ClassnameSecondPanel => new CssBuilder("child-panel")
-        .AddClass($"mud-elevation-{Elevation}", Elevation != 0 && SecondPanel != null)
+        .AddClass($"hamkare-elevation-{Elevation}", Elevation != 0 && SecondPanel != null)
         .AddClass("transparent", SecondPanel == null || Transparent)
         .AddClass($"pa-{Padding}", Padding != 0)
         .AddClass("rounded", Rounded)
@@ -187,7 +187,7 @@ public partial class MudSplitPanel : MudComponentBase, IAsyncDisposable
 
         if (firstRender)
         {
-            await JsRuntime.InvokeVoidAsync("mudSplitPanel.build", _containerId, Horizontal, ResetOnDoubleClick, MinPanelSize, FirstPanelInitialSize, PanelGap);
+            await JsRuntime.InvokeVoidAsync("hamkareSplitPanel.build", _containerId, Horizontal, ResetOnDoubleClick, MinPanelSize, FirstPanelInitialSize, PanelGap);
         }
     }
 
@@ -197,7 +197,7 @@ public partial class MudSplitPanel : MudComponentBase, IAsyncDisposable
 
         if (IsJSRuntimeAvailable)
         {
-            await JsRuntime.InvokeVoidAsync("mudSplitPanel_update", _containerId, Horizontal, ResetOnDoubleClick, MinPanelSize, PanelGap);
+            await JsRuntime.InvokeVoidAsync("hamkareSplitPanel_update", _containerId, Horizontal, ResetOnDoubleClick, MinPanelSize, PanelGap);
         }
     }
 
@@ -206,7 +206,7 @@ public partial class MudSplitPanel : MudComponentBase, IAsyncDisposable
     /// </summary>
     public async Task ResetDividerPositionAsync()
     {
-        await JsRuntime.InvokeVoidAsync("mudSplitPanel_resetDividerPosition", _containerId);
+        await JsRuntime.InvokeVoidAsync("hamkareSplitPanel_resetDividerPosition", _containerId);
     }
 
     /// <summary>
@@ -218,7 +218,7 @@ public partial class MudSplitPanel : MudComponentBase, IAsyncDisposable
     /// <param name="offset">The offset in pixels from the left or top border.</param>
     public async Task SetDividerPositionAsync(int offset)
     {
-        await JsRuntime.InvokeVoidAsync("mudSplitPanel_setDividerPosition", _containerId, offset);
+        await JsRuntime.InvokeVoidAsync("hamkareSplitPanel_setDividerPosition", _containerId, offset);
     }
 
     /// <summary>
@@ -226,13 +226,13 @@ public partial class MudSplitPanel : MudComponentBase, IAsyncDisposable
     /// </summary>
     public async Task<int> GetDividerPositionAsync()
     {
-        return await JsRuntime.InvokeAsync<int>("mudSplitPanel_getDividerPosition", _containerId);
+        return await JsRuntime.InvokeAsync<int>("hamkareSplitPanel_getDividerPosition", _containerId);
     }
 
     /// <inheritdoc/>
     public async ValueTask DisposeAsync()
     {
-        await JsRuntime.InvokeVoidAsyncWithErrorHandling("mudSplitPanel_destroy", _containerId);
+        await JsRuntime.InvokeVoidAsyncWithErrorHandling("hamkareSplitPanel_destroy", _containerId);
         GC.SuppressFinalize(this);
     }
 }

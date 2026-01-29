@@ -1,4 +1,4 @@
-﻿namespace MudBlazor.Services
+﻿namespace HamkareBlazor.Services
 {
 #nullable enable
     /// <summary>

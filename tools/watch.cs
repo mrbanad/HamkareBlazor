@@ -1,7 +1,7 @@
 #!/usr/bin/env dotnet
 
 // This script extends the 'dotnet watch' functionality to also watch and rebuild
-// MudBlazor JS/CSS assets using Bun whenever relevant source files change.
+// HamkareBlazor JS/CSS assets using Bun whenever relevant source files change.
 // 
 // Usage examples:
 //   dotnet tools/watch.cs
@@ -17,9 +17,9 @@ static async Task Run()
     var repositoryRoot = GetRepositoryRoot();
     var toolsDirectory = Path.Combine(repositoryRoot, "tools");
     var srcDirectory = Path.Combine(repositoryRoot, "src");
-    var mudblazorProjectDirectory = Path.Combine(srcDirectory, "MudBlazor");
-    var mudblazorDocsProjectDirectory = Path.Combine(srcDirectory, "MudBlazor.Docs.Server");
-    var assetBuildScript = Path.Combine(mudblazorProjectDirectory, "build.mjs");
+    var hamkareblazorProjectDirectory = Path.Combine(srcDirectory, "HamkareBlazor");
+    var hamkareblazorDocsProjectDirectory = Path.Combine(srcDirectory, "HamkareBlazor.Docs.Server");
+    var assetBuildScript = Path.Combine(hamkareblazorProjectDirectory, "build.mjs");
     var buildPropsFile = Path.Combine(srcDirectory, "Directory.Build.props");
     var versions = GetVersions(buildPropsFile);
 
@@ -29,7 +29,7 @@ static async Task Run()
         {
             FileName = "dotnet",
             Arguments = "watch",
-            WorkingDirectory = mudblazorDocsProjectDirectory,
+            WorkingDirectory = hamkareblazorDocsProjectDirectory,
             RedirectStandardOutput = true,
             RedirectStandardError = true,
             UseShellExecute = false,
@@ -47,7 +47,7 @@ static async Task Run()
         StartInfo = new ProcessStartInfo
         {
             FileName = "dotnet",
-            WorkingDirectory = mudblazorProjectDirectory,
+            WorkingDirectory = hamkareblazorProjectDirectory,
             RedirectStandardOutput = true,
             RedirectStandardError = true,
             UseShellExecute = false,

@@ -1,17 +1,17 @@
 ﻿@import '../abstracts/variables';
 
-.mud-picker-datepicker-toolbar {
+.hamkare-picker-datepicker-toolbar {
   align-items: flex-start;
   flex-direction: column;
 
-  .mud-button-year {
+  .hamkare-button-year {
     font-size: 1rem;
     font-weight: 400;
     line-height: 1.75;
     letter-spacing: 0.00938em;
   }
 
-  .mud-button-date {
+  .hamkare-button-date {
     font-size: 2.125rem;
     font-weight: 400;
     line-height: 1.17;
@@ -20,45 +20,45 @@
   }
 }
 
-.mud-picker-datepicker-toolbar-landscape {
+.hamkare-picker-datepicker-toolbar-landscape {
   padding: 16px;
 }
 
-.mud-picker-datepicker-date-landscape {
+.hamkare-picker-datepicker-date-landscape {
   margin-right: 16px;
   margin-inline-end: 16px;
   margin-inline-start: unset;
 }
 
 
-.mud-picker-calendar-header-switch {
+.hamkare-picker-calendar-header-switch {
   display: flex;
   margin-top: 4px;
   align-items: center;
   margin-bottom: 8px;
   justify-content: space-between;
 
-  & > .mud-icon-button {
+  & > .hamkare-icon-button {
     z-index: 1;
     padding: 8px;
     margin: 6px;
-    background-color: var(--mud-palette-surface);
+    background-color: var(--hamkare-palette-surface);
 
     @media(hover: hover) and (pointer: fine) {
       &:hover {
-        background-color: var(--mud-palette-action-default-hover);
+        background-color: var(--hamkare-palette-action-default-hover);
       }
     }
   }
 
-  & .mud-picker-calendar-header-transition {
+  & .hamkare-picker-calendar-header-transition {
     width: 100%;
     height: 23px;
     overflow: hidden;
 
     @media(hover: hover) and (pointer: fine) {
       &:hover {
-        & .mud-typography {
+        & .hamkare-typography {
           cursor: pointer;
           font-weight: 500;
         }
@@ -68,25 +68,25 @@
 }
 
 
-.mud-picker-calendar-header-day {
+.hamkare-picker-calendar-header-day {
   display: flex;
   max-height: 16px;
   align-items: center;
   justify-content: center;
 
-  .mud-day-label {
-    color: var(--mud-palette-text-secondary);
+  .hamkare-day-label {
+    color: var(--hamkare-palette-text-secondary);
     width: 36px;
     margin: 0 2px;
     text-align: center;
   }
 }
 
-.mud-picker-year-container {
+.hamkare-picker-year-container {
   height: 300px;
   overflow-y: auto;
 
-  .mud-picker-year {
+  .hamkare-picker-year {
     cursor: pointer;
     height: 40px;
     display: flex;
@@ -94,29 +94,29 @@
     align-items: center;
     justify-content: center;
     user-select: none;
-    animation: mud-animation-fadein 500ms;
+    animation: hamkare-animation-fadein 500ms;
     transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
 
     @media(hover: hover) and (pointer: fine) {
       &:hover {
-        background-color: var(--mud-palette-action-default-hover);
+        background-color: var(--hamkare-palette-action-default-hover);
       }
     }
 
-    & .mud-picker-year-selected {
+    & .hamkare-picker-year-selected {
       margin: 10px 0;
       font-weight: 500;
     }
   }
 }
 
-.mud-picker-month-container {
+.hamkare-picker-month-container {
   width: 310px;
   display: flex;
   flex-wrap: wrap;
   align-content: stretch;
 
-  .mud-picker-month {
+  .hamkare-picker-month {
     flex: 1 0 33.33%;
     cursor: pointer;
     height: 60px;
@@ -128,40 +128,40 @@
 
     @media(hover: hover) and (pointer: fine) {
       &:hover {
-        background-color: var(--mud-palette-action-default-hover);
+        background-color: var(--hamkare-palette-action-default-hover);
       }
     }
 
-    & .mud-picker-month-selected {
+    & .hamkare-picker-month-selected {
       font-weight: 500;
     }
 
-    &.mud-disabled {
-      color: var(--mud-palette-text-disabled);
+    &.hamkare-disabled {
+      color: var(--hamkare-palette-text-disabled);
       pointer-events: none;
     }
   }
 }
 
 
-.mud-picker-slide-transition {
+.hamkare-picker-slide-transition {
   display: block;
   position: relative;
 }
 
-.mud-picker-slide-transition > * {
+.hamkare-picker-slide-transition > * {
   top: 0;
   left: 0;
   right: 0;
   position: absolute;
 }
 
-.mud-picker-calendar-transition {
+.hamkare-picker-calendar-transition {
   margin-top: 12px;
   min-height: 216px;
 }
 
-.mud-picker-calendar-progress-container {
+.hamkare-picker-calendar-progress-container {
   width: 100%;
   height: 100%;
   display: flex;
@@ -169,7 +169,7 @@
   justify-content: center;
 }
 
-.mud-picker-calendar-content {
+.hamkare-picker-calendar-content {
   display: grid;
   --selected-day: 0;
   grid-column-gap: 10px;
@@ -177,35 +177,35 @@
 }
 
 @media(min-width: $breakpoint-sm) {
-  .mud-picker-calendar-content:not(.mud-picker-calendar-content-1) {
+  .hamkare-picker-calendar-content:not(.hamkare-picker-calendar-content-1) {
     grid-template-columns: repeat(2, minmax(auto, 1fr));
 
-    .mud-picker-calendar-header-1,
-    .mud-picker-calendar-header-3,
-    .mud-picker-calendar-header-5,
-    .mud-picker-calendar-header-7,
-    .mud-picker-calendar-header-9,
-    .mud-picker-calendar-header-11 {
-      .mud-picker-nav-button-next {
+    .hamkare-picker-calendar-header-1,
+    .hamkare-picker-calendar-header-3,
+    .hamkare-picker-calendar-header-5,
+    .hamkare-picker-calendar-header-7,
+    .hamkare-picker-calendar-header-9,
+    .hamkare-picker-calendar-header-11 {
+      .hamkare-picker-nav-button-next {
         visibility: hidden;
       }
 
-      .mud-picker-nav-button-prev {
+      .hamkare-picker-nav-button-prev {
         visibility: visible;
       }
     }
 
-    .mud-picker-calendar-header-2,
-    .mud-picker-calendar-header-4,
-    .mud-picker-calendar-header-6,
-    .mud-picker-calendar-header-8,
-    .mud-picker-calendar-header-10,
-    .mud-picker-calendar-header-12 {
-      .mud-picker-nav-button-next {
+    .hamkare-picker-calendar-header-2,
+    .hamkare-picker-calendar-header-4,
+    .hamkare-picker-calendar-header-6,
+    .hamkare-picker-calendar-header-8,
+    .hamkare-picker-calendar-header-10,
+    .hamkare-picker-calendar-header-12 {
+      .hamkare-picker-nav-button-next {
         visibility: visible;
       }
 
-      .mud-picker-nav-button-prev {
+      .hamkare-picker-nav-button-prev {
         visibility: hidden;
       }
     }
@@ -213,73 +213,73 @@
 }
 
 @media(min-width: $breakpoint-md) {
-  .mud-picker-calendar-content:not(.mud-picker-calendar-content-1):not(.mud-picker-calendar-content-2) {
+  .hamkare-picker-calendar-content:not(.hamkare-picker-calendar-content-1):not(.hamkare-picker-calendar-content-2) {
     grid-template-columns: repeat(3, minmax(auto, 1fr));
 
-    .mud-picker-calendar-header-1,
-    .mud-picker-calendar-header-4,
-    .mud-picker-calendar-header-7,
-    .mud-picker-calendar-header-10 {
-      .mud-picker-nav-button-next {
+    .hamkare-picker-calendar-header-1,
+    .hamkare-picker-calendar-header-4,
+    .hamkare-picker-calendar-header-7,
+    .hamkare-picker-calendar-header-10 {
+      .hamkare-picker-nav-button-next {
         visibility: hidden;
       }
 
-      .mud-picker-nav-button-prev {
+      .hamkare-picker-nav-button-prev {
         visibility: visible;
       }
     }
 
-    .mud-picker-calendar-header-2,
-    .mud-picker-calendar-header-5,
-    .mud-picker-calendar-header-8,
-    .mud-picker-calendar-header-11 {
-      .mud-picker-nav-button-next, .mud-picker-nav-button-prev {
+    .hamkare-picker-calendar-header-2,
+    .hamkare-picker-calendar-header-5,
+    .hamkare-picker-calendar-header-8,
+    .hamkare-picker-calendar-header-11 {
+      .hamkare-picker-nav-button-next, .hamkare-picker-nav-button-prev {
         visibility: hidden;
       }
     }
 
-    .mud-picker-calendar-header-3,
-    .mud-picker-calendar-header-6,
-    .mud-picker-calendar-header-9,
-    .mud-picker-calendar-header-12 {
-      .mud-picker-nav-button-next {
+    .hamkare-picker-calendar-header-3,
+    .hamkare-picker-calendar-header-6,
+    .hamkare-picker-calendar-header-9,
+    .hamkare-picker-calendar-header-12 {
+      .hamkare-picker-nav-button-next {
         visibility: visible;
       }
 
-      .mud-picker-nav-button-prev {
+      .hamkare-picker-nav-button-prev {
         visibility: hidden;
       }
     }
   }
 }
 
-:not(.mud-picker-hidden) {
-  .mud-picker-calendar-header-last {
-    .mud-picker-nav-button-next {
+:not(.hamkare-picker-hidden) {
+  .hamkare-picker-calendar-header-last {
+    .hamkare-picker-nav-button-next {
       visibility: inherit !important;
     }
   }
 }
 
-.mud-picker-hidden {
-  .mud-picker-nav-button-next, .mud-picker-nav-button-prev {
+.hamkare-picker-hidden {
+  .hamkare-picker-nav-button-next, .hamkare-picker-nav-button-prev {
     visibility: hidden !important;
   }
 }
 
-.mud-picker-calendar-container {
+.hamkare-picker-calendar-container {
   display: flex;
   width: 310px;
   flex-direction: column;
 }
 
-.mud-picker-calendar {
+.hamkare-picker-calendar {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
 
-  .mud-day {
-    color: var(--mud-palette-text-primary);
+  .hamkare-day {
+    color: var(--hamkare-palette-text-primary);
     width: 36px;
     height: 36px;
     margin: 0 2px;
@@ -289,108 +289,108 @@
 
     @media(hover: hover) and (pointer: fine) {
       &:hover {
-        background-color: var(--mud-palette-action-default-hover);
+        background-color: var(--hamkare-palette-action-default-hover);
       }
     }
 
-    &.mud-hidden {
+    &.hamkare-hidden {
       opacity: 0;
       pointer-events: none;
     }
 
-    &.mud-current {
+    &.hamkare-current {
       font-weight: 600;
     }
 
-    &.mud-selected {
+    &.hamkare-selected {
       font-weight: 500;
     }
 
-    .mud-typography {
+    .hamkare-typography {
       margin-top: 2px;
     }
 
-    &.mud-disabled {
-      color: var(--mud-palette-text-disabled);
+    &.hamkare-disabled {
+      color: var(--hamkare-palette-text-disabled);
       pointer-events: none;
     }
 
-    &.mud-range {
+    &.hamkare-range {
       margin: 0;
       width: 40px;
       transition: none;
 
-      &.mud-range-start-selected {
+      &.hamkare-range-start-selected {
         border-radius: 50% 0% 0% 50%;
       }
 
-      &.mud-range-end-selected {
+      &.hamkare-range-end-selected {
         border-radius: 0% 50% 50% 0%;
       }
 
-      &.mud-range-between {
+      &.hamkare-range-between {
         border-radius: 0;
-        background-color: var(--mud-palette-action-default-hover);
+        background-color: var(--hamkare-palette-action-default-hover);
       }
 
       @media(hover: hover) and (pointer: fine) {
-        &.mud-range-selection:hover {
-          &.mud-range-start-selected {
+        &.hamkare-range-selection:hover {
+          &.hamkare-range-start-selected {
             border-radius: 50%;
           }
 
-          &:not(.mud-range-start-selected) {
+          &:not(.hamkare-range-start-selected) {
             border-radius: 0% 50% 50% 0%;
           }
         }
       }
 
-      &.mud-range-selection:not(:hover):not(.mud-range-start-selected) {
+      &.hamkare-range-selection:not(:hover):not(.hamkare-range-start-selected) {
         border-radius: 0;
-        background: linear-gradient(var(--mud-palette-action-default-hover) 100%, var(--mud-palette-action-default-hover) 100%, transparent 0%);
+        background: linear-gradient(var(--hamkare-palette-action-default-hover) 100%, var(--hamkare-palette-action-default-hover) 100%, transparent 0%);
         background-size: 100% calc(100% * (var(--selected-day) - var(--day-id)));
       }
     }
   }
 }
 
-@each $color in $mud-palette-colors {
-  .mud-range-selection-#{$color} {
+@each $color in $hamkare-palette-colors {
+  .hamkare-range-selection-#{$color} {
     @media(hover: hover) and (pointer: fine) {
       &:hover {
-        color: var(--mud-palette-#{$color}-text) !important;
-        background-color: var(--mud-palette-#{$color}) !important;
+        color: var(--hamkare-palette-#{$color}-text) !important;
+        background-color: var(--hamkare-palette-#{$color}) !important;
       }
     }
   }
 }
 
-.mud-picker-calendar-week {
+.hamkare-picker-calendar-week {
   display: flex;
   margin: 0 5px;
   justify-content: center;
   align-items: center;
 
-  .mud-picker-calendar-week-text {
+  .hamkare-picker-calendar-week-text {
     width: 15px;
     margin-top: 2px !important;
-    color: var(--mud-palette-text-disabled);
+    color: var(--hamkare-palette-text-disabled);
   }
 }
 
-.mud-application-layout-rtl {
-  .mud-picker-calendar .mud-day.mud-range {
-    &.mud-range-start-selected {
+.hamkare-application-layout-rtl {
+  .hamkare-picker-calendar .hamkare-day.hamkare-range {
+    &.hamkare-range-start-selected {
       border-radius: 0% 50% 50% 0%;
     }
 
-    &.mud-range-end-selected {
+    &.hamkare-range-end-selected {
       border-radius: 50% 0% 0% 50%;
     }
 
     @media(hover: hover) and (pointer: fine) {
-      &.mud-range-selection:hover {
-        &:not(.mud-range-start-selected) {
+      &.hamkare-range-selection:hover {
+        &:not(.hamkare-range-start-selected) {
           border-radius: 50% 0% 0% 50%;
         }
       }

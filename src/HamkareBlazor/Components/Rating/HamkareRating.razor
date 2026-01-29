@@ -1,7 +1,7 @@
-﻿@namespace MudBlazor
-@using MudBlazor.Resources
-@inherits MudComponentBase
-@inject InternalMudLocalizer Localizer
+﻿@namespace HamkareBlazor
+@using HamkareBlazor.Resources
+@inherits HamkareComponentBase
+@inject InternalHamkareLocalizer Localizer
 
 @{
 #pragma warning disable CS0618 // Type or member is obsolete
@@ -13,7 +13,7 @@
         @for (var i = 1; i <= MaxValue; i++)
         {
             var currentValue = i;
-            <MudRatingItem Class="@RatingItemsClass"
+            <HamkareRatingItem Class="@RatingItemsClass"
                            Style="@RatingItemsStyle"
                            ItemValue="@currentValue"
                            Ripple="@Ripple"
@@ -23,7 +23,7 @@
                            Size="Size"
                            ItemClicked="HandleItemClickedAsync"
                            ItemHovered="HandleItemHoveredAsync"
-                           aria-label="@Localizer[LanguageResource.MudRatingItem_Label, $"{currentValue}"]"/>
+                           aria-label="@Localizer[LanguageResource.HamkareRatingItem_Label, $"{currentValue}"]"/>
         }
     </CascadingValue>
 </span>

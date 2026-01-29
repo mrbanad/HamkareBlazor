@@ -1,10 +1,10 @@
-﻿@namespace MudBlazor
+﻿@namespace HamkareBlazor
 @typeparam T
-@inherits MudComponentBase
+@inherits HamkareComponentBase
 
 @if (!HideContent)
 {
-    <MudListItem @attributes="UserAttributes" Value="@ItemId" id="@ItemId" OnClick="@OnClickHandleAsync" OnClickPreventDefault="true" Icon="@CheckBoxIcon" Disabled="@Disabled" Class="@GetCssClasses()" Style="@Style">
+    <HamkareListItem @attributes="UserAttributes" Value="@ItemId" id="@ItemId" OnClick="@OnClickHandleAsync" OnClickPreventDefault="true" Icon="@CheckBoxIcon" Disabled="@Disabled" Class="@GetCssClasses()" Style="@Style">
         @if (ChildContent is not null)
         {
             @ChildContent
@@ -13,5 +13,5 @@
         {
             @DisplayString
         }
-    </MudListItem>
+    </HamkareListItem>
 }

@@ -1,18 +1,18 @@
 ﻿using Microsoft.AspNetCore.Components;
-using MudBlazor.Interfaces;
-using MudBlazor.Services;
-using MudBlazor.State;
-using MudBlazor.Utilities;
+using HamkareBlazor.Interfaces;
+using HamkareBlazor.Services;
+using HamkareBlazor.State;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
     /// <summary>
     /// Represents a navigation panel docked to the side of the page.
     /// </summary>
-    /// <seealso cref="MudDrawerContainer"/>
-    /// <seealso cref="MudDrawerHeader"/>
-    public partial class MudDrawer : MudComponentBase, INavigationEventReceiver, IBrowserViewportObserver, IAsyncDisposable
+    /// <seealso cref="HamkareDrawerContainer"/>
+    /// <seealso cref="HamkareDrawerHeader"/>
+    public partial class HamkareDrawer : HamkareComponentBase, INavigationEventReceiver, IBrowserViewportObserver, IAsyncDisposable
     {
         private double _height;
         private bool _disposed;
@@ -26,7 +26,7 @@ namespace MudBlazor
         /// <summary>
         /// Creates a new instance.
         /// </summary>
-        public MudDrawer()
+        public HamkareDrawer()
         {
             using var registerScope = CreateRegisterScope();
             _openState = registerScope.RegisterParameter<bool>(nameof(Open))
@@ -47,36 +47,36 @@ namespace MudBlazor
         private bool OverlayVisible => _openState.Value && Overlay && (Variant == DrawerVariant.Temporary || (IsBelowCurrentBreakpoint() && IsResponsiveOrMini()));
 
         protected string Classname =>
-            new CssBuilder("mud-drawer")
-                .AddClass($"mud-drawer-fixed", IsFixed)
-                .AddClass($"mud-drawer-pos-{GetPosition()}")
-                .AddClass($"mud-drawer--open", _openState.Value)
-                .AddClass($"mud-drawer--closed", !_openState.Value)
-                .AddClass($"mud-drawer--initial", _initial)
-                .AddClass($"mud-drawer-{Breakpoint.ToStringFast(true)}")
-                .AddClass($"mud-drawer-clipped-{ClipMode.ToStringFast(true)}")
-                .AddClass($"mud-theme-{Color.ToStringFast(true)}", Color != Color.Default)
-                .AddClass($"mud-elevation-{Elevation}")
-                .AddClass($"mud-drawer-{Variant.ToStringFast(true)}")
+            new CssBuilder("hamkare-drawer")
+                .AddClass($"hamkare-drawer-fixed", IsFixed)
+                .AddClass($"hamkare-drawer-pos-{GetPosition()}")
+                .AddClass($"hamkare-drawer--open", _openState.Value)
+                .AddClass($"hamkare-drawer--closed", !_openState.Value)
+                .AddClass($"hamkare-drawer--initial", _initial)
+                .AddClass($"hamkare-drawer-{Breakpoint.ToStringFast(true)}")
+                .AddClass($"hamkare-drawer-clipped-{ClipMode.ToStringFast(true)}")
+                .AddClass($"hamkare-theme-{Color.ToStringFast(true)}", Color != Color.Default)
+                .AddClass($"hamkare-elevation-{Elevation}")
+                .AddClass($"hamkare-drawer-{Variant.ToStringFast(true)}")
                 .AddClass(Class)
                 .Build();
 
         protected string OverlayClass =>
-            new CssBuilder("mud-drawer-overlay mud-overlay-drawer")
-                .AddClass($"mud-drawer-pos-{GetPosition()}")
-                .AddClass($"mud-drawer-overlay--open", _openState.Value)
-                .AddClass($"mud-drawer-overlay-{Variant.ToStringFast(true)}")
-                .AddClass($"mud-drawer-overlay-{Breakpoint.ToStringFast(true)}")
-                .AddClass($"mud-drawer-overlay--initial", _initial)
-                .AddClass($"mud-skip-overlay-positioning") // popovers try to position the overlay by zindex, this skips that behavior
-                .AddClass($"mud-skip-overlay-section") // drawer overlay remains outside of Section
+            new CssBuilder("hamkare-drawer-overlay hamkare-overlay-drawer")
+                .AddClass($"hamkare-drawer-pos-{GetPosition()}")
+                .AddClass($"hamkare-drawer-overlay--open", _openState.Value)
+                .AddClass($"hamkare-drawer-overlay-{Variant.ToStringFast(true)}")
+                .AddClass($"hamkare-drawer-overlay-{Breakpoint.ToStringFast(true)}")
+                .AddClass($"hamkare-drawer-overlay--initial", _initial)
+                .AddClass($"hamkare-skip-overlay-positioning") // popovers try to position the overlay by zindex, this skips that behavior
+                .AddClass($"hamkare-skip-overlay-section") // drawer overlay remains outside of Section
                 .Build();
 
         protected string Stylename =>
             new StyleBuilder()
-                .AddStyle("--mud-drawer-width", Width, !string.IsNullOrWhiteSpace(Width) && (!IsFixed || Variant == DrawerVariant.Temporary))
+                .AddStyle("--hamkare-drawer-width", Width, !string.IsNullOrWhiteSpace(Width) && (!IsFixed || Variant == DrawerVariant.Temporary))
                 .AddStyle("height", Height, !string.IsNullOrWhiteSpace(Height))
-                .AddStyle("--mud-drawer-height", string.IsNullOrWhiteSpace(Height) ? _height.ToPx() : Height, Anchor == Anchor.Bottom || Anchor == Anchor.Top)
+                .AddStyle("--hamkare-drawer-height", string.IsNullOrWhiteSpace(Height) ? _height.ToPx() : Height, Anchor == Anchor.Bottom || Anchor == Anchor.Top)
                 .AddStyle("visibility", "hidden", string.IsNullOrWhiteSpace(Height) && _height == 0 && Anchor is Anchor.Bottom or Anchor.Top)
                 .AddStyle(Style)
                 .Build();
@@ -85,7 +85,7 @@ namespace MudBlazor
         protected IBrowserViewportService BrowserViewportService { get; set; } = null!;
 
         [CascadingParameter]
-        private MudDrawerContainer? DrawerContainer { get; set; }
+        private HamkareDrawerContainer? DrawerContainer { get; set; }
 
         [CascadingParameter(Name = "RightToLeft")]
         private bool RightToLeft { get; set; }
@@ -262,7 +262,7 @@ namespace MudBlazor
         public string? Height { get; set; }
 
         /// <summary>
-        /// The position of this drawer when opened, relative to a <see cref="HamkareAppBar"/> when inside a <see cref="MudLayout"/>.
+        /// The position of this drawer when opened, relative to a <see cref="HamkareAppBar"/> when inside a <see cref="HamkareLayout"/>.
         /// </summary>
         [Parameter, ParameterState(ParameterUsage = ParameterUsageOptions.None)]
         [Category(CategoryTypes.Drawer.Behavior)]
@@ -351,7 +351,7 @@ namespace MudBlazor
 
         private void OnRightToLeftParameterChanged() => DrawerContainerUpdate();
 
-        private void DrawerContainerUpdate() => (DrawerContainer as IMudStateHasChanged)?.StateHasChanged();
+        private void DrawerContainerUpdate() => (DrawerContainer as IHamkareStateHasChanged)?.StateHasChanged();
 
         private Task CloseDrawerAsync()
         {
@@ -365,7 +365,7 @@ namespace MudBlazor
 
         private async Task UpdateHeightAsync()
         {
-            _height = (await _contentRef.MudGetBoundingClientRectAsync())?.Height ?? 0;
+            _height = (await _contentRef.HamkareGetBoundingClientRectAsync())?.Height ?? 0;
         }
 
         private async Task UpdateBreakpointStateAsync(Breakpoint breakpoint)
@@ -414,7 +414,7 @@ namespace MudBlazor
             };
         }
 
-        internal bool IsFixed => Fixed && DrawerContainer is MudLayout;
+        internal bool IsFixed => Fixed && DrawerContainer is HamkareLayout;
 
         private async Task OnPointerEnterAsync()
         {
@@ -497,7 +497,7 @@ namespace MudBlazor
 
         private static Breakpoint NormalizeBreakpoint(Breakpoint breakpoint)
         {
-            // Historically, MudDrawer only functioned with breakpoints like Xs, Sm, Md, Lg, Xl, and Xxl.
+            // Historically, HamkareDrawer only functioned with breakpoints like Xs, Sm, Md, Lg, Xl, and Xxl.
             // However, some users may supply additional breakpoints such as SmAndDown, MdAndDown, LgAndDown, XlAndDown, SmAndUp, MdAndUp, LgAndUp, XlAndUp, None, and Always.
             // The IBrowserViewportService provides an IsBreakpointWithinReferenceSizeAsync method that considers these additional breakpoints.
             // However, utilizing it would constitute a breaking change.

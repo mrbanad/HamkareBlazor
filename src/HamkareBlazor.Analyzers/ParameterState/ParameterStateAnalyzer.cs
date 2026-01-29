@@ -1,9 +1,9 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Collections.Immutable;
-using MudBlazor.State;
+using HamkareBlazor.State;
 
 namespace HamkareBlazor.Analyzers;
 
@@ -13,7 +13,7 @@ namespace HamkareBlazor.Analyzers;
 [DiagnosticAnalyzer(LanguageNames.CSharp)]
 public sealed partial class ParameterStateAnalyzer : DiagnosticAnalyzer
 {
-    private const string ParameterStateAttributeFullName = "MudBlazor.State.ParameterStateAttribute";
+    private const string ParameterStateAttributeFullName = "HamkareBlazor.State.ParameterStateAttribute";
     private const string ParameterUsagePropertyName = "ParameterUsage";
     private const string SetParametersAsyncMethodName = "SetParametersAsync";
     private const string GetStateMethodName = "GetState";
@@ -548,8 +548,8 @@ public sealed partial class ParameterStateAnalyzer : DiagnosticAnalyzer
                 return false;
             }
 
-            // Check namespace: MudBlazor.Extensions
-            return IsNamespaceMatch(typeSymbol.ContainingNamespace, "MudBlazor", "Extensions");
+            // Check namespace: HamkareBlazor.Extensions
+            return IsNamespaceMatch(typeSymbol.ContainingNamespace, "HamkareBlazor", "Extensions");
         }
 
         private static bool IsExternalAccess(IPropertyReferenceOperation propertyReference, OperationAnalysisContext context)

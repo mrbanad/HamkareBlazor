@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
 #nullable enable
-namespace MudBlazor
+namespace HamkareBlazor
 {
     [ExcludeFromCodeCoverage]
     internal static class Num

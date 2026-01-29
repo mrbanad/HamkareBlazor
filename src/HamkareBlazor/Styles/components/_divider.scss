@@ -1,44 +1,44 @@
-﻿.mud-divider {
+﻿.hamkare-divider {
   margin: 0;
   flex-shrink: 0;
-  border-color: var(--mud-palette-divider);
+  border-color: var(--hamkare-palette-divider);
   border-width: 1px;
   border-style: solid none none none;
 }
 
-.mud-divider-absolute {
+.hamkare-divider-absolute {
   left: 0;
   width: 100%;
   bottom: 0;
   position: absolute;
 }
 
-.mud-divider-inset {
+.hamkare-divider-inset {
   margin-left: 72px;
   margin-inline-start: 72px;
   margin-inline-end: unset;
 }
 
-.mud-divider-light {
-  border-color: var(--mud-palette-divider-light);
+.hamkare-divider-light {
+  border-color: var(--hamkare-palette-divider-light);
 }
 
-.mud-divider-middle {
+.hamkare-divider-middle {
   margin-left: 16px;
   margin-right: 16px;
 }
 
-.mud-divider-vertical {
+.hamkare-divider-vertical {
   border-style: none solid none none;
   height: 100%;
 }
 
-.mud-divider-flexitem {
+.hamkare-divider-flexitem {
   height: auto;
   align-self: stretch;
 }
 
-.mud-divider-fullwidth {
+.hamkare-divider-fullwidth {
   flex-grow: 1;
   width: 100%;
 }

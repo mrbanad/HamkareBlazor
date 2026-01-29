@@ -1,6 +1,6 @@
-﻿@namespace MudBlazor
-@using MudBlazor.Extensions
-@inherits MudComponentBase
+﻿@namespace HamkareBlazor
+@using HamkareBlazor.Extensions
+@inherits HamkareComponentBase
 
 <div role="progressbar"
      aria-valuenow="@_valueState.Value.ToInvariantString()"
@@ -12,21 +12,21 @@
      @attributes="UserAttributes">
     @if (Indeterminate)
     {
-        <svg class="mud-progress-circular-svg" viewBox="@_viewBox">
+        <svg class="hamkare-progress-circular-svg" viewBox="@_viewBox">
             <circle class="@SvgClassname" cx="44" cy="44" r="20" fill="none" stroke-width="@StrokeWidth"></circle>
         </svg>
 
-        <div class="mud-progress-circular-percentage mud-progress-circular-indeterminate-child">
+        <div class="hamkare-progress-circular-percentage hamkare-progress-circular-indeterminate-child">
             @ChildContent
         </div>
     }
     else
     {
-        <svg class="mud-progress-circular-svg" viewBox="@_viewBox">
+        <svg class="hamkare-progress-circular-svg" viewBox="@_viewBox">
             <circle class="@SvgClassname" cx="44" cy="44" r="20" fill="none" stroke-width="@StrokeWidth" style="stroke-dasharray: @MagicNumber; stroke-dashoffset: @_svgValue;"></circle>
         </svg>
 
-        <div class="mud-progress-circular-percentage">
+        <div class="hamkare-progress-circular-percentage">
             @ChildContent
         </div>
     }

@@ -1,10 +1,10 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Globalization;
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 #nullable enable
 /// <summary>
@@ -12,8 +12,8 @@ namespace MudBlazor;
 /// </summary>
 /// <remarks>
 /// This interface is intended primarily for converters that are used by components via
-/// <see cref="MudFormComponent{T, U}.Converter"/>. When a converter implementing this interface is supplied to
-/// a Mud form component, the component will automatically provide the <see cref="Culture"/> and
+/// <see cref="HamkareFormComponent{T, U}.Converter"/>. When a converter implementing this interface is supplied to
+/// a Hamkare form component, the component will automatically provide the <see cref="Culture"/> and
 /// <see cref="Format"/> delegates at runtime.
 /// 
 /// If you plan to use a converter outside of Blazor components (for example in plain services or library code),
@@ -31,7 +31,7 @@ public interface ICultureAwareConverter
     /// </summary>
     /// <remarks>
     /// This delegate is invoked at conversion time. When the converter is used as a component converter (via
-    /// <see cref="MudFormComponent{T, U}.Converter"/>), the host component will supply this delegate automatically.
+    /// <see cref="HamkareFormComponent{T, U}.Converter"/>), the host component will supply this delegate automatically.
     /// Implementations should not cache the returned value permanently unless they have a reason to ignore runtime changes.
     /// </remarks>
     Func<CultureInfo> Culture { get; set; }
@@ -42,7 +42,7 @@ public interface ICultureAwareConverter
     /// <remarks>
     /// The delegate is invoked at conversion/formatting time and may return <c>null</c> to indicate that the default
     /// formatting rules should be applied. Typical uses include custom date/time or numeric format strings supplied by the consumer.
-    /// When the converter is used as a component converter (via <see cref="MudFormComponent{T, U}.Converter"/>), the host component will
+    /// When the converter is used as a component converter (via <see cref="HamkareFormComponent{T, U}.Converter"/>), the host component will
     /// supply this delegate automatically.
     /// </remarks>
     Func<string?> Format { get; set; }

@@ -1,22 +1,22 @@
 ﻿using Microsoft.AspNetCore.Components;
-using MudBlazor.Extensions;
-using MudBlazor.State;
-using MudBlazor.Utilities;
+using HamkareBlazor.Extensions;
+using HamkareBlazor.State;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
     /// <summary>
     /// An extensively customizable tree view component for displaying hierarchical data, featuring item selection, lazy-loading, and templating support.
     /// </summary>
     /// <typeparam name="T">The type of item to display.</typeparam>
-    /// <seealso cref="MudTreeViewItem{T}"/>
-    /// <seealso cref="MudTreeViewItemToggleButton"/>
-    public partial class MudTreeView<T> : MudComponentBase
+    /// <seealso cref="HamkareTreeViewItem{T}"/>
+    /// <seealso cref="HamkareTreeViewItemToggleButton"/>
+    public partial class HamkareTreeView<T> : HamkareComponentBase
     {
-        public MudTreeView()
+        public HamkareTreeView()
         {
-            MudTreeRoot = this;
+            HamkareTreeRoot = this;
             using var registerScope = CreateRegisterScope();
             _selectedValueState = registerScope.RegisterParameter<T?>(nameof(SelectedValue))
                 .WithParameter(() => SelectedValue)
@@ -50,17 +50,17 @@ namespace MudBlazor
         private readonly ParameterState<IReadOnlyCollection<T>?> _selectedValuesState;
 
         private HashSet<T> _selection;
-        private readonly HashSet<MudTreeViewItem<T>> _childItems = new();
+        private readonly HashSet<HamkareTreeViewItem<T>> _childItems = new();
         private bool _isFirstRender = true;
         internal bool MultiSelection => SelectionMode == SelectionMode.MultiSelection;
         private bool ToggleSelection => SelectionMode == SelectionMode.ToggleSelection;
 
         protected string Classname =>
-            new CssBuilder("mud-treeview")
-                .AddClass("mud-treeview-dense", Dense)
-                .AddClass("mud-treeview-hover", !Disabled && Hover && (!ReadOnly || ExpandOnClick))
-                .AddClass($"mud-treeview-selected-{Color.ToStringFast(true)}")
-                .AddClass($"mud-treeview-checked-{CheckBoxColor.ToStringFast(true)}")
+            new CssBuilder("hamkare-treeview")
+                .AddClass("hamkare-treeview-dense", Dense)
+                .AddClass("hamkare-treeview-hover", !Disabled && Hover && (!ReadOnly || ExpandOnClick))
+                .AddClass($"hamkare-treeview-selected-{Color.ToStringFast(true)}")
+                .AddClass($"hamkare-treeview-checked-{CheckBoxColor.ToStringFast(true)}")
                 .AddClass(Class)
                 .Build();
 
@@ -73,7 +73,7 @@ namespace MudBlazor
                 .Build();
 
         [CascadingParameter]
-        private MudTreeView<T> MudTreeRoot { get; set; }
+        private HamkareTreeView<T> HamkareTreeRoot { get; set; }
 
         /// <summary>
         /// The color of the selected item.
@@ -355,7 +355,7 @@ namespace MudBlazor
         /// <inheritdoc />
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            if (firstRender && MudTreeRoot == this)
+            if (firstRender && HamkareTreeRoot == this)
             {
                 _isFirstRender = false;
                 await UpdateItemsAsync();
@@ -385,7 +385,7 @@ namespace MudBlazor
         }
 
         /// <summary>
-        /// The internal filter logic that traverses the tree recursively and applies the <see cref="FilterFunc"/> to every item to set the <see cref="MudTreeViewItem{T}.Visible"/> property
+        /// The internal filter logic that traverses the tree recursively and applies the <see cref="FilterFunc"/> to every item to set the <see cref="HamkareTreeViewItem{T}.Visible"/> property
         /// </summary>
         /// <param name="items">The hierarchical tree structure to traverse</param>
         /// <returns>A task to represent the asynchronous operation.</returns>
@@ -409,7 +409,7 @@ namespace MudBlazor
         }
 
         /// <summary>
-        /// Resets the filter, so that all <see cref="MudTreeViewItem{T}.Visible"/> are set to true and the entire tree is visible.
+        /// Resets the filter, so that all <see cref="HamkareTreeViewItem{T}.Visible"/> are set to true and the entire tree is visible.
         /// </summary>
         /// <param name="items">The items to reset</param>
         private static void ResetFilter(IEnumerable<ITreeItemData<T>> items)
@@ -488,7 +488,7 @@ namespace MudBlazor
             return UpdateItemsAsync();
         }
 
-        internal async Task OnItemClickAsync(MudTreeViewItem<T> clickedItem)
+        internal async Task OnItemClickAsync(HamkareTreeViewItem<T> clickedItem)
         {
             if (ReadOnly)
             {
@@ -498,7 +498,7 @@ namespace MudBlazor
             {
                 var items = clickedItem.GetChildItemsRecursive();
                 items.Add(clickedItem!);
-                var allSelected = items.All(x => x.GetState<bool>(nameof(MudTreeViewItem<T>.Selected)));
+                var allSelected = items.All(x => x.GetState<bool>(nameof(HamkareTreeViewItem<T>.Selected)));
                 // toggle selection of the clickedItem and its children
                 foreach (var item in items.Where(x => x.GetValue() is not null))
                 {
@@ -519,7 +519,7 @@ namespace MudBlazor
                 await UpdateItemsAsync();
                 return;
             }
-            var selected = clickedItem.GetState<bool>(nameof(MudTreeViewItem<T>.Selected));
+            var selected = clickedItem.GetState<bool>(nameof(HamkareTreeViewItem<T>.Selected));
             if (ToggleSelection)
             {
                 await SetSelectedValueAsync(selected ? default : clickedItem.GetValue()); // <-- toggle selected value
@@ -535,7 +535,7 @@ namespace MudBlazor
         /// This changes the parent item's state based on the selection state of its children in multi-selection mode
         /// But only if the items are clicked, not when the selection is modified via SelectedValues
         /// </summary>
-        private void UpdateParentItem(MudTreeViewItem<T>? parentItem)
+        private void UpdateParentItem(HamkareTreeViewItem<T>? parentItem)
         {
             while (parentItem is not null)
             {
@@ -552,20 +552,20 @@ namespace MudBlazor
             }
         }
 
-        internal async Task AddChildAsync(MudTreeViewItem<T> item)
+        internal async Task AddChildAsync(HamkareTreeViewItem<T> item)
         {
             _childItems.Add(item);
             // this is to ensure that setting Selected="true" on the item will update the single/multiselection.
             // Note: Setting Selected="false" has no effect however because it would cancel the initialization of the SelectedValue or SelectedValues !
             var value = item.GetValue();
-            if (value is not null && item.GetState<bool>(nameof(MudTreeViewItem<T>.Selected)))
+            if (value is not null && item.GetState<bool>(nameof(HamkareTreeViewItem<T>.Selected)))
             {
                 await SelectAsync(value);
             }
             await item.UpdateSelectionStateAsync(GetSelection());
         }
 
-        internal void RemoveChild(MudTreeViewItem<T> item)
+        internal void RemoveChild(HamkareTreeViewItem<T> item)
         {
             _childItems.Remove(item);
         }
@@ -664,7 +664,7 @@ namespace MudBlazor
         }
 
         // TODO: speed this up with caching
-        private HashSet<T> GetChildValuesRecursive(IEnumerable<MudTreeViewItem<T>>? children = null, HashSet<T>? values = null)
+        private HashSet<T> GetChildValuesRecursive(IEnumerable<HamkareTreeViewItem<T>>? children = null, HashSet<T>? values = null)
         {
             values ??= new HashSet<T>(Comparer);
             children ??= _childItems;

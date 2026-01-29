@@ -1,7 +1,7 @@
 ﻿//Copyright(c) Alessandro Ghidini.All rights reserved.
-//Changes and improvements Copyright (c) The MudBlazor Team.
+//Changes and improvements Copyright (c) The HamkareBlazor Team.
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 #nullable enable
 
@@ -23,52 +23,52 @@ public static class Defaults
             /// <summary>
             /// Snackbars will appear in the top-left corner.
             /// </summary>
-            public const string TopLeft = "mud-snackbar-location-top-left";
+            public const string TopLeft = "hamkare-snackbar-location-top-left";
 
             /// <summary>
             /// Snackbars will appear at the top, centered horizontally.
             /// </summary>
-            public const string TopCenter = "mud-snackbar-location-top-center";
+            public const string TopCenter = "hamkare-snackbar-location-top-center";
 
             /// <summary>
             /// Snackbars will appear in the top-right corner.
             /// </summary>
-            public const string TopRight = "mud-snackbar-location-top-right";
+            public const string TopRight = "hamkare-snackbar-location-top-right";
 
             /// <summary>
             /// Snackbars will appear at the top, aligned based on Right-to-Left settings.
             /// </summary>
-            public const string TopStart = "mud-snackbar-location-top-start";
+            public const string TopStart = "hamkare-snackbar-location-top-start";
 
             /// <summary>
             /// Snackbars will appear at the top, aligned based on Right-to-Left settings.
             /// </summary>
-            public const string TopEnd = "mud-snackbar-location-top-end";
+            public const string TopEnd = "hamkare-snackbar-location-top-end";
 
             /// <summary>
             /// Snackbars will appear in the bottom-left corner.
             /// </summary>
-            public const string BottomLeft = "mud-snackbar-location-bottom-left";
+            public const string BottomLeft = "hamkare-snackbar-location-bottom-left";
 
             /// <summary>
             /// Snackbars will appear on the bottom, centered horizontally.
             /// </summary>
-            public const string BottomCenter = "mud-snackbar-location-bottom-center";
+            public const string BottomCenter = "hamkare-snackbar-location-bottom-center";
 
             /// <summary>
             /// Snackbars will appear in the bottom-right corner.
             /// </summary>
-            public const string BottomRight = "mud-snackbar-location-bottom-right";
+            public const string BottomRight = "hamkare-snackbar-location-bottom-right";
 
             /// <summary>
             /// Snackbars will appear on the bottom, aligned based on Right-to-Left settings.
             /// </summary>
-            public const string BottomStart = "mud-snackbar-location-bottom-start";
+            public const string BottomStart = "hamkare-snackbar-location-bottom-start";
 
             /// <summary>
             /// Snackbars will appear on the bottom, aligned based on Right-to-Left settings.
             /// </summary>
-            public const string BottomEnd = "mud-snackbar-location-bottom-end";
+            public const string BottomEnd = "hamkare-snackbar-location-bottom-end";
         }
     }
 }

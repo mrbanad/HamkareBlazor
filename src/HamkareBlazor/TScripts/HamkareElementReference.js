@@ -1,8 +1,8 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-class MudElementReference {
+class HamkareElementReference {
     constructor() {
         this.listenerId = 0;
         this.eventListeners = {};
@@ -46,15 +46,15 @@ class MudElementReference {
     saveFocus (element) {
         if (element)
         {
-            element['mudblazor_savedFocus'] = document.activeElement;
+            element['hamkareblazor_savedFocus'] = document.activeElement;
         }
     }
 
     restoreFocus (element) {
         if (element)
         {
-            const previous = element['mudblazor_savedFocus'];
-            delete element['mudblazor_savedFocus'];
+            const previous = element['hamkareblazor_savedFocus'];
+            delete element['hamkareblazor_savedFocus'];
             if (previous)
                 previous.focus();
         }
@@ -147,38 +147,38 @@ class MudElementReference {
         }
     }
 
-    // ios doesn't trigger Blazor/React/Other dom style blur event so add a base event listener here 
+    // ios doesn't trigger Blazor/React/Other dom style blur event so add a base event listener here
     // that will trigger with IOS Done button and regular blur events
     addOnBlurEvent(element, dotNetReference) {
         if (!element) return;
 
-        element._mudBlurHandler = function (e) {
+        element._hamkareBlurHandler = function (e) {
             if (!element || !document.contains(element)) {
                 // Element is no longer in the DOM, clean up
-                window.mudElementRef.removeOnBlurEvent(element);
+                window.hamkareElementRef.removeOnBlurEvent(element);
                 return;
             }
             e.preventDefault();
-            
+
             if (dotNetReference) {
                 dotNetReference.invokeMethodAsync('CallOnBlurredAsync').catch(err => {
                     console.warn("Error invoking CallOnBlurredAsync, possibly disposed:", err);
-                    window.mudElementRef.removeOnBlurEvent(element);
+                    window.hamkareElementRef.removeOnBlurEvent(element);
                 });
             } else {
                 console.error("No dotNetReference found for iosKeyboardFocus");
             }
         };
 
-        element.addEventListener('blur', element._mudBlurHandler);
+        element.addEventListener('blur', element._hamkareBlurHandler);
     }
 
     removeOnBlurEvent(element) {
         if (!element) return;
-        if (element._mudBlurHandler) {
-            element.removeEventListener('blur', element._mudBlurHandler);
-            delete element._mudBlurHandler;
+        if (element._hamkareBlurHandler) {
+            element.removeEventListener('blur', element._hamkareBlurHandler);
+            delete element._hamkareBlurHandler;
         }
     }
 };
-window.mudElementRef = new MudElementReference();
+window.hamkareElementRef = new HamkareElementReference();

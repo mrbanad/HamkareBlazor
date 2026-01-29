@@ -1,21 +1,21 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 #nullable enable
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using MudBlazor.State;
-using MudBlazor.Utilities;
+using HamkareBlazor.State;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 /// <summary>
 /// Guides users through a series of steps to complete a transaction, such as forms or wizards.
 /// </summary>
-public partial class MudStepper : MudComponentBase
+public partial class HamkareStepper : HamkareComponentBase
 {
-    public MudStepper()
+    public HamkareStepper()
     {
         using var registerScope = CreateRegisterScope();
         _activeIndex = registerScope.RegisterParameter<int>(nameof(ActiveIndex))
@@ -24,26 +24,26 @@ public partial class MudStepper : MudComponentBase
             .WithChangeHandler(async args => await SetActiveIndexAsync(args.Value));
     }
 
-    private MudStep? _activeStep;
+    private HamkareStep? _activeStep;
     private readonly ParameterState<int> _activeIndex;
-    private readonly List<MudStep> _steps = [];
+    private readonly List<HamkareStep> _steps = [];
 
     protected string Classname =>
-        new CssBuilder("mud-stepper")
-            .AddClass("mud-stepper__horizontal", Vertical == false)
-            .AddClass("mud-stepper__vertical", Vertical)
-            .AddClass("mud-stepper__center-labels", CenterLabels && !Vertical)
+        new CssBuilder("hamkare-stepper")
+            .AddClass("hamkare-stepper__horizontal", Vertical == false)
+            .AddClass("hamkare-stepper__vertical", Vertical)
+            .AddClass("hamkare-stepper__center-labels", CenterLabels && !Vertical)
             .AddClass(Class)
             .Build();
 
     internal string StepClassname =>
-        new CssBuilder("mud-stepper-content")
+        new CssBuilder("hamkare-stepper-content")
             .AddClass(StepClass)
             .Build();
 
     protected string NavClassname =>
-        new CssBuilder("mud-stepper-nav")
-            .AddClass("mud-stepper-nav-scrollable", ScrollableNavigation)
+        new CssBuilder("hamkare-stepper-nav")
+            .AddClass("hamkare-stepper-nav-scrollable", ScrollableNavigation)
             .AddClass(NavClass)
             .Build();
 
@@ -328,7 +328,7 @@ public partial class MudStepper : MudComponentBase
     /// The steps in this component.
     /// </summary>
     /// <remarks>
-    /// Must be a set of <see cref="MudStep"/> components.  
+    /// Must be a set of <see cref="HamkareStep"/> components.  
     /// </remarks>
     [Parameter]
     [Category(CategoryTypes.List.Appearance)]
@@ -338,7 +338,7 @@ public partial class MudStepper : MudComponentBase
     /// The custom template for displaying each step's title.
     /// </summary>
     /// <remarks>
-    /// Defaults to <c>null</c>.  The current <see cref="MudStep"/> is passed as context for this render fragment.
+    /// Defaults to <c>null</c>.  The current <see cref="HamkareStep"/> is passed as context for this render fragment.
     /// </remarks>
     [Parameter]
     [Category(CategoryTypes.List.Appearance)]
@@ -376,9 +376,9 @@ public partial class MudStepper : MudComponentBase
     /// </summary>
     [Parameter]
     [Category(CategoryTypes.List.Appearance)]
-    public RenderFragment<MudStepper>? ActionContent { get; set; }
+    public RenderFragment<HamkareStepper>? ActionContent { get; set; }
 
-    internal async Task AddStepAsync(MudStep step)
+    internal async Task AddStepAsync(HamkareStep step)
     {
         _steps.Add(step);
         if (_afterFirstRender)
@@ -407,7 +407,7 @@ public partial class MudStepper : MudComponentBase
         }
     }
 
-    internal async Task RemoveStepAsync(MudStep step)
+    internal async Task RemoveStepAsync(HamkareStep step)
     {
         _steps.Remove(step);
         await ConsolidateActiveIndexAsync();
@@ -421,7 +421,7 @@ public partial class MudStepper : MudComponentBase
         return SetActiveIndexAsync(_activeIndex.Value);
     }
 
-    private async Task UpdateStepAsync(MudStep? step, MouseEventArgs ev, StepAction stepAction, bool ignoreDisabledState = false)
+    private async Task UpdateStepAsync(HamkareStep? step, MouseEventArgs ev, StepAction stepAction, bool ignoreDisabledState = false)
     {
         if (step == null || (step.DisabledState.Value && !ignoreDisabledState))
         {
@@ -514,9 +514,9 @@ public partial class MudStepper : MudComponentBase
         }
     }
 
-    private MudStep? GetPreviousStep(int index)
+    private HamkareStep? GetPreviousStep(int index)
     {
-        MudStep? step = null;
+        HamkareStep? step = null;
         if (index > _steps.Count)
             index = _steps.Count;
         while (index > 0)
@@ -529,9 +529,9 @@ public partial class MudStepper : MudComponentBase
         return step;
     }
 
-    private MudStep? GetNextStep(int index)
+    private HamkareStep? GetNextStep(int index)
     {
-        MudStep? step = null;
+        HamkareStep? step = null;
         if (index < -1)
             index = -1;
         while (index < _steps.Count - 1)
@@ -597,7 +597,7 @@ public partial class MudStepper : MudComponentBase
         await UpdateStepAsync(_steps[0], new MouseEventArgs(), StepAction.Activate);
     }
 
-    private Task OnStepClickAsync(MudStep step, MouseEventArgs e)
+    private Task OnStepClickAsync(HamkareStep step, MouseEventArgs e)
     {
         return UpdateStepAsync(step, e, StepAction.Activate);
     }

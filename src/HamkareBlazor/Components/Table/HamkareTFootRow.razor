@@ -1,28 +1,28 @@
-﻿@namespace MudBlazor
+﻿@namespace HamkareBlazor
 @implements IDisposable
-@inherits MudComponentBase
+@inherits HamkareComponentBase
 
 <tr class="@Classname" @onclick="@OnRowClick" style="@Style" @attributes="@UserAttributes">
 	@if (Context.DisplayApplyButtonAtStart(IgnoreEditable) || Context.DisplayEditButtonAtStart(IgnoreEditable))
 	{
-		<MudTh />
+		<HamkareTh />
 	}
 	@if (Expandable || ((Context?.Table?.MultiSelection ?? false) && !IgnoreCheckbox))
     {
-        <MudTd>
+        <HamkareTd>
             @if (Expandable)
             {
                 <div class="ml-4 mr-5"></div>
             }
             @if (Checkable)
             {
-                <MudCheckBox @bind-Value="Checked" ReadOnly="!SelectionChangeable" Disabled="!SelectionChangeable" Class="mud-table-cell-checkbox" />
+                <HamkareCheckBox @bind-Value="Checked" ReadOnly="!SelectionChangeable" Disabled="!SelectionChangeable" Class="hamkare-table-cell-checkbox" />
             }
-        </MudTd>
+        </HamkareTd>
     }
     @ChildContent
     @if (Context.DisplayApplyButtonAtEnd(IgnoreEditable) || Context.DisplayEditButtonAtEnd(IgnoreEditable))
     {
-		<MudTh />
+		<HamkareTh />
 	}
 </tr>

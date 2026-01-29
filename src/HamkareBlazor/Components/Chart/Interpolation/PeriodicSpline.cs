@@ -6,7 +6,7 @@
 #nullable enable
 using System.Diagnostics;
 
-namespace MudBlazor.Interpolation
+namespace HamkareBlazor.Interpolation
 {
     internal class PeriodicSpline : SplineInterpolator
     {

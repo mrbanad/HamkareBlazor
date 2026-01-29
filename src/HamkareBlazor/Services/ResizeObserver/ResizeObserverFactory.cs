@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Options;
 using Microsoft.JSInterop;
 
-namespace MudBlazor.Services;
+namespace HamkareBlazor.Services;
 
 #nullable enable
 /// <summary>

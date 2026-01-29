@@ -1,10 +1,10 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using Microsoft.AspNetCore.Components.Web;
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 #nullable enable
 
@@ -12,19 +12,19 @@ namespace MudBlazor;
 /// Provides access to menu operations for external components and custom activators.
 /// </summary>
 /// <remarks>
-/// This context is passed to <see cref="MudMenu.ActivatorContent"/> to allow custom activators
+/// This context is passed to <see cref="HamkareMenu.ActivatorContent"/> to allow custom activators
 /// to control menu behavior through strongly-typed async methods.
 /// </remarks>
 public sealed class MenuContext
 {
-    private readonly MudMenu _menu;
+    private readonly HamkareMenu _menu;
 
     /// <summary>
     /// Creates a new instance of <see cref="MenuContext"/>.
     /// </summary>
     /// <param name="menu">The menu associated with this context.</param>
     /// <exception cref="ArgumentNullException">Thrown when <paramref name="menu"/> is null.</exception>
-    internal MenuContext(MudMenu menu)
+    internal MenuContext(HamkareMenu menu)
     {
         ArgumentNullException.ThrowIfNull(menu);
         _menu = menu;
@@ -34,7 +34,7 @@ public sealed class MenuContext
     /// Opens the menu.
     /// </summary>
     /// <param name="args">
-    /// Optional event arguments. When <see cref="MudMenu.PositionAtCursor"/> is <c>true</c>,
+    /// Optional event arguments. When <see cref="HamkareMenu.PositionAtCursor"/> is <c>true</c>,
     /// the menu will be positioned at the coordinates from <see cref="MouseEventArgs"/> or <see cref="TouchEventArgs"/>.
     /// </param>
     /// <returns>A task that represents the asynchronous operation.</returns>
@@ -50,7 +50,7 @@ public sealed class MenuContext
     /// Toggles the menu between open and closed states.
     /// </summary>
     /// <param name="args">
-    /// Optional event arguments. When <see cref="MudMenu.PositionAtCursor"/> is <c>true</c>,
+    /// Optional event arguments. When <see cref="HamkareMenu.PositionAtCursor"/> is <c>true</c>,
     /// the menu will be positioned at the coordinates from <see cref="MouseEventArgs"/> or <see cref="TouchEventArgs"/>.
     /// </param>
     /// <returns>A task that represents the asynchronous operation.</returns>

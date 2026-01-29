@@ -1,18 +1,18 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using MudBlazor.Services;
-using MudBlazor.Utilities;
+using HamkareBlazor.Services;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
     /// <summary>
     /// A form input for boolean values or selecting multiple items in a list. Use checkboxes (instead of switches or radio buttons) if multiple options can be selected from a list.
     /// </summary>
     /// <typeparam name="T">The type of item managed by this checkbox.</typeparam>
-    /// <seealso cref="MudRadio{T}"/>
-    /// <seealso cref="MudSwitch{T}"/>
-    public partial class MudCheckBox<T> : MudBooleanInput<T>
+    /// <seealso cref="HamkareRadio{T}"/>
+    /// <seealso cref="HamkareSwitch{T}"/>
+    public partial class HamkareCheckBox<T> : HamkareBooleanInput<T>
     {
         private readonly string _elementId = Identifier.Create("checkbox");
         private readonly string _ariaId = Identifier.Create("cbox-aria-");
@@ -20,29 +20,29 @@ namespace MudBlazor
         [Inject]
         private IKeyInterceptorService KeyInterceptorService { get; set; } = null!;
 
-        protected override string Classname => new CssBuilder("mud-input-control-boolean-input")
-            .AddClass($"mud-disabled", GetDisabledState())
-            .AddClass($"mud-readonly", GetReadOnlyState())
-            .AddClass("mud-input-with-content", ChildContent is not null)
+        protected override string Classname => new CssBuilder("hamkare-input-control-boolean-input")
+            .AddClass($"hamkare-disabled", GetDisabledState())
+            .AddClass($"hamkare-readonly", GetReadOnlyState())
+            .AddClass("hamkare-input-with-content", ChildContent is not null)
             .AddClass(Class)
             .Build();
 
-        protected override string LabelClassname => new CssBuilder("mud-checkbox")
-            .AddClass($"mud-disabled", GetDisabledState())
-            .AddClass($"mud-readonly", GetReadOnlyState())
-            .AddClass($"mud-input-content-placement-{ConvertPlacement(LabelPlacement).ToStringFast(true)}")
+        protected override string LabelClassname => new CssBuilder("hamkare-checkbox")
+            .AddClass($"hamkare-disabled", GetDisabledState())
+            .AddClass($"hamkare-readonly", GetReadOnlyState())
+            .AddClass($"hamkare-input-content-placement-{ConvertPlacement(LabelPlacement).ToStringFast(true)}")
             .Build();
 
-        protected override string IconClassname => new CssBuilder("mud-button-root mud-icon-button")
-            .AddClass($"mud-{Color.ToStringFast(true)}-text hover:mud-{Color.ToStringFast(true)}-hover", !GetReadOnlyState() && !GetDisabledState() && UncheckedColor == null || (UncheckedColor != null && BoolValue == true))
-            .AddClass($"mud-{UncheckedColor?.ToStringFast(true)}-text hover:mud-{UncheckedColor?.ToStringFast(true)}-hover", !GetReadOnlyState() && !GetDisabledState() && UncheckedColor != null && BoolValue == false)
-            .AddClass($"mud-checkbox-dense", Dense)
-            .AddClass($"mud-ripple mud-ripple-checkbox", Ripple && !GetReadOnlyState() && !GetDisabledState())
-            .AddClass($"mud-disabled", GetDisabledState())
-            .AddClass($"mud-readonly", GetReadOnlyState())
-            .AddClass($"mud-checkbox-true", BoolValue == true)
-            .AddClass($"mud-checkbox-false", BoolValue == false)
-            .AddClass($"mud-checkbox-null", BoolValue is null)
+        protected override string IconClassname => new CssBuilder("hamkare-button-root hamkare-icon-button")
+            .AddClass($"hamkare-{Color.ToStringFast(true)}-text hover:hamkare-{Color.ToStringFast(true)}-hover", !GetReadOnlyState() && !GetDisabledState() && UncheckedColor == null || (UncheckedColor != null && BoolValue == true))
+            .AddClass($"hamkare-{UncheckedColor?.ToStringFast(true)}-text hover:hamkare-{UncheckedColor?.ToStringFast(true)}-hover", !GetReadOnlyState() && !GetDisabledState() && UncheckedColor != null && BoolValue == false)
+            .AddClass($"hamkare-checkbox-dense", Dense)
+            .AddClass($"hamkare-ripple hamkare-ripple-checkbox", Ripple && !GetReadOnlyState() && !GetDisabledState())
+            .AddClass($"hamkare-disabled", GetDisabledState())
+            .AddClass($"hamkare-readonly", GetReadOnlyState())
+            .AddClass($"hamkare-checkbox-true", BoolValue == true)
+            .AddClass($"hamkare-checkbox-false", BoolValue == false)
+            .AddClass($"hamkare-checkbox-null", BoolValue is null)
             .Build();
 
         /// <summary>
@@ -215,7 +215,7 @@ namespace MudBlazor
             if (firstRender)
             {
                 var options = new KeyInterceptorOptions(
-                    "mud-button-root",
+                    "hamkare-button-root",
                     [
                         // prevent scrolling page
                         new(" ", preventDown: "key+none", preventUp: "key+none"),

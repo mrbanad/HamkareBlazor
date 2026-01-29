@@ -1,18 +1,18 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System;
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 #nullable enable
 
 /// <summary>
-/// The information related to a <see cref="MudDropZone{T}"/> completed drag-and-drop transaction.
+/// The information related to a <see cref="HamkareDropZone{T}"/> completed drag-and-drop transaction.
 /// </summary>
 /// <typeparam name="T">The type of item being dragged and dropped.</typeparam>
-public class MudDragAndDropTransactionFinishedEventArgs<T> : EventArgs
+public class HamkareDragAndDropTransactionFinishedEventArgs<T> : EventArgs
 {
     /// <summary>
     /// The item which was dropped.
@@ -53,7 +53,7 @@ public class MudDragAndDropTransactionFinishedEventArgs<T> : EventArgs
     /// <param name="destinationDropZoneIdentifier">The unique ID of the zone where the drag-and-drop finished.</param>
     /// <param name="success">Whether the drag-and-drop completed successfully.</param>
     /// <param name="transaction">The transaction related to this event.</param>
-    public MudDragAndDropTransactionFinishedEventArgs(string destinationDropZoneIdentifier, bool success, MudDragAndDropItemTransaction<T> transaction)
+    public HamkareDragAndDropTransactionFinishedEventArgs(string destinationDropZoneIdentifier, bool success, HamkareDragAndDropItemTransaction<T> transaction)
     {
         Item = transaction.Item;
         Success = success;
@@ -67,7 +67,7 @@ public class MudDragAndDropTransactionFinishedEventArgs<T> : EventArgs
     /// Creates a new instance.
     /// </summary>
     /// <param name="transaction">The transaction related to this event.</param>
-    public MudDragAndDropTransactionFinishedEventArgs(MudDragAndDropItemTransaction<T> transaction) :
+    public HamkareDragAndDropTransactionFinishedEventArgs(HamkareDragAndDropItemTransaction<T> transaction) :
         this(string.Empty, false, transaction)
     {
     }

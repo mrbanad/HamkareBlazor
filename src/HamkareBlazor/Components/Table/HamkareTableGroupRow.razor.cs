@@ -4,31 +4,31 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using MudBlazor.Utilities;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
 
     /// <summary>
-    /// A grouping of values for a column in a <see cref="MudTable{T}"/>.
+    /// A grouping of values for a column in a <see cref="HamkareTable{T}"/>.
     /// </summary>
     /// <typeparam name="T">The type of item being grouped.</typeparam>
-    public partial class MudTableGroupRow<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)] T> : MudComponentBase
+    public partial class HamkareTableGroupRow<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)] T> : HamkareComponentBase
     {
         private bool? _checked = false;
         private IGrouping<object, T>? _items = null;
         private IEnumerable<IGrouping<object, T>>? _innerGroupItems = null;
 
-        protected string HeaderClassname => new CssBuilder("mud-table-row")
+        protected string HeaderClassname => new CssBuilder("hamkare-table-row")
             .AddClass(HeaderClass)
-            .AddClass($"mud-table-row-group-indented-{GroupDefinition?.Level - 1}",
+            .AddClass($"hamkare-table-row-group-indented-{GroupDefinition?.Level - 1}",
                 (GroupDefinition?.Indentation ?? false) && GroupDefinition?.Level > 1)
             .Build();
 
-        protected string FooterClassname => new CssBuilder("mud-table-row")
+        protected string FooterClassname => new CssBuilder("hamkare-table-row")
             .AddClass(FooterClass)
-            .AddClass($"mud-table-row-group-indented-{GroupDefinition?.Level - 1}",
+            .AddClass($"hamkare-table-row-group-indented-{GroupDefinition?.Level - 1}",
                 (GroupDefinition?.Indentation ?? false) && GroupDefinition?.Level > 1)
             .Build();
 
@@ -36,7 +36,7 @@ namespace MudBlazor
             .AddStyle("padding-left", "34px", GroupDefinition?.IsParentExpandable ?? false).Build();
 
         /// <summary>
-        /// The current state of the <see cref="MudTable{T}"/> containing this group.
+        /// The current state of the <see cref="HamkareTable{T}"/> containing this group.
         /// </summary>
         [CascadingParameter]
         public TableContext? Context { get; set; }
@@ -209,7 +209,7 @@ namespace MudBlazor
         /// Sets the <see cref="Checked"/> value and optionally refreshes this group.
         /// </summary>
         /// <param name="checkedState">The new checked state.</param>
-        /// <param name="notify">When <c>true</c>, and <see cref="Checkable"/> is <c>true</c>, the <see cref="MudTable{T}.OnGroupHeaderCheckboxClicked(bool, IEnumerable{T})"/> event will occur.</param>
+        /// <param name="notify">When <c>true</c>, and <see cref="Checkable"/> is <c>true</c>, the <see cref="HamkareTable{T}.OnGroupHeaderCheckboxClicked(bool, IEnumerable{T})"/> event will occur.</param>
         public void SetChecked(bool? checkedState, bool notify)
         {
             if (_checked != checkedState)
@@ -225,9 +225,9 @@ namespace MudBlazor
             }
         }
 
-        private MudTable<T>? Table
+        private HamkareTable<T>? Table
         {
-            get => (MudTable<T>?)((TableContext<T>?)Context)?.Table;
+            get => (HamkareTable<T>?)((TableContext<T>?)Context)?.Table;
         }
     }
 }

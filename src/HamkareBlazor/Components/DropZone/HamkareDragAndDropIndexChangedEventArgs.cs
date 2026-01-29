@@ -1,17 +1,17 @@
-﻿// Copyright (c) MudBlazor 2021
-// MudBlazor licenses this file to you under the MIT license.
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System;
 
-namespace MudBlazor;
+namespace HamkareBlazor;
 
 #nullable enable
 
 /// <summary>
-/// The information related to a <see cref="MudDropZone{T}"/> index change event.
+/// The information related to a <see cref="HamkareDropZone{T}"/> index change event.
 /// </summary>
-public class MudDragAndDropIndexChangedEventArgs : EventArgs
+public class HamkareDragAndDropIndexChangedEventArgs : EventArgs
 {
     /// <summary>
     /// The unique identifier of the zone.
@@ -34,7 +34,7 @@ public class MudDragAndDropIndexChangedEventArgs : EventArgs
     /// <param name="zoneIdentifier">The unique identifier of the zone.</param>
     /// <param name="oldZoneIdentifier">The unique identifier of the previous zone.</param>
     /// <param name="index">The index of the zone.</param>
-    public MudDragAndDropIndexChangedEventArgs(string zoneIdentifier, string oldZoneIdentifier, int index)
+    public HamkareDragAndDropIndexChangedEventArgs(string zoneIdentifier, string oldZoneIdentifier, int index)
     {
         ZoneIdentifier = zoneIdentifier;
         Index = index;

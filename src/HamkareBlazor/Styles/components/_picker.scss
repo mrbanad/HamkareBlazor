@@ -1,9 +1,9 @@
-.mud-picker {
-  &.mud-rounded {
-    border-radius: var(--mud-default-borderradius);
+.hamkare-picker {
+  &.hamkare-rounded {
+    border-radius: var(--hamkare-default-borderradius);
   }
 
-  & .mud-picker-actions {
+  & .hamkare-picker-actions {
     flex: 0 0 auto;
     display: flex;
     padding: 8px;
@@ -22,32 +22,32 @@
   }
 }
 
-.mud-picker-inline {
+.hamkare-picker-inline {
   display: flex;
   flex: 1 1 auto;
   position: relative;
   max-width: 100%;
 
-  &.mud-picker-input-button {
-    & .mud-input, .mud-input .mud-input-root {
+  &.hamkare-picker-input-button {
+    & .hamkare-input, .hamkare-input .hamkare-input-root {
       cursor: pointer
     }
 
-    &.mud-disabled {
-      & .mud-input, .mud-input .mud-input-root {
+    &.hamkare-disabled {
+      & .hamkare-input, .hamkare-input .hamkare-input-root {
         cursor: default;
       }
     }
   }
 
-  &.mud-picker-input-text {
+  &.hamkare-picker-input-text {
     cursor: text;
 
     &:hover {
       cursor: text;
     }
 
-    &.mud-disabled {
+    &.hamkare-disabled {
       cursor: default;
 
       &:hover {
@@ -57,31 +57,31 @@
   }
 }
 
-.mud-picker-static {
+.hamkare-picker-static {
   display: flex;
   overflow: hidden;
   min-width: 310px;
   flex-direction: column;
 }
 
-.mud-picker-container {
+.hamkare-picker-container {
   display: flex;
   flex-direction: column;
   border-radius: inherit;
 
-  &.mud-picker-container-landscape {
+  &.hamkare-picker-container-landscape {
     flex-direction: row;
   }
 
-  & .mud-toolbar {
+  & .hamkare-toolbar {
     border-top-left-radius: inherit;
     border-top-right-radius: inherit;
   }
 }
 
-.mud-picker-popover-paper {
+.hamkare-picker-popover-paper {
   outline: 0;
-  z-index: calc(var(--mud-zindex-popover) + 1);
+  z-index: calc(var(--hamkare-zindex-popover) + 1);
   position: absolute;
   min-width: 16px;
   min-height: 16px;
@@ -89,15 +89,15 @@
   overflow-y: auto;
 }
 
-.mud-picker-view {
+.hamkare-picker-view {
   display: none;
 
-  &.mud-picker-open {
+  &.hamkare-picker-open {
     display: block;
   }
 }
 
-.mud-picker-content {
+.hamkare-picker-content {
   display: flex;
   max-width: 100%;
   min-width: 310px;
@@ -106,19 +106,19 @@
   flex-direction: column;
   justify-content: center;
 
-  &.mud-picker-content-landscape {
+  &.hamkare-picker-content-landscape {
     padding: 0 8px;
   }
 }
 
-.mud-picker-toolbar {
+.hamkare-picker-toolbar {
   height: 100px;
   display: flex;
   align-items: center;
   flex-direction: row;
   justify-content: center;
 
-  &.mud-picker-toolbar-landscape {
+  &.hamkare-picker-toolbar-landscape {
     height: auto;
     padding: 8px;
     max-width: 150px;
@@ -126,74 +126,74 @@
   }
 
 
-  &.mud-button-root {
+  &.hamkare-button-root {
     padding: 0;
     min-width: 16px;
     text-transform: none;
   }
 }
 
-.mud-picker-inline-paper {
-  .mud-paper {
+.hamkare-picker-inline-paper {
+  .hamkare-paper {
     position: relative !important;
   }
 }
 
-.mud-picker-hidden {
+.hamkare-picker-hidden {
   visibility: hidden;
 }
 
-.mud-picker-pos-top {
+.hamkare-picker-pos-top {
   top: 0px;
   position: fixed;
   visibility: visible;
 
-  &.mud-picker-pos-left {
+  &.hamkare-picker-pos-left {
     left: 10px;
   }
 
-  &.mud-picker-pos-right {
+  &.hamkare-picker-pos-right {
     right: 10px;
   }
 }
 
-.mud-picker-pos-above {
+.hamkare-picker-pos-above {
   bottom: 0px;
   visibility: visible;
 
-  &.mud-picker-pos-left {
+  &.hamkare-picker-pos-left {
     left: 50%;
     transform: translateX(-50%);
   }
 
-  &.mud-picker-pos-right {
+  &.hamkare-picker-pos-right {
     right: 0px;
   }
 }
 
-.mud-picker-pos-bottom {
+.hamkare-picker-pos-bottom {
   bottom: 10px;
   position: fixed;
   visibility: visible;
 
-  &.mud-picker-pos-left {
+  &.hamkare-picker-pos-left {
     left: 10px;
   }
 
-  &.mud-picker-pos-right {
+  &.hamkare-picker-pos-right {
     right: 10px;
   }
 }
 
-.mud-picker-pos-below {
+.hamkare-picker-pos-below {
   visibility: visible;
 
-  &.mud-picker-pos-left {
+  &.hamkare-picker-pos-left {
     left: 50%;
     transform: translateX(-50%);
   }
 
-  &.mud-picker-pos-right {
+  &.hamkare-picker-pos-right {
     right: 0px;
   }
 }

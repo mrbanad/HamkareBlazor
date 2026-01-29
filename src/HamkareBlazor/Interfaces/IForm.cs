@@ -1,4 +1,4 @@
-﻿namespace MudBlazor.Interfaces
+﻿namespace HamkareBlazor.Interfaces
 {
 #nullable enable
     public interface IForm

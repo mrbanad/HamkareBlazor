@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Components;
-using MudBlazor.Extensions;
-using MudBlazor.Interfaces;
-using MudBlazor.State;
-using MudBlazor.Utilities;
+using HamkareBlazor.Extensions;
+using HamkareBlazor.Interfaces;
+using HamkareBlazor.State;
+using HamkareBlazor.Utilities;
 
-namespace MudBlazor
+namespace HamkareBlazor
 {
 #nullable enable
 
@@ -12,14 +12,14 @@ namespace MudBlazor
     /// A scrollable list for displaying text, avatars, and icons. Use lists to help users find a specific item and act on it.
     /// </summary>
     /// <remarks>
-    /// This component contains an optional <see cref="MudListSubheader"/> and one or more <see cref="MudListItem{T}"/>.
+    /// This component contains an optional <see cref="HamkareListSubheader"/> and one or more <see cref="HamkareListItem{T}"/>.
     /// </remarks>
     /// <typeparam name="T">The type of item being listed.</typeparam>
-    /// <seealso cref="MudListItem{T}"/>
-    /// <seealso cref="MudListSubheader"/>
-    public partial class MudList<T> : MudComponentBase, IDisposable
+    /// <seealso cref="HamkareListItem{T}"/>
+    /// <seealso cref="HamkareListSubheader"/>
+    public partial class HamkareList<T> : HamkareComponentBase, IDisposable
     {
-        public MudList()
+        public HamkareList()
         {
             TopLevelList = this;
             using var registerScope = CreateRegisterScope();
@@ -56,19 +56,19 @@ namespace MudBlazor
         private ParameterState<T?> _selectedValueState;
         private ParameterState<IReadOnlyCollection<T>?> _selectedValuesState;
 
-        private HashSet<MudListItem<T>> _items = new();
-        private HashSet<MudList<T>> _childLists = new();
+        private HashSet<HamkareListItem<T>> _items = new();
+        private HashSet<HamkareList<T>> _childLists = new();
         private HashSet<T> _selection = new();
-        internal MudList<T> TopLevelList { get; private set; }
+        internal HamkareList<T> TopLevelList { get; private set; }
 
         protected string Classname =>
-            new CssBuilder("mud-list")
-                .AddClass("mud-list-padding", Padding)
+            new CssBuilder("hamkare-list")
+                .AddClass("hamkare-list-padding", Padding)
                 .AddClass(Class)
                 .Build();
 
         [CascadingParameter]
-        protected MudList<T>? ParentList { get; set; }
+        protected HamkareList<T>? ParentList { get; set; }
 
         /// <summary>
         /// The color of the selected list item.
@@ -257,7 +257,7 @@ namespace MudBlazor
         internal void Update()
         {
             foreach (var item in _items)
-                ((IMudStateHasChanged)item).StateHasChanged();
+                ((IHamkareStateHasChanged)item).StateHasChanged();
             foreach (var list in _childLists)
                 list.Update();
         }
@@ -296,7 +296,7 @@ namespace MudBlazor
             UpdateSelectedItem(_selectedValueState);
         }
 
-        internal async Task RegisterAsync(MudListItem<T> item)
+        internal async Task RegisterAsync(HamkareListItem<T> item)
         {
             _items.Add(item);
             if (_selectedValueState.Value is not null && Equals(item.GetValue(), _selectedValueState.Value))
@@ -306,17 +306,17 @@ namespace MudBlazor
             }
         }
 
-        internal void Unregister(MudListItem<T> item)
+        internal void Unregister(HamkareListItem<T> item)
         {
             _items.Remove(item);
         }
 
-        internal void Register(MudList<T> child)
+        internal void Register(HamkareList<T> child)
         {
             _childLists.Add(child);
         }
 
-        internal void Unregister(MudList<T> child)
+        internal void Unregister(HamkareList<T> child)
         {
             _childLists.Remove(child);
         }

@@ -1,11 +1,11 @@
-﻿@namespace MudBlazor
-@inherits MudComponentBase
+﻿@namespace HamkareBlazor
+@inherits HamkareComponentBase
 @typeparam T
 
-<tr class="mud-table-row">
+<tr class="hamkare-table-row">
     <td class="@GroupClassname" colspan="1000" style="@GroupStylename">
         <div style="display:flex; align-items:center;">
-            <MudIconButton Class="mud-table-row-expander" Icon="@(DataGrid.GetGroupIcon(_expanded))"
+            <HamkareIconButton Class="hamkare-table-row-expander" Icon="@(DataGrid.GetGroupIcon(_expanded))"
                            OnClick="@GroupExpandClick" />
             @if (GroupDefinition.GroupTemplate is not null)
             {
@@ -53,7 +53,7 @@
                                     RowClick="@((args) => RowClick.InvokeAsync((args.args, args.item, args.index)))"
                                     ContextRowClick="@((args) => ContextRowClick.InvokeAsync((args.args, args.item, args.index)))"/>
             <!-- Group Footer -->
-            <tr class="mud-table-row">
+            <tr class="hamkare-table-row">
                 @DataGrid.FooterCells(Items)
             </tr>
         }

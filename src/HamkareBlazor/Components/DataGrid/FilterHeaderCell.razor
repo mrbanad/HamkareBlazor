@@ -1,10 +1,10 @@
-﻿@using MudBlazor.Extensions
-@using MudBlazor.Resources
-@namespace MudBlazor
-@inherits MudComponentBase
+﻿@using HamkareBlazor.Extensions
+@using HamkareBlazor.Resources
+@namespace HamkareBlazor
+@inherits HamkareComponentBase
 @typeparam T
 
-@inject InternalMudLocalizer Localizer
+@inject InternalHamkareLocalizer Localizer
 
 @if (!Column.HiddenState.Value)
 {
@@ -15,62 +15,62 @@
         }
         else if (Column.filterable)
         {
-            <MudStack Row="true">
+            <HamkareStack Row="true">
                 @if (fieldType.IsString && !(@operator ?? "").EndsWith("empty"))
                 {
-                    <MudTextField T="string" Value="@valueString" ValueChanged="@StringValueChangedAsync" FullWidth="true" Placeholder="@Localizer[LanguageResource.MudDataGrid_FilterValue]" Margin="@Margin.Dense" Immediate="true" DebounceInterval="@(!DataGrid.HasServerData ? 0 : 500.0)" />
+                    <HamkareTextField T="string" Value="@valueString" ValueChanged="@StringValueChangedAsync" FullWidth="true" Placeholder="@Localizer[LanguageResource.HamkareDataGrid_FilterValue]" Margin="@Margin.Dense" Immediate="true" DebounceInterval="@(!DataGrid.HasServerData ? 0 : 500.0)" />
                 }
                 else if (fieldType.IsNumber && !(@operator ?? "").EndsWith("empty"))
                 {
-                    <MudNumericField T="double?" Culture="@Column.Culture" Value="@valueNumber" ValueChanged="@NumberValueChangedAsync" FullWidth="true" Placeholder="@Localizer[LanguageResource.MudDataGrid_FilterValue]" Margin="@Margin.Dense" Immediate="true" DebounceInterval="@(!DataGrid.HasServerData ? 0 : 500.0)" />
+                    <HamkareNumericField T="double?" Culture="@Column.Culture" Value="@valueNumber" ValueChanged="@NumberValueChangedAsync" FullWidth="true" Placeholder="@Localizer[LanguageResource.HamkareDataGrid_FilterValue]" Margin="@Margin.Dense" Immediate="true" DebounceInterval="@(!DataGrid.HasServerData ? 0 : 500.0)" />
                 }
                 else if (fieldType.IsEnum)
                 {
-                    <MudSelect T="Enum" Value="@valueEnum" ValueChanged="@EnumValueChangedAsync" FullWidth="true" Dense="true" Margin="@Margin.Dense">
-                        <MudSelectItem T="Enum" Value="@(null)"></MudSelectItem>
+                    <HamkareSelect T="Enum" Value="@valueEnum" ValueChanged="@EnumValueChangedAsync" FullWidth="true" Dense="true" Margin="@Margin.Dense">
+                        <HamkareSelectItem T="Enum" Value="@(null)"></HamkareSelectItem>
                         @foreach (var item in EnumExtensions.GetSafeEnumValues(fieldType.InnerType))
                         {
-                            <MudSelectItem T="Enum" Value="@item">@Localizer[item]</MudSelectItem>
+                            <HamkareSelectItem T="Enum" Value="@item">@Localizer[item]</HamkareSelectItem>
                         }
-                    </MudSelect>
+                    </HamkareSelect>
                 }
                 else if (fieldType.IsBoolean)
                 {
-                    <MudSelect T="bool?" Value="@valueBool" ValueChanged="@BoolValueChangedAsync" FullWidth="true" Dense="true" Margin="@Margin.Dense">
-                        <MudSelectItem T="bool?" Value="@(null)"></MudSelectItem>
-                        <MudSelectItem T="bool?" Value="@(true)">@Localizer[LanguageResource.MudDataGrid_True]</MudSelectItem>
-                        <MudSelectItem T="bool?" Value="@(false)">@Localizer[LanguageResource.MudDataGrid_False]</MudSelectItem>
-                    </MudSelect>
+                    <HamkareSelect T="bool?" Value="@valueBool" ValueChanged="@BoolValueChangedAsync" FullWidth="true" Dense="true" Margin="@Margin.Dense">
+                        <HamkareSelectItem T="bool?" Value="@(null)"></HamkareSelectItem>
+                        <HamkareSelectItem T="bool?" Value="@(true)">@Localizer[LanguageResource.HamkareDataGrid_True]</HamkareSelectItem>
+                        <HamkareSelectItem T="bool?" Value="@(false)">@Localizer[LanguageResource.HamkareDataGrid_False]</HamkareSelectItem>
+                    </HamkareSelect>
                 }
                 else if (fieldType.IsDateOnly && !(@operator ?? "").EndsWith("empty"))
                 {
-                    <MudDatePicker Date="@valueDateOnlyForPicker" DateChanged="@DateOnlyValueChangedAsync" Margin="@Margin.Dense" />
+                    <HamkareDatePicker Date="@valueDateOnlyForPicker" DateChanged="@DateOnlyValueChangedAsync" Margin="@Margin.Dense" />
                 }
                 else if (fieldType.IsDateTime && !(@operator ?? "").EndsWith("empty"))
                 {
-                    <MudGrid Spacing="0">
-                        <MudItem xs="7">
-                            <MudDatePicker Date="@valueDateTimeForPicker" DateChanged="@DateTimeValueChangedAsync" Margin="@Margin.Dense" />
-                        </MudItem>
-                        <MudItem xs="5">
-                            <MudTimePicker Time="@valueTime" TimeChanged="@TimeValueChangedAsync" Margin="@Margin.Dense" />
-                        </MudItem>
-                    </MudGrid>
+                    <HamkareGrid Spacing="0">
+                        <HamkareItem xs="7">
+                            <HamkareDatePicker Date="@valueDateTimeForPicker" DateChanged="@DateTimeValueChangedAsync" Margin="@Margin.Dense" />
+                        </HamkareItem>
+                        <HamkareItem xs="5">
+                            <HamkareTimePicker Time="@valueTime" TimeChanged="@TimeValueChangedAsync" Margin="@Margin.Dense" />
+                        </HamkareItem>
+                    </HamkareGrid>
                 }
                 @if (!Column.ShowFilterIcon.HasValue || Column.ShowFilterIcon.Value)
                 {
-                    <MudMenu Class="column-filter-menu" Icon="@DataGrid.FilterIconFilled" Size="@Size.Small" Dense="true">
+                    <HamkareMenu Class="column-filter-menu" Icon="@DataGrid.FilterIconFilled" Size="@Size.Small" Dense="true">
                         @foreach (var o in operators)
                         {
                             if (!string.IsNullOrWhiteSpace(o))
                             {
-                                <MudMenuItem Style="@chosenOperatorStyle(o)" OnClick="@(async () => await ChangeOperatorAsync(o))">@Localizer[FilterOperator.GetTranslationKeyByOperatorName(o)]</MudMenuItem>
+                                <HamkareMenuItem Style="@chosenOperatorStyle(o)" OnClick="@(async () => await ChangeOperatorAsync(o))">@Localizer[FilterOperator.GetTranslationKeyByOperatorName(o)]</HamkareMenuItem>
                             }
                         }
-                    </MudMenu>
-                    <MudIconButton Class="align-self-center filter-button clear" Icon="@DataGrid.FilterIconClear" Size="@Size.Small" OnClick="@ClearFilterAsync" aria-label="@Localizer[LanguageResource.MudDataGrid_ClearFilter]"></MudIconButton>
+                    </HamkareMenu>
+                    <HamkareIconButton Class="align-self-center filter-button clear" Icon="@DataGrid.FilterIconClear" Size="@Size.Small" OnClick="@ClearFilterAsync" aria-label="@Localizer[LanguageResource.HamkareDataGrid_ClearFilter]"></HamkareIconButton>
                 }
-            </MudStack>
+            </HamkareStack>
         }
     </th>
 }
