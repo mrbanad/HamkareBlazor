@@ -22,3 +22,6 @@ import "./hamkareTableCell";
 import "./hamkareThemeProvider";
 import "./hamkareTimePicker";
 import "./hamkareWindow";
+
+// Customize
+import "./hamkareCookieHelper";

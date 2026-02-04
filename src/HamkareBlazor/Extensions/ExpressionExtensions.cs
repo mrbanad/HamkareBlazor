@@ -3,8 +3,10 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 
 namespace HamkareBlazor
 {
@@ -40,6 +42,79 @@ namespace HamkareBlazor
             var propertyInfo = memberExpression.Expression?.Type.GetProperty(memberExpression.Member.Name);
 #pragma warning restore IL2075
             return propertyInfo?.GetCustomAttributes(typeof(LabelAttribute), true).Cast<LabelAttribute>().FirstOrDefault()?.Name ?? string.Empty;
+        }
+        
+        public static (string? Label, string? HelperText) ResolveDisplayFromExpression<T>(
+            string? labelFromParams,
+            string? helperFromParams,
+            Expression<Func<T>>? forExpression)
+        {
+            var label = string.IsNullOrWhiteSpace(labelFromParams) ? null : labelFromParams;
+            var helper = string.IsNullOrWhiteSpace(helperFromParams) ? null : helperFromParams;
+
+            if (forExpression is null)
+                return (label, helper);
+
+            var prop = GetPropertyInfo(forExpression);
+            if (prop is null)
+                return (label, helper);
+
+            var display = prop.GetCustomAttribute<DisplayAttribute>();
+
+            if (string.IsNullOrWhiteSpace(label))
+                label = display is null ? prop.Name : display.GetName();
+
+            if (string.IsNullOrWhiteSpace(helper))
+                helper = display?.GetDescription();
+
+            return (label, helper);
+        }
+        
+        public static (string? Label, string? HelperText) ResolveDisplayFromLambda(
+            string? labelFromParams,
+            string? helperFromParams,
+            LambdaExpression? lambdaExpression)
+        {
+            var label = string.IsNullOrWhiteSpace(labelFromParams) ? null : labelFromParams;
+            var helper = string.IsNullOrWhiteSpace(helperFromParams) ? null : helperFromParams;
+
+            if (lambdaExpression is null)
+                return (label, helper);
+
+            var prop = GetPropertyInfo(lambdaExpression);
+            if (prop is null)
+                return (label, helper);
+
+            var display = prop.GetCustomAttribute<DisplayAttribute>();
+
+            if (string.IsNullOrWhiteSpace(label))
+                label = display is null ? prop.Name : display.GetName();
+
+            if (string.IsNullOrWhiteSpace(helper))
+                helper = display?.GetDescription();
+
+            return (label, helper);
+        }
+        
+        
+        private static PropertyInfo? GetPropertyInfo<T>(Expression<Func<T, object>> expr)
+        {
+            return GetPropertyInfo((LambdaExpression)expr);
+        }
+
+        private static PropertyInfo? GetPropertyInfo(LambdaExpression expr)
+        {
+            var body = expr.Body;
+
+            if (body is UnaryExpression { NodeType: ExpressionType.Convert } unary)
+                body = unary.Operand;
+
+            if (body is not MemberExpression member) return null;
+            return member.Member switch
+            {
+                PropertyInfo pi => pi,
+                _ => null
+            };
         }
     }
 }
