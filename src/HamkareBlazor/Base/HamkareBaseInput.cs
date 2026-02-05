@@ -96,11 +96,11 @@ namespace HamkareBlazor
         /// Changes the <see cref="Value"/> as soon as input is received.
         /// </summary>
         /// <remarks>
-        /// Defaults to <c>false</c>.  When <c>true</c>, the <see cref="Value"/> property will be updated any time user input occurs.  Otherwise, <see cref="Value"/> is updated when the user presses <c>Enter</c> or the input loses focus.
+        /// Defaults to <c>true</c>.  When <c>true</c>, the <see cref="Value"/> property will be updated any time user input occurs.  Otherwise, <see cref="Value"/> is updated when the user presses <c>Enter</c> or the input loses focus.
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.FormComponent.Behavior)]
-        public bool Immediate { get; set; }
+        public bool Immediate { get; set; } = true;
 
         /// <summary>
         /// Displays an underline for the input.
@@ -222,21 +222,21 @@ namespace HamkareBlazor
         /// The appearance variation to use.
         /// </summary>
         /// <remarks>
-        /// Defaults to <see cref="Variant.Text"/>.
+        /// Defaults to <see cref="Variant.Outlined"/>.
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.FormComponent.Appearance)]
-        public Variant Variant { get; set; } = Variant.Text;
+        public Variant Variant { get; set; } = Variant.Outlined;
 
         /// <summary>
         /// The amount of vertical spacing for this input.
         /// </summary>
         /// <remarks>
-        /// Defaults to <see cref="Margin.None"/>.
+        /// Defaults to <see cref="Margin.Dense"/>.
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.FormComponent.Appearance)]
-        public Margin Margin { get; set; } = Margin.None;
+        public Margin Margin { get; set; } = Margin.Dense;
 
         /// <summary>
         /// Typography for the input text.
@@ -637,6 +637,11 @@ namespace HamkareBlazor
             if (Label == null && For != null)
             {
                 Label = For.GetLabelString();
+            }
+            
+            if (HelperText == null && For != null)
+            {
+                HelperText = For.GetHelpTextString();
             }
 
             _userAttributesId = UserAttributes.FirstOrDefault(userAttribute => userAttribute.Key.Equals("id", StringComparison.InvariantCultureIgnoreCase)).Value?.ToString();

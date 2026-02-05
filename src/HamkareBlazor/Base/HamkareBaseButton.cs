@@ -24,6 +24,13 @@ namespace HamkareBlazor
         private bool ParentDisabled { get; set; }
 
         /// <summary>
+        /// For Send Just One Request
+        /// </summary>
+        /// <remarks>
+        /// </remarks>
+        private bool Processing { get; set; }
+        
+        /// <summary>
         /// The HTML tag rendered for this component.
         /// </summary>
         /// <remarks>
@@ -126,8 +133,14 @@ namespace HamkareBlazor
         {
             if (GetDisabledState())
                 return;
-            await OnClick.InvokeAsync(ev);
-            Activatable?.Activate(this, ev);
+            
+            if (!Processing)
+            {
+                Processing = true;
+                await OnClick.InvokeAsync(ev);
+                Activatable?.Activate(this, ev);
+                Processing = false;
+            }
         }
 
         protected override void OnInitialized()

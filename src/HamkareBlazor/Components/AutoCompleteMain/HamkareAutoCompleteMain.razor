@@ -1,0 +1,11 @@
+@inherits HamkareAutocomplete<long?>
+@inject ApiService ApiService
+
+@if (ShowSkeleton)
+{
+    <HamkareSkeletonInput HaveHelper="true"/>
+}
+else
+{
+    base.BuildRenderTree(__builder);
+}

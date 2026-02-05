@@ -2,7 +2,13 @@
 @inherits HamkareBaseInput<T>
 @typeparam T
 
-<CascadingValue Name="SubscribeToParentForm" Value="false" IsFixed="true">
+@if (ShowSkeleton)
+{
+    <HamkareSkeletonInput HaveHelper="true"/>
+}
+else
+{
+    <CascadingValue Name="SubscribeToParentForm" Value="false" IsFixed="true">
     <div class="@AutocompleteClassname" @onclick:stopPropagation @onmousedown:stopPropagation>
         <HamkareInputControl Label="@Label"
                          Variant="@Variant"
@@ -146,3 +152,4 @@
             OnClosed="OnOverlayClosedAsync"
             LockScroll="@LockScroll"
             Modal="@GetModal()" />
+}

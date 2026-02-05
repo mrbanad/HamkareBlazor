@@ -86,12 +86,12 @@ namespace HamkareBlazor
         /// The step interval when selecting minutes.
         /// </summary>
         /// <remarks>
-        /// Defaults to <c>1</c>. For example: a value of <c>15</c> would allow minutes <c>0</c>, <c>15</c>, 
+        /// Defaults to <c>5</c>. For example: a value of <c>15</c> would allow minutes <c>0</c>, <c>15</c>, 
         /// <c>30</c>, and <c>45</c> be selected.
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.FormComponent.PickerBehavior)]
-        public int MinuteSelectionStep { get; set; } = 1;
+        public int MinuteSelectionStep { get; set; } = 5;
 
         /// <summary>
         /// Shows a 12-hour selection clock.

@@ -53,7 +53,7 @@
             var rowClass = new CssBuilder(DataGrid.RowClass).AddClass(DataGrid.RowClassFunc?.Invoke(itemBag.Item, itemBag.Index)).Build();
             var rowStyle = new StyleBuilder().AddStyle(DataGrid.RowStyle).AddStyle(DataGrid.RowStyleFunc?.Invoke(itemBag.Item, itemBag.Index)).Build();
         }
-        <tr class="hamkare-table-row @rowClass" Style="@rowStyle" @key="itemBag.Item"
+        <tr class="hamkare-table-row w-max @rowClass" Style="@rowStyle" @key="itemBag.Item"
             @onclick="@((args) => RowClick.InvokeAsync((args, itemBag.Item, itemBag.Index)))"
             @oncontextmenu="@((args) => ContextRowClick.InvokeAsync((args, itemBag.Item, itemBag.Index)))"
             @oncontextmenu:preventDefault="@(DataGrid.RowContextMenuClick.HasDelegate ? true : false)">

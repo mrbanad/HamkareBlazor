@@ -74,7 +74,7 @@ namespace HamkareBlazor
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.Table.Appearance)]
-        public int Elevation { set; get; } = 1;
+        public int Elevation { set; get; } = 0;
 
         /// <summary>
         /// Uses square corners for the table.
@@ -98,10 +98,11 @@ namespace HamkareBlazor
 
         /// <summary>
         /// Shows left and right borders for each table cell.
+        /// Defaults to <c>true</c>.
         /// </summary>
         [Parameter]
         [Category(CategoryTypes.Table.Appearance)]
-        public bool Bordered { get; set; }
+        public bool Bordered { get; set; } = true;
 
         /// <summary>
         /// Uses compact padding for all rows.
@@ -127,11 +128,11 @@ namespace HamkareBlazor
         /// Highlights rows when hovering over them.
         /// </summary>
         /// <remarks>
-        /// Defaults to <c>false</c>.
+        /// Defaults to <c>true</c>.
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.Table.Appearance)]
-        public bool Hover { get; set; }
+        public bool Hover { get; set; } = true;
 
         /// <summary>
         /// Uses alternating colors for table rows.
@@ -141,7 +142,7 @@ namespace HamkareBlazor
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.Table.Appearance)]
-        public bool Striped { get; set; }
+        public bool Striped { get; set; } = true;
 
         /// <summary>
         /// The screen width at which this table switches to small-device mode.
@@ -157,11 +158,11 @@ namespace HamkareBlazor
         /// Fixes the table header in place while the table is scrolled.
         /// </summary>
         /// <remarks>
-        /// Defaults to <c>false</c>. When set, <see cref="Height"/> must also be set.
+        /// Defaults to <c>true</c>. When set, <see cref="Height"/> must also be set.
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.Table.Header)]
-        public bool FixedHeader { get; set; }
+        public bool FixedHeader { get; set; } = true;
 
         /// <summary>
         /// Fixes the table footer in place while the table is scrolled.

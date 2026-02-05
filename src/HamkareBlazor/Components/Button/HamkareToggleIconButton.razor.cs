@@ -178,6 +178,13 @@ public partial class HamkareToggleIconButton : HamkareComponentBase
     internal Variant GetVariant() => Toggled ? (ToggledVariant ?? Variant) : Variant;
 
     /// <summary>
+    /// For Send Just One Request
+    /// </summary>
+    /// <remarks>
+    /// </remarks>
+    private bool Processing { get; set; }
+    
+    /// <summary>
     /// Toggles the state of the button.
     /// </summary>
     public Task Toggle() => SetToggledAsync(!Toggled);
@@ -186,10 +193,16 @@ public partial class HamkareToggleIconButton : HamkareComponentBase
     {
         if (Disabled)
             return;
+        
         if (Toggled != toggled)
         {
-            Toggled = toggled;
-            await ToggledChanged.InvokeAsync(Toggled);
+            if (!Processing)
+            {
+                Processing = true;
+                Toggled = toggled;
+                await ToggledChanged.InvokeAsync(Toggled);
+                Processing = false;
+            }
         }
     }
 }

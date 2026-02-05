@@ -23,11 +23,13 @@ public partial class HamkareItem : HamkareComponentBase
             .AddClass($"hamkare-grid-item-lg-{lg}", lg != 0)
             .AddClass($"hamkare-grid-item-xl-{xl}", xl != 0)
             .AddClass($"hamkare-grid-item-xxl-{xxl}", xxl != 0)
+            .AddClass("h-available", AutoHeight)
             .AddClass(Class)
             .Build();
 
-    [CascadingParameter]
-    private HamkareGrid? Parent { get; set; }
+    [Parameter] public bool AutoHeight { get; set; } = true;
+
+    [CascadingParameter] private HamkareGrid? Parent { get; set; }
 
     /// <summary>
     /// Sets the number of columns to occupy at the 'extra small' breakpoint.

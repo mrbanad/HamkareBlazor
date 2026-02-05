@@ -669,6 +669,7 @@ namespace HamkareBlazor
 
         private string AlphaSliderStyle => new StyleBuilder()
             .AddStyle($"background-image: linear-gradient(to {(RightToLeft ? "left" : "right")}, transparent, {_valueState.Value?.ToString(HamkareColorOutputFormats.RGB)})")
+            .AddStyle("color",_value?.Value,!string.IsNullOrWhiteSpace(_value?.Value))
             .Build();
     }
 }

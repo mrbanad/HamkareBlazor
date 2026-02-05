@@ -103,7 +103,7 @@ namespace HamkareBlazor
         [Parameter]
         [Category(CategoryTypes.FormComponent.Appearance)]
         public Color AdornmentColor { get; set; } = Color.Default;
-
+        
         /// <summary>
         /// The icon shown next to the text input.
         /// </summary>
@@ -310,17 +310,17 @@ namespace HamkareBlazor
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.FormComponent.Behavior)]
-        public PickerVariant PickerVariant { get; set; } = PickerVariant.Inline;
+        public PickerVariant PickerVariant { get; set; } = PickerVariant.Dialog;
 
         /// <summary>
         /// The display variant of the text input.
         /// </summary>
         /// <remarks>
-        /// Defaults to <see cref="Variant.Text"/>.
+        /// Defaults to <see cref="Variant.Outlined"/>.
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.FormComponent.Appearance)]
-        public Variant Variant { get; set; } = Variant.Text;
+        public Variant Variant { get; set; } = Variant.Outlined;
 
         /// <summary>
         /// The location of the <see cref="AdornmentIcon"/> for the input.
@@ -415,11 +415,11 @@ namespace HamkareBlazor
         /// The amount of vertical spacing for the text input.
         /// </summary>
         /// <remarks>
-        /// Defaults to <see cref="Margin.None"/>.
+        /// Defaults to <see cref="Margin.Dense"/>.
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.FormComponent.Appearance)]
-        public Margin Margin { get; set; } = Margin.None;
+        public Margin Margin { get; set; } = Margin.Dense;
 
         /// <summary>
         /// Shows the label inside the text input if no <see cref="Text"/> is specified.
@@ -463,21 +463,21 @@ namespace HamkareBlazor
         /// The location the popover opens, relative to its container.
         /// </summary>
         /// <remarks>
-        /// Defaults to <see cref="Origin.BottomLeft"/>.
+        /// Defaults to <see cref="Origin.CenterCenter"/>.
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.Popover.Appearance)]
-        public Origin AnchorOrigin { get; set; } = Origin.BottomLeft;
+        public Origin AnchorOrigin { get; set; } = Origin.CenterCenter;
 
         /// <summary>
         /// The direction the popover opens, relative to its container.
         /// </summary>
         /// <remarks>
-        /// Defaults to <see cref="Origin.TopLeft"/>.
+        /// Defaults to <see cref="Origin.CenterCenter"/>.
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.Popover.Appearance)]
-        public Origin TransformOrigin { get; set; } = Origin.TopLeft;
+        public Origin TransformOrigin { get; set; } = Origin.CenterCenter;
 
         /// <summary>
         /// Determines the width of the Popover dropdown in relation the parent container.
@@ -625,6 +625,9 @@ namespace HamkareBlazor
 
             if (Label == null && For != null)
                 Label = For.GetLabelString();
+            
+            if (HelperText == null && For != null)
+                HelperText = For.GetHelpTextString();
         }
 
         private async Task EnsureKeyInterceptorAsync()

@@ -111,7 +111,7 @@ namespace HamkareBlazor
         /// </summary>
         [Parameter]
         [Category(CategoryTypes.FormComponent.Appearance)]
-        public Color Color { get; set; } = Color.Default;
+        public Color Color { get; set; } = Color.Primary;
 
         [Parameter]
         [Category(CategoryTypes.FormComponent.Behavior)]

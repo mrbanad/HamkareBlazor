@@ -180,11 +180,11 @@ namespace HamkareBlazor
         /// Shows the progress indicator during searches.
         /// </summary>
         /// <remarks>
-        /// Defaults to <c>false</c>.  The progress indicator uses the color specified in the <see cref="ProgressIndicatorColor"/> property.
+        /// Defaults to <c>true</c>.  The progress indicator uses the color specified in the <see cref="ProgressIndicatorColor"/> property.
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.FormComponent.Behavior)]
-        public bool ShowProgressIndicator { get; set; }
+        public bool ShowProgressIndicator { get; set; } = true;
 
         /// <summary>
         /// The color of the progress indicator.

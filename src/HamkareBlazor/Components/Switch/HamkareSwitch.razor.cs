@@ -21,6 +21,7 @@ namespace HamkareBlazor
         private IKeyInterceptorService KeyInterceptorService { get; set; } = null!;
 
         protected override string Classname => new CssBuilder("hamkare-input-control-boolean-input")
+            .AddClass("w-100 mt-1")
             .AddClass(Class)
             .Build();
 

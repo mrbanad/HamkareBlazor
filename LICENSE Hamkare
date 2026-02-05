@@ -1,0 +1,103 @@
+HamkareBlazor Non-Commercial License (HBNCL)
+Version 1.0 — 2026
+Copyright (c) 2026 Mohammadreza
+
+This license applies ONLY to the original work created by Mohammadreza within the “HamkareBlazor” fork.
+All original MudBlazor code remains under the MIT License and is not affected by this document.
+
+1. Definitions
+
+“HamkareBlazor Work”
+refers only to the original source code, components, files, modifications, enhancements, and documentation created exclusively by Mohammadreza in this repository.
+Any portion originating from MudBlazor remains under MIT.
+
+“Non-Commercial Use”
+means personal, academic, hobby, or research use where no direct or indirect financial gain is involved.
+
+“Commercial Use”
+includes, but is not limited to:
+
+selling software or services containing HamkareBlazor Work
+
+integrating it into paid SaaS or applications
+
+providing consulting, development, or technical services using it
+
+using it inside any product, platform, or company workflow intended for profit
+
+2. License Grant
+
+Permission is hereby granted to any individual or organization to:
+
+use
+
+copy
+
+modify
+
+merge
+
+publish
+
+distribute
+
+the HamkareBlazor Work, strictly for Non-Commercial Use only, and only under the terms of this license.
+
+3. Restrictions
+
+The following actions are strictly prohibited without prior written permission from the copyright holder:
+
+Commercial Use of any kind
+
+sublicensing the HamkareBlazor Work
+
+selling or redistributing it as part of commercial bundles
+
+integrating it into closed-source products
+
+removing or altering copyright / license headers
+
+representing the work as your own
+
+4. Combined Licensing
+
+If MudBlazor MIT-licensed code and HamkareBlazor Work appear together:
+
+MIT terms apply ONLY to the original MudBlazor files
+
+This HBNCL license applies ONLY to HamkareBlazor Work
+
+The presence of this license does not limit the MIT License rights for MudBlazor.
+
+5. Commercial Licensing
+
+Commercial rights may be granted through a separate paid license or contract.
+
+To request commercial use permission, contact:
+
+Mohammadreza — (add your email here)
+
+6. Disclaimer
+
+THE HAMKAREBLAZOR WORK IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY
+ARISING FROM OR IN CONNECTION WITH THE WORK.
+
+7. Termination
+
+This license automatically terminates if:
+
+you violate any of its restrictions
+
+you attempt commercial use without permission
+
+you remove license or copyright notices
+
+Upon termination, all rights granted to you immediately end.
+
+8. Acceptance
+
+By downloading, using, modifying, or distributing any part of the HamkareBlazor Work,
+you acknowledge that you have read, understood, and agreed to this license.

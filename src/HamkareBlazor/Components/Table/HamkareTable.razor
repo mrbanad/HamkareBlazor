@@ -98,7 +98,7 @@
                                     var itemIndex = FilteredItems.ToList().IndexOf(item);
                                     var generatedRowId = itemIndex != -1 ? $"{_tableId}_row_{itemIndex}" : null;
                                     var rowClass = new CssBuilder(RowClass).AddClass(RowClassFunc?.Invoke(item, itemIndex)).Build();
-                                    var rowStyle = new StyleBuilder().AddStyle(RowStyle).AddStyle(RowStyleFunc?.Invoke(item, itemIndex)).Build();
+                                    var rowStyle = new StyleBuilder().AddStyle("width", "max-content").AddStyle(RowStyle).AddStyle(RowStyleFunc?.Invoke(item, itemIndex)).Build();
                                 }
                                 <HamkareTr Class="@rowClass" Style="@rowStyle" Item="item" @key="item" RowId="@generatedRowId"
                                         Checkable="MultiSelection" SelectionChangeable="SelectionChangeable" Editable="IsItemEditable(item)"

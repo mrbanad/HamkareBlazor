@@ -122,6 +122,9 @@ namespace HamkareBlazor
 
         protected string Classname =>
             new CssBuilder("hamkare-table-pagination-toolbar")
+                .AddClass("d-flex")
+                .AddClass("justify-content-center")
+                .AddClass("align-items-center")
                 .AddClass(Class)
                 .Build();
 

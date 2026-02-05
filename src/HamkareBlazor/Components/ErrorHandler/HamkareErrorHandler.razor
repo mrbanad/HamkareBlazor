@@ -1,0 +1,20 @@
+﻿@inherits ErrorBoundary
+@inject ISnackbar Snackbar
+
+@ChildContent
+
+@code
+{
+    protected override async Task OnErrorAsync(Exception exception)
+    {
+        if (exception.Message is "A task was canceled."
+            or "An exception has been raised that is likely due to a transient failure. Consider enabling transient error resiliency by adding 'EnableRetryOnFailure' to the 'UseSqlServer' call.")
+            return;
+
+        if (exception is not SilenceException)
+            Snackbar.Error(exception.Message);
+
+        if (exception is not BusinessException)
+            await base.OnErrorAsync(exception);
+    }
+}

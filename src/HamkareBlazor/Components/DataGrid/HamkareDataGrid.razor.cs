@@ -428,10 +428,10 @@ namespace HamkareBlazor
         /// Allows filtering of data in this grid.
         /// </summary>
         /// <remarks>
-        /// Defaults to <c>false</c>.  Can be overridden for individual columns via <see cref="Column{T}.Filterable"/>.
+        /// Defaults to <c>true</c>.  Can be overridden for individual columns via <see cref="Column{T}.Filterable"/>.
         /// </remarks>
         [Parameter]
-        public bool Filterable { get; set; } = false;
+        public bool Filterable { get; set; } = true;
 
         /// <summary>
         /// Allows columns to be hidden.
@@ -464,10 +464,10 @@ namespace HamkareBlazor
         /// The size of the drop shadow.
         /// </summary>
         /// <remarks>
-        /// Defaults to <c>1</c>.  A higher number creates a heavier drop shadow.  Use a value of <c>0</c> for no shadow.
+        /// Defaults to <c>0</c>.  A higher number creates a heavier drop shadow.  Use a value of <c>0</c> for no shadow.
         /// </remarks>
         [Parameter]
-        public int Elevation { set; get; } = 1;
+        public int Elevation { set; get; } = 0;
 
         /// <summary>
         /// Disables rounded corners.
@@ -491,10 +491,10 @@ namespace HamkareBlazor
         /// Shows left and right borders for each column.
         /// </summary>
         /// <remarks>
-        /// Defaults to <c>false</c>.
+        /// Defaults to <c>true</c>.
         /// </remarks>
         [Parameter]
-        public bool Bordered { get; set; }
+        public bool Bordered { get; set; } = true;
 
         /// <summary>
         /// The content for any column groupings.
@@ -530,28 +530,29 @@ namespace HamkareBlazor
         /// Highlights rows when hovering over them.
         /// </summary>
         /// <remarks>
-        /// Defaults to <c>false</c>.
+        /// Defaults to <c>true</c>.
         /// </remarks>
         [Parameter]
-        public bool Hover { get; set; }
+        public bool Hover { get; set; } = true;
 
         /// <summary>
         /// Shows alternating row styles.
         /// </summary>
         /// <remarks>
-        /// Defaults to <c>false</c>.
+        /// Defaults to <c>true</c>.
         /// </remarks>
         [Parameter]
-        public bool Striped { get; set; }
+        public bool Striped { get; set; } = true;
 
         /// <summary>
         /// Fixes the header in place even as the grid is scrolled.
         /// </summary>
         /// <remarks>
         /// Set the <see cref="Height"/> property to make this grid scrollable.
+        /// Defaults to <c>true</c>.
         /// </remarks>
         [Parameter]
-        public bool FixedHeader { get; set; }
+        public bool FixedHeader { get; set; } = true;
 
         /// <summary>
         /// Fixes the footer in place even as the grid is scrolled.
@@ -1003,10 +1004,10 @@ namespace HamkareBlazor
         /// The column resizing behavior for this grid.
         /// </summary>
         /// <remarks>
-        /// Defaults to <see cref="ResizeMode.None"/>.  Other values include <see cref="ResizeMode.Column"/> and <see cref="ResizeMode.Container"/>.
+        /// Defaults to <see cref="ResizeMode.Column"/>.  Other values include <see cref="ResizeMode.None"/> and <see cref="ResizeMode.Container"/>.
         /// </remarks>
         [Parameter]
-        public ResizeMode ColumnResizeMode { get; set; }
+        public ResizeMode ColumnResizeMode { get; set; } = ResizeMode.Column;
 
         /// <summary>
         /// The CSS classes applied to the grid header.
@@ -1060,10 +1061,10 @@ namespace HamkareBlazor
         /// The culture used to format numeric and date values.  Can be overridden by <see cref="Column{T}.Culture"/>.
         /// </summary>
         /// <remarks>
-        /// Defaults to <see cref="CultureInfo.InvariantCulture"/>.
+        /// Defaults to <see cref="CultureInfo.CurrentUICulture"/>.
         /// </remarks>
         [Parameter]
-        public CultureInfo? Culture { get; set; }
+        public CultureInfo? Culture { get; set; } = Thread.CurrentThread.CurrentUICulture;
 
         /// <summary>
         /// The content shown for each cell.

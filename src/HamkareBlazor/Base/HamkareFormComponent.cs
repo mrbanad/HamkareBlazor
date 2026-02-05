@@ -79,6 +79,16 @@ namespace HamkareBlazor
         [Parameter]
         [Category(CategoryTypes.FormComponent.Validation)]
         public bool Required { get; set; }
+        
+        /// <summary>
+        /// Show Skeleton Before Render Component.
+        /// </summary>
+        /// <remarks>
+        /// Defaults to false/>.
+        /// </remarks>
+        [Parameter]
+        [Category(CategoryTypes.FormComponent.Appearance)]
+        public bool ShowSkeleton { get; set; }
 
         /// <summary>
         /// The text displayed during validation if no input was given.

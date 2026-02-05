@@ -4,7 +4,14 @@
 @inherits HamkarePicker<DateTime?>
 @inject InternalHamkareLocalizer Localizer
 
-@Render
+@if (ShowSkeleton)
+{
+    <HamkareSkeletonInput HaveHelper="true"/>
+}
+else
+{
+    @Render
+}
 
 @code {
 #nullable enable

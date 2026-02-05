@@ -18,7 +18,7 @@ namespace HamkareBlazor
         protected HamkareBaseDatePicker()
         {
             _hamkarePickerCalendarContentElementId = Identifier.Create();
-            Culture = CultureInfo.CurrentCulture;
+            Culture = CultureInfo.CurrentUICulture;
 
             using var registerScope = CreateRegisterScope();
             _dateFormatState = registerScope.RegisterParameter<string?>(nameof(DateFormat))
@@ -61,10 +61,12 @@ namespace HamkareBlazor
 
         /// <summary>
         /// The format for selected dates.
+        /// Defaults to <c>"HH:mm yyyy/MM/dd" Or "HH:mm MM/dd/yyyy"</c> Base On CultureUI.
         /// </summary>
         [Parameter, ParameterState]
         [Category(CategoryTypes.FormComponent.Behavior)]
-        public string? DateFormat { get; set; }
+        public string? DateFormat { get; set; } =
+            Thread.CurrentThread.CurrentUICulture.IsRtl() ? "HH:mm yyyy/MM/dd" : "HH:mm MM/dd/yyyy";
 
         /// <summary>
         /// Occurs when the <see cref="DateFormat"/> has changed.
@@ -188,11 +190,11 @@ namespace HamkareBlazor
         /// Closes this picker when a value is selected.
         /// </summary>
         /// <remarks>
-        /// Defaults to <c>false</c>.
+        /// Defaults to <c>true</c>.
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.FormComponent.PickerBehavior)]
-        public bool AutoClose { get; set; }
+        public bool AutoClose { get; set; } = true;
 
         /// <summary>
         /// The function used to disable one or more dates.

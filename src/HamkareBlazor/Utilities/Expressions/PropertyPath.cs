@@ -2,6 +2,7 @@
 // HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.ComponentModel.DataAnnotations;
 using System.Linq.Expressions;
 using System.Reflection;
 
@@ -39,11 +40,11 @@ internal static class PropertyPath
 
         public string GetLastMemberName()
         {
-            var lastMemberName = _members
-                .Select(x => x.Name)
-                .LastOrDefault();
+            var lastMember = _members.LastOrDefault();
 
-            return string.IsNullOrEmpty(lastMemberName) ? string.Empty : lastMemberName;
+            var display = lastMember?.GetCustomAttribute<DisplayAttribute>();
+            
+            return display?.Name ?? lastMember?.Name ??  string.Empty;
         }
 
         public override string ToString() => GetPath();
