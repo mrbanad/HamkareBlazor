@@ -1,5 +1,7 @@
 .hamkare-switch {
   cursor: pointer;
+  margin-inline-start: 0 !important;
+  margin-inline-end: 0 !important;
   display: inline-flex;
   align-items: center;
   vertical-align: middle;
@@ -174,4 +176,8 @@
     width: 72px;
     height: 52px;
   }
+}
+
+.hamkare-switch-base.hamkare-checked + .hamkare-switch-track {
+  background-color: var(--hamkare-palette-primary);
 }
