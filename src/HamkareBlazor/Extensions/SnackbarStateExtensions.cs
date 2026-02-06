@@ -7,13 +7,13 @@ using HamkareBlazor.Resources;
 namespace HamkareBlazor;
 
 #nullable enable
-internal static class SnackbarStateExtensions
+public static class SnackbarStateExtensions
 {
-    public static bool IsShowing(this SnackbarState state) => state == SnackbarState.Showing;
+    internal static bool IsShowing(this SnackbarState state) => state == SnackbarState.Showing;
 
-    public static bool IsVisible(this SnackbarState state) => state == SnackbarState.Visible;
+    internal static bool IsVisible(this SnackbarState state) => state == SnackbarState.Visible;
 
-    public static bool IsHiding(this SnackbarState state) => state == SnackbarState.Hiding;
+    internal static bool IsHiding(this SnackbarState state) => state == SnackbarState.Hiding;
 
     public static void IsActive(this ISnackbar snackbar, string entityName)
     {

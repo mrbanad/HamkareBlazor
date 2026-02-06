@@ -1,0 +1,198 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral,
+    PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral,
+    PublicKeyToken=b77a5c561934e089</value></resheader>
+
+  <data name="HamkareDataGrid_Apply" xml:space="preserve"><value>اعمال</value></data>
+  <data name="HamkareDataGrid_Clear" xml:space="preserve"><value>پاک‌کردن</value></data>
+  <data name="HamkareDataGrid_AddFilter" xml:space="preserve"><value>افزودن فیلتر</value></data>
+  <data name="HamkareDataGrid_Cancel" xml:space="preserve"><value>لغو</value></data>
+  <data name="HamkareDataGrid_Loading" xml:space="preserve"><value>در حال بارگذاری...</value></data>
+  <data name="HamkareDataGrid_Save" xml:space="preserve"><value>ذخیره</value></data>
+  <data name="HamkareDataGrid_HideAll" xml:space="preserve"><value>پنهان کردن همه</value></data>
+  <data name="HamkareDataGrid_ShowAll" xml:space="preserve"><value>نمایش همه</value></data>
+  <data name="HamkareDataGrid_Columns" xml:space="preserve"><value>ستون‌ها</value></data>
+  <data name="HamkareDataGrid_ExpandAllGroups" xml:space="preserve"><value>بازکردن همه گروه‌ها</value></data>
+  <data name="HamkareDataGrid_CollapseAllGroups" xml:space="preserve"><value>بستن همه گروه‌ها</value></data>
+  <data name="HamkareDataGrid_RefreshData" xml:space="preserve"><value>تازه‌سازی داده‌ها</value></data>
+  <data name="HamkareDataGrid_True" xml:space="preserve"><value>درست</value></data>
+  <data name="HamkareDataGrid_False" xml:space="preserve"><value>نادرست</value></data>
+  <data name="HamkareDataGrid_Unsort" xml:space="preserve"><value>لغو مرتب‌سازی</value></data>
+  <data name="HamkareDataGrid_Filter" xml:space="preserve"><value>فیلتر</value></data>
+  <data name="HamkareDataGrid_Hide" xml:space="preserve"><value>پنهان‌کردن</value></data>
+  <data name="HamkareDataGrid_Ungroup" xml:space="preserve"><value>لغو گروه‌بندی</value></data>
+  <data name="HamkareDataGrid_Group" xml:space="preserve"><value>گروه‌بندی</value></data>
+  <data name="HamkareDataGrid_FilterValue" xml:space="preserve"><value>مقدار فیلتر</value></data>
+  <data name="HamkareDataGrid_Contains" xml:space="preserve"><value>شامل</value></data>
+  <data name="HamkareDataGrid_NotContains" xml:space="preserve"><value>شامل نیست</value></data>
+  <data name="HamkareDataGrid_Equals" xml:space="preserve"><value>برابر است با</value></data>
+  <data name="HamkareDataGrid_NotEquals" xml:space="preserve"><value>برابر نیست با</value></data>
+  <data name="HamkareDataGrid_StartsWith" xml:space="preserve"><value>شروع می‌شود با</value></data>
+  <data name="HamkareDataGrid_EndsWith" xml:space="preserve"><value>تمام می‌شود با</value></data>
+  <data name="HamkareDataGrid_IsEmpty" xml:space="preserve"><value>خالی است</value></data>
+  <data name="HamkareDataGrid_IsNotEmpty" xml:space="preserve"><value>خالی نیست</value></data>
+  <data name="HamkareDataGrid_EqualSign" xml:space="preserve"><value>=</value></data>
+  <data name="HamkareDataGrid_NotEqualSign" xml:space="preserve"><value>!=</value></data>
+  <data name="HamkareDataGrid_GreaterThanSign" xml:space="preserve"><value>&gt;</value></data>
+  <data name="HamkareDataGrid_GreaterThanOrEqualSign" xml:space="preserve"><value>&gt;=</value></data>
+  <data name="HamkareDataGrid_LessThanSign" xml:space="preserve"><value>&lt;</value></data>
+  <data name="HamkareDataGrid_LessThanOrEqualSign" xml:space="preserve"><value>&lt;=</value></data>
+  <data name="HamkareDataGrid_Is" xml:space="preserve"><value>است</value></data>
+  <data name="HamkareDataGrid_IsNot" xml:space="preserve"><value>نیست</value></data>
+  <data name="HamkareDataGrid_IsAfter" xml:space="preserve"><value>بعد از</value></data>
+  <data name="HamkareDataGrid_IsOnOrAfter" xml:space="preserve"><value>در یا بعد از</value></data>
+  <data name="HamkareDataGrid_IsBefore" xml:space="preserve"><value>قبل از</value></data>
+  <data name="HamkareDataGrid_IsOnOrBefore" xml:space="preserve"><value>در یا قبل از</value></data>
+  <data name="HamkareDataGrid_Column" xml:space="preserve"><value>ستون</value></data>
+  <data name="HamkareDataGrid_Operator" xml:space="preserve"><value>عملگر</value></data>
+  <data name="HamkareDataGrid_Value" xml:space="preserve"><value>مقدار</value></data>
+  <data name="HamkareDataGrid_MoveDown" xml:space="preserve"><value>حرکت به پایین</value></data>
+  <data name="HamkareDataGrid_MoveUp" xml:space="preserve"><value>حرکت به بالا</value></data>
+  <data name="HamkareDataGrid_Sort" xml:space="preserve"><value>مرتب‌سازی</value></data>
+
+  <data name="HamkareNavGroup_ToggleExpand" xml:space="preserve"><value>باز/بستن {0}</value></data>
+
+  <data name="HamkareAlert_Close" xml:space="preserve"><value>بستن</value></data>
+  <data name="HamkareChip_Close" xml:space="preserve"><value>بستن</value></data>
+  <data name="HamkareColorPicker_Close" xml:space="preserve"><value>بستن</value></data>
+  <data name="HamkareColorPicker_SpectrumView" xml:space="preserve"><value>طیف</value></data>
+  <data name="HamkareColorPicker_GridView" xml:space="preserve"><value>شبکه</value></data>
+  <data name="HamkareColorPicker_PaletteView" xml:space="preserve"><value>پالت</value></data>
+  <data name="HamkareColorPicker_ShowSwatches" xml:space="preserve"><value>نمایش نمونه‌ها</value></data>
+  <data name="HamkareColorPicker_HideSwatches" xml:space="preserve"><value>مخفی‌کردن نمونه‌ها</value></data>
+  <data name="HamkareColorPicker_HueSlider" xml:space="preserve"><value>نوار تنظیم رنگ</value></data>
+  <data name="HamkareColorPicker_AlphaSlider" xml:space="preserve"><value>نوار شفافیت</value></data>
+  <data name="HamkareColorPicker_ModeSwitch" xml:space="preserve"><value>تغییر حالت</value></data>
+
+  <data name="HamkareBaseDatePicker_PrevYear" xml:space="preserve"><value>سال قبل {0}</value></data>
+  <data name="HamkareBaseDatePicker_NextYear" xml:space="preserve"><value>سال بعد {0}</value></data>
+  <data name="HamkareBaseDatePicker_PrevMonth" xml:space="preserve"><value>ماه قبل {0}</value></data>
+  <data name="HamkareBaseDatePicker_NextMonth" xml:space="preserve"><value>ماه بعد {0}</value></data>
+
+  <data name="HamkarePagination_CurrentPage" xml:space="preserve"><value>صفحه فعلی {0}</value></data>
+  <data name="HamkarePagination_FirstPage" xml:space="preserve"><value>اولین صفحه</value></data>
+  <data name="HamkarePagination_LastPage" xml:space="preserve"><value>آخرین صفحه</value></data>
+  <data name="HamkarePagination_NextPage" xml:space="preserve"><value>صفحه بعد</value></data>
+  <data name="HamkarePagination_PageIndex" xml:space="preserve"><value>صفحه {0}</value></data>
+  <data name="HamkarePagination_PreviousPage" xml:space="preserve"><value>صفحه قبل</value></data>
+
+  <data name="HamkareRatingItem_Label" xml:space="preserve"><value>امتیاز {0}</value></data>
+
+  <data name="HamkareCarousel_Index" xml:space="preserve"><value>آیتم {0}</value></data>
+  <data name="HamkareCarousel_Next" xml:space="preserve"><value>بعدی</value></data>
+  <data name="HamkareCarousel_Previous" xml:space="preserve"><value>قبلی</value></data>
+
+  <data name="HamkareDialog_Close" xml:space="preserve"><value>بستن</value></data>
+
+  <data name="HamkareInput_Clear" xml:space="preserve"><value>پاک‌کردن</value></data>
+  <data name="HamkareInput_Decrement" xml:space="preserve"><value>کم‌کردن</value></data>
+  <data name="HamkareInput_Increment" xml:space="preserve"><value>زیادکردن</value></data>
+
+  <data name="HamkarePageContentNavigation_NavMenu" xml:space="preserve"><value>فهرست مطالب</value></data>
+
+  <data name="HamkareTablePager_FirstPage" xml:space="preserve"><value>اولین صفحه</value></data>
+  <data name="HamkareTablePager_LastPage" xml:space="preserve"><value>آخرین صفحه</value></data>
+  <data name="HamkareTablePager_NextPage" xml:space="preserve"><value>صفحه بعد</value></data>
+  <data name="HamkareTablePager_PreviousPage" xml:space="preserve"><value>صفحه قبل</value></data>
+
+  <data name="HamkareSnackbar_Close" xml:space="preserve"><value>بستن</value></data>
+
+  <data name="HamkareDataGridPager_RowsPerPage" xml:space="preserve"><value>تعداد ردیف در هر صفحه:</value></data>
+  <data name="HamkareDataGridPager_AllItems" xml:space="preserve"><value>همه</value></data>
+  <data name="HamkareDataGridPager_InfoFormat" xml:space="preserve"><value>{0}-{1} از {2}</value></data>
+
+  <data name="HamkareStepper_Next" xml:space="preserve"><value>بعدی</value></data>
+  <data name="HamkareStepper_Previous" xml:space="preserve"><value>قبلی</value></data>
+  <data name="HamkareStepper_Skip" xml:space="preserve"><value>ردکردن</value></data>
+  <data name="HamkareStepper_Reset" xml:space="preserve"><value>بازنشانی</value></data>
+  <data name="HamkareStepper_Complete" xml:space="preserve"><value>تکمیل</value></data>
+
+  <data name="HamkareDataGrid_ClearFilter" xml:space="preserve"><value>حذف فیلتر</value></data>
+  <data name="HamkareDataGrid_OpenFilters" xml:space="preserve"><value>بازکردن فیلترها</value></data>
+  <data name="HamkareDataGrid_ToggleGroupExpansion" xml:space="preserve"><value>باز/بستن گروه</value></data>
+  <data name="HamkareDataGrid_RemoveFilter" xml:space="preserve"><value>حذف فیلتر</value></data>
+
+  <data name="HamkareDataGridPager_FirstPage" xml:space="preserve"><value>اولین صفحه</value></data>
+  <data name="HamkareDataGridPager_PreviousPage" xml:space="preserve"><value>صفحه قبل</value></data>
+  <data name="HamkareDataGridPager_NextPage" xml:space="preserve"><value>صفحه بعد</value></data>
+  <data name="HamkareDataGridPager_LastPage" xml:space="preserve"><value>آخرین صفحه</value></data>
+
+  <data name="HamkareDataGrid_ShowColumnOptions" xml:space="preserve"><value>تنظیمات ستون</value></data>
+
+  <data name="Converter_InvalidBoolean" xml:space="preserve"><value>مقدار بولین معتبر نیست</value></data>
+  <data name="Converter_InvalidNumber" xml:space="preserve"><value>عدد معتبر نیست</value></data>
+  <data name="Converter_InvalidGUID" xml:space="preserve"><value>GUID معتبر نیست</value></data>
+  <data name="Converter_NotValueOf" xml:space="preserve"><value>مقدارِ معتبر برای {0} نیست</value></data>
+  <data name="Converter_InvalidDateTime" xml:space="preserve"><value>تاریخ/زمان معتبر نیست</value></data>
+  <data name="Converter_InvalidTimeSpan" xml:space="preserve"><value>بازه زمانی معتبر نیست</value></data>
+  <data name="Converter_InvalidType" xml:space="preserve"><value>{0} معتبر نیست</value></data>
+  <data name="Converter_ConversionNotImplemented" xml:space="preserve"><value>تبدیل نوع {0} پیاده‌سازی نشده است</value></data>
+  <data name="Converter_ConversionError" xml:space="preserve"><value>خطا در تبدیل: {0}</value></data>
+  <data name="Converter_ConversionFailed" xml:space="preserve"><value>تبدیل از {0} به {1} ناموفق بود: {2}</value></data>
+  <data name="Converter_UnableToConvert" xml:space="preserve"><value>نمی‌توان {0} را از نوع {1} تبدیل کرد</value></data>
+
+  <data name="HeatMap_Less" xml:space="preserve"><value>کمتر</value></data>
+  <data name="HeatMap_More" xml:space="preserve"><value>بیشتر</value></data>
+
+  <data name="HamkareTreeView_ExpandItem" xml:space="preserve"><value>بازکردن</value></data>
+  <data name="HamkareTreeView_CollapseItem" xml:space="preserve"><value>بستن</value></data>
+
+  <data name="HamkareTimePicker_Open" xml:space="preserve"><value>بازکردن</value></data>
+  <data name="HamkareBaseDatePicker_Open" xml:space="preserve"><value>بازکردن</value></data>
+  <data name="HamkareColorPicker_Open" xml:space="preserve"><value>بازکردن</value></data>
+
+  <data name="HamkareFileUpload_FileSizeError" xml:space="preserve">
+    <value>فایل '{0}' از حداکثر اندازه مجاز {1} بایت بیشتر است.</value>
+  </data>
+
+  <data name="ErrorServerSendNull" xml:space="preserve">
+    <value>هیچ پیام مشخصی از سرور دریافت نشد!</value>
+  </data>
+  <data name="ErrorServerExceptionDontHaveMessage" xml:space="preserve">
+    <value>سرور هیچ پیام خطایی ارسال نکرد!</value>
+  </data>
+  <data name="ErrorServerStatusCode" xml:space="preserve">
+    <value>خطای {0} از سمت سرور دریافت شد!</value>
+  </data>
+  <data name="ErrorConnectWithServer" xml:space="preserve">
+    <value>خطا در ارتباط با سرور!</value>
+  </data>
+  <data name="ErrorReadFile" xml:space="preserve">
+    <value>خطا در خواندن فایل!</value>
+  </data>
+  <data name="ErrorUploadingFile" xml:space="preserve">
+    <value>خطای نامشخص هنگام آپلود فایل!</value>
+  </data>
+  <data name="ErrorNotFound" xml:space="preserve">
+    <value>{0} موردنظر پیدا نشد!</value>
+  </data>
+
+  <data name="SuccessActiveMessage" xml:space="preserve">
+    <value>{0} موردنظر با موفقیت فعال شد!</value>
+  </data>
+  <data name="SuccessDeactivateMessage" xml:space="preserve">
+    <value>{0} موردنظر با موفقیت غیرفعال شد!</value>
+  </data>
+  <data name="SubmitSuccessMessage" xml:space="preserve">
+    <value>ثبت {0} با موفقیت انجام شد!</value>
+  </data>
+  <data name="ErrorSubmit" xml:space="preserve">
+    <value>در ثبت {0} مشکلی پیش آمده است!</value>
+  </data>
+  <data name="RequiredNotFound" xml:space="preserve">
+    <value>{0} فعال برای ثبت یا تغییر لازم است!</value>
+  </data>
+  <data name="Remove" xml:space="preserve">
+    <value>حذف</value>
+  </data>
+  <data name="RemoveMessage" xml:space="preserve">
+    <value>آیا از حذف این مورد مطمئن هستید؟</value>
+  </data>
+  <data name="Loading" xml:space="preserve">
+    <value>در حال بارگذاری</value>
+  </data>
+</root>
