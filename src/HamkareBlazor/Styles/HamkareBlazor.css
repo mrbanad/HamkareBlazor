@@ -5193,6 +5193,17 @@ textarea:focus-visible {
   cursor: default;
 }
 
+.Group-section.hamkare-expand-panel:after {
+  content: " ";
+  border: 1px solid var(--mud-palette-lines-default);
+  position: absolute;
+  width: 100%;
+  z-index: 1;
+}
+.Group-section.hamkare-expand-panel.hamkare-panel-expanded:after {
+  content: none;
+}
+
 .hamkare-fab {
   padding: 0;
   font-family: var(--hamkare-typography-button-family);
