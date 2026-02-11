@@ -2,6 +2,7 @@
 // HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using HamkareBlazor.Resources;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using HamkareBlazor.Services;
@@ -401,7 +402,7 @@ namespace HamkareBlazor
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.FormComponent.ListAppearance)]
-        public string SelectAllText { get; set; } = "Select all";
+        public string SelectAllText { get; set; } = LanguageResource.HamkareSelect_SelectAll;
 
         /// <summary>
         /// Occurs when <see cref="SelectedValues"/> has changed.

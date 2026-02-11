@@ -152,4 +152,19 @@
   <data name="Remove" xml:space="preserve"><value>حذف</value></data>
   <data name="RemoveMessage" xml:space="preserve"><value>متأكد تريد تحذف هذا العنصر؟</value></data>
   <data name="Loading" xml:space="preserve"><value>جار التحميل</value></data>
+  <data name="HamkareDataGridPager_FirstPage" xml:space="preserve">
+    <value>الصفحة الأولى</value>
+  </data>
+  <data name="HamkareDataGridPager_LastPage" xml:space="preserve">
+    <value>الصفحة الأخيرة</value>
+  </data>
+  <data name="HamkareDataGridPager_NextPage" xml:space="preserve">
+    <value>الصفحة التالية</value>
+  </data>
+  <data name="HamkareDataGridPager_PreviousPage" xml:space="preserve">
+    <value>الصفحة السابقة</value>
+  </data>
+  <data name="HamkareSelect_SelectAll" xml:space="preserve">
+    <value>تحديد الكل</value>
+  </data>
 </root>

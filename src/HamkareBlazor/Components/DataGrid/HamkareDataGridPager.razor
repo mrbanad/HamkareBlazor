@@ -11,7 +11,7 @@
         <HamkareText Typo="Typo.body2" Class="hamkare-table-pagination-caption">
             @RowsPerPageString
         </HamkareText>
-        <HamkareSelect T="int" ValueChanged="@SetRowsPerPageAsync" Value="@(DataGrid?.RowsPerPage ?? 0)" Class="hamkare-table-pagination-select" Underline="false" Dense="true" Disabled="@Disabled" SelectionOnEnter="true">
+        <HamkareSelect T="int" ValueChanged="@SetRowsPerPageAsync" Value="@(DataGrid?.RowsPerPage ?? 0)" Class="hamkare-table-pagination-select" Underline="false" Dense="true" Disabled="@Disabled" Variant="Variant.Text" SelectionOnEnter="true">
             @foreach (int pageSize in PageSizeOptions)
             {
                 if (pageSize == int.MaxValue)
@@ -24,7 +24,7 @@
                 }
             }
         </HamkareSelect>
-    }
+    }  
 
     @if (ShowPageNumber)
     {
