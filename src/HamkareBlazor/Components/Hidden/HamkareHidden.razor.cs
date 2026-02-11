@@ -9,7 +9,7 @@ namespace HamkareBlazor
     /// A component which conditionally renders content depending on the screen size.
     /// </summary>
     /// <remarks>
-    /// This component uses JavaScript to listen for browser window size changes.  If you want a solution using only CSS, you can use the <see href="https://hamkareblazor.com/features/display#class-reference">responsive display classes</see>.
+    /// This component uses JavaScript to listen for browser window size changes.  If you want a solution using only CSS, you can use the <see href="https://hamkare.com/features/display#class-reference">responsive display classes</see>.
     /// </remarks>
     public partial class HamkareHidden : HamkareComponentBase, IBrowserViewportObserver, IAsyncDisposable
     {

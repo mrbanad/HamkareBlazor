@@ -38,20 +38,23 @@ namespace HamkareBlazor
 
         private readonly IReadOnlyList<HamkareColor> _gridList = new HamkareColor[]
         {
-            "#FFFFFF","#ebebeb","#d6d6d6","#c2c2c2","#adadad","#999999","#858586","#707070","#5c5c5c","#474747","#333333","#000000",
-            "#133648","#071d53","#0f0638","#2a093b","#370c1b","#541107","#532009","#53350d","#523e0f","#65611b","#505518","#2b3d16",
-            "#1e4c63","#0f2e76","#180b4e","#3f1256","#4e1629","#781e0e","#722f10","#734c16","#73591a","#8c8629","#707625","#3f5623",
-            "#2e6c8c","#1841a3","#280c72","#591e77","#6f223d","#a62c17","#a0451a","#a06b23","#9f7d28","#c3bc3c","#9da436","#587934",
-            "#3c8ab0","#2155ce","#331c8e","#702898","#8d2e4f","#d03a20","#ca5a24","#c8862e","#c99f35","#f3ec4e","#c6d047","#729b44",
-            "#479fd3","#2660f5","#4725ab","#8c33b5","#aa395d","#eb512e","#ed732e","#f3ae3d","#f5c944","#fefb67","#ddeb5c","#86b953",
-            "#59c4f7","#4e85f6","#5733e2","#af43eb","#d44a7a","#ed6c59","#ef8c56","#f3b757","#f6cd5b","#fef881","#e6ee7a","#a3d16e",
-            "#78d3f8","#7fa6f8","#7e52f5","#c45ff6","#de789d","#f09286","#f2a984","#f6c983","#f9da85","#fef9a1","#ebf29b","#badc94",
-            "#a5e1fa","#adc5fa","#ab8df7","#d696f8","#e8a7bf","#f4b8b1","#f6c7af","#f9daae","#fae5af","#fefbc0","#f3f7be","#d2e7ba",
-            "#d2effd","#d6e1fc","#d6c9fa","#e9cbfb","#f3d4df","#f9dcd9","#fae3d8","#fcecd7","#fdf2d8","#fefce0","#f7fade","#e3edd6"
+            "#FFFFFF", "#ebebeb", "#d6d6d6", "#c2c2c2", "#adadad", "#999999", "#858586", "#707070", "#5c5c5c",
+            "#474747", "#333333", "#000000", "#133648", "#071d53", "#0f0638", "#2a093b", "#370c1b", "#541107",
+            "#532009", "#53350d", "#523e0f", "#65611b", "#505518", "#2b3d16", "#1e4c63", "#0f2e76", "#180b4e",
+            "#3f1256", "#4e1629", "#781e0e", "#722f10", "#734c16", "#73591a", "#8c8629", "#707625", "#3f5623",
+            "#2e6c8c", "#1841a3", "#280c72", "#591e77", "#6f223d", "#a62c17", "#a0451a", "#a06b23", "#9f7d28",
+            "#c3bc3c", "#9da436", "#587934", "#3c8ab0", "#2155ce", "#331c8e", "#702898", "#8d2e4f", "#d03a20",
+            "#ca5a24", "#c8862e", "#c99f35", "#f3ec4e", "#c6d047", "#729b44", "#479fd3", "#2660f5", "#4725ab",
+            "#8c33b5", "#aa395d", "#eb512e", "#ed732e", "#f3ae3d", "#f5c944", "#fefb67", "#ddeb5c", "#86b953",
+            "#59c4f7", "#4e85f6", "#5733e2", "#af43eb", "#d44a7a", "#ed6c59", "#ef8c56", "#f3b757", "#f6cd5b",
+            "#fef881", "#e6ee7a", "#a3d16e", "#78d3f8", "#7fa6f8", "#7e52f5", "#c45ff6", "#de789d", "#f09286",
+            "#f2a984", "#f6c983", "#f9da85", "#fef9a1", "#ebf29b", "#badc94", "#a5e1fa", "#adc5fa", "#ab8df7",
+            "#d696f8", "#e8a7bf", "#f4b8b1", "#f6c7af", "#f9daae", "#fae5af", "#fefbc0", "#f3f7be", "#d2e7ba",
+            "#d2effd", "#d6e1fc", "#d6c9fa", "#e9cbfb", "#f3d4df", "#f9dcd9", "#fae3d8", "#fcecd7", "#fdf2d8",
+            "#fefce0", "#f7fade", "#e3edd6"
         };
 
-        [Inject]
-        private TimeProvider TimeProvider { get; set; } = null!;
+        [Inject] private TimeProvider TimeProvider { get; set; } = null!;
 
         public HamkareColorPicker()
         {
@@ -84,6 +87,7 @@ namespace HamkareBlazor
             {
                 return;
             }
+
             _baseColor = UpdateBaseColor(_valueState.Value);
             var (x, y) = UpdateColorSelectorBasedOnRgb(_valueState.Value);
             _selectorX = x;
@@ -103,6 +107,7 @@ namespace HamkareBlazor
             {
                 return;
             }
+
             // TODO: To be refactored, for now we replicate old behavior that was without ParameterState
             if (!args.Value)
             {
@@ -119,15 +124,16 @@ namespace HamkareBlazor
             }
         }
 
-        private static Dictionary<int, (Func<int, int> r, Func<int, int> g, Func<int, int> b, string dominantColorPart)> _rgbToHueMapper = new()
-        {
-            { 0, ((x) => 255, x => x, x => 0, "rb") },
-            { 1, ((x) => 255 - x, x => 255, x => 0, "gb") },
-            { 2, ((x) => 0, x => 255, x => x, "gr") },
-            { 3, ((x) => 0, x => 255 - x, x => 255, "br") },
-            { 4, ((x) => x, x => 0, x => 255, "bg") },
-            { 5, ((x) => 255, x => 0, x => 255 - x, "rg") },
-        };
+        private static Dictionary<int, (Func<int, int> r, Func<int, int> g, Func<int, int> b, string dominantColorPart)>
+            _rgbToHueMapper = new()
+            {
+                { 0, ((x) => 255, x => x, x => 0, "rb") },
+                { 1, ((x) => 255 - x, x => 255, x => 0, "gb") },
+                { 2, ((x) => 0, x => 255, x => x, "gr") },
+                { 3, ((x) => 0, x => 255 - x, x => 255, "br") },
+                { 4, ((x) => x, x => 0, x => 255, "bg") },
+                { 5, ((x) => 255, x => 0, x => 255 - x, "rg") },
+            };
 
         [CascadingParameter(Name = "RightToLeft")]
         public bool RightToLeft { get; set; }
@@ -254,13 +260,11 @@ namespace HamkareBlazor
         [Parameter]
         [Category(CategoryTypes.FormComponent.PickerBehavior)]
         public IEnumerable<HamkareColor> Palette { get; set; } = new HamkareColor[]
-        { "#424242", "#2196f3", "#00c853", "#ff9800", "#f44336",
-          "#f6f9fb", "#9df1fa", "#bdffcf", "#fff0a3", "#ffd254",
-          "#e6e9eb", "#27dbf5", "#7ef7a0", "#ffe273", "#ffb31f",
-          "#c9cccf", "#13b8e8", "#14dc71", "#fdd22f", "#ff9102",
-          "#858791", "#0989c2", "#1bbd66", "#ebb323", "#fe6800",
-          "#585b62", "#17698e", "#17a258", "#d9980d", "#dc3f11",
-          "#353940", "#113b53", "#127942", "#bf7d11", "#aa0000"
+        {
+            "#424242", "#2196f3", "#00c853", "#ff9800", "#f44336", "#f6f9fb", "#9df1fa", "#bdffcf", "#fff0a3",
+            "#ffd254", "#e6e9eb", "#27dbf5", "#7ef7a0", "#ffe273", "#ffb31f", "#c9cccf", "#13b8e8", "#14dc71",
+            "#fdd22f", "#ff9102", "#858791", "#0989c2", "#1bbd66", "#ebb323", "#fe6800", "#585b62", "#17698e",
+            "#17a258", "#d9980d", "#dc3f11", "#353940", "#113b53", "#127942", "#bf7d11", "#aa0000"
         };
 
         /// <summary>
@@ -365,7 +369,8 @@ namespace HamkareBlazor
             await SetColorAsync(color);
             _collectionOpen = false;
 
-            if (!IsAnyControlVisible() || _colorPickerViewState.Value is ColorPickerView.GridCompact or ColorPickerView.Palette)
+            if (!IsAnyControlVisible() ||
+                _colorPickerViewState.Value is ColorPickerView.GridCompact or ColorPickerView.Palette)
             {
                 await CloseAsync();
             }
@@ -399,11 +404,7 @@ namespace HamkareBlazor
         /// <inheritdoc />
         protected override IConverter<HamkareColor?, string?> GetDefaultConverter()
         {
-            return new DefaultConverter<HamkareColor>
-            {
-                Culture = GetCulture,
-                Format = GetFormat
-            };
+            return new DefaultConverter<HamkareColor> { Culture = GetCulture, Format = GetFormat };
         }
 
         private async Task SetColorAsync(HamkareColor? newColor, bool forceUpdate = false)
@@ -416,7 +417,8 @@ namespace HamkareBlazor
             var rgbChanged = !newColor.Equals(_valueState.Value);
             var hslChanged = !newColor.HslEquals(_valueState.Value);
             var colorChanged = rgbChanged || hslChanged;
-            var shouldUpdateBinding = _valueState.Value is not null && (rgbChanged || (UpdateBindingIfOnlyHSLChanged && hslChanged));
+            var shouldUpdateBinding = _valueState.Value is not null &&
+                                      (rgbChanged || (UpdateBindingIfOnlyHSLChanged && hslChanged));
 
             if (colorChanged && !_skipFeedback)
             {
@@ -451,6 +453,7 @@ namespace HamkareBlazor
             {
                 await StringValueChangedAsync(value);
             }
+
             await _textState.SetValueAsync(value);
         }
 
@@ -496,6 +499,7 @@ namespace HamkareBlazor
             {
                 return;
             }
+
             var x = _selectorX / MaxX;
             var rX = 255 - (int)((255 - _baseColor.R) * x);
             var gX = 255 - (int)((255 - _baseColor.G) * x);
@@ -552,6 +556,7 @@ namespace HamkareBlazor
 
             return (selectorX, selectorY);
         }
+
         private async Task HandleColorOverlayClickedAsync()
         {
             await UpdateColorBaseOnSelectionAsync();
@@ -589,8 +594,10 @@ namespace HamkareBlazor
 
         private void SetSelectorBasedOnPointerEvents(PointerEventArgs e, bool offsetIsAbsolute)
         {
-            _selectorX = (offsetIsAbsolute ? e.OffsetX : e.OffsetX - (SelectorSize / 2.0) + _selectorX).EnsureRange(MaxX);
-            _selectorY = (offsetIsAbsolute ? e.OffsetY : e.OffsetY - (SelectorSize / 2.0) + _selectorY).EnsureRange(MaxY);
+            _selectorX =
+                (offsetIsAbsolute ? e.OffsetX : e.OffsetX - (SelectorSize / 2.0) + _selectorX).EnsureRange(MaxX);
+            _selectorY =
+                (offsetIsAbsolute ? e.OffsetY : e.OffsetY - (SelectorSize / 2.0) + _selectorY).EnsureRange(MaxY);
         }
 
         private int ReadRed => _valueState.Value?.R ?? HamkareColor.Empty.R;
@@ -649,27 +656,43 @@ namespace HamkareBlazor
             }
         }
 
-        private string GetSelectorLocation() => $"translate({Math.Round(_selectorX, 2).ToString(CultureInfo.InvariantCulture)}px, {Math.Round(_selectorY, 2).ToString(CultureInfo.InvariantCulture)}px);";
+        private string GetSelectorLocation() =>
+            $"translate({Math.Round(_selectorX, 2).ToString(CultureInfo.InvariantCulture)}px, {Math.Round(_selectorY, 2).ToString(CultureInfo.InvariantCulture)}px);";
 
-        private string? GetColorTextValue(HamkareColor? color) => !_alphaState.Value || _colorPickerViewState.Value is ColorPickerView.Palette or ColorPickerView.GridCompact
+        private string? GetColorTextValue(HamkareColor? color) => !_alphaState.Value ||
+                                                                  _colorPickerViewState.Value is ColorPickerView.Palette
+                                                                      or ColorPickerView.GridCompact
             ? color?.ToString(HamkareColorOutputFormats.Hex)
             : color?.ToString(HamkareColorOutputFormats.HexA);
 
         private int GetHexColorInputMaxLength() => !_alphaState.Value ? 7 : 9;
 
-        private EventCallback<MouseEventArgs> GetEventCallback() => EventCallback.Factory.Create<MouseEventArgs>(this, () => CloseAsync());
+        private EventCallback<MouseEventArgs> GetEventCallback() =>
+            EventCallback.Factory.Create<MouseEventArgs>(this, () => CloseAsync());
 
         private bool IsAnyControlVisible() => ShowPreview || ShowSliders || ShowInputs;
 
-        private EventCallback<MouseEventArgs> GetSelectPaletteColorCallback(HamkareColor color) => new EventCallbackFactory().Create(this, (MouseEventArgs _) => SelectPaletteColorAsync(color));
+        private EventCallback<MouseEventArgs> GetSelectPaletteColorCallback(HamkareColor color) =>
+            new EventCallbackFactory().Create(this, (MouseEventArgs _) => SelectPaletteColorAsync(color));
 
-        private Color GetButtonColor(ColorPickerView view) => _colorPickerViewState.Value == view ? Color.Primary : Color.Inherit;
+        private Color GetButtonColor(ColorPickerView view) =>
+            _colorPickerViewState.Value == view ? Color.Primary : Color.Inherit;
 
-        private string GetColorDotClass(HamkareColor color) => new CssBuilder("hamkare-picker-color-dot").AddClass("selected", color == _valueState.Value).ToString();
+        private string GetColorDotClass(HamkareColor color) => new CssBuilder("hamkare-picker-color-dot")
+            .AddClass("selected", color == _valueState.Value).ToString();
 
         private string AlphaSliderStyle => new StyleBuilder()
-            .AddStyle($"background-image: linear-gradient(to {(RightToLeft ? "left" : "right")}, transparent, {_valueState.Value?.ToString(HamkareColorOutputFormats.RGB)})")
-            .AddStyle("color",_value?.Value,!string.IsNullOrWhiteSpace(_value?.Value))
+            .AddStyle(
+                $"background-image: linear-gradient(to {(RightToLeft ? "left" : "right")}, transparent, {_valueState.Value?.ToString(HamkareColorOutputFormats.RGB)})")
             .Build();
+
+        public override async Task SetParametersAsync(ParameterView parameters)
+        {
+            if (_valueState.Value != null)
+                Style = parameters.TryGetValue("Style", out string? style)
+                    ? style + $" color: {_valueState.Value};"
+                    : $"color: {_valueState.Value};";
+            await base.SetParametersAsync(parameters);
+        }
     }
 }
