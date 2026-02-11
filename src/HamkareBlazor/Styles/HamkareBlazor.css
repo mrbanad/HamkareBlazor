@@ -1,6 +1,6 @@
 @charset "UTF-8";
 /*!
- * HamkareBlazor (https://hamkareblazor.com/)
+ * HamkareBlazor (https://hamkare.com/)
  * Copyright (c) 2021 HamkareBlazor
  * Licensed under MIT (https://github.com/HamkareBlazor/HamkareBlazor/blob/master/LICENSE)
  */
@@ -5193,14 +5193,18 @@ textarea:focus-visible {
   cursor: default;
 }
 
-.Group-section.hamkare-expand-panel:after {
+.Group-section > .hamkare-expand-panel {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+.Group-section > .hamkare-expand-panel:after {
   content: " ";
-  border: 1px solid var(--mud-palette-lines-default);
+  border: 1px solid var(--hamkare-palette-lines-default);
   position: absolute;
   width: 100%;
   z-index: 1;
 }
-.Group-section.hamkare-expand-panel.hamkare-panel-expanded:after {
+.Group-section > .hamkare-expand-panel.hamkare-panel-expanded:after {
   content: none;
 }
 

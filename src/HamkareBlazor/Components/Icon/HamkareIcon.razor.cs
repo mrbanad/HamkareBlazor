@@ -11,7 +11,7 @@ namespace HamkareBlazor
     /// A picture displayed via an SVG path or font.
     /// </summary>
     /// <remarks>
-    /// You can use the <see cref="Icons"/> class and <see href="https://hamkareblazor.com/features/icons#icons">Icons Reference</see> for SVG paths, or a <see href="https://fontawesome.com/icons">Font Awesome CSS Class</see>.
+    /// You can use the <see cref="Icons"/> class and <see href="https://hamkare.com/features/icons#icons">Icons Reference</see> for SVG paths, or a <see href="https://fontawesome.com/icons">Font Awesome CSS Class</see>.
     /// </remarks>
     /// <seealso cref="HamkareIconButton"/>
     public partial class HamkareIcon : HamkareComponentBase
@@ -29,7 +29,7 @@ namespace HamkareBlazor
         /// The SVG path or Font Awesome font icon to display.
         /// </summary>
         /// <remarks>
-        /// You can use the <see cref="Icons"/> class and <see href="https://hamkareblazor.com/features/icons#icons">Icons Reference</see> for SVG paths, or a <see href="https://fontawesome.com/icons">Font Awesome CSS Class</see>.
+        /// You can use the <see cref="Icons"/> class and <see href="https://hamkare.com/features/icons#icons">Icons Reference</see> for SVG paths, or a <see href="https://fontawesome.com/icons">Font Awesome CSS Class</see>.
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.Icon.Behavior)]

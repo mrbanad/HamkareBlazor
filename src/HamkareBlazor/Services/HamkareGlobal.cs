@@ -11,7 +11,7 @@ namespace HamkareBlazor;
 /// </para>
 /// <para>
 /// <b>Warning:</b> This feature is under development and breaking changes to the API <b>will occur</b> between releases.
-/// See <see href="https://hamkareblazor.com/customization/globals#usage">our website</see> for more info including our support policy.
+/// See <see href="https://hamkare.com/customization/globals#usage">our website</see> for more info including our support policy.
 /// </para>
 /// </summary>
 public static class HamkareGlobal

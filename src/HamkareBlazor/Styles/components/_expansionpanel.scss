@@ -130,16 +130,19 @@
 }
 
 .Group-section{
-
-  &.hamkare-expand-panel:after {
-    content: " ";
-    border: 1px solid var(--mud-palette-lines-default);
-    position: absolute;
-    width: 100%;
-    z-index: 1;
+  & > .hamkare-expand-panel
+  {
+    margin-top:8px;
+    margin-bottom:8px;
+    &:after {
+      content: " ";
+      border: 1px solid var(--hamkare-palette-lines-default);
+      position: absolute;
+      width: 100%;
+      z-index: 1;
+    }
   }
-
-  &.hamkare-expand-panel.hamkare-panel-expanded:after {
+  & > .hamkare-expand-panel.hamkare-panel-expanded:after {
     content: none;
   }
 }
