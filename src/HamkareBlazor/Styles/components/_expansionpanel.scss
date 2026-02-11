@@ -134,6 +134,18 @@
   {
     margin-top:8px;
     margin-bottom:8px;
+
+    & > .hamkare-expand-panel-header{
+      & > .hamkare-expand-panel-text{
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+      }
+    }
+
+    & > .hamkare-collapse-container{
+      border: unset !important;
+    }
+
     &:after {
       content: " ";
       border: 1px solid var(--hamkare-palette-lines-default);
@@ -142,6 +154,7 @@
       z-index: 1;
     }
   }
+
   & > .hamkare-expand-panel.hamkare-panel-expanded:after {
     content: none;
   }

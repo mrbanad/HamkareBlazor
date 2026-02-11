@@ -5197,6 +5197,13 @@ textarea:focus-visible {
   margin-top: 8px;
   margin-bottom: 8px;
 }
+.Group-section > .hamkare-expand-panel > .hamkare-expand-panel-header > .hamkare-expand-panel-text {
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+}
+.Group-section > .hamkare-expand-panel > .hamkare-collapse-container {
+  border: unset !important;
+}
 .Group-section > .hamkare-expand-panel:after {
   content: " ";
   border: 1px solid var(--hamkare-palette-lines-default);
@@ -9448,6 +9455,9 @@ textarea:focus-visible {
   background-color: var(--hamkare-palette-surface);
   border-radius: var(--hamkare-default-borderradius);
   transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  height: 92% !important;
+  display: flex;
+  flex-direction: column;
 }
 .hamkare-table.hamkare-table-square {
   border-radius: 0px;
@@ -9742,6 +9752,7 @@ textarea:focus-visible {
   display: initial;
   position: sticky;
   left: 0;
+  margin-top: auto;
 }
 
 .hamkare-table-pagination:last-child {
@@ -9761,6 +9772,9 @@ textarea:focus-visible {
 }
 .hamkare-table-pagination-toolbar .hamkare-tablepager-right {
   flex-direction: row-reverse !important;
+}
+.hamkare-table-pagination-toolbar > .hamkare-select {
+  top: 2px;
 }
 
 .hamkare-table-pagination-spacer {
@@ -26430,6 +26444,7 @@ body {
 
 .hamkare-table .hamkare-toolbar {
   height: fit-content;
+  z-index: 3;
 }
 
 .hamkare-table-pagination {
