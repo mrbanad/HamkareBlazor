@@ -26118,25 +26118,25 @@ body {
 
 @font-face {
   font-family: panel-fa-Font;
-  src: url(../fonts/Shabnam-FD-WOL.woff2) format("woff2"), url(../fonts/Shabnam-FD-WOL.woff) format("woff"), url(../fonts/Shabnam-FD-WOL.ttf) format("truetype");
+  src: url(fonts/Shabnam-FD-WOL.woff2) format("woff2"), url(fonts/Shabnam-FD-WOL.woff) format("woff"), url(fonts/Shabnam-FD-WOL.ttf) format("truetype");
   font-weight: normal;
   font-display: swap;
 }
 @font-face {
   font-family: panel-fa-Font;
-  src: url(../fonts/Shabnam-Bold-FD-WOL.woff2) format("woff2"), url(../fonts/Shabnam-Bold-FD-WOL.woff) format("woff"), url(../fonts/Shabnam-Bold-FD-WOL.ttf) format("truetype");
+  src: url(fonts/Shabnam-Bold-FD-WOL.woff2) format("woff2"), url(fonts/Shabnam-Bold-FD-WOL.woff) format("woff"), url(fonts/Shabnam-Bold-FD-WOL.ttf) format("truetype");
   font-weight: bold;
   font-display: swap;
 }
 @font-face {
   font-family: "OpenSans";
-  src: url(../fonts/OpenSans-Medium.ttf) format("truetype");
+  src: url(fonts/OpenSans-Medium.ttf) format("truetype");
   font-weight: normal;
   font-display: swap;
 }
 @font-face {
   font-family: "OpenSans";
-  src: url(../fonts/OpenSans-Bold.ttf) format("truetype");
+  src: url(fonts/OpenSans-Bold.ttf) format("truetype");
   font-weight: bold;
   font-display: swap;
 }
