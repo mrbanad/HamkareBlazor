@@ -136,26 +136,19 @@
     margin-bottom:8px;
 
     & > .hamkare-expand-panel-header{
+
+      padding: 0 !important;
+
       & > .hamkare-expand-panel-text{
-        padding-left: 20px !important;
-        padding-right: 20px !important;
+        color: var(--hamkare-palette-primary);
+        font-size: var(--hamkare-typography-h6-size);
       }
+
     }
 
     & > .hamkare-collapse-container{
       border: unset !important;
     }
 
-    &:after {
-      content: " ";
-      border: 1px solid var(--hamkare-palette-lines-default);
-      position: absolute;
-      width: 100%;
-      z-index: 1;
-    }
-  }
-
-  & > .hamkare-expand-panel.hamkare-panel-expanded:after {
-    content: none;
   }
 }

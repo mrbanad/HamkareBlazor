@@ -402,7 +402,7 @@ namespace HamkareBlazor
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.FormComponent.ListAppearance)]
-        public string SelectAllText { get; set; } = LanguageResource.HamkareSelect_SelectAll;
+        public string SelectAllText { get; set; } = LanguageResource.GetResourceString(LanguageResource.HamkareSelect_SelectAll) ?? "Select All";
 
         /// <summary>
         /// Occurs when <see cref="SelectedValues"/> has changed.
