@@ -5095,7 +5095,7 @@ textarea:focus-visible {
   border-radius: var(--hamkare-default-borderradius);
 }
 .hamkare-expansion-panels.hamkare-expansion-panels-square {
-  border-radius: 0px;
+  border-radius: 0;
 }
 .hamkare-expansion-panels.hamkare-expansion-panels-borders .hamkare-expand-panel {
   border-bottom: 1px solid var(--hamkare-palette-lines-default);
@@ -5151,7 +5151,7 @@ textarea:focus-visible {
   line-height: 1;
   min-height: 48px;
   outline: none;
-  padding: 16px 0px;
+  padding: 16px 0;
   position: relative;
   transition: min-height 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
   user-select: none;
@@ -5182,8 +5182,8 @@ textarea:focus-visible {
   padding-right: 24px;
 }
 .hamkare-expand-panel .hamkare-expand-panel-content.hamkare-expand-panel-dense {
-  padding-top: 0px;
-  padding-bottom: 0px;
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
 .hamkare-disabled > .hamkare-expand-panel-header {

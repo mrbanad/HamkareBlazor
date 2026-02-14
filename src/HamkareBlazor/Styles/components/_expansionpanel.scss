@@ -7,7 +7,7 @@
   border-radius: var(--hamkare-default-borderradius);
 
   &.hamkare-expansion-panels-square {
-    border-radius: 0px;
+    border-radius: 0;
   }
 
   &.hamkare-expansion-panels-borders {
@@ -75,7 +75,7 @@
     line-height: 1;
     min-height: 48px;
     outline: none;
-    padding: 16px 0px;
+    padding: 16px 0;
     position: relative;
     transition: min-height .3s cubic-bezier(.25,.8,.5,1);
     user-select: none;
@@ -113,8 +113,8 @@
     }
 
     &.hamkare-expand-panel-dense {
-      padding-top: 0px;
-      padding-bottom: 0px;
+      padding-top: 0;
+      padding-bottom: 0;
     }
   }
 }
