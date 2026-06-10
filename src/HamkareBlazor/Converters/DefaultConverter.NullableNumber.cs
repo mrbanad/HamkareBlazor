@@ -9,7 +9,6 @@ using HamkareBlazor.Utilities.Exceptions;
 
 namespace HamkareBlazor;
 
-#nullable enable
 internal partial class DefaultConverter
 {
     internal sealed class NullableNumberConverter<TNumber>(Func<CultureInfo> culture, Func<string?> format)

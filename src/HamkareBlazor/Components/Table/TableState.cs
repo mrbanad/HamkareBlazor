@@ -2,7 +2,6 @@
 
 namespace HamkareBlazor
 {
-#nullable enable
 
     /// <summary>
     /// The state of a <see cref="HamkareTable{T}"/> when requesting data via <see cref="HamkareTable{T}.ServerData"/>.

@@ -4,7 +4,6 @@
 
 namespace HamkareBlazor;
 
-#nullable enable
 
 /// <summary>
 /// Indicates the position of the commit button during inline edits to a <see cref="HamkareTable{T}"/>.

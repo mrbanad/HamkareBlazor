@@ -1,7 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 
-#nullable enable
 namespace HamkareBlazor.Utilities
 {
     [ExcludeFromCodeCoverage]

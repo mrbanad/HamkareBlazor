@@ -2,7 +2,6 @@
 
 namespace HamkareBlazor;
 
-#nullable enable
 /// <summary>
 /// A set of methods which generate CSS classes for <see cref="HamkareBaseInput{T}" /> components.
 /// </summary>

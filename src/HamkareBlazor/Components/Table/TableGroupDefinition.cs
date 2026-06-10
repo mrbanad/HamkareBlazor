@@ -8,7 +8,6 @@ using System.Linq;
 
 namespace HamkareBlazor
 {
-#nullable enable
 
     /// <summary>
     /// A definition of a group within a <see cref="HamkareTable{T}"/>.

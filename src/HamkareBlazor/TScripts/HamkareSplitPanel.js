@@ -1,5 +1,16 @@
-﻿// noinspection JSUnusedGlobalSymbols
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
+
+// noinspection JSUnusedGlobalSymbols
+/**
+ * SplitPanel resize behavior for the HamkareSplitPanel component.
+ * Owns pointer/keyboard interaction and ARIA value updates for smooth resizing.
+ */
 class HamkareSplitPanel {
+    /**
+     * Creates and stores a split panel runtime instance for a container ID.
+     */
     static build(containerId, horizontal, resetOnDoubleClick, minPanelSize, firstPanelInitialSize, panelGap) {
         window.splitPanels[containerId] = new HamkareSplitPanel(containerId, horizontal, resetOnDoubleClick, minPanelSize, firstPanelInitialSize, panelGap);
     }
@@ -22,9 +33,11 @@ class HamkareSplitPanel {
         this.secondPanel = children[2];
 
         this.isDragging = false;
+        this.dividerHasMoved = false;
         this.startPos = 0;
         this.startFirstSize = 0;
         this.lastTap = 0;
+        this.lastDragEndDate = 0;
         this.firstPanelInitialSize = firstPanelInitialSize;
         this.keyboardStep = 10;
 
@@ -44,6 +57,9 @@ class HamkareSplitPanel {
         this.update(horizontal, resetOnDoubleClick, minPanelSize, panelGap, true);
     }
 
+    /**
+     * Removes listeners and disposes the split panel runtime instance.
+     */
     destroy() {
         this.divider.removeEventListener("mousedown", this._onMouseDown);
         this.divider.removeEventListener("touchstart", this._onMouseDown);
@@ -56,6 +72,9 @@ class HamkareSplitPanel {
     }
 
     // noinspection JSUnusedGlobalSymbols
+    /**
+     * Updates runtime options and recalculates panel sizes when needed.
+     */
     update(horizontal, resetOnDoubleClick, minPanelSize, panelGap, forceRecalculateSize = false) {
         const shouldRecalculateSize = horizontal !== this.horizontal || forceRecalculateSize;
         this.horizontal = horizontal;
@@ -75,6 +94,9 @@ class HamkareSplitPanel {
         }
     }
 
+    /**
+     * Resets both panel sizes using either the provided size or initial configuration.
+     */
     resetSizes(firstPanelSize = null) {
         this.firstPanel.style.width = "100%";
         this.secondPanel.style.width = "100%";
@@ -82,17 +104,23 @@ class HamkareSplitPanel {
         this.secondPanel.style.height = "100%";
 
         const firstPanelSizeNew = firstPanelSize !== null ? firstPanelSize : this.firstPanelInitialSize;
-        if (firstPanelSizeNew !== null) {
-            this._setPanelSizes(firstPanelSizeNew, this._getContainerSize());
-        } else {
+        if (firstPanelSizeNew === null) {
             this.divider.ariaValueNow = "50";
+        } else {
+            this._setPanelSizes(firstPanelSizeNew, this._getContainerSize());
         }
     }
 
+    /**
+     * Returns the current divider offset in pixels.
+     */
     getDividerPosition() {
         return this.horizontal ? this.firstPanel.clientHeight : this.firstPanel.clientWidth;
     }
 
+    /**
+     * Sets the divider offset in pixels.
+     */
     setDividerPosition(offset) {
         this.resetSizes(offset);
     }
@@ -104,6 +132,7 @@ class HamkareSplitPanel {
     _onMouseDown(e) {
         e.preventDefault();
         this.isDragging = true;
+        this.dividerHasMoved = false;
 
         const clientX = e.touches ? e.touches[0].clientX : e.clientX;
         const clientY = e.touches ? e.touches[0].clientY : e.clientY;
@@ -138,6 +167,7 @@ class HamkareSplitPanel {
         const max = containerSize - this.panelGap - min;
 
         if (newFirstSize >= min && newFirstSize <= max) {
+            this.dividerHasMoved = true;
             this._setPanelSizes(newFirstSize, containerSize);
         }
     }
@@ -157,6 +187,10 @@ class HamkareSplitPanel {
         if (!this.isDragging) return;
         this.isDragging = false;
 
+        if (this.dividerHasMoved) {
+            this.lastDragEndDate = Date.now();
+        }
+
         document.body.style.userSelect = "";
         document.body.style.cursor = "";
         document.removeEventListener("mousemove", this._onMouseMove);
@@ -167,6 +201,9 @@ class HamkareSplitPanel {
 
     _onDoubleClick() {
         if (!this.resetOnDoubleClick) return;
+
+        // Fixes the edge case where the user first clicks and then clicks again and holds to drag
+        if (Date.now() - this.lastDragEndDate < 100) return;
 
         const containerSize = this.horizontal
             ? this.container.offsetHeight
@@ -207,16 +244,14 @@ class HamkareSplitPanel {
             } else if (key === "End") {
                 this._setPanelSizes(containerSize - this.panelGap - this.minPanelSize, containerSize);
             }
-        } else {
-            if (key === "ArrowLeft") {
-                delta = -this.keyboardStep;
-            } else if (key === "ArrowRight") {
-                delta = this.keyboardStep;
-            } else if (key === "Home") {
-                this._setPanelSizes(this.minPanelSize, containerSize);
-            } else if (key === "End") {
-                this._setPanelSizes(containerSize - this.panelGap - this.minPanelSize, containerSize);
-            }
+        } else if (key === "ArrowLeft") {
+            delta = -this.keyboardStep;
+        } else if (key === "ArrowRight") {
+            delta = this.keyboardStep;
+        } else if (key === "Home") {
+            this._setPanelSizes(this.minPanelSize, containerSize);
+        } else if (key === "End") {
+            this._setPanelSizes(containerSize - this.panelGap - this.minPanelSize, containerSize);
         }
 
         if (delta !== 0) {
@@ -239,22 +274,37 @@ if (!window.hamkareSplitPanel) {
     window.splitPanels = {};
 }
 
+/**
+ * Updates split panel options for an existing container ID.
+ */
 window.hamkareSplitPanel_update = function (id, horizontal, resetOnDoubleClick, minPanelSize, panelGap) {
     window.splitPanels[id].update(horizontal, resetOnDoubleClick, minPanelSize, panelGap);
 };
 
+/**
+ * Resets the divider position to the configured initial value.
+ */
 window.hamkareSplitPanel_resetDividerPosition = function (id) {
     window.splitPanels[id].resetSizes();
 };
 
+/**
+ * Returns the divider position for a split panel container ID.
+ */
 window.hamkareSplitPanel_getDividerPosition = function (id) {
     return window.splitPanels[id].getDividerPosition();
 };
 
+/**
+ * Sets the divider position for a split panel container ID.
+ */
 window.hamkareSplitPanel_setDividerPosition = function (id, offset) {
     window.splitPanels[id].setDividerPosition(offset);
 };
 
+/**
+ * Disposes the split panel runtime instance for a container ID.
+ */
 window.hamkareSplitPanel_destroy = function (id) {
     window.splitPanels[id].destroy();
 };

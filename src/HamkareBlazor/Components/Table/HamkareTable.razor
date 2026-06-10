@@ -1,258 +1,259 @@
 ﻿@namespace HamkareBlazor
 @inherits HamkareTableBase
 @using HamkareBlazor.Utilities
+@using HamkareBlazor.Resources
+@inject InternalHamkareLocalizer Localizer
 @typeparam T
 
 @(ClearFilterCache()) @*Clear filtered items cache for this render*@
 
 <div @attributes="UserAttributes" class="@Classname" style="@Style">
-@if (Items != null || ServerData != null)
-{
-    <CascadingValue Value="TableContext" IsFixed="true">
-        @if (ToolBarContent != null)
-        {
-            <HamkareToolBar Class="hamkare-table-toolbar">
-                @ToolBarContent
-            </HamkareToolBar>
-        }
-        @if (Context.SortLabels.Any())
-        {
-            <div Class="hamkare-table-smalldevices-sortselect">
-                <CascadingValue Name="SubscribeToParentForm" Value="false" IsFixed>
-                    <HamkareSelect Value="@Context.CurrentSortLabel" Label="@SortLabel" ValueChanged="@(v => Context.SetSortFunc(v, overrideDirectionNone: true))" T="HamkareTableSortLabel<T>">
-                        @foreach (var label in Context.SortLabels)
+    @if (Items != null || ServerData != null)
+    {
+        <CascadingValue Value="TableContext" IsFixed="true">
+            @if (ToolBarContent != null)
+            {
+                <HamkareToolBar Class="hamkare-table-toolbar">
+                    @ToolBarContent
+                </HamkareToolBar>
+            }
+            @if (Context.SortLabels.Any())
+            {
+                <div Class="hamkare-table-smalldevices-sortselect">
+                    <CascadingValue Name="SubscribeToParentForm" Value="false" IsFixed>
+                        <HamkareSelect Value="@Context.CurrentSortLabel" Label="@SortLabel" ValueChanged="@(v => Context.SetSortFunc(v, overrideDirectionNone: true))" T="HamkareTableSortLabel<T>">
+                            @foreach (var label in Context.SortLabels)
+                            {
+                                <HamkareSelectItem Value="@label">@label.ChildContent</HamkareSelectItem>
+                            }
+                        </HamkareSelect>
+                    </CascadingValue>
+                </div>
+            }
+            <div id="@_tableId" class="hamkare-table-container @TableContainerClass" style="@TableContainerStyle @(GetHorizontalScrollbarStyle())">
+                <table class="@TableClassname" aria-label="@AriaLabel">
+                    @if (ColGroup != null)
+                    {
+                        <colgroup>
+                            @ColGroup
+                        </colgroup>
+                    }
+                    @if (HeaderContent != null || Columns != null)
+                    {
+                        <thead class="@HeadClassname">
+                            @if (CustomHeader)
+                            {
+                                @HeaderContent
+                            }
+                            else
+                            {
+                                <HamkareTHeadRow Checkable="MultiSelection" SelectionChangeable="SelectionChangeable" Expandable="@(GroupBy?.Expandable ?? false)">
+                                    @if (HeaderContent != null)
+                                    {
+                                        @HeaderContent
+                                    }
+
+                                    @if (Columns != null)
+                                    {
+                                        @Columns(Def)
+                                    }
+                                </HamkareTHeadRow>
+                            }
+                            @if (Loading)
+                            {
+                                <tr class="hamkare-table-loading-row">
+                                    <th colspan="1000" class="@(CurrentPageItems.Any() || (LoadingContent is not null || LoadingContentBody is not null) ? "hamkare-table-loading" : "")">
+                                        <HamkareProgressLinear Color="@LoadingProgressColor" Class="hamkare-table-loading-progress" Indeterminate="true" aria-label="@Localizer[LanguageResource.HamkareTable_Loading]" />
+                                    </th>
+                                </tr>
+                            }
+                        </thead>
+                    }
+                    else if (Loading)
+                    {
+                        <thead class="@HeadClassname">
+                            <tr class="hamkare-table-loading-row">
+                                <th colspan="1000" class="@(CurrentPageItems.Any() || (LoadingContent is not null || LoadingContentBody is not null) ? "hamkare-table-loading" : "")">
+                                    <HamkareProgressLinear Color="@LoadingProgressColor" Class="hamkare-table-loading-progress" Indeterminate="true" aria-label="@Localizer[LanguageResource.HamkareTable_Loading]" />
+                                </th>
+                            </tr>
+                        </thead>
+                    }
+                    <tbody class="hamkare-table-body">
+                        @if (GroupBy != null)
                         {
-                            <HamkareSelectItem Value="@label">@label.ChildContent</HamkareSelectItem>
-                        }
-                    </HamkareSelect>
-                </CascadingValue>
-            </div>
-        }
-        <div id="@_tableId" class="hamkare-table-container @TableContainerClass" style="@TableContainerStyle @(GetHorizontalScrollbarStyle())">
-            <table class="@TableClassname" aria-label="@AriaLabel">
-                @if (ColGroup != null)
-                {
-                    <colgroup>
-                        @ColGroup
-                    </colgroup>
-                }
-                @if (HeaderContent != null || Columns != null)
-                {
-                    <thead class="@HeadClassname">
-                        @if (CustomHeader)
-                        {
-                            @HeaderContent
+                            foreach (var group in GroupItemsPage)
+                            {
+                                <HamkareTableGroupRow @key="group.Key" T="T" GroupDefinition="GroupBy" Items="group"
+                                                  Checkable="MultiSelection" SelectionChangeable="SelectionChangeable"
+                                                  HeaderClass="@GroupHeaderClass" HeaderStyle="@GroupHeaderStyle" HeaderTemplate="@GroupHeaderTemplate"
+                                                  FooterClass="@GroupFooterClass" FooterStyle="@GroupFooterStyle" FooterTemplate="@GroupFooterTemplate"/>
+                            }
                         }
                         else
                         {
-                            <HamkareTHeadRow Checkable="MultiSelection" SelectionChangeable="SelectionChangeable" Expandable="@(GroupBy?.Expandable ?? false)">
-                                @if (HeaderContent != null)
-                                {
-                                    @HeaderContent
-                                }
-
-                                @if (Columns != null)
-                                {
-                                    @Columns(Def)
-                                }
-                            </HamkareTHeadRow>
-                        }
-                        @if (Loading)
-                        {
-                            <tr>
-                                <th colspan="1000" class="@(CurrentPageItems.Any() || (LoadingContent is not null || LoadingContentBody is not null) ? "hamkare-table-loading" : "")">
-                                    <HamkareProgressLinear Color="@LoadingProgressColor" Class="hamkare-table-loading-progress" Indeterminate="true" />
-                                </th>
-                            </tr>
-                        }
-                    </thead>
-                }
-                else if (Loading)
-                {
-                    <thead class="@HeadClassname">
-                        <tr class="hamkare-table-row">
-                            <th colspan="1000" class="@(CurrentPageItems.Any() || (LoadingContent is not null || LoadingContentBody is not null) ? "hamkare-table-loading" : "")">
-                                <HamkareProgressLinear Color="@LoadingProgressColor" Class="hamkare-table-loading-progress" Indeterminate="true" />
-                            </th>
-                        </tr>
-                    </thead>
-                }
-                <tbody class="hamkare-table-body">
-                    @if(GroupBy != null)
-                    {
-                        @foreach (var group in GroupItemsPage)
-                        {
-                            <HamkareTableGroupRow @key="group.Key" T="T" GroupDefinition="GroupBy" Items="group"
-                                              Checkable="MultiSelection" SelectionChangeable="SelectionChangeable"
-                                              HeaderClass="@GroupHeaderClass" HeaderStyle="@GroupHeaderStyle" HeaderTemplate="@GroupHeaderTemplate"
-                                              FooterClass="@GroupFooterClass" FooterStyle="@GroupFooterStyle" FooterTemplate="@GroupFooterTemplate" />
-                        }
-                    }
-                    else
-                    {
-                        @if (CurrentPageItems != null && CurrentPageItems.Any())
-                        {
-                            var rowIndex = 0;
-                            <HamkareVirtualize Enabled="@Virtualize" Items="@CurrentPageItems.ToList()" OverscanCount="@OverscanCount" ItemSize="@ItemSize" Context="item">
-                                @{
-                                    var itemIndex = FilteredItems.ToList().IndexOf(item);
-                                    var generatedRowId = itemIndex != -1 ? $"{_tableId}_row_{itemIndex}" : null;
-                                    var rowClass = new CssBuilder(RowClass).AddClass(RowClassFunc?.Invoke(item, itemIndex)).Build();
-                                    var rowStyle = new StyleBuilder().AddStyle("width", "max-content").AddStyle(RowStyle).AddStyle(RowStyleFunc?.Invoke(item, itemIndex)).Build();
-                                }
-                                <HamkareTr Class="@rowClass" Style="@rowStyle" Item="item" @key="item" RowId="@generatedRowId"
-                                        Checkable="MultiSelection" SelectionChangeable="SelectionChangeable" Editable="IsItemEditable(item)"
-                                        Checked="@(IsCheckedRow(item))"
-                                        CheckedChanged="((value) => OnRowCheckboxChanged(value, item))">
-
-                                    @if ((!ReadOnly) && Editable && Equals(_editingItem, item))
-                                    {
-                                        <CascadingValue Value="@Validator" IsFixed="true">
-                                            @if (RowEditingTemplate != null)
-                                            {
-                                                @RowEditingTemplate(item)
-                                            }
-                                            @if (Columns != null)
-                                            {
-                                                @Columns(item)
-                                            }
-                                        </CascadingValue>
+                            if (CurrentPageItems != null && CurrentPageItems.Any())
+                            {
+                                <HamkareVirtualize Enabled="@Virtualize" Items="@CurrentPageItems?.ToList()" OverscanCount="@OverscanCount" ItemSize="@ItemSize" Context="item">
+                                    @{
+                                        var itemIndex = FilteredItems.ToList().IndexOf(item);
+                                        var generatedRowId = itemIndex != -1 ? $"{_tableId}_row_{itemIndex}" : null;
+                                        var rowClass = new CssBuilder(RowClass)
+                                            .AddClass(RowClassFunc?.Invoke(item, itemIndex))
+                                            .AddClass("hamkare-table-row-clickable", OnRowClick.HasDelegate && !IsRowDisabled(item))
+                                            .Build();
+                                        var rowStyle = new StyleBuilder().AddStyle(RowStyle).AddStyle(RowStyleFunc?.Invoke(item, itemIndex)).Build();
                                     }
-                                    else
-                                    {
-                                        if (RowTemplate != null)
+                                    <HamkareTr Class="@rowClass" Style="@rowStyle" Item="item" @key="item" RowId="@generatedRowId"
+                                           Checkable="MultiSelection" SelectionChangeable="SelectionChangeable" Editable="IsItemEditable(item)"
+                                           Disabled="IsRowDisabled(item)" DisabledClass="@DisabledRowClass" Checked="@(IsCheckedRow(item))"
+                                           CheckedChanged="@(value => OnRowCheckboxChanged(value, item))">
+                                        @if (!ReadOnly && Editable && Equals(_editingItem, item))
                                         {
-                                            @RowTemplate(item)
-                                        }
-                                        @if (Columns != null)
-                                        {
-                                            @Columns(item)
-                                        }
-                                    }
-                                </HamkareTr>
-                                @if (ChildRowContent != null)
-                                {
-                                    @ChildRowContent(item)
-                                }
-                                @{ rowIndex++; }
-                            </HamkareVirtualize>
-                        }
-                    }
-                    @if (!(CurrentPageItems is not null && CurrentPageItems.Any()))
-                    {
-                        if (Loading && LoadingContentBody != null)
-                        {
-                            @LoadingContentBody
-                        }
-                        else if (Loading ? LoadingContent != null : NoRecordsContent != null)
-                        {                            
-                            <tr>
-                                <th colspan="1000" class="hamkare-table-empty-row">
-                                    <div Class="my-3">
-                                        @if(Loading)
-                                        {
-                                            @LoadingContent
+                                            <CascadingValue Value="@Validator" IsFixed="true">
+                                                @if (RowEditingTemplate != null)
+                                                {
+                                                    @RowEditingTemplate(item)
+                                                }
+                                                @if (Columns != null)
+                                                {
+                                                    @Columns(item)
+                                                }
+                                            </CascadingValue>
                                         }
                                         else
                                         {
-                                            @NoRecordsContent
+                                            if (RowTemplate != null)
+                                            {
+                                                @RowTemplate(item)
+                                            }
+
+                                            if (Columns != null)
+                                            {
+                                                @Columns(item)
+                                            }
                                         }
-                                    </div>
-                                </th>
-                            </tr>    
+                                    </HamkareTr>
+                                    @if (ChildRowContent != null)
+                                    {
+                                        @ChildRowContent(item)
+                                    }
+                                </HamkareVirtualize>
+                            }
                         }
+                        @if (!(CurrentPageItems is not null && CurrentPageItems.Any()))
+                        {
+                            if (Loading && LoadingContentBody != null)
+                            {
+                                @LoadingContentBody
+                            }
+                            else if (Loading ? LoadingContent != null : NoRecordsContent != null)
+                            {
+                                <tr>
+                                    <th colspan="1000" class="hamkare-table-empty-row">
+                                        <div Class="my-3">
+                                            @if (Loading)
+                                            {
+                                                @LoadingContent
+                                            }
+                                            else
+                                            {
+                                                @NoRecordsContent
+                                            }
+                                        </div>
+                                    </th>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                    @if (FooterContent != null || Columns != null)
+                    {
+                        <tfoot class="@FootClassname">
+                            @if (CustomFooter)
+                            {
+                                @FooterContent
+                            }
+                            else
+                            {
+                                <HamkareTFootRow Checkable="MultiSelection" SelectionChangeable="SelectionChangeable" Expandable="@(GroupBy?.Expandable ?? false)">
+                                    @if (FooterContent != null)
+                                    {
+                                        @FooterContent
+                                    }
+                                    @if (Columns != null)
+                                    {
+                                        @Columns(Def)
+                                    }
+                                </HamkareTFootRow>
+                            }
+                        </tfoot>
                     }
-                </tbody>
-                @if (FooterContent != null || Columns != null)
-                {
-                    <tfoot class="@FootClassname">
-                        @if (CustomFooter)
-                        {
-                            @FooterContent
-                        }
-                        else
-                        {
-                            <HamkareTFootRow Checkable="MultiSelection" SelectionChangeable="SelectionChangeable" Expandable="@(GroupBy?.Expandable ?? false)">
-                                @if (FooterContent != null)
-                                {
-                                    @FooterContent
-                                }
-                                @if (Columns != null)
-                                {
-                                    @Columns(Def)
-                                }
-                            </HamkareTFootRow>
-                        }
-                    </tfoot>
-                }
-            </table>
-        </div>
-        @if (PagerContent != null)
-        {
-            <div class="hamkare-table-pagination">
-                @PagerContent
+                </table>
             </div>
-        }
-    </CascadingValue>
-}
+            @if (PagerContent != null)
+            {
+                <div class="hamkare-table-pagination">
+                    @PagerContent
+                </div>
+            }
+        </CascadingValue>
+    }
 </div>
+
 @code
 {
-    // moved to code to avoid repeatedly code on markup block
+    // Moved to code to avoid code repetition in the markup-block
     internal RenderFragment RenderRows(IEnumerable<T>? source, string? customClass = null, bool expandable = false)
     {
-        var rowIndex = 0;
-
         RenderFragment rootNode =
             @<text>
-                <HamkareVirtualize Enabled="@Virtualize" Items="@source?.ToList()" OverscanCount="@OverscanCount" ItemSize="@ItemSize" Context="item" ChildContent="@child()">
-                </HamkareVirtualize>
+                 <HamkareVirtualize Enabled="@Virtualize" Items="@source?.ToList()" OverscanCount="@OverscanCount" ItemSize="@ItemSize" Context="item" ChildContent="@child()"/>
             </text>;
 
-         RenderFragment<T> child() => item =>
-             @<text>
-             @{
-                 var itemIndexForId = FilteredItems.ToList().IndexOf(item);
-                 var generatedRowId = itemIndexForId != -1 ? $"{_tableId}_row_{itemIndexForId}" : null;
+        RenderFragment<T> child() => item =>
+            @<text>
+                 @{
+                     var itemIndexForId = FilteredItems.ToList().IndexOf(item);
+                     var generatedRowId = itemIndexForId != -1 ? $"{_tableId}_row_{itemIndexForId}" : null;
 
-                 var rowClass = new CssBuilder(RowClass).AddClass(RowClassFunc?.Invoke(item, itemIndexForId)).AddClass(customClass, !string.IsNullOrEmpty(customClass)).Build();
-                 var rowStyle = new StyleBuilder().AddStyle(RowStyle).AddStyle(RowStyleFunc?.Invoke(item, itemIndexForId)).Build();
-             }
-             <HamkareTr Class="@rowClass" Style="@rowStyle" Item="item" @key="item" RowId="@generatedRowId" Checkable="MultiSelection" SelectionChangeable="SelectionChangeable" Editable="IsItemEditable(item)" Expandable="expandable"
-                Checked="Context.Selection.Contains(item)" CheckedChanged="((value) => { var x = item; OnRowCheckboxChanged(value, x); })">
-                @if ((!ReadOnly) && Editable && Equals(_editingItem, item))
-                {
-                    <CascadingValue Value="@Validator" IsFixed="true">
-                        @if(RowEditingTemplate != null)
-                        {
-	                        @RowEditingTemplate(item)
-                        }
-                        @if (Columns != null)
-                        {
-                            @Columns(item)
-                        }
-                    </CascadingValue>
-                }
-                else
-                {
-                    if (RowTemplate != null)
-                    {
-	                    @RowTemplate(item)
-                    }
-                    @if (Columns != null)
-                    {
-                        @Columns(item)
-                    }
-                }
-            </HamkareTr>
-            @if (ChildRowContent != null)
-            {
-                @ChildRowContent(item)
-            }
-            @{rowIndex++;}
-        </text>;
+                     var rowClass = new CssBuilder(RowClass).AddClass(RowClassFunc?.Invoke(item, itemIndexForId)).AddClass(customClass, !string.IsNullOrEmpty(customClass)).AddClass("hamkare-table-row-clickable", OnRowClick.HasDelegate && !IsRowDisabled(item)).Build();
+                     var rowStyle = new StyleBuilder().AddStyle(RowStyle).AddStyle(RowStyleFunc?.Invoke(item, itemIndexForId)).Build();
+                 }
+                 <HamkareTr Class="@rowClass" Style="@rowStyle" Item="item" @key="item" RowId="@generatedRowId" Checkable="MultiSelection" SelectionChangeable="SelectionChangeable"
+                        Editable="IsItemEditable(item)" Expandable="expandable" Disabled="IsRowDisabled(item)" DisabledClass="@DisabledRowClass"
+                        Checked="Context.Selection.Contains(item)" CheckedChanged="((value) => { OnRowCheckboxChanged(value, item); })">
+                     @if (!ReadOnly && Editable && Equals(_editingItem, item))
+                     {
+                         <CascadingValue Value="@Validator" IsFixed="true">
+                             @if (RowEditingTemplate != null)
+                             {
+                                 @RowEditingTemplate(item)
+                             }
+                             @if (Columns != null)
+                             {
+                                 @Columns(item)
+                             }
+                         </CascadingValue>
+                     }
+                     else
+                     {
+                         if (RowTemplate != null)
+                         {
+                             @RowTemplate(item)
+                         }
+
+                         if (Columns != null)
+                         {
+                             @Columns(item)
+                         }
+                     }
+                 </HamkareTr>
+                 @if (ChildRowContent != null)
+                 {
+                     @ChildRowContent(item)
+                 }
+            </text>;
 
         return rootNode;
     }
 }
-

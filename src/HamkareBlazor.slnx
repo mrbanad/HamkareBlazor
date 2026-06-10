@@ -3,10 +3,5 @@
     <Project Path="HamkareBlazor.Analyzers.CodeFixes/HamkareBlazor.Analyzers.CodeFixes.csproj" />
     <Project Path="HamkareBlazor.Analyzers/HamkareBlazor.Analyzers.csproj" />
   </Folder>
-  <Folder Name="/Solution Items/">
-    <File Path=".editorconfig" />
-    <File Path="Directory.Build.props" />
-    <File Path="Directory.Build.targets" />
-  </Folder>
   <Project Path="HamkareBlazor/HamkareBlazor.csproj" />
 </Solution>

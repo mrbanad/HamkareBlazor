@@ -6,7 +6,6 @@ using HamkareBlazor.Utilities;
 
 namespace HamkareBlazor
 {
-#nullable enable
 
     /// <summary>
     /// Prevents the keyboard focus from cycling out of its child content. Typically used within dropdown selectors and modal dialogs.
@@ -93,17 +92,17 @@ namespace HamkareBlazor
             }
         }
 
-        private Task OnBottomFocusAsync(FocusEventArgs args)
+        private Task OnBottomFocusAsync()
         {
             return FocusLastAsync();
         }
 
-        private Task OnBumperFocusAsync(FocusEventArgs args)
+        private Task OnBumperFocusAsync()
         {
             return _shiftDown ? FocusLastAsync() : FocusFirstAsync();
         }
 
-        private Task OnRootFocusAsync(FocusEventArgs args)
+        private Task OnRootFocusAsync()
         {
             return FocusFallbackAsync();
         }
@@ -118,7 +117,7 @@ namespace HamkareBlazor
             HandleKeyEvent(args);
         }
 
-        private Task OnTopFocusAsync(FocusEventArgs args)
+        private Task OnTopFocusAsync()
         {
             return FocusFirstAsync();
         }

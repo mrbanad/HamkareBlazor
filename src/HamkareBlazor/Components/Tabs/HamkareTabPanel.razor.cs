@@ -8,7 +8,6 @@ using HamkareBlazor.Utilities;
 
 namespace HamkareBlazor;
 
-#nullable enable
 
 /// <summary>
 /// A tab as part of a <see cref="HamkareTabs"/> or <see cref="HamkareDynamicTabs"/> component.
@@ -112,6 +111,16 @@ public partial class HamkareTabPanel : HamkareComponentBase
     [Parameter]
     [Category(CategoryTypes.Tabs.Behavior)]
     public object? BadgeData { get; set; }
+
+    /// <summary>
+    /// The maximum number allowed in the badge.
+    /// </summary>
+    /// <remarks>
+    /// Defaults to <c>99</c>. Applies when <see cref="BadgeData"/> is an <c>int</c>.
+    /// </remarks>
+    [Parameter]
+    [Category(CategoryTypes.Tabs.Behavior)]
+    public int BadgeMax { get; set; } = 99;
 
     /// <summary>
     /// Optional icon to be shown in the badge instead of text.

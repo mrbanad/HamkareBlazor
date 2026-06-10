@@ -1,6 +1,5 @@
 ﻿namespace HamkareBlazor.Extensions
 {
-#nullable enable
     public static class EnumExtensions
     {
         /// <summary>

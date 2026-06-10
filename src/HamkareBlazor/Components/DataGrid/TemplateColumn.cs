@@ -4,10 +4,10 @@
 
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Components;
+using HamkareBlazor.Utilities;
 
 namespace HamkareBlazor
 {
-#nullable enable
     /// <summary>
     /// Represents an additional column for a <see cref="HamkareDataGrid{T}"/> which isn't tied to data.
     /// </summary>
@@ -79,6 +79,12 @@ namespace HamkareBlazor
         /// </remarks>
         [Parameter]
         public Func<T, bool>? InitiallyExpandedFunc { get; set; }
+
+        /// <summary>
+        /// Occurs when hierarchy visibility is toggled if used as a Hierarchy Column.
+        /// </summary>
+        [Parameter]
+        public EventCallback<DataGridHierarchyVisibilityToggledEventArgs<T>> HierarchyVisibilityToggled { get; set; }
 
         /// <summary>
         /// Sets the function which determines whether buttons are disabled if used in a Hierarchy Column.

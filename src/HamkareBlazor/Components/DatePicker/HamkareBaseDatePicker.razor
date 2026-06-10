@@ -14,7 +14,6 @@ else
 }
 
 @code {
-#nullable enable
 
     protected override RenderFragment PickerContent =>
     @<CascadingValue Value="@this" IsFixed="true">
@@ -52,7 +51,7 @@ else
                         }
                         else if (tempMonth == 0 && CurrentView == OpenTo.Month)
                         {
-                            var calendarYear = GetCalendarYear(PickerMonth ?? DateTime.Today);
+                            var calendarYear = GetCalendarYear(PickerMonth ?? TimeProvider.GetLocalNow().Date);
 
                             <div class="hamkare-picker-calendar-header">
                                 <div class="hamkare-picker-calendar-header-switch">

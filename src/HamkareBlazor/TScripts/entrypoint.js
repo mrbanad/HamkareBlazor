@@ -1,6 +1,7 @@
 import "./hamkareAAAlicense";
 import "./hamkareDragAndDrop";
 import "./hamkareElementReference";
+import "./hamkareExitPrompt";
 import "./hamkareFileUpload";
 import "./hamkareHelpers";
 import "./hamkareHotkeyListener";
@@ -23,5 +24,5 @@ import "./hamkareThemeProvider";
 import "./hamkareTimePicker";
 import "./hamkareWindow";
 
-// Customize
+// Hamkare Customize
 import "./hamkareCookieHelper";

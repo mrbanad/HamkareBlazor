@@ -4,7 +4,6 @@ using System.Linq;
 
 namespace HamkareBlazor;
 
-#nullable enable
 /// <summary>
 /// Provides extension methods for filtering queryable data sources using filter definitions.
 /// </summary>

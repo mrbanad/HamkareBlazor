@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 
 namespace HamkareBlazor;
 
-#nullable enable
 
 /// <summary>
 /// The information related to a <see cref="HamkareDropZone{T}"/> drag-and-drop transaction.

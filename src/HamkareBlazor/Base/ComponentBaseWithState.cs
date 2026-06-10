@@ -8,7 +8,6 @@ using HamkareBlazor.State.Builder;
 
 namespace HamkareBlazor;
 
-#nullable enable
 /// <summary>
 /// Represents a base class for designing components which maintain state.
 /// </summary>

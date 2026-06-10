@@ -4,15 +4,14 @@
 @inject InternalHamkareLocalizer Localizer
 
 @{
-#nullable enable
 }
 
-<div @attributes="UserAttributes" id="@_elementId" class="hamkare-dialog-container @GetPosition()">
+<div @attributes="UserAttributes" id="@ElementId" class="hamkare-dialog-container @GetPosition()">
     <HamkareOverlay Visible="true" OnClick="HandleBackgroundClickAsync" Class="@BackgroundClassname" DarkBackground="true" @onmouseup="OnMouseUpAsync" />
-    <div @ref="_dialogContainerReference" id="_@Id.ToString("N")" role="dialog" class="@Classname" style="@Style" tabindex="-1">
+    <div @ref="_dialogContainerReference" id="_@Id.ToString("N")" role="dialog" aria-labelledby="@(GetHideHeader() ? null : $"_{Id:N}_title")" class="@Classname" style="@Style" tabindex="-1">
         @if (!GetHideHeader())
         {
-            <div class="@TitleClassname">
+            <div id="@($"_{Id:N}_title")" class="@TitleClassname">
                 @if (TitleContent is null)
                 {
                     <HamkareText Typo="Typo.h6">@_titleState.Value</HamkareText>

@@ -6,7 +6,6 @@ using HamkareBlazor.Services;
 
 namespace HamkareBlazor;
 
-#nullable enable
 /// <summary>
 /// Represents an observer for browser viewport updates.
 /// </summary>

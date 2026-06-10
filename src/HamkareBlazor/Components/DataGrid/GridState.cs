@@ -9,7 +9,6 @@ using System.Threading;
 
 namespace HamkareBlazor
 {
-#nullable enable
     /// <summary>
     /// Represents the current paging, sorting, and filtering for a <see cref="HamkareDataGrid{T}"/>.
     /// </summary>

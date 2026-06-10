@@ -2,7 +2,6 @@
 
 namespace HamkareBlazor
 {
-#nullable enable
 #pragma warning disable IDE1006 // must being with upper case
     /// <summary>
     /// Represents the breakpoints for responsive design.

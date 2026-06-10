@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 
 namespace HamkareBlazor
 {
-#nullable enable
 
     /// <summary>
     /// Represents the current state of a footer in a <see cref="HamkareDataGrid{T}"/>.

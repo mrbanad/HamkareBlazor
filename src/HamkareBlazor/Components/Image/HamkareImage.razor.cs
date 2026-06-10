@@ -8,7 +8,6 @@ using HamkareBlazor.Utilities;
 
 namespace HamkareBlazor;
 
-#nullable enable
 
 /// <summary>
 /// A simple component that displays an image.

@@ -8,7 +8,6 @@ using HamkareBlazor.Utilities;
 
 namespace HamkareBlazor
 {
-#nullable enable
 
     /// <summary>
     /// A line-shaped indicator of progress for an ongoing operation.
@@ -32,8 +31,18 @@ namespace HamkareBlazor
                 .AddClass("hamkare-progress-linear-background", ShowBackground)
                 .AddClass("horizontal", !Vertical)
                 .AddClass("vertical", Vertical)
-                .AddClass("hamkare-flip-x-rtl")
                 .AddClass(Class)
+                .Build();
+
+        /// <summary>
+        /// The CSS classes for the internal bars container.
+        /// </summary>
+        /// <remarks>
+        /// Horizontal progress bars are mirrored in RTL layouts so the fill direction remains correct, while vertical bars do not require mirroring.
+        /// </remarks>
+        protected string BarsClassname =>
+            new CssBuilder("hamkare-progress-linear-bars")
+                .AddClass("hamkare-flip-x-rtl", !Vertical)
                 .Build();
 
         /// <summary>

@@ -1,5 +1,4 @@
 ﻿namespace HamkareBlazor.Interop;
-#nullable enable
 
 /// <summary>
 /// Represents the bounding rectangle of an element.

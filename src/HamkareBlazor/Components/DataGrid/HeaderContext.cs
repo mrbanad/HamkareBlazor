@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Components;
 
 namespace HamkareBlazor
 {
-#nullable enable
     /// <summary>
     /// Represents the current state of a header in a <see cref="HamkareDataGrid{T}"/>.
     /// </summary>

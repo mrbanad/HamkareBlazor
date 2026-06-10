@@ -6,7 +6,6 @@ using HamkareBlazor.Utilities;
 
 namespace HamkareBlazor;
 
-#nullable enable
 
 /// <summary>
 /// Compact elements used to enter information, select a choice, filter content, or trigger an action.
@@ -18,7 +17,7 @@ public partial class HamkareChip<T> : HamkareComponentBase, IAsyncDisposable
     [Inject]
     private IKeyInterceptorService KeyInterceptorService { get; set; } = null!;
 
-    private string _chipContainerId = $"chip-container-{Guid.NewGuid()}";
+    private readonly string _chipContainerId = $"chip-container-{Guid.NewGuid()}";
 
     internal readonly ParameterState<bool> SelectedState;
 
@@ -425,9 +424,16 @@ public partial class HamkareChip<T> : HamkareComponentBase, IAsyncDisposable
                     new("Delete", preventDown: "key+none")
                 ]);
 
-            await KeyInterceptorService.SubscribeAsync(_chipContainerId, options, keyDown: HandleKeyDownAsync);
+            await KeyInterceptorService.SubscribeAsync(_chipContainerId, options, keys => keys
+                .When(CanHandleKeys, builder => builder
+                    .OnKeyDown(" ", () => OnClickAsync(new MouseEventArgs()))
+                    .OnKeyDownAny(["Backspace", "Delete"], () => OnCloseAsync(new MouseEventArgs()))));
         }
     }
+
+    private bool CanHandleKeys() => !GetDisabled() && !GetReadOnly();
+
+    protected Task HandleKeyDownAsync(KeyboardEventArgs obj) => KeyInterceptorService.DispatchAsync(_chipContainerId, KeyEventKind.Down, obj);
 
     protected internal async Task OnClickAsync(MouseEventArgs ev)
     {
@@ -457,24 +463,6 @@ public partial class HamkareChip<T> : HamkareComponentBase, IAsyncDisposable
         }
 
         StateHasChanged();
-    }
-
-    private async Task HandleKeyDownAsync(KeyboardEventArgs args)
-    {
-        if (GetDisabled() || GetReadOnly())
-        {
-            return;
-        }
-
-        switch (args.Key)
-        {
-            case " ":
-                await OnClickAsync(new MouseEventArgs());
-                break;
-            case "Backspace" or "Delete":
-                await OnCloseAsync(new MouseEventArgs());
-                break;
-        }
     }
 
     /// <summary>

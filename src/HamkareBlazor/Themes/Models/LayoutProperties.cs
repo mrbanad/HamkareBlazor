@@ -1,6 +1,5 @@
 ﻿namespace HamkareBlazor
 {
-#nullable enable
     /// <summary>
     /// Represents the layout properties for a user interface.
     /// </summary>

@@ -6,7 +6,6 @@ using HamkareBlazor.Utilities;
 
 namespace HamkareBlazor;
 
-#nullable enable
 /// <summary>
 /// Allows registering a hotkey.
 /// </summary>

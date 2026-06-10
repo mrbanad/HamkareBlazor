@@ -8,7 +8,6 @@ using HamkareBlazor.State.Invocation;
 
 namespace HamkareBlazor.State;
 
-#nullable enable
 /// <summary>
 /// Utility class for handling parameter change detection and handler invocation.
 /// </summary>

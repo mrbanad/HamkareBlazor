@@ -34,7 +34,7 @@
             {
                 @if (PreviousButtonTemplate is null)
                 {
-                    <HamkareIconButton tabindex="1" aria-label="@Localizer[LanguageResource.HamkareCarousel_Previous]" Class="@NavigationButtonsClassName" Style="z-index:3;opacity:0.75" Icon="@PreviousIcon" OnClick="Previous" Color="Color.Inherit" />
+                    <HamkareIconButton tabindex="1" aria-label="@Localizer[LanguageResource.HamkareCarousel_Previous]" Class="@NavigationButtonsClassName" Style="z-index:3;opacity:0.75" Icon="@PreviousIcon" OnClick="Previous" Color="@(ArrowsColor ?? Color.Inherit)" />
                 }
                 else
                 {
@@ -72,7 +72,7 @@
             {
                 @if (NextButtonTemplate is null)
                 {
-                    <HamkareIconButton tabindex="2" aria-label="@Localizer[LanguageResource.HamkareCarousel_Next]" Class="@NavigationButtonsClassName" Style="z-index:3;opacity:0.75" Icon="@NextIcon" OnClick="Next" Color="Color.Inherit" />
+                    <HamkareIconButton tabindex="2" aria-label="@Localizer[LanguageResource.HamkareCarousel_Next]" Class="@NavigationButtonsClassName" Style="z-index:3;opacity:0.75" Icon="@NextIcon" OnClick="Next" Color="@(ArrowsColor ?? Color.Inherit)" />
                 }
                 else
                 {

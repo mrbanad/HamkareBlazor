@@ -13,7 +13,6 @@ using HamkareBlazor.Utilities;
 
 namespace HamkareBlazor
 {
-#nullable enable
     /// <summary>
     /// Represents a vertical set of values.
     /// </summary>
@@ -33,8 +32,6 @@ namespace HamkareBlazor
         [CascadingParameter]
         public HamkareDataGrid<T> DataGrid { get; set; } = null!;
 
-        //[CascadingParameter(Name = "HeaderCell")] public HeaderCell<T> HeaderCell { get; set; }
-
         /// <summary>
         /// The value stored in this column.
         /// </summary>
@@ -45,12 +42,6 @@ namespace HamkareBlazor
         /// </summary>
         [Parameter]
         public EventCallback<T> ValueChanged { get; set; }
-
-        //[Parameter] public bool Visible { get; set; } = true;
-
-        //[Parameter] public string Field { get; set; }
-
-        //[Parameter] public Type FieldType { get; set; }
 
         /// <summary>
         /// The display text for this column.
@@ -312,10 +303,24 @@ namespace HamkareBlazor
         public SortDirection InitialDirection { get; set; } = SortDirection.None;
 
         /// <summary>
+        /// The sort direction applied when this column is unsorted and the header is clicked for the first time.
+        /// </summary>
+        /// <remarks>
+        /// Defaults to <see cref="SortDirection.Ascending"/>.
+        /// </remarks>
+        [Parameter]
+        public SortDirection InitialSortDirection { get; set; } = SortDirection.Ascending;
+
+        /// <summary>
         /// The icon shown when <see cref="Sortable"/> is <c>true</c>.
         /// </summary>
+        /// <remarks>
+        /// Defaults to <c>null</c>, which falls back to <see cref="HamkareDataGrid{T}.SortIcon"/>.
+        /// </remarks>
         [Parameter]
-        public string SortIcon { get; set; } = Icons.Material.Filled.ArrowUpward;
+        [Category(CategoryTypes.DataGrid.Appearance)]
+        [Obsolete("Column-level sort icon customization is no longer supported. Configure HamkareDataGrid.SortIcon or use HeaderTemplate for full header customization.", true)]
+        public string? SortIcon { get; set; }
 
         /// <summary>
         /// Allows values in this column to be grouped.
@@ -379,7 +384,7 @@ namespace HamkareBlazor
         /// The culture used to parse, filter, and display values in this column.
         /// </summary>
         /// <remarks>
-        /// Defaults to <see cref="HamkareDataGrid{T}.Culture"/>.
+        /// Defaults to <see cref="HamkareDataGrid{T}.Culture"/>.  When neither value is set, formatting uses the current culture.
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.Table.Appearance)]
@@ -438,6 +443,24 @@ namespace HamkareBlazor
         /// <summary>
         /// The template for editing values in this cell.
         /// </summary>
+        /// <remarks>
+        /// <para>
+        /// When <see cref="HamkareDataGrid{T}.EditMode"/> is <see cref="DataGridEditMode.Form"/>, the built-in Save button
+        /// automatically invokes <see cref="HamkareDataGrid{T}.CommittedItemChanges"/> — no extra handling is required.
+        /// </para>
+        /// <para>
+        /// When <see cref="HamkareDataGrid{T}.EditMode"/> is <see cref="DataGridEditMode.Cell"/>, standard columns commit
+        /// their value automatically on change. Custom controls inside an <see cref="EditTemplate"/> do not trigger
+        /// <see cref="HamkareDataGrid{T}.CommittedItemChanges"/> automatically. Track changes directly in a value-changed
+        /// handler instead:
+        /// </para>
+        /// <code>
+        /// &lt;EditTemplate&gt;
+        ///     &lt;HamkareDatePicker Date="@context.Item.Date"
+        ///         DateChanged="@(d => { context.Item.Date = d; TrackChange(context.Item); })" /&gt;
+        /// &lt;/EditTemplate&gt;
+        /// </code>
+        /// </remarks>
         [Parameter]
         public RenderFragment<CellContext<T>>? EditTemplate { get; set; }
 
@@ -499,6 +522,7 @@ namespace HamkareBlazor
 
         internal string FooterClassname =>
             new CssBuilder("hamkare-table-cell")
+                .AddClass("footer-cell")
                 .AddClass("hamkare-table-cell-hide", HideSmall)
                 .AddClass(Class)
                 .Build();
@@ -534,7 +558,7 @@ namespace HamkareBlazor
         {
             get
             {
-                return Sortable ?? DataGrid?.SortMode != SortMode.None;
+                return Sortable ?? (DataGrid?.SortMode != SortMode.None);
             }
         }
 
@@ -567,6 +591,9 @@ namespace HamkareBlazor
         private FilterContext<T> filterContext = null!;
         internal FooterContext<T> footerContext = null!;
 
+        // Cached filter definition to avoid repeated lookups during rendering
+        private IFilterDefinition<T>? _cachedFilterDefinition;
+
         /// <summary>
         /// The context used for filtering values in this column.
         /// </summary>
@@ -574,16 +601,34 @@ namespace HamkareBlazor
         {
             get
             {
-                // Make sure that when we access filterContext properties, they have been defined...
-                if (filterContext.FilterDefinition == null)
+                Debug.Assert(DataGrid is not null);
+
+                // Check if the cached filter definition is still valid in the grid's FilterDefinitions
+                var existingFilterDefinition = DataGrid.FilterDefinitions.FirstOrDefault(fd => fd.Column == this);
+
+                if (existingFilterDefinition != null)
                 {
-                    Debug.Assert(DataGrid is not null);
-                    var operators = GetFilterOperators(FieldType.Identify(PropertyType));
-                    var filterDefinition = DataGrid.CreateFilterDefinitionInstance();
-                    filterDefinition.Title = Title;
-                    filterDefinition.Operator = operators.FirstOrDefault();
-                    filterDefinition.Column = this;
-                    filterContext.FilterDefinition = filterDefinition;
+                    // Use the existing filter definition from the grid
+                    if (_cachedFilterDefinition != existingFilterDefinition)
+                    {
+                        _cachedFilterDefinition = existingFilterDefinition;
+                        filterContext.FilterDefinition = existingFilterDefinition;
+                    }
+                }
+                else
+                {
+                    // No filter exists in the grid - check if we have a stale reference or need to create a new one
+                    if (_cachedFilterDefinition != null || filterContext.FilterDefinition == null)
+                    {
+                        // Clear the stale cached reference and create a new filter definition
+                        _cachedFilterDefinition = null;
+                        var operators = GetFilterOperators(FieldType.Identify(PropertyType));
+                        var filterDefinition = DataGrid.CreateFilterDefinitionInstance();
+                        filterDefinition.Title = Title;
+                        filterDefinition.Operator = operators.FirstOrDefault();
+                        filterDefinition.Column = this;
+                        filterContext.FilterDefinition = filterDefinition;
+                    }
                 }
 
                 return filterContext;
@@ -602,9 +647,11 @@ namespace HamkareBlazor
                 .WithChangeHandler(OnGroupingParameterChangedAsync);
             _groupExpandedState = registerScope.RegisterParameter<bool>(nameof(GroupExpanded))
                 .WithParameter(() => GroupExpanded)
+                .WithEventCallback(() => GroupExpandedChanged)
                 .WithChangeHandler(OnGroupExpandedChangedAsync);
             _groupByOrderState = registerScope.RegisterParameter<int>(nameof(GroupByOrder))
                 .WithParameter(() => GroupByOrder)
+                .WithEventCallback(() => GroupByOrderChanged)
                 .WithChangeHandler(OnGroupByOrderChangedAsync);
         }
 
@@ -637,21 +684,6 @@ namespace HamkareBlazor
 
             // Add the HeaderContext
             headerContext = new HeaderContext<T>(DataGrid);
-
-            // Add the FilterContext
-            //if (filterable)
-            //{
-            //    filterContext = new FilterContext<T>(DataGrid);
-            //    var operators = FilterOperator.GetOperatorByDataType(dataType);
-            //    filterContext.FilterDefinition = new FilterDefinition<T>()
-            //    {
-            //        DataGrid = this.DataGrid,
-            //        Field = PropertyName,
-            //        FieldType = dataType,
-            //        Title = Title,
-            //        Operator = operators.FirstOrDefault()
-            //    };
-            //}
 
             // Add the FilterContext
             filterContext = new FilterContext<T>(DataGrid);
@@ -752,6 +784,21 @@ namespace HamkareBlazor
         /// </summary>
         public virtual void Dispose()
         {
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// Releases resources used by this column.
+        /// </summary>
+        /// <param name="disposing">When <c>true</c>, managed resources should be released.</param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposing)
+            {
+                return;
+            }
+
             if (DataGrid != null)
                 DataGrid.RemoveColumn(this);
         }

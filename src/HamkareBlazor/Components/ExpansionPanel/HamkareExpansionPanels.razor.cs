@@ -3,7 +3,6 @@ using HamkareBlazor.Utilities;
 
 namespace HamkareBlazor
 {
-#nullable enable
     /// <summary>
     /// A container which manages <see cref="HamkareExpansionPanel"/> components such that when one panel is expanded the others are collapsed automatically.
     /// </summary>
@@ -11,7 +10,7 @@ namespace HamkareBlazor
     /// <seealso cref="HamkareCollapse"/>
     public partial class HamkareExpansionPanels : HamkareComponentBase
     {
-        private List<HamkareExpansionPanel> _panels = new();
+        private readonly List<HamkareExpansionPanel> _panels = new();
 
         protected string Classname =>
             new CssBuilder("hamkare-expansion-panels")

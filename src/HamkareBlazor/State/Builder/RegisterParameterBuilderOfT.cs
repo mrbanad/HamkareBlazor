@@ -8,7 +8,6 @@ using HamkareBlazor.State.Comparer;
 
 namespace HamkareBlazor.State.Builder;
 
-#nullable enable
 /// <summary>
 /// Builder class for constructing instances of <see cref="ParameterState{T}"/>.
 /// </summary>
@@ -201,10 +200,11 @@ public class RegisterParameterBuilder<T> : IParameterBuilderAttach
     private ParameterStateInternal<T> CreateParameterState()
     {
         ArgumentNullException.ThrowIfNull(_parameterName);
+        ArgumentNullException.ThrowIfNull(_getParameterValueFunc);
 
         var parameterState = ParameterStateInternal<T>.Attach(
             new ParameterMetadata(_parameterName, _handlerName, _comparerParameterName),
-            _getParameterValueFunc ?? throw new ArgumentNullException(nameof(_getParameterValueFunc)),
+            _getParameterValueFunc,
             _eventCallbackFunc,
             _parameterChangedHandler,
             _comparer);

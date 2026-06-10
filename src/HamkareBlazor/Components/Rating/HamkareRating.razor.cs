@@ -5,7 +5,6 @@ using HamkareBlazor.Utilities;
 
 namespace HamkareBlazor
 {
-#nullable enable
 
     /// <summary>
     /// Ratings provide insight regarding other's opinions and experiences with a product. Collecting user feedback via ratings is a simple analytic that can provide a lot of feedback to your product or application.
@@ -220,7 +219,15 @@ namespace HamkareBlazor
             }
         }
 
-        internal Task HandleItemHoveredAsync(int? itemValue) => SetHoveredValueAsync(itemValue);
+        internal Task HandleItemHoveredAsync(int? itemValue)
+        {
+            if (ReadOnly || Disabled)
+            {
+                return Task.CompletedTask;
+            }
+
+            return SetHoveredValueAsync(itemValue);
+        }
 
         private async Task IncreaseValueAsync(int val)
         {

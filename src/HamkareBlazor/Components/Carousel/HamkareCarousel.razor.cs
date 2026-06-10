@@ -4,7 +4,6 @@ using HamkareBlazor.Utilities;
 
 namespace HamkareBlazor
 {
-#nullable enable
     /// <summary>
     /// Represents a set of slides which transition after a delay.
     /// </summary>
@@ -12,11 +11,14 @@ namespace HamkareBlazor
     /// <seealso cref="HamkareCarouselItem" />
     public partial class HamkareCarousel<TData> : HamkareBaseBindableItemsControl<HamkareCarouselItem, TData>, IAsyncDisposable
     {
-        private Timer? _timer;
+        private ITimer? _timer;
         private bool _disposing;
         private Color _currentColor = Color.Inherit;
         private readonly ParameterState<bool> _autoCycleState;
         private readonly ParameterState<TimeSpan> _cycleTimeoutState;
+
+        [Inject]
+        private TimeProvider TimeProvider { get; set; } = null!;
 
         protected string Classname => new CssBuilder("hamkare-carousel")
             .AddClass($"hamkare-carousel-{(BulletsColor ?? _currentColor).ToStringFast(true)}")
@@ -33,6 +35,9 @@ namespace HamkareBlazor
             .AddClass(BulletsClass)
             .Build();
 
+        /// <summary>
+        /// Displays carousel controls right-to-left.
+        /// </summary>
         [CascadingParameter(Name = "RightToLeft")]
         public bool RightToLeft { get; set; }
 
@@ -75,6 +80,16 @@ namespace HamkareBlazor
         [Parameter]
         [Category(CategoryTypes.Carousel.Appearance)]
         public Position BulletsPosition { get; set; } = Position.Bottom;
+
+        /// <summary>
+        /// The color of arrows when <see cref="ShowArrows"/> is <c>true</c>.
+        /// </summary>
+        /// <remarks>
+        /// Defaults to <c>null</c>.  When <c>null</c>, <see cref="Color.Inherit"/> is used.
+        /// </remarks>
+        [Parameter]
+        [Category(CategoryTypes.Carousel.Appearance)]
+        public Color? ArrowsColor { get; set; }
 
         /// <summary>
         /// The color of bullets when <see cref="ShowBullets"/> is <c>true</c>.
@@ -301,7 +316,7 @@ namespace HamkareBlazor
         /// </summary>
         private ValueTask StopTimerAsync()
         {
-            _timer?.Change(Timeout.Infinite, Timeout.Infinite);
+            _timer?.Change(Timeout.InfiniteTimeSpan, Timeout.InfiniteTimeSpan);
 
             return ValueTask.CompletedTask;
         }
@@ -332,7 +347,7 @@ namespace HamkareBlazor
             {
                 // Prevent timer creation after or while disposal, which would result in a memory leak.
                 if (_disposing) return;
-                _timer = new Timer(TimerElapsed, null, _autoCycleState.Value ? _cycleTimeoutState.Value : Timeout.InfiniteTimeSpan, _cycleTimeoutState.Value);
+                _timer = TimeProvider.CreateTimer(TimerElapsed, null, _autoCycleState.Value ? _cycleTimeoutState.Value : Timeout.InfiniteTimeSpan, _cycleTimeoutState.Value);
             }
         }
 

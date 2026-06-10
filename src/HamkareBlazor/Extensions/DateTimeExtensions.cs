@@ -7,7 +7,6 @@ using System.Globalization;
 
 namespace HamkareBlazor.Extensions;
 
-#nullable enable
 /// <summary>
 /// Represents methods added to DateTime types.
 /// </summary>

@@ -7,7 +7,6 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace HamkareBlazor
 {
-#nullable enable
     /// <summary>
     /// Represents the logic of a filter applied to <see cref="HamkareGrid"/> data.
     /// </summary>

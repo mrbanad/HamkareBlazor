@@ -2,7 +2,6 @@
 
 namespace HamkareBlazor;
 
-#nullable enable
 /// <summary>
 /// Factory helpers for creating converter chains from existing converters or delegate functions.
 /// </summary>

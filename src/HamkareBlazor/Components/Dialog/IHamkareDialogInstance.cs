@@ -4,7 +4,6 @@
 
 namespace HamkareBlazor;
 
-#nullable enable
 public interface IHamkareDialogInstance
 {
     /// <summary>

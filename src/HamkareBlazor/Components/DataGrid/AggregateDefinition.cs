@@ -12,7 +12,6 @@ using HamkareBlazor.Utilities.Expressions;
 
 namespace HamkareBlazor
 {
-#nullable enable
     /// <summary>
     /// Represents a function which calculates aggregate values such as counts, sums, averages, and custom functions.
     /// </summary>

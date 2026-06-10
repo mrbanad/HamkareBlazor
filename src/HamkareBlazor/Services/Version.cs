@@ -4,10 +4,12 @@
 
 namespace HamkareBlazor;
 
-#nullable enable
 /// <summary>
-/// Provides metadata about the HamkareBlazor library.
+/// Central place to read runtime library metadata such as the HamkareBlazor version.
 /// </summary>
+/// <remarks>
+/// Useful for diagnostics, bug reports, and displaying version info in app footers or about dialogs without hard-coding values.
+/// </remarks>
 public static class Metadata
 {
     /// <summary>

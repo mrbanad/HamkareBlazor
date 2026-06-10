@@ -5,7 +5,6 @@ using HamkareBlazor.Utilities;
 
 namespace HamkareBlazor
 {
-#nullable enable
 
     /// <summary>
     /// A picture displayed via an SVG path or font.

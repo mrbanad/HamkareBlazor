@@ -4,7 +4,6 @@ using HamkareBlazor.Utilities;
 
 namespace HamkareBlazor
 {
-#nullable enable
     /// <summary>
     /// A container for content which can be collapsed and expanded.
     /// </summary>
@@ -102,14 +101,17 @@ namespace HamkareBlazor
             {
                 _state = CollapseState.Entered;
                 StateHasChanged();
+                return OnAnimationEnd.InvokeAsync(_expandedState.Value);
             }
-            else if (_state == CollapseState.Exiting)
+
+            if (_state == CollapseState.Exiting)
             {
                 _state = CollapseState.Exited;
                 StateHasChanged();
+                return OnAnimationEnd.InvokeAsync(_expandedState.Value);
             }
 
-            return OnAnimationEnd.InvokeAsync(_expandedState.Value);
+            return Task.CompletedTask;
         }
     }
 }

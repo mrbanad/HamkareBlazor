@@ -7,7 +7,6 @@ using HamkareBlazor.Utilities;
 
 namespace HamkareBlazor;
 
-#nullable enable
 /// <summary>
 /// Represents the main content area of the <see cref="HamkareLayout"/>.
 /// </summary>

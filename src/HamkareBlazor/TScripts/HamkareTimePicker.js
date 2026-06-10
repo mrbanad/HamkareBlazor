@@ -2,7 +2,14 @@
 // HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+/**
+ * Pointer interaction model for the analog clock UI in HamkareTimePicker.
+ * Tracks pressed state so drag-over-stick selection remains continuous.
+ */
 window.hamkareTimePicker = {
+    /**
+     * Attaches pointer handlers for clock stick hover/select interactions.
+     */
     initPointerEvents: (clock, dotNetHelper) => {
         let isPointerDown = false;
 
@@ -20,7 +27,7 @@ window.hamkareTimePicker = {
             // Set the selected value to the stick that the pointer went down on.
             if (event.target.classList.contains('hamkare-hour') || event.target.classList.contains('hamkare-minute')) {
                 const attributeValue = event.target.getAttribute('data-stick-value');
-                const stickValue = attributeValue ? parseInt(attributeValue) : -1; // Ensure an integer.
+                const stickValue = attributeValue ? Number.parseInt(attributeValue, 10) : -1; // Ensure an integer.
 
                 dotNetHelper.invokeMethodAsync('SelectTimeFromStick', stickValue, false);
             }
@@ -38,7 +45,7 @@ window.hamkareTimePicker = {
 
             if (event.target.classList.contains('hamkare-hour') || event.target.classList.contains('hamkare-minute')) {
                 const attributeValue = event.target.getAttribute('data-stick-value');
-                const stickValue = attributeValue ? parseInt(attributeValue) : -1; // Ensure an integer.
+                const stickValue = attributeValue ? Number.parseInt(attributeValue, 10) : -1; // Ensure an integer.
 
                 dotNetHelper.invokeMethodAsync('OnStickClick', stickValue);
             }
@@ -53,7 +60,7 @@ window.hamkareTimePicker = {
             }
 
             const attributeValue = event.target.getAttribute('data-stick-value');
-            const stickValue = attributeValue ? parseInt(attributeValue) : -1; // Ensure an integer.
+            const stickValue = attributeValue ? Number.parseInt(attributeValue, 10) : -1; // Ensure an integer.
 
             dotNetHelper.invokeMethodAsync('SelectTimeFromStick', stickValue, true);
 
@@ -73,6 +80,9 @@ window.hamkareTimePicker = {
         };
     },
 
+    /**
+     * Detaches pointer handlers previously registered on the clock container.
+     */
     destroyPointerEvents: (container) => {
         if (container == null) {
             return;

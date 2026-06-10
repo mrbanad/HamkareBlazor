@@ -4,7 +4,6 @@ using HamkareBlazor.Utilities;
 
 namespace HamkareBlazor;
 
-#nullable enable
 
 /// <summary>
 /// A clickable link which can navigate to a URL.

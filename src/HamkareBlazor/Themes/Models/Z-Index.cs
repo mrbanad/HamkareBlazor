@@ -1,6 +1,5 @@
 ﻿namespace HamkareBlazor
 {
-#nullable enable
     /// <summary>
     /// Represents the Z-index values for different components.
     /// </summary>

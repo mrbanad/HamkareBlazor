@@ -7,13 +7,17 @@ using HamkareBlazor.Utilities;
 
 namespace HamkareBlazor;
 
-#nullable enable
 
 /// <summary>
 /// Manages layout of its child items along the vertical or horizontal axis with optional spacing.
 /// </summary>
 public partial class HamkareStack : HamkareComponentBase
 {
+    private string? Role =>
+        string.Equals(HtmlTag, "div", StringComparison.OrdinalIgnoreCase)
+            ? "group"
+            : null;
+
     protected string Classname =>
         new CssBuilder("d-flex")
             .AddClass(getFlexDirection())
@@ -22,7 +26,6 @@ public partial class HamkareStack : HamkareComponentBase
             .AddClass($"flex-{Wrap?.ToStringFast(true)}", Wrap is not null)
             .AddClass($"gap-{Spacing}", Spacing >= 0)
             .AddClass($"flex-grow-{StretchItems?.ToStringFast(true)}", StretchItems is not null and not HamkareBlazor.StretchItems.None)
-            .AddClass(Background ? "rounded-lg stack-title-table p-4" : string.Empty)
             .AddClass(Class)
             .Build();
 
@@ -173,7 +176,14 @@ public partial class HamkareStack : HamkareComponentBase
     [Parameter]
     [Category(CategoryTypes.Stack.Behavior)]
     public RenderFragment? ChildContent { get; set; }
-    
-    [Category(CategoryTypes.Stack.Appearance)]
-    [Parameter] public bool Background { get; set; }
+
+    /// <summary>
+    /// The HTML tag rendered for this component.
+    /// </summary>
+    /// <remarks>
+    /// Defaults to <c>div</c>.
+    /// </remarks>
+    [Parameter]
+    [Category(CategoryTypes.Stack.Behavior)]
+    public string HtmlTag { get; set; } = "div";
 }

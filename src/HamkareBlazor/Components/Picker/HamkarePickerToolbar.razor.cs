@@ -12,7 +12,6 @@ namespace HamkareBlazor;
 /// </summary>
 /// <seealso cref="HamkarePicker{T}" />
 /// <seealso cref="HamkarePickerContent" />
-#nullable enable
 public partial class HamkarePickerToolbar : HamkareComponentBase
 {
     protected string Classname =>

@@ -5,6 +5,7 @@
 using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
@@ -13,7 +14,6 @@ using HamkareBlazor.Utilities;
 
 namespace HamkareBlazor
 {
-#nullable enable
     /// <summary>
     /// Represents a pager for navigating pages of a <see cref="HamkareDataGrid{T}"/>.
     /// </summary>
@@ -100,19 +100,20 @@ namespace HamkareBlazor
                 if (DataGrid == null)
                     return "DataGrid==null";
                 Debug.Assert(DataGrid is not null);
-                var firstItem = DataGrid.GetFilteredItemsCount() == 0 ? 0 : DataGrid.CurrentPage * DataGrid.RowsPerPage + 1;
+                var firstItem = DataGrid.GetFilteredItemsCount() == 0 ? 0 : (DataGrid.CurrentPage * DataGrid.RowsPerPage) + 1;
                 var lastItem = Math.Min((DataGrid.CurrentPage + 1) * DataGrid.RowsPerPage, DataGrid.GetFilteredItemsCount());
-                var allItems = DataGrid?.GetFilteredItemsCount() ?? 0;
+                var allItems = DataGrid.GetFilteredItemsCount();
+                var culture = DataGrid.Culture ?? Thread.CurrentThread.CurrentUICulture;
 
-                if (InfoFormat.Contains("{first_item}") || InfoFormat.Contains("{last_item}") || InfoFormat.Contains("{all_items}"))
+                if (string.IsNullOrEmpty(InfoFormat))
                 {
-                    return InfoFormat
-                        .Replace("{first_item}", $"{firstItem}")
-                        .Replace("{last_item}", $"{lastItem}")
-                        .Replace("{all_items}", $"{allItems}");
+                    return Localizer[LanguageResource.HamkareDataGridPager_InfoFormat, firstItem.ToString("N0", culture), lastItem.ToString("N0", culture), allItems.ToString("N0", culture)];
                 }
 
-                return Localizer[LanguageResource.HamkareDataGridPager_InfoFormat, firstItem, lastItem, allItems];
+                return InfoFormat
+                    .Replace("{first_item}", firstItem.ToString("N0", culture))
+                    .Replace("{last_item}", lastItem.ToString("N0", culture))
+                    .Replace("{all_items}", allItems.ToString("N0", culture));
             }
         }
 
@@ -122,9 +123,6 @@ namespace HamkareBlazor
 
         protected string Classname =>
             new CssBuilder("hamkare-table-pagination-toolbar")
-                .AddClass("d-flex")
-                .AddClass("justify-content-center")
-                .AddClass("align-items-center")
                 .AddClass(Class)
                 .Build();
 
@@ -168,6 +166,21 @@ namespace HamkareBlazor
         /// </summary>
         public void Dispose()
         {
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// Releases resources used by this pager.
+        /// </summary>
+        /// <param name="disposing">When <c>true</c>, managed resources should be released.</param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposing)
+            {
+                return;
+            }
+
             if (DataGrid != null)
             {
                 DataGrid.PagerStateHasChangedEvent -= StateHasChanged;

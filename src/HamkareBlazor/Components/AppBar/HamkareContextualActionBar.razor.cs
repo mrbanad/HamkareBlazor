@@ -7,7 +7,6 @@ using HamkareBlazor.State;
 
 namespace HamkareBlazor;
 
-#nullable enable
 
 /// <summary>
 /// A contextual app bar.

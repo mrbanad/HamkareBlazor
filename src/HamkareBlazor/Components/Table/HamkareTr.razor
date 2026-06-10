@@ -1,33 +1,38 @@
 ﻿@namespace HamkareBlazor
 @implements IDisposable
+@using HamkareBlazor.Resources
 @inherits HamkareComponentBase
+@inject InternalHamkareLocalizer Localizer
 
-<tr id="@RowId" class="@Classname" @onclick="@OnRowClickedAsync" @onpointerenter="@RowMouseEnterEventCallback" @onpointerleave="@RowMouseLeaveEventCallback" style="@Style" @attributes="@UserAttributes">
+<tr id="@RowId" class="@Classname" @onclick="@OnRowClickedAsync" @onpointerenter="@RowMouseEnterEventCallback" @onpointerleave="@RowMouseLeaveEventCallback" style="@Style"
+    @attributes="@UserAttributes" aria-disabled="@Disabled">
     @if (Context?.Table?.Editable == true && ((Context?.Table.EditButtonPosition.DisplayEditButtonAtStart() == true && Context?.Table.EditTrigger == TableEditTrigger.EditButton) || Context?.Table.ApplyButtonPosition.DisplayApplyButtonAtStart() == true))
     {
         @* Add datalabel as a placeholder to avoid jumps on small viewports *@
         <HamkareTd DataLabel="&nbsp;" Class="py-3">
             @if (Editable && Context?.Table.EditTrigger == TableEditTrigger.EditButton && !ReferenceEquals(Context?.Table._editingItem, Item) && (!Context?.Table.ReadOnly ?? false) && Context?.Table.EditButtonPosition.DisplayEditButtonAtStart() == true)
             {
-                @if (Context?.Table.EditButtonContent != null)
+                if (Context?.Table.EditButtonContent != null)
                 {
                     @Context?.Table.EditButtonContent(new EditButtonContext(StartEditingItem, Context.EditButtonDisabled(Item), Item))
                 }
                 else
                 {
-                    <HamkareIconButton Size="@Size.Small" Icon="@Icons.Material.Outlined.Edit" Class="pa-0" OnClick="StartEditingItem" Disabled="Context?.EditButtonDisabled(Item) ?? false" />
+                    <HamkareIconButton Size="@Size.Small" Icon="@Icons.Material.Outlined.Edit" Class="pa-0" OnClick="StartEditingItem" Disabled="Context?.EditButtonDisabled(Item) ?? false"
+                        aria-label="@Localizer[LanguageResource.HamkareTable_EditRow]"/>
                 }
             }
             else if (ReferenceEquals(Context?.Table._editingItem, Item) && (!Context?.Table.ReadOnly ?? false) && Context?.Table.ApplyButtonPosition.DisplayApplyButtonAtStart() == true)
             {
                 <div style="display: flex;">
                     <HamkareTooltip Text="@Context?.Table?.CommitEditTooltip">
-                        <HamkareIconButton Class="pa-0" Icon="@Context?.Table?.CommitEditIcon" OnClick="FinishEdit" Size="@Size.Small" Disabled="@(!(Context?.Table?.Validator?.IsValid ?? false))" />
+                        <HamkareIconButton Class="pa-0" Icon="@Context?.Table?.CommitEditIcon" OnClick="FinishEdit" Size="@Size.Small" Disabled="@(!(Context?.Table?.Validator?.IsValid ?? false))" 
+                            aria-label="@Localizer[LanguageResource.HamkareTable_CommitRow]"/>
                     </HamkareTooltip>
                     @if (Context?.Table?.CanCancelEdit ?? false)
                     {
                         <HamkareTooltip Text="@Context?.Table?.CancelEditTooltip">
-                            <HamkareIconButton Class="pa-0 ml-4" Icon="@Context?.Table?.CancelEditIcon" OnClick="CancelEdit" Size="@Size.Small" />
+                            <HamkareIconButton Class="pa-0 ml-4" Icon="@Context?.Table?.CancelEditIcon" OnClick="CancelEdit" Size="@Size.Small" aria-label="@Localizer[LanguageResource.HamkareTable_CancelEditRow]" />
                         </HamkareTooltip>
                     }
                 </div>
@@ -52,25 +57,27 @@
         <HamkareTd DataLabel="&nbsp;" Class="py-3">
             @if (Editable && Context?.Table.EditTrigger == TableEditTrigger.EditButton && !ReferenceEquals(Context?.Table._editingItem, Item) && (!Context?.Table.ReadOnly ?? false) && Context?.Table.EditButtonPosition.DisplayEditButtonAtEnd() == true)
             {
-                @if (Context?.Table.EditButtonContent != null)
+                if (Context?.Table.EditButtonContent != null)
                 {
                     @Context?.Table.EditButtonContent(new EditButtonContext(StartEditingItem, Context.EditButtonDisabled(Item), Item))
                 }
                 else
                 {
-                    <HamkareIconButton Size="@Size.Small" Icon="@Icons.Material.Outlined.Edit" Class="pa-0" OnClick="StartEditingItem" Disabled="Context?.EditButtonDisabled(Item)?? false" />
+                    <HamkareIconButton Size="@Size.Small" Icon="@Icons.Material.Outlined.Edit" Class="pa-0" OnClick="StartEditingItem" Disabled="Context?.EditButtonDisabled(Item)?? false"
+                                   aria-label="@Localizer[LanguageResource.HamkareTable_EditRow]" />
                 }
             }
             else if (ReferenceEquals(Context?.Table._editingItem, Item) && (!Context?.Table.ReadOnly ?? false) && Context?.Table.ApplyButtonPosition.DisplayApplyButtonAtEnd() == true)
             {
                 <div style="display: flex;">
                     <HamkareTooltip Text="@Context.Table.CommitEditTooltip">
-                        <HamkareIconButton Class="pa-0" Icon="@Context.Table.CommitEditIcon" OnClick="FinishEdit" Size="@Size.Small" Disabled="@(!(Context?.Table.Validator?.IsValid ?? false))" />
+                        <HamkareIconButton Class="pa-0" Icon="@Context.Table.CommitEditIcon" OnClick="FinishEdit" Size="@Size.Small" Disabled="@(!(Context?.Table.Validator?.IsValid ?? false))"
+                                       aria-label="@Localizer[LanguageResource.HamkareTable_CommitRow]" />
                     </HamkareTooltip>
                     @if (Context.Table.CanCancelEdit)
                     {
                         <HamkareTooltip Text="@Context.Table.CancelEditTooltip">
-                            <HamkareIconButton Class="pa-0 ml-4" Icon="@Context.Table.CancelEditIcon" OnClick="CancelEdit" Size="@Size.Small" />
+                            <HamkareIconButton Class="pa-0 ml-4" Icon="@Context.Table.CancelEditIcon" OnClick="CancelEdit" Size="@Size.Small" aria-label="@Localizer[LanguageResource.HamkareTable_CancelEditRow]" />
                         </HamkareTooltip>
                     }
                 </div>

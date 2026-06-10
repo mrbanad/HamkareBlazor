@@ -4,7 +4,6 @@
 
 namespace HamkareBlazor;
 
-#nullable enable
 
 /// <summary>
 /// Represents information about sorting in a <see cref="HamkareDataGrid{T}"/>.

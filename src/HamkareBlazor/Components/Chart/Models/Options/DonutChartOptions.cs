@@ -4,7 +4,6 @@
 
 namespace HamkareBlazor;
 
-#nullable enable
 /// <summary>
 /// Options specific to donut charts, extending <see cref="PieChartOptions"/>.
 /// </summary>

@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
 using HamkareBlazor.Utilities;
 
-#nullable enable
 namespace HamkareBlazor
 {
     /// <summary>
@@ -16,6 +15,8 @@ namespace HamkareBlazor
         private string? _internalText;
         private string? _oldText = null;
         private bool _shouldInitSizing;
+        private bool _shouldUpdateSizingParams;
+        private bool _shouldAdjustSizingAfterRender;
         private ElementReference _elementReference1;
         private readonly Lazy<DotNetObjectReference<HamkareInput<T>>> _dotNetReferenceLazy;
 
@@ -275,9 +276,42 @@ namespace HamkareBlazor
             await OnClearButtonClick.InvokeAsync(e);
         }
 
+        protected virtual async Task HandleSpinButtonPointerDownAsync()
+        {
+            await ElementReference.FocusAsync();
+        }
+
+        private readonly record struct AutoSizingVisualState(
+            Variant Variant,
+            Margin Margin,
+            Typo Typo,
+            Adornment Adornment,
+            string? Class,
+            string? Style,
+            bool Disabled);
+
+        private AutoSizingVisualState CaptureAutoSizingVisualState()
+            => new(Variant, Margin, Typo, Adornment, Class, Style, GetDisabledState());
+
+        private void ResetAutoSizingFlags()
+        {
+            _shouldInitSizing = false;
+            _shouldUpdateSizingParams = false;
+            _shouldAdjustSizingAfterRender = false;
+        }
+
+        private void SyncAutoSizingTextSnapshot()
+        {
+            _oldText = _internalText;
+        }
+
         /// <inheritdoc />
         public override async Task SetParametersAsync(ParameterView parameters)
         {
+            // Visual/style-affecting changes.
+            var oldVisualState = CaptureAutoSizingVisualState();
+
+            // Handled separately because they drive different lifecycle actions.
             var oldLines = Lines;
             var oldMaxLines = MaxLines;
             var oldSizing = Sizing;
@@ -285,32 +319,36 @@ namespace HamkareBlazor
             await base.SetParametersAsync(parameters);
 
             var newSizing = Sizing;
+            var hasAutoSizingVisualChange = oldVisualState != CaptureAutoSizingVisualState();
+            var hasAutoSizingParameterChange = oldLines != Lines || oldMaxLines != MaxLines || oldSizing != newSizing;
 
             // Always update internal text (TextUpdateSuppression removed)
             _internalText = ReadText;
 
-            // Flag dynamic sizing to be initialized on the next render.
             if (oldSizing == InputSizing.Fixed && newSizing != InputSizing.Fixed)
             {
                 _shouldInitSizing = true;
             }
 
-            if (IsJSRuntimeAvailable)
+            if (newSizing != InputSizing.Fixed && !_shouldInitSizing && hasAutoSizingVisualChange)
             {
-                if (oldSizing != InputSizing.Fixed && newSizing == InputSizing.Fixed)
+                // Re-measure after style/class-related updates because runtime classes and computed styles can affect textarea metrics.
+                _shouldAdjustSizingAfterRender = true;
+            }
+
+            if (oldSizing != InputSizing.Fixed && newSizing == InputSizing.Fixed)
+            {
+                // Disable dynamic sizing.
+                ResetAutoSizingFlags();
+                if (IsJSRuntimeAvailable)
                 {
-                    // Disable dynamic sizing.
-                    _shouldInitSizing = false;
                     await JsRuntime.InvokeVoidAsyncWithErrorHandling("hamkareInputSizing.destroy", ElementReference);
                 }
-                else if (oldLines != Lines || oldMaxLines != MaxLines || oldSizing != newSizing)
-                {
-                    if (newSizing != InputSizing.Fixed && !_shouldInitSizing)
-                    {
-                        // Update dynamic sizing parameters (if it was already enabled).
-                        await JsRuntime.InvokeVoidAsyncWithErrorHandling("hamkareInputSizing.updateParams", ElementReference, MaxLines);
-                    }
-                }
+            }
+            else if (newSizing != InputSizing.Fixed && !_shouldInitSizing && hasAutoSizingParameterChange)
+            {
+                // Defer until OnAfterRender so measurements use the latest DOM/classes.
+                _shouldUpdateSizingParams = true;
             }
         }
 
@@ -323,20 +361,27 @@ namespace HamkareBlazor
             {
                 if (firstRender || _shouldInitSizing)
                 {
-                    _shouldInitSizing = false;
+                    ResetAutoSizingFlags();
                     await JsRuntime.InvokeVoidAsyncWithErrorHandling("hamkareInputSizing.init", ElementReference, MaxLines);
-                    _oldText = _internalText;
+                    SyncAutoSizingTextSnapshot();
                 }
-                else if (_oldText != _internalText)
+                else if (_shouldUpdateSizingParams)
                 {
+                    _shouldUpdateSizingParams = false;
+                    _shouldAdjustSizingAfterRender = false;
+                    await JsRuntime.InvokeVoidAsyncWithErrorHandling("hamkareInputSizing.updateParams", ElementReference, MaxLines);
+                    SyncAutoSizingTextSnapshot();
+                }
+                else if (_shouldAdjustSizingAfterRender || _oldText != _internalText)
+                {
+                    _shouldAdjustSizingAfterRender = false;
                     await JsRuntime.InvokeVoidAsyncWithErrorHandling("hamkareInputSizing.adjustHeight", ElementReference);
-                    _oldText = _internalText;
+                    SyncAutoSizingTextSnapshot();
                 }
             }
             if (firstRender)
             {
-                // add onblur event through javascript which will trigger CallOnBlurredAsync
-                // must do in javascript or it won't detect ios Keyboard button - limitation of Blazor/React/other frameworks of the DOM
+                // Attach a JS blur fallback for cases where focus is dismissed without Blazor observing the native blur event.
                 await ElementReference.HamkareAttachBlurEventWithJS(_dotNetReferenceLazy.Value);
             }
 
@@ -349,8 +394,13 @@ namespace HamkareBlazor
         /// <param name="text">The new value.</param>
         public Task SetText(string? text)
         {
+            return SetText(text, updateValue: true);
+        }
+
+        internal Task SetText(string? text, bool updateValue)
+        {
             _internalText = text;
-            return SetTextAndUpdateValueAsync(text);
+            return SetTextAndUpdateValueAsync(text, updateValue);
         }
 
         // Certain HTML5 inputs (dates and color) have a native placeholder
@@ -388,9 +438,11 @@ namespace HamkareBlazor
         [JSInvokable]
         public async Task CallOnBlurredAsync()
         {
-            // If onblurred already fired then cancel
+            // If native blur already ran, do not process the fallback callback again.
             if (!_isFocused)
+            {
                 return;
+            }
 
             await OnBlurredAsync(new FocusEventArgs { Type = "jsBlur.OnBlur" });
         }

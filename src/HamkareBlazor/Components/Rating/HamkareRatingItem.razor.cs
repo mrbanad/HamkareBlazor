@@ -9,7 +9,6 @@ using HamkareBlazor.Utilities;
 
 namespace HamkareBlazor
 {
-#nullable enable
 
     /// <summary>
     /// A clickable item as part of a <see cref="HamkareRating"/>.

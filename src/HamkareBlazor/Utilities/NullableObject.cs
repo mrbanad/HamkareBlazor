@@ -2,7 +2,6 @@
 
 namespace HamkareBlazor.Utilities;
 
-#nullable enable
 /// <summary>
 /// Represents a wrapper for an object that can be null.
 /// </summary>

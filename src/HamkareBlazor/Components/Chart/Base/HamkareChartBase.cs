@@ -8,7 +8,6 @@ using HamkareBlazor.Charts;
 using HamkareBlazor.State;
 using HamkareBlazor.Utilities;
 
-#nullable enable
 namespace HamkareBlazor;
 
 /// <summary>
@@ -161,7 +160,7 @@ public abstract class HamkareChartBase<T, TOptions> : HamkareComponentBase, IHam
     /// </remarks>
     [Parameter]
     [Category(CategoryTypes.Chart.Behavior)]
-    public bool CanHideSeries { get; set; } = false;
+    public bool CanHideSeries { get; set; }
 
     /// <summary>
     /// The palette of colors to be used for the legend.
@@ -173,6 +172,7 @@ public abstract class HamkareChartBase<T, TOptions> : HamkareComponentBase, IHam
     /// </summary>
     protected string Classname => new CssBuilder("hamkare-chart")
         .AddClass($"hamkare-chart-legend-{ConvertLegendPosition(LegendPosition).ToStringFast(true)}")
+        .AddClass("hamkare-chart-fill-bounds", MatchBoundsToSize)
         .AddClass(Class)
         .Build();
 

@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.Extensions.Logging;
 using HamkareBlazor.Utilities;
 
-#nullable enable
 namespace HamkareBlazor
 {
     /// <summary>
@@ -22,7 +21,7 @@ namespace HamkareBlazor
         private bool _isClearing;
         private bool _isProcessingValue;
         private int _selectedListItemIndex;
-        private int _elementKey = 0;
+        private readonly int _elementKey = 0;
         private int _returnedItemsCount;
         private bool _open;
         private bool _opening;
@@ -30,7 +29,7 @@ namespace HamkareBlazor
         private HamkareInput<string> _elementReference = null!;
         private CancellationTokenSource? _cancellationTokenSrc;
         private Task? _currentSearchTask;
-        private Timer? _debounceTimer;
+        private ITimer? _debounceTimer;
         private T[]? _items;
         private List<int> _enabledItemIndices = [];
         private bool _handleNextFocus;
@@ -41,6 +40,9 @@ namespace HamkareBlazor
         [Inject]
         private IPopoverService PopoverService { get; set; } = null!;
 
+        [Inject]
+        private TimeProvider TimeProvider { get; set; } = null!;
+
         protected string Classname =>
             new CssBuilder("hamkare-select")
                 .AddClass(Class)
@@ -48,6 +50,7 @@ namespace HamkareBlazor
 
         protected string InputClassname =>
             new CssBuilder("hamkare-select-input")
+                .AddClass("hamkare-readonly", GetReadOnlyState())
                 .AddClass(InputClass)
                 .Build();
 
@@ -266,6 +269,15 @@ namespace HamkareBlazor
         [Parameter]
         [Category(CategoryTypes.FormComponent.Behavior)]
         public int DebounceInterval { get; set; } = 100;
+
+        /// <summary>
+        /// Occurs when the <see cref="DebounceInterval"/> has elapsed.
+        /// </summary>
+        /// <remarks>
+        /// The current value of <see cref="HamkareBaseInput{T}.Text"/> is included in this event.
+        /// </remarks>
+        [Parameter]
+        public EventCallback<string> OnDebounceIntervalElapsed { get; set; }
 
         /// <summary>
         /// The custom template used to display unselected items.
@@ -518,7 +530,18 @@ namespace HamkareBlazor
 
         private bool IsLoading => _currentSearchTask is { IsCompleted: false };
 
-        private string CurrentIcon => !string.IsNullOrWhiteSpace(AdornmentIcon) ? AdornmentIcon : _open ? CloseIcon : OpenIcon;
+        private string CurrentIcon
+        {
+            get
+            {
+                if (!string.IsNullOrWhiteSpace(AdornmentIcon))
+                {
+                    return AdornmentIcon;
+                }
+
+                return _open ? CloseIcon : OpenIcon;
+            }
+        }
 
         /// <summary>
         /// Returns a value for the <c>autocomplete</c> attribute, either supplied by default or the one specified in the attribute overrides.
@@ -626,10 +649,15 @@ namespace HamkareBlazor
             if (DebounceInterval <= 0)
                 await OpenMenuAsync();
             else
-                _debounceTimer = new Timer(OnDebounceComplete, null, DebounceInterval, Timeout.Infinite);
+                _debounceTimer = TimeProvider.CreateTimer(OnDebounceComplete, null, TimeSpan.FromMilliseconds(DebounceInterval), Timeout.InfiniteTimeSpan);
         }
 
-        private void OnDebounceComplete(object? stateInfo) => InvokeAsync(OpenMenuAsync);
+        private void OnDebounceComplete(object? stateInfo)
+            => InvokeAsync(async () =>
+            {
+                await OnDebounceIntervalElapsed.InvokeAsync(ReadText);
+                await OpenMenuAsync();
+            });
 
         private void CancelToken()
         {

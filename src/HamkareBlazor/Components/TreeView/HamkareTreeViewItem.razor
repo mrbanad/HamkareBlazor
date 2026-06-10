@@ -17,7 +17,7 @@
                 @if (MultiSelection)
                 {
                     <HamkareCheckBox T="bool?" TriState Class="hamkare-treeview-item-checkbox" CheckedIcon="@CheckedIcon" UncheckedIcon="@UncheckedIcon" IndeterminateIcon="@GetIndeterminateIcon()"
-                                 @bind-Value:get="GetCheckBoxStateTriState()" @bind-Value:set="@(x=>OnCheckboxChangedAsync())" Disabled="@Disabled"></HamkareCheckBox>
+                                 @bind-Value:get="GetCheckBoxStateTriState()" @bind-Value:set="@(x => OnCheckboxChangedAsync())" Disabled="@GetDisabled()" ReadOnly="@GetReadOnly()"></HamkareCheckBox>
                 }
 
                 @if (HasIcon)

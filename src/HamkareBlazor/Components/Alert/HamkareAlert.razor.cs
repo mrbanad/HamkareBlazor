@@ -7,7 +7,6 @@ using HamkareBlazor.Utilities;
 
 namespace HamkareBlazor
 {
-#nullable enable
 
     /// <summary>
     /// Displays an important message which is statically embedded in the page content.
@@ -24,7 +23,7 @@ namespace HamkareBlazor
             .Build();
 
         protected string ClassPosition => new CssBuilder("hamkare-alert-position")
-            .AddClass($"justify-sm-{ConvertHorizontalAlignment(ContentAlignment).ToStringFast(true)}")
+            .AddClass($"justify-{ConvertHorizontalAlignment(ContentAlignment).ToStringFast(true)}")
             .Build();
 
         /// <summary>
@@ -46,6 +45,9 @@ namespace HamkareBlazor
             };
         }
 
+        /// <summary>
+        /// Displays content right-to-left.
+        /// </summary>
         [CascadingParameter(Name = "RightToLeft")]
         public bool RightToLeft { get; set; }
 
@@ -53,11 +55,11 @@ namespace HamkareBlazor
         /// Position of the text to the start (Left in LTR and right in RTL).
         /// </summary>
         /// <remarks>
-        /// Defaults to <see cref="HorizontalAlignment.Left"/>.
+        /// Defaults to <see cref="HorizontalAlignment.Start"/>.
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.Alert.Appearance)]
-        public HorizontalAlignment ContentAlignment { get; set; } = HorizontalAlignment.Left;
+        public HorizontalAlignment ContentAlignment { get; set; } = HorizontalAlignment.Start;
 
         /// <summary>
         /// Occurs when the close button has been clicked.
@@ -198,7 +200,7 @@ namespace HamkareBlazor
                     Severity.Success => Icons.Custom.Uncategorized.AlertSuccess,
                     Severity.Warning => Icons.Material.Outlined.ReportProblem,
                     Severity.Error => Icons.Material.Filled.ErrorOutline,
-                    _ => throw new ArgumentOutOfRangeException(nameof(Severity)),
+                    _ => throw new InvalidOperationException($"Unsupported {nameof(Severity)} value: {Severity}."),
                 };
             }
         }

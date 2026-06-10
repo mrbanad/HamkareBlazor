@@ -6,7 +6,6 @@ using HamkareBlazor.Utilities;
 
 namespace HamkareBlazor
 {
-#nullable enable
     /// <summary>
     /// Represents a dark color palette.
     /// </summary>

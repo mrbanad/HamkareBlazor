@@ -4,7 +4,6 @@
 
 namespace HamkareBlazor;
 
-#nullable enable
 /// <summary>
 /// Represents an observer for popover updates.
 /// </summary>

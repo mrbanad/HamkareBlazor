@@ -8,7 +8,6 @@ using HamkareBlazor.Utilities;
 
 namespace HamkareBlazor.Charts
 {
-#nullable enable
     /// <summary>
     /// Represents a single cell in a heat map chart.
     /// </summary>

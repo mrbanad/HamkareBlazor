@@ -3,7 +3,6 @@ using HamkareBlazor.Services;
 
 namespace HamkareBlazor;
 
-#nullable enable
 /// <summary>
 /// This customizable localization interceptor enables users to tailor existing localizations,
 /// incorporating features such as logging missing translations or completely redefining the localization selection process.

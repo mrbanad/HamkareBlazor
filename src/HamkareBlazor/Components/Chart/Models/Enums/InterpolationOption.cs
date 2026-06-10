@@ -3,7 +3,6 @@
 // See the LICENSE file in the project root for more information.
 using HamkareBlazor.Charts;
 
-#nullable enable
 
 namespace HamkareBlazor
 {

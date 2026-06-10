@@ -9,7 +9,6 @@ using HamkareBlazor.Interfaces;
 
 namespace HamkareBlazor
 {
-#nullable enable
     /// <summary>
     /// Represents the validation logic for a <see cref="HamkareDataGrid{T}"/> row.
     /// </summary>
@@ -35,7 +34,6 @@ namespace HamkareBlazor
             get => _errors.ToArray();
         }
 
-#nullable enable
         /// <summary>
         /// The data to validate for this row.
         /// </summary>
@@ -62,7 +60,6 @@ namespace HamkareBlazor
 
         void IForm.Update(IFormComponent formControl)
         {
-            //Validate(formControl);
         }
 
         protected HashSet<IFormComponent> _formControls = new HashSet<IFormComponent>();

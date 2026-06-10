@@ -14,7 +14,6 @@ using HamkareBlazor.Utilities;
 
 namespace HamkareBlazor
 {
-#nullable enable
     /// <summary>
     /// Represents a column filter shown when <see cref="HamkareDataGrid{T}.FilterMode"/> is <see cref="DataGridFilterMode.ColumnFilterRow"/>.
     /// </summary>
@@ -193,6 +192,7 @@ namespace HamkareBlazor
                 await DataGrid.ReloadServerData();
 
             DataGrid.GroupItems();
+            await DataGrid.NotifyFilterChangedAsync();
             ((IHamkareStateHasChanged)DataGrid).StateHasChanged();
         }
 

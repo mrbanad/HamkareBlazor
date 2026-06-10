@@ -6,7 +6,6 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace HamkareBlazor;
 
-#nullable enable
 
 /// <summary>
 /// The current state of a <see cref="HamkareTreeViewItem{T}"/>.

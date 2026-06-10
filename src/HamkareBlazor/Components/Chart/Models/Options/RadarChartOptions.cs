@@ -6,7 +6,6 @@ using HamkareBlazor.Charts;
 
 namespace HamkareBlazor;
 
-#nullable enable
 /// <summary>
 /// Options specific to radar charts, extending <see cref="DefaultRadialChartOptions"/>.
 /// </summary>
@@ -90,6 +89,23 @@ public class RadarChartOptions : DefaultRadialChartOptions, IRadialChartOptions,
     /// Default is 3.0.
     /// </summary>
     public double DataPointRadius { get; set; } = 3.0;
+
+    /// <summary>
+    /// The suggested maximum value for the axis.
+    /// </summary>
+    public double? AxisSuggestedMax { get; set; }
+
+    /// <summary>
+    /// The format applied to numbers on the axis.
+    /// </summary>
+    public string? AxisFormat { get; set; }
+
+    /// <summary>
+    /// Custom formatting function for radar axis values.
+    /// If set, this function will be used to convert radial axis values to strings for display purposes.
+    /// If not provided, <see cref="AxisFormat"/> will be used instead.
+    /// </summary>
+    public Func<double, string>? AxisToStringFunc { get; set; }
 
     /// <inheritdoc/>
     public override AggregationOption AggregationOption { get; set; } = AggregationOption.GroupByDataSet;

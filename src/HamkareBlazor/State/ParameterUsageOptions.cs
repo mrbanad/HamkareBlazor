@@ -4,7 +4,6 @@
 
 namespace HamkareBlazor.State;
 
-#nullable enable
 [Flags]
 public enum ParameterUsageOptions
 {

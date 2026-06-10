@@ -4,7 +4,6 @@
 
 namespace HamkareBlazor;
 
-#nullable enable
 public sealed class SvgPolygon : SvgPath
 {
     /// <summary>

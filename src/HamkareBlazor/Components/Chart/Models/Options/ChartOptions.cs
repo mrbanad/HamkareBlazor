@@ -5,7 +5,6 @@
 using HamkareBlazor.Charts;
 
 namespace HamkareBlazor;
-#nullable enable
 
 /// <summary>
 /// Represents configuration options for a chart, including tooltip formatting.

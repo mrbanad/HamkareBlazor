@@ -8,7 +8,6 @@ using HamkareBlazor.Utilities.Exceptions;
 
 namespace HamkareBlazor
 {
-#nullable enable
 
     /// <summary>
     /// A group of <see cref="HamkareRadio{T}"/> components.

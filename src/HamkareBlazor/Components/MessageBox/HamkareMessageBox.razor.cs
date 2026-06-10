@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Components.Web;
 using HamkareBlazor.State;
 using HamkareBlazor.Utilities;
 
-#nullable enable
 namespace HamkareBlazor
 {
     /// <summary>
@@ -32,6 +31,9 @@ namespace HamkareBlazor
                 .WithEventCallback(() => VisibleChanged)
                 .WithChangeHandler(OnVisibleChangedAsync);
         }
+
+        [CascadingParameter]
+        private HamkareDialogProvider? DialogProvider { get; set; }
 
         [Inject]
         private IDialogService DialogService { get; set; } = null!;
@@ -182,6 +184,8 @@ namespace HamkareBlazor
         /// </summary>
         [Parameter]
         public EventCallback<bool> VisibleChanged { get; set; }
+
+        internal bool IsButtonOrderReversed => DialogProvider?.ReverseMessageBoxButtonOrder ?? false;
 
         [MemberNotNullWhen(false, nameof(DialogInstance))]
         private bool IsInline => DialogInstance is null;

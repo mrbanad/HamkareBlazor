@@ -5,7 +5,6 @@ using HamkareBlazor.Utilities;
 
 namespace HamkareBlazor
 {
-#nullable enable
 
     /// <summary>
     /// Toggles between two values with the tap of a button, visually distinct from checkboxes. Use switches (not radio buttons) if the items in a list can be independently controlled.
@@ -15,13 +14,13 @@ namespace HamkareBlazor
     /// <seealso cref="HamkareRadio{T}"/>
     public partial class HamkareSwitch<T> : HamkareBooleanInput<T>
     {
-        private string _elementId = Identifier.Create("switch");
+        private readonly string _ariaId = Identifier.Create("switch-aria-");
+        internal string ElementId { get; } = Identifier.Create("switch");
 
         [Inject]
         private IKeyInterceptorService KeyInterceptorService { get; set; } = null!;
 
         protected override string Classname => new CssBuilder("hamkare-input-control-boolean-input")
-            .AddClass("w-100 mt-1")
             .AddClass(Class)
             .Build();
 
@@ -54,6 +53,13 @@ namespace HamkareBlazor
             .AddClass($"hamkare-switch-span-{Size.ToStringFast(true)}")
             .Build();
 
+        protected string AriaCheckedState => BoolValue switch
+        {
+            true => "true",
+            false => "false",
+            null => "mixed"
+        };
+
         /// <summary>
         /// The color of this switch when in an unchecked state.
         /// </summary>
@@ -63,6 +69,16 @@ namespace HamkareBlazor
         [Parameter]
         [Category(CategoryTypes.Radio.Appearance)]
         public Color UncheckedColor { get; set; } = Color.Default;
+
+        /// <summary>
+        /// The Aria Label to be assigned to the switch.
+        /// </summary>
+        /// <remarks>
+        /// Defaults to <c>null</c>. Used to improve accessibility for screen readers. Adds an <c>aria-labelledby</c> to the <c>input</c> element.
+        /// </remarks>
+        [Parameter]
+        [Category(CategoryTypes.Radio.Appearance)]
+        public string? AriaLabel { get; set; }
 
         /// <summary>
         /// The icon to display for the switch thumb.
@@ -84,46 +100,6 @@ namespace HamkareBlazor
         [Category(CategoryTypes.FormComponent.Appearance)]
         public Color ThumbIconColor { get; set; } = Color.Default;
 
-        /// <summary>
-        /// Occurs when a key is pressed.
-        /// </summary>
-        /// <param name="obj">Information about which key was pressed.</param>
-        /// <remarks>
-        /// Supported keys are:<br />
-        /// <c>ArrowLeft</c> or <c>Delete</c> to uncheck the switch.<br />
-        /// <c>ArrowRight</c>, <c>Enter</c>, or <c>NumpadEnter</c> to check the switch.<br />
-        /// <c>Space</c> to toggle the selected value.
-        /// </remarks>
-        protected internal async Task HandleKeyDownAsync(KeyboardEventArgs obj)
-        {
-            if (GetDisabledState() || GetReadOnlyState())
-            {
-                return;
-            }
-
-            switch (obj.Key)
-            {
-                case "ArrowLeft" or "Delete":
-                    await SetBoolValueAsync(false, true);
-                    break;
-                case "ArrowRight" or "Enter" or "NumpadEnter":
-                    await SetBoolValueAsync(true, true);
-                    break;
-                case " ":
-                    switch (BoolValue)
-                    {
-                        case true:
-                            await SetBoolValueAsync(false, true);
-                            break;
-                        default:
-                            await SetBoolValueAsync(true, true);
-                            break;
-                    }
-
-                    break;
-            }
-        }
-
         /// <inheritdoc />
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
@@ -139,11 +115,19 @@ namespace HamkareBlazor
                         new(" ", preventDown: "key+none", preventUp: "key+none")
                     ]);
 
-                await KeyInterceptorService.SubscribeAsync(_elementId, options, keyDown: HandleKeyDownAsync);
+                await KeyInterceptorService.SubscribeAsync(ElementId, options, keys => keys
+                    .When(CanHandleKeys, builder => builder
+                        .OnKeyDownAny(["ArrowLeft", "Delete"], () => SetBoolValueAsync(false, true))
+                        .OnKeyDownAny(["ArrowRight", "Enter", "NumpadEnter"], () => SetBoolValueAsync(true, true))
+                        .OnKeyDown(" ", () => SetBoolValueAsync(!BoolValue, true))));
             }
 
             await base.OnAfterRenderAsync(firstRender);
         }
+
+        protected Task HandleKeyDownAsync(KeyboardEventArgs obj) => KeyInterceptorService.DispatchAsync(ElementId, KeyEventKind.Down, obj);
+
+        private bool CanHandleKeys() => !GetDisabledState() && !GetReadOnlyState();
 
         /// <inheritdoc />
         protected override async ValueTask DisposeAsyncCore()
@@ -152,7 +136,7 @@ namespace HamkareBlazor
 
             if (IsJSRuntimeAvailable)
             {
-                await KeyInterceptorService.UnsubscribeAsync(_elementId);
+                await KeyInterceptorService.UnsubscribeAsync(ElementId);
             }
         }
     }

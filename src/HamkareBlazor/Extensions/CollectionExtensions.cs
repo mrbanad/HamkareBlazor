@@ -6,7 +6,6 @@
 
 namespace HamkareBlazor;
 
-#nullable enable
 
 internal static class CollectionExtensions
 {

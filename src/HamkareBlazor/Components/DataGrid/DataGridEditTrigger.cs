@@ -3,7 +3,6 @@
 // See the LICENSE file in the project root for more information.
 
 namespace HamkareBlazor;
-#nullable enable
 
 /// <summary>
 /// Indicates the behavior which begins editing a cell.

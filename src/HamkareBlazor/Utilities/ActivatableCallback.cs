@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Components.Web;
 using HamkareBlazor.Interfaces;
 
-#nullable enable
 namespace HamkareBlazor
 {
     public class ActivatableCallback : IActivatable

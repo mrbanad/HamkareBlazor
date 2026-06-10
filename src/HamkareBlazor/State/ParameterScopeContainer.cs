@@ -10,7 +10,6 @@ using HamkareBlazor.State.Invocation;
 
 namespace HamkareBlazor.State;
 
-#nullable enable
 /// <summary>
 /// Represents a collection of registered parameters.
 /// This class is part of HamkareBlazor's ParameterState framework.
@@ -199,7 +198,7 @@ internal class ParameterScopeContainer : IParameterScopeContainer
     /// <summary>
     /// Represents an enumerable reader for parameter states.
     /// </summary>
-    private class ParameterScopeContainerReadonlyEnumerable : IParameterStatesReader
+    private sealed class ParameterScopeContainerReadonlyEnumerable : IParameterStatesReader
     {
         private readonly IEnumerable<IParameterComponentLifeCycle> _parameters;
 

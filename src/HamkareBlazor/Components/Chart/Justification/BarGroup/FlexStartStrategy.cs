@@ -4,7 +4,6 @@
 
 namespace HamkareBlazor.Justification.BarGroup;
 
-#nullable enable
 internal class FlexStartStrategy : IBarGroupPositionStrategy
 {
     public double[] CalculatePositions(BarGroupContext ctx)
@@ -19,7 +18,7 @@ internal class FlexStartStrategy : IBarGroupPositionStrategy
 
         for (var i = 0; i < ctx.ColumnsPerDataSet; i++)
         {
-            positions[i] = start + i * (spaceBetweenGroups + ctx.BarWidth + barGapOffset * spacingRatioOffset);
+            positions[i] = start + (i * (spaceBetweenGroups + ctx.BarWidth + (barGapOffset * spacingRatioOffset)));
         }
 
         return positions;

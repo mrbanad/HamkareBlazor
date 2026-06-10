@@ -6,7 +6,6 @@ using HamkareBlazor.Interop;
 
 namespace HamkareBlazor
 {
-#nullable enable
     [ExcludeFromCodeCoverage]
     public static class ElementReferenceExtensions
     {

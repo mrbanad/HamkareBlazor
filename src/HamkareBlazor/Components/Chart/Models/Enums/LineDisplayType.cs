@@ -1,5 +1,4 @@
-﻿#nullable enable
-namespace HamkareBlazor;
+﻿namespace HamkareBlazor;
 
 /// <summary>
 /// Specifies the type of graphical representation for a line or area.

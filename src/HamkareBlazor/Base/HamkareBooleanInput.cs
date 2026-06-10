@@ -7,7 +7,6 @@ using HamkareBlazor.State;
 
 namespace HamkareBlazor
 {
-#nullable enable
     /// <summary>
     /// Represents a form input component which stores a boolean value.
     /// </summary>
@@ -75,6 +74,9 @@ namespace HamkareBlazor
         [Category(CategoryTypes.FormComponent.Behavior)]
         public bool StopClickPropagation { get; set; } = true;
 
+        /// <summary>
+        /// Displays this input using right-to-left layout.
+        /// </summary>
         [CascadingParameter(Name = "RightToLeft")]
         public bool RightToLeft { get; set; }
 
@@ -113,6 +115,9 @@ namespace HamkareBlazor
         [Category(CategoryTypes.FormComponent.Appearance)]
         public Color Color { get; set; } = Color.Primary;
 
+        /// <summary>
+        /// The content within this component.
+        /// </summary>
         [Parameter]
         [Category(CategoryTypes.FormComponent.Behavior)]
         public RenderFragment? ChildContent { get; set; }
@@ -128,6 +133,21 @@ namespace HamkareBlazor
         protected virtual Task OnChange(ChangeEventArgs args)
         {
             return SetBoolValueAsync((bool?)args.Value, true);
+        }
+
+        protected Dictionary<string, object?> GetInputAttributes()
+        {
+            var attributes = new Dictionary<string, object?>(StringComparer.OrdinalIgnoreCase)
+            {
+                ["tabindex"] = GetDisabledState() ? -1 : 0
+            };
+
+            foreach (var userAttribute in UserAttributes)
+            {
+                attributes[userAttribute.Key] = userAttribute.Value;
+            }
+
+            return attributes;
         }
 
         protected Task SetBoolValueAsync(bool? value, bool? markAsTouched = null)

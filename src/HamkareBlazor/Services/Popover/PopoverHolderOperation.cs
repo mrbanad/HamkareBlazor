@@ -4,7 +4,6 @@
 
 namespace HamkareBlazor;
 
-#nullable enable
 /// <summary>
 /// Represents the operation types for <see cref="IHamkarePopoverHolder"/>.
 /// </summary>

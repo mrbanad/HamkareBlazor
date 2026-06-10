@@ -2,7 +2,14 @@
 // HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+/**
+ * Factory that wires element IDs to HamkareJsEvent instances.
+ * Provides connect/subscribe lifecycle entry points for .NET interop.
+ */
 class HamkareJsEventFactory {
+    /**
+     * Creates (or reuses) a JsEvent observer for the element and starts observing it.
+     */
     connect(dotNetRef, elementId, options) {
         //console.log('[HamkareBlazor | HamkareJsEventFactory] connect ', { dotNetRef, elementId, options });
         if (!elementId)
@@ -15,13 +22,19 @@ class HamkareJsEventFactory {
         element.hamkareJsEvent.connect(element);
     }
 
+    /**
+     * Stops observing and detaches handlers for an element ID.
+     */
     disconnect(elementId) {
         const element = document.getElementById(elementId);
-        if (!element || !element.hamkareJsEvent)
+        if (!element?.hamkareJsEvent)
             return;
         element.hamkareJsEvent.disconnect();
     }
 
+    /**
+     * Subscribes a logical event name for matching child elements.
+     */
     subscribe(elementId, eventName) {
         //console.log('[HamkareBlazor | HamkareJsEventFactory] subscribe ', { elementId, eventName});
         if (!elementId)
@@ -34,18 +47,23 @@ class HamkareJsEventFactory {
         element.hamkareJsEvent.subscribe(eventName);
     }
 
+    /**
+     * Unsubscribes a logical event name for matching child elements.
+     */
     unsubscribe(elementId, eventName) {
         const element = document.getElementById(elementId);
-        if (!element || !element.hamkareJsEvent)
+        if (!element?.hamkareJsEvent)
             return;
         element.hamkareJsEvent.unsubscribe(element, eventName);
     }
 }
 window.hamkareJsEvent = new HamkareJsEventFactory();
 
-
+/**
+ * Observes a container and attaches configured event handlers to matching children.
+ * Keeps subscriptions stable across dynamic DOM changes from re-rendering.
+ */
 class HamkareJsEvent {
-
     constructor(dotNetRef, options) {
         this._dotNetRef = dotNetRef;
         this._options = options || {};
@@ -54,6 +72,9 @@ class HamkareJsEvent {
         this._subscribedEvents = {};
     }
 
+    /**
+     * Starts DOM observation for child nodes matching the configured target class.
+     */
     connect(element) {
         if (!this._options)
             return;
@@ -67,11 +88,15 @@ class HamkareJsEvent {
         this.logger('[HamkareBlazor | JsEvent] Start observing DOM of element for changes to child with class ', { element, targetClass });
         this._element = element;
         this._observer = new MutationObserver(this.onDomChanged);
+        // MutationObserver callbacks do not preserve class context, so keep an explicit back-reference.
         this._observer.hamkareJsEvent = this;
         this._observer.observe(this._element, { attributes: false, childList: true, subtree: true });
         this._observedChildren = [];
     }
 
+    /**
+     * Stops DOM observation and removes all active handlers.
+     */
     disconnect() {
         if (!this._observer)
             return;
@@ -82,6 +107,9 @@ class HamkareJsEvent {
             this.detachHandlers(child);
     }
 
+    /**
+     * Enables forwarding for one event name on matching child nodes.
+     */
     subscribe(eventName) {
         // register handlers
         if (this._subscribedEvents[eventName]) {
@@ -97,10 +125,14 @@ class HamkareJsEvent {
         }
     }
 
+    /**
+     * Disables forwarding for one event name on matching child nodes.
+     */
     unsubscribe(eventName) {
         if (!this._observer)
             return;
         this.logger('[HamkareBlazor | JsEvent] unsubscribe event handler ' + eventName );
+        // Pause observation while unsubscribing so removed handlers are not reattached by concurrent mutations.
         this._observer.disconnect();
         this._observer = null;
         this._subscribedEvents[eventName] = false;
@@ -109,7 +141,11 @@ class HamkareJsEvent {
         }
     }
 
+    /**
+     * Attaches currently subscribed event handlers to a matching child node.
+     */
     attachHandlers(child) {
+        // Event callbacks execute with `this === child`, so we stash the owning instance on the node.
         child.hamkareJsEvent = this;
         //this.logger('[HamkareBlazor | JsEvent] attachHandlers ', this._subscribedEvents, child);
         for (const eventName of Object.getOwnPropertyNames(this._subscribedEvents)) {
@@ -119,15 +155,21 @@ class HamkareJsEvent {
             this.logger('[HamkareBlazor | JsEvent] attaching event ' + eventName, child);
             child.addEventListener(eventName, this.eventHandler);
         }
-        if(this._observedChildren.indexOf(child) < 0)
+        if (!this._observedChildren.includes(child))
             this._observedChildren.push(child);
     }
 
+    /**
+     * Removes a single event handler from a child node.
+     */
     detachHandler(child, eventName) {
         this.logger('[HamkareBlazor | JsEvent] detaching handler ' + eventName, child);
         child.removeEventListener(eventName, this.eventHandler);
     }
 
+    /**
+     * Removes all subscribed event handlers from a child node.
+     */
     detachHandlers(child) {
         this.logger('[HamkareBlazor | JsEvent] detaching handlers ', child);
         for (const eventName of Object.getOwnPropertyNames(this._subscribedEvents)) {
@@ -138,6 +180,9 @@ class HamkareJsEvent {
         this._observedChildren = this._observedChildren.filter(x=>x!==child);
     }
 
+    /**
+     * Reacts to subtree mutations by attaching/removing handlers on matching nodes.
+     */
     onDomChanged(mutationsList, _) {
         const self = this.hamkareJsEvent; // func is invoked with this == _observer
         //self.logger('[HamkareBlazor | JsEvent] onDomChanged: ', { self });
@@ -145,13 +190,13 @@ class HamkareJsEvent {
         for (const mutation of mutationsList) {
             //self.logger('[HamkareBlazor | JsEvent] Subtree mutation: ', { mutation });
             for (const element of mutation.addedNodes) {
-                if (element.classList && element.classList.contains(targetClass)) {
+                if (element.classList?.contains(targetClass)) {
                     if (!self._options.TagName || element.tagName == self._options.TagName)
                         self.attachHandlers(element);
                 }
             }
             for (const element of mutation.removedNodes) {
-                if (element.classList && element.classList.contains(targetClass)) {
+                if (element.classList?.contains(targetClass)) {
                     if (!self._options.tagName || element.tagName == self._options.tagName)
                          self.detachHandlers(element);
                 }
@@ -159,27 +204,42 @@ class HamkareJsEvent {
         }
     }
 
+    /**
+     * Dispatches DOM events to the corresponding event-specific bridge method.
+     */
     eventHandler(e) {
         const self = this.hamkareJsEvent; // func is invoked with this == child
         const eventName = e.type;
         self.logger('[HamkareBlazor | JsEvent] "' + eventName + '"', e);
-        // call specific handler
+        // Dynamic dispatch keeps DOM event names aligned with their bridge methods (onkeyup, onpaste, ...).
         self["on" + eventName](self, e);
     }
 
+    /**
+     * Forwards caret changes from keyup to .NET.
+     */
     onkeyup(self, e) {
         const caretPosition = e.target.selectionStart;
         const invoke = self._subscribedEvents["keyup"];
         if (invoke) {
+            if (caretPosition === null || caretPosition === undefined) {
+                return;
+            }
             //self.logger('[HamkareBlazor | JsEvent] caret pos: ' + caretPosition);
             self._dotNetRef.invokeMethodAsync('OnCaretPositionChanged', caretPosition);
         }
     }
 
+    /**
+     * Forwards caret changes from click events to .NET.
+     */
     onclick(self, e) {
         const caretPosition = e.target.selectionStart;
         const invoke = self._subscribedEvents["click"];
         if (invoke) {
+            if (caretPosition === null || caretPosition === undefined) {
+                return;
+            }
             //self.logger('[HamkareBlazor | JsEvent] caret pos: ' + caretPosition);
             self._dotNetRef.invokeMethodAsync('OnCaretPositionChanged', caretPosition);
         }
@@ -195,6 +255,9 @@ class HamkareJsEvent {
     //    }
     //}
 
+    /**
+     * Intercepts paste text and forwards plain text content to .NET.
+     */
     onpaste(self, e) {
         const invoke = self._subscribedEvents["paste"];
         if (invoke) {
@@ -211,6 +274,9 @@ class HamkareJsEvent {
         }
     }
 
+    /**
+     * Forwards selected text range changes to .NET.
+     */
     onselect(self, e) {
         const invoke = self._subscribedEvents["select"];
         if (invoke) {
@@ -223,4 +289,3 @@ class HamkareJsEvent {
         }
     }
 }
-

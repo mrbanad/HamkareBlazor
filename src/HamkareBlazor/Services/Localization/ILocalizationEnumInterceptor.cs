@@ -6,7 +6,6 @@ using HamkareBlazor.Services;
 
 namespace HamkareBlazor;
 
-#nullable enable
 /// <summary>
 /// Provides functionality to localize enumeration values.
 /// Users can register custom implementations using the syntax:

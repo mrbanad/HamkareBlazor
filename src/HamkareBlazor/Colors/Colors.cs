@@ -2,7 +2,6 @@
 
 namespace HamkareBlazor
 {
-#nullable enable
     [ExcludeFromCodeCoverage]
     public static class Colors
     {

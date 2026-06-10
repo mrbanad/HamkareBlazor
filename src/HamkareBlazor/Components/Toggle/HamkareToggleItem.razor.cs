@@ -7,7 +7,6 @@ using HamkareBlazor.Utilities;
 
 namespace HamkareBlazor
 {
-#nullable enable
 
     /// <summary>
     /// An item as part of a <see cref="HamkareToggleGroup{T}"/>

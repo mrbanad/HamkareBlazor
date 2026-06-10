@@ -2,7 +2,6 @@
 
 namespace HamkareBlazor.Utilities;
 
-#nullable enable
 internal static partial class StringHelpers
 {
     /// <summary>

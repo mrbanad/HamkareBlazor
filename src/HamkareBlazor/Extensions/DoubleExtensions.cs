@@ -6,7 +6,6 @@ using System.Globalization;
 
 namespace HamkareBlazor.Extensions
 {
-#nullable enable
     public static class DoubleExtensions
     {
         public static string ToInvariantString(this double input) => input.ToString(CultureInfo.InvariantCulture);

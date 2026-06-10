@@ -7,7 +7,6 @@ using System.Numerics;
 
 namespace HamkareBlazor;
 
-#nullable enable
 internal partial class BoolConverter
 {
     [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicMethods | DynamicallyAccessedMemberTypes.Interfaces)]

@@ -3,7 +3,6 @@ using HamkareBlazor.State;
 
 namespace HamkareBlazor
 {
-#nullable enable
 
     /// <summary>
     /// A component which conditionally renders content depending on the screen size.

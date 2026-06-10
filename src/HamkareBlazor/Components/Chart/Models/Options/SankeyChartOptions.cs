@@ -2,7 +2,6 @@
 
 namespace HamkareBlazor;
 
-#nullable enable
 public class SankeyChartOptions : DefaultChartOptions
 {
     /// <summary>

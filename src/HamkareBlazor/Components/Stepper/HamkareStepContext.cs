@@ -1,6 +1,5 @@
 ﻿namespace HamkareBlazor;
 
-#nullable enable
 /// <summary>
 /// Provides contextual information about a <see cref="HamkareStep"/> within a <see cref="HamkareStepper"/>.
 /// </summary>

@@ -59,47 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-              xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string"/>
-              <xsd:attribute name="type" type="xsd:string"/>
-              <xsd:attribute name="mimetype" type="xsd:string"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string"/>
-              <xsd:attribute name="name" type="xsd:string"/>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -113,14 +112,10 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral,
-      PublicKeyToken=b77a5c561934e089
-    </value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral,
-      PublicKeyToken=b77a5c561934e089
-    </value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="HamkareDataGrid_Apply" xml:space="preserve">
     <value>Apply</value>
@@ -175,6 +170,12 @@
   </data>
   <data name="HamkareDataGrid_Ungroup" xml:space="preserve">
     <value>Ungroup</value>
+  </data>
+  <data name="HamkareDataGrid_CollapseGroup" xml:space="preserve">
+    <value>Collapse group</value>
+  </data>
+  <data name="HamkareDataGrid_ExpandGroup" xml:space="preserve">
+    <value>Expand group</value>
   </data>
   <data name="HamkareDataGrid_Group" xml:space="preserve">
     <value>Group</value>
@@ -350,8 +351,38 @@
   <data name="HamkareInput_Increment" xml:space="preserve">
     <value>Increment</value>
   </data>
+  <data name="HamkareRangeInput_Start" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="HamkareRangeInput_End" xml:space="preserve">
+    <value>End</value>
+  </data>
+  <data name="HamkareDateRangePicker_Start" xml:space="preserve">
+    <value>Start date</value>
+  </data>
+  <data name="HamkareDateRangePicker_End" xml:space="preserve">
+    <value>End date</value>
+  </data>
   <data name="HamkarePageContentNavigation_NavMenu" xml:space="preserve">
     <value>Contents</value>
+  </data>
+  <data name="HamkareTable_Loading" xml:space="preserve">
+    <value>Loading...</value>
+  </data>
+  <data name="HamkareTable_ExpandGroup" xml:space="preserve">
+    <value>Expand group</value>
+  </data>
+  <data name="HamkareTable_EditRow" xml:space="preserve">
+    <value>Edit row</value>
+  </data>
+  <data name="HamkareTable_CancelEditRow" xml:space="preserve">
+    <value>Cancel edit</value>
+  </data>
+  <data name="HamkareTable_CollapseGroup" xml:space="preserve">
+    <value>Collapse group</value>
+  </data>
+  <data name="HamkareTable_CommitRow" xml:space="preserve">
+    <value>Commit edit</value>
   </data>
   <data name="HamkareTablePager_FirstPage" xml:space="preserve">
     <value>First page</value>
@@ -404,6 +435,12 @@
   <data name="HamkareDataGrid_RemoveFilter" xml:space="preserve">
     <value>Remove filter</value>
   </data>
+  <data name="HamkareDataGrid_SelectRow" xml:space="preserve">
+    <value>Select row</value>
+  </data>
+  <data name="HamkareDataGrid_SelectAllRows" xml:space="preserve">
+    <value>Select all rows</value>
+  </data>
   <data name="HamkareDataGridPager_FirstPage" xml:space="preserve">
     <value>First page</value>
   </data>
@@ -418,6 +455,12 @@
   </data>
   <data name="HamkareDataGrid_ShowColumnOptions" xml:space="preserve">
     <value>Column options</value>
+  </data>
+  <data name="HamkareFileUpload_DragAndDrop" xml:space="preserve">
+    <value>Drag files here or click to browse</value>
+  </data>
+  <data name="HamkareFileUpload_Button" xml:space="preserve">
+    <value>Browse files</value>
   </data>
   <data name="Converter_InvalidBoolean" xml:space="preserve">
     <value>Not a valid boolean</value>
@@ -461,6 +504,25 @@
   <data name="HamkareTreeView_ExpandItem" xml:space="preserve">
     <value>Expand</value>
   </data>
+  <data name="HamkareTabs_ScrollLeft" xml:space="preserve">
+    <value>Scroll tabs left</value>
+  </data>
+  <data name="HamkareTabs_ScrollRight" xml:space="preserve">
+    <value>Scroll tabs right</value>
+  </data>
+  <data name="HamkareTabs_ScrollUp" xml:space="preserve">
+    <value>Scroll tabs up</value>
+  </data>
+  <data name="HamkareTabs_CloseTab" xml:space="preserve">
+    <value>Close tab</value>
+  </data>
+  <data name="HamkareTabs_AddTab" xml:space="preserve">
+    <value>Add tab</value>
+  </data>
+  <data name="HamkareTabs_ScrollDown" xml:space="preserve">
+    <value>Scroll tabs down</value>
+  </data>
+  
   <data name="HamkareTreeView_CollapseItem" xml:space="preserve">
     <value>Collapse</value>
   </data>
@@ -476,52 +538,19 @@
   <data name="HamkareFileUpload_FileSizeError" xml:space="preserve">
     <value>File '{0}' exceeds the maximum allowed size of {1} bytes.</value>
   </data>
-  <data name="ErrorServerSendNull" xml:space="preserve">
-        <value>No specific message was received from the server!</value>
-    </data>
-  <data name="ErrorServerExceptionDontHaveMessage" xml:space="preserve">
-        <value>The server did not provide an error message!</value>
-    </data>
-  <data name="ErrorServerStatusCode" xml:space="preserve">
-        <value>Error {0} was received from the server!</value>
-    </data>
-  <data name="ErrorConnectWithServer" xml:space="preserve">
-        <value>Error communicating with the server!</value>
-    </data>
-  <data name="ErrorReadFile" xml:space="preserve">
-        <value>Error reading file!</value>
-    </data>
-  <data name="ErrorUploadingFile" xml:space="preserve">
-        <value>Unknown error while uploading file!</value>
-    </data>
-  <data name="ErrorNotFound" xml:space="preserve">
-        <value>The specified {0} was not found!</value>
-    </data>
-  <data name="SuccessActiveMessage" xml:space="preserve">
-        <value>The desired {0} has been activated!</value>
-    </data>
-  <data name="SuccessDeactivateMessage" xml:space="preserve">
-        <value>The desired {0} has been disabled!</value>
-    </data>
-  <data name="SubmitSuccessMessage" xml:space="preserve">
-        <value>Registration {0} was successful!</value>
-    </data>
-  <data name="ErrorSubmit" xml:space="preserve">
-        <value>There is a problem registering {0}!</value>
-    </data>
-  <data name="RequiredNotFound" xml:space="preserve">
-        <value>Active {0} is required to register and change!</value>
-    </data>
-  <data name="Remove" xml:space="preserve">
-        <value>Remove</value>
-    </data>
-  <data name="RemoveMessage" xml:space="preserve">
-        <value>Are you sure you want to delete this item?</value>
-    </data>
-  <data name="Loading" xml:space="preserve">
-        <value>Loading</value>
-    </data>
-  <data name="HamkareSelect_SelectAll" xml:space="preserve">
-    <value>Select All</value>
+  <data name="HamkareFileUpload_MaximumFileCountExceeded" xml:space="preserve">
+    <value>Selected {0} files, which exceeds the maximum of {1}</value>
+  </data>
+  <data name="HamkareExitPrompt_Title" xml:space="preserve">
+    <value>Confirm Navigation</value>
+  </data>
+  <data name="HamkareExitPrompt_Text" xml:space="preserve">
+    <value>Leave site? Changes you made may not be saved.</value>
+  </data>
+  <data name="HamkareExitPrompt_Exit" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="HamkareExitPrompt_Cancel" xml:space="preserve">
+    <value>Cancel</value>
   </data>
 </root>

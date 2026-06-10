@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Components;
 
 namespace HamkareBlazor;
 
-#nullable enable
 /// <summary>
 /// An icon button that toggles between two distinct states, useful for on/off or favorite/unfavorite scenarios.
 /// </summary>
@@ -178,13 +177,6 @@ public partial class HamkareToggleIconButton : HamkareComponentBase
     internal Variant GetVariant() => Toggled ? (ToggledVariant ?? Variant) : Variant;
 
     /// <summary>
-    /// For Send Just One Request
-    /// </summary>
-    /// <remarks>
-    /// </remarks>
-    private bool Processing { get; set; }
-    
-    /// <summary>
     /// Toggles the state of the button.
     /// </summary>
     public Task Toggle() => SetToggledAsync(!Toggled);
@@ -193,16 +185,10 @@ public partial class HamkareToggleIconButton : HamkareComponentBase
     {
         if (Disabled)
             return;
-        
         if (Toggled != toggled)
         {
-            if (!Processing)
-            {
-                Processing = true;
-                Toggled = toggled;
-                await ToggledChanged.InvokeAsync(Toggled);
-                Processing = false;
-            }
+            Toggled = toggled;
+            await ToggledChanged.InvokeAsync(Toggled);
         }
     }
 }

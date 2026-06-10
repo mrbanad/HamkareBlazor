@@ -3,7 +3,6 @@ using HamkareBlazor.Utilities;
 
 namespace HamkareBlazor
 {
-#nullable enable
     /// <summary>
     /// Represents the top portion of a <see cref="HamkareCard"/>.
     /// </summary>

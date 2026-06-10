@@ -4,7 +4,6 @@ using HamkareBlazor.Utilities;
 
 namespace HamkareBlazor
 {
-#nullable enable
     // note: the HamkareTable code is split. Everything that has nothing to do with the type parameter of HamkareTable<T> is here in HamkareTableBase
 
     /// <summary>

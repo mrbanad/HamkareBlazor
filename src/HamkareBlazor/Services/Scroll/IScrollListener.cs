@@ -4,7 +4,6 @@
 
 namespace HamkareBlazor;
 
-#nullable enable
 /// <summary>
 /// Interface for a scroll listener that listens to scroll events on a specified element.
 /// </summary>

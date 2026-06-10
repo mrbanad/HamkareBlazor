@@ -7,7 +7,6 @@ using HamkareBlazor.Interop;
 
 namespace HamkareBlazor.Services;
 
-#nullable enable
 /// <summary>
 /// Delegate for handling size change events.
 /// </summary>

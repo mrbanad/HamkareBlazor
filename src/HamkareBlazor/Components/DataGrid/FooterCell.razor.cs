@@ -9,7 +9,6 @@ using HamkareBlazor.Utilities;
 
 namespace HamkareBlazor
 {
-#nullable enable
     /// <summary>
     /// Represents a cell displayed at the bottom of a column.
     /// </summary>
@@ -41,10 +40,9 @@ namespace HamkareBlazor
         public IEnumerable<T>? CurrentItems { get; set; }
 
         private string Classname =>
-            new CssBuilder("footer-cell")
+            new CssBuilder(Column?.FooterClassname)
                 .AddClass(Column?.FooterClassFunc?.Invoke(items ?? Enumerable.Empty<T>()))
                 .AddClass(Column?.FooterClass)
-                .AddClass(Column?.FooterClassname)
                 .AddClass(Class)
                 .Build();
 

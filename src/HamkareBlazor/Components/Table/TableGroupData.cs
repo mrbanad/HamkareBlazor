@@ -6,7 +6,6 @@ using System.Collections.Generic;
 
 namespace HamkareBlazor;
 
-#nullable enable
 
 /// <summary>
 /// The data within a <see cref="HamkareTable{T}"/> group when grouping is enabled.

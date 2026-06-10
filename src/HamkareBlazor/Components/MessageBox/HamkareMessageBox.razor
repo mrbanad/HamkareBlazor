@@ -2,7 +2,6 @@
 @inherits HamkareComponentBase
 
 @{
-#nullable enable
 }
 
 <HamkareDialog @attributes="UserAttributes" Class="@Classname">
@@ -29,39 +28,66 @@
     </DialogContent>
     <DialogActions>
         <div tabindex="-1" class="d-contents">
-            <HamkareFocusTrap DefaultFocus="DefaultFocus.LastChild">
-                @if (CancelButton is not null)
-                {
-                    <CascadingValue Value="@_cancelCallback">
-                        @CancelButton
-                    </CascadingValue>
-                }
-                else if (!string.IsNullOrWhiteSpace(CancelText))
-                {
-                    <HamkareButton Class="hamkare-message-box__cancel-button" OnClick="OnCancelClicked">@CancelText</HamkareButton>
-                }
-                @if (NoButton is not null)
-                {
-                    <CascadingValue Value="@_noCallback">
-                        @NoButton
-                    </CascadingValue>
-                }
-                else if (!string.IsNullOrWhiteSpace(NoText))
-                {
-                    <HamkareButton Class="hamkare-message-box__no-button" OnClick="OnNoClicked">@NoText</HamkareButton>
-                }
-                @if (YesButton is not null)
-                {
-                    <CascadingValue Value="@_yesCallback">
-                        @YesButton
-                    </CascadingValue>
-                }
-                else if (!string.IsNullOrWhiteSpace(YesText))
-                {
-                    <HamkareButton Class="hamkare-message-box__yes-button" Color="Color.Primary" OnClick="OnYesClicked">@YesText</HamkareButton>
-                }
-            </HamkareFocusTrap>
+            @if (IsButtonOrderReversed)
+            {
+                <HamkareFocusTrap DefaultFocus="DefaultFocus.FirstChild">
+                    @YesButtonFragment
+                    @NoButtonFragment
+                    @CancelButtonFragment
+                </HamkareFocusTrap>
+            }
+            else
+            {
+                <HamkareFocusTrap DefaultFocus="DefaultFocus.LastChild">
+                    @CancelButtonFragment
+                    @NoButtonFragment
+                    @YesButtonFragment
+                </HamkareFocusTrap>
+            }
         </div>
-
     </DialogActions>
 </HamkareDialog>
+
+@code {
+    private RenderFragment CancelButtonFragment => 
+    @<text>
+        @if (CancelButton is not null)
+        {
+            <CascadingValue Value="@_cancelCallback">
+                @CancelButton
+            </CascadingValue>
+        }
+        else if (!string.IsNullOrWhiteSpace(CancelText))
+        {
+            <HamkareButton Class="hamkare-message-box__cancel-button" OnClick="OnCancelClicked">@CancelText</HamkareButton>
+        }
+    </text>;
+
+    private RenderFragment NoButtonFragment =>
+    @<text>
+        @if (NoButton is not null)
+        {
+            <CascadingValue Value="@_noCallback">
+                @NoButton
+            </CascadingValue>
+        }
+        else if (!string.IsNullOrWhiteSpace(NoText))
+        {
+            <HamkareButton Class="hamkare-message-box__no-button" OnClick="OnNoClicked">@NoText</HamkareButton>
+        }
+    </text>;
+
+    private RenderFragment YesButtonFragment =>
+    @<text>
+        @if (YesButton is not null)
+        {
+            <CascadingValue Value="@_yesCallback">
+                @YesButton
+            </CascadingValue>
+        }
+        else if (!string.IsNullOrWhiteSpace(YesText))
+        {
+            <HamkareButton Class="hamkare-message-box__yes-button" Color="Color.Primary" OnClick="OnYesClicked">@YesText</HamkareButton>
+        }
+    </text>;
+}

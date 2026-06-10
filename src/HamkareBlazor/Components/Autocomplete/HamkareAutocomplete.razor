@@ -9,147 +9,154 @@
 else
 {
     <CascadingValue Name="SubscribeToParentForm" Value="false" IsFixed="true">
-    <div class="@AutocompleteClassname" @onclick:stopPropagation @onmousedown:stopPropagation>
-        <HamkareInputControl Label="@Label"
-                         Variant="@Variant"
-                         HelperId="@GetHelperId()"
-                         HelperText="@HelperText"
-                         HelperTextOnFocus="@HelperTextOnFocus"
-                         FullWidth="@FullWidth"
-                         Margin="@Margin"
-                         Class="@Classname"
-                         Style="@Style"
-                         Error="@HasErrors"
-                         ErrorText="@GetErrorText()"
-                         ErrorId="@ErrorIdState.Value"
-                         Disabled="@GetDisabledState()"
-                         Required="@Required"
-                         @onmousedown="@OnInputClickedAsync"
-                         @onfocus="@OnInputFocusedAsync"
-                         ForId="@InputElementId">
-            <InputContent>
-                <HamkareInput @ref="_elementReference" @key="_elementKey" InputType="InputType.Text"
-                          Class="@InputClassname" Margin="@Margin"
-                          Variant="@Variant"
-                          Typo="@Typo"
-                          Label="@Label"
-                          Value="@ReadText" Underline="@Underline"
-                          Disabled="@GetDisabledState()"
-                          ReadOnly="@GetReadOnlyState()"
-                          Error="@ErrorState.Value"
-                          ErrorId="@ErrorIdState.Value"
-                          HelperId="@GetHelperId()"
-                          HelperText="@HelperText"
-                          AdornmentIcon="@CurrentIcon" Adornment="@Adornment" AdornmentColor="@AdornmentColor" IconSize="@IconSize" AdornmentText="@AdornmentText"
-                          OnAdornmentClick="@AdornmentClickHandlerAsync"
-                          AdornmentAriaLabel="@AdornmentAriaLabel"
-                          Clearable="@(Clearable && !GetReadOnlyState())"
-                          OnClearButtonClick="@HandleClearButtonAsync"
-                          ClearIcon="@ClearIcon"
-                          MaxLength="@MaxLength"
-                          autocomplete="@GetAutocomplete()"
-                          @attributes="UserAttributes"
-                          TextChanged="OnTextChangedAsync"
-                          @onfocus="@OnInputFocusedAsync"
-                          OnBlur="OnInputBlurredAsync"
-                          OnKeyDown="@OnInputKeyDownAsync"
-                          OnKeyUp="@OnInputKeyUpAsync" KeyUpPreventDefault="KeyUpPreventDefault"
-                          Placeholder="@Placeholder" Immediate="true"
-                          InputMode="@InputMode" Pattern="@Pattern"
-                          ShrinkLabel="@ShrinkLabel"
-                          Required="@Required"
-                          InputId="@InputElementId" />
+        <div id="@_componentId" class="@AutocompleteClassname" @onclick:stopPropagation @onmousedown:stopPropagation>
+            <HamkareInputControl Label="@Label"
+                                 Variant="@Variant"
+                                 HelperId="@GetHelperId()"
+                                 HelperText="@HelperText"
+                                 HelperTextOnFocus="@HelperTextOnFocus"
+                                 FullWidth="@FullWidth"
+                                 Margin="@Margin"
+                                 Class="@Classname"
+                                 Style="@Style"
+                                 Error="@HasErrors"
+                                 ErrorText="@GetErrorText()"
+                                 ErrorId="@ErrorIdState.Value"
+                                 Disabled="@GetDisabledState()"
+                                 Required="@Required"
+                                 @onmousedown="@OnInputClickedAsync"
+                                 @onfocus="@OnInputFocusedAsync"
+                                 ForId="@InputElementId">
+                <InputContent>
+                    <HamkareInput @ref="_elementReference" @key="_elementKey" InputType="InputType.Text"
+                                  Class="@InputClassname" Margin="@Margin"
+                                  Variant="@Variant"
+                                  Typo="@Typo"
+                                  Label="@Label"
+                                  Value="@ReadText" Underline="@Underline"
+                                  Disabled="@GetDisabledState()"
+                                  ReadOnly="@GetReadOnlyState()"
+                                  Error="@HasErrors"
+                                  ErrorId="@ErrorIdState.Value"
+                                  HelperId="@GetHelperId()"
+                                  HelperText="@HelperText"
+                                  AdornmentIcon="@CurrentIcon" Adornment="@Adornment" AdornmentColor="@AdornmentColor"
+                                  IconSize="@IconSize" AdornmentText="@AdornmentText"
+                                  OnAdornmentClick="@AdornmentClickHandlerAsync"
+                                  AdornmentAriaLabel="@AdornmentAriaLabel"
+                                  Clearable="@(Clearable && !GetReadOnlyState())"
+                                  OnClearButtonClick="@HandleClearButtonAsync"
+                                  ClearIcon="@ClearIcon"
+                                  MaxLength="@MaxLength"
+                                  autocomplete="@GetAutocomplete()"
+                                  @attributes="UserAttributes"
+                                  TextChanged="OnTextChangedAsync"
+                                  @onfocus="@OnInputFocusedAsync"
+                                  OnBlur="OnInputBlurredAsync"
+                                  OnKeyDown="@OnInputKeyDownAsync"
+                                  OnKeyUp="@OnInputKeyUpAsync" KeyUpPreventDefault="KeyUpPreventDefault"
+                                  Placeholder="@Placeholder" Immediate="true"
+                                  InputMode="@InputMode" Pattern="@Pattern"
+                                  ShrinkLabel="@ShrinkLabel"
+                                  Required="@Required"
+                                  InputId="@InputElementId"/>
 
-                @if (ShowProgressIndicator && IsLoading)
-                {
-                    @if (ProgressIndicatorTemplate is not null)
+                    @if (ShowProgressIndicator && IsLoading)
                     {
-                        @ProgressIndicatorTemplate
+                        @if (ProgressIndicatorTemplate is not null)
+                        {
+                            @ProgressIndicatorTemplate
+                        }
+                        else
+                        {
+                            <div class="@CircularProgressClassname">
+                                <HamkareProgressCircular Color="ProgressIndicatorColor" Indeterminate="true"
+                                                         Size="Size.Small"/>
+                            </div>
+                        }
                     }
-                    else
-                    {
-                        <div class="@CircularProgressClassname">
-                            <HamkareProgressCircular Color="ProgressIndicatorColor" Indeterminate="true" Size="Size.Small" />
-                        </div>
-                    }
-                }
 
-                <HamkarePopover Open="@Open"
-                            Class="@PopoverClass"
-                            MaxHeight="@MaxHeight"
-                            RelativeWidth="@RelativeWidth"
-                            AnchorOrigin="@AnchorOrigin"
-                            TransformOrigin="@TransformOrigin"
-                            Fixed="@PopoverFixed">
-                    @if (ProgressIndicatorInPopoverTemplate is not null && IsLoading)
-                    {
-                        @ProgressIndicatorInPopoverTemplate
-                    }
-                    else if (_items != null && _items.Length != 0)
-                    {
-                        <HamkareList T="T" Class="@ListClass" Dense="@Dense">
-                            @if (BeforeItemsTemplate is not null)
-                            {
-                                <div class="hamkare-autocomplete-before-items pa-1">
-                                    @BeforeItemsTemplate
-                                </div>
-                            }
-                            @for (var index = 0; index < _items.Length; index++)
-                            {
-                                var item = _items[index];
-                                bool isSelected = index == _selectedListItemIndex;
-                                bool isDisabled = !_enabledItemIndices.Contains(index);
-                                bool showSelectedTemplate = ItemSelectedTemplate is not null && isSelected;
-                                bool showDisabledTemplate = ItemDisabledTemplate is not null && isDisabled;
-                                var captureIndex = index;
-                                <HamkareListItem T="T" Value="@item" @key="@item" id="@GetListItemId(captureIndex)" Disabled="@(isDisabled)" OnClick="@(async () => await ListItemOnClickAsync(item))" OnClickPreventDefault="true" Class="@GetListItemClassname(isSelected)">
-                                    @if (showDisabledTemplate)
-                                    {
-                                        @ItemDisabledTemplate!(item)
-                                    }
-                                    else if (showSelectedTemplate)
-                                    {
-                                        @ItemSelectedTemplate!(item)
-                                    }
-                                    else if (ItemTemplate is not null)
-                                    {
-                                        @ItemTemplate(item)
-                                    }
-                                    else
-                                    {
-                                        @GetItemString(item)
-                                    }
-                                </HamkareListItem>
-                            }
-                            @if (MoreItemsTemplate is not null && _returnedItemsCount > MaxItems)
-                            {
-                                <div class="hamkare-autocomplete-more-items pa-1">
-                                    @MoreItemsTemplate
-                                </div>
-                            }
-                            @if (AfterItemsTemplate is not null)
-                            {
-                                <div class="hamkare-autocomplete-after-items pa-1">
-                                    @AfterItemsTemplate
-                                </div>
-                            }
-                        </HamkareList>
-                    }
-                    else if (NoItemsTemplate is not null)
-                    {
-                        <div class="hamkare-autocomplete-no-items pa-1">
-                            @NoItemsTemplate
-                        </div>
-                    }
-                </HamkarePopover>
-            </InputContent>
-        </HamkareInputControl>
-    </div>
-</CascadingValue>
+                    <HamkarePopover Open="@Open"
+                                    Class="@PopoverClass"
+                                    MaxHeight="@MaxHeight"
+                                    RelativeWidth="@RelativeWidth"
+                                    AnchorOrigin="@AnchorOrigin"
+                                    TransformOrigin="@TransformOrigin"
+                                    Fixed="@PopoverFixed">
+                        @if (ProgressIndicatorInPopoverTemplate is not null && IsLoading)
+                        {
+                            @ProgressIndicatorInPopoverTemplate
+                        }
+                        else if (_items != null && _items.Length != 0)
+                        {
+                            <HamkareList T="T" Class="@ListClass" Dense="@Dense">
+                                @if (BeforeItemsTemplate is not null)
+                                {
+                                    <div class="hamkare-autocomplete-before-items">
+                                        @BeforeItemsTemplate
+                                    </div>
+                                }
+                                @for (var index = 0; index < _items.Length; index++)
+                                {
+                                    var item = _items[index];
+                                    bool isSelected = index == _selectedListItemIndex;
+                                    bool isDisabled = !_enabledItemIndices.Contains(index);
+                                    bool showSelectedTemplate = ItemSelectedTemplate is not null && isSelected;
+                                    bool showDisabledTemplate = ItemDisabledTemplate is not null && isDisabled;
+                                    var captureIndex = index;
+                                    <HamkareListItem T="T" Value="@item" @key="@item" id="@GetListItemId(captureIndex)"
+                                                     Disabled="@(isDisabled)"
+                                                     OnClick="@(async () => await ListItemOnClickAsync(item))"
+                                                     OnClickPreventDefault="true"
+                                                     Class="@GetListItemClassname(isSelected)">
+                                        @if (showDisabledTemplate)
+                                        {
+                                            @ItemDisabledTemplate!(item)
+                                        }
+                                        else if (showSelectedTemplate)
+                                        {
+                                            @ItemSelectedTemplate!(item)
+                                        }
+                                        else if (ItemTemplate is not null)
+                                        {
+                                            @ItemTemplate(item)
+                                        }
+                                        else
+                                        {
+                                            @GetItemString(item)
+                                        }
+                                    </HamkareListItem>
+                                }
+                                @if (MoreItemsTemplate is not null && _returnedItemsCount > MaxItems)
+                                {
+                                    <div class="hamkare-autocomplete-more-items">
+                                        @MoreItemsTemplate
+                                    </div>
+                                }
+                                @if (AfterItemsTemplate is not null)
+                                {
+                                    <div class="hamkare-autocomplete-after-items">
+                                        @AfterItemsTemplate
+                                    </div>
+                                }
+                            </HamkareList>
+                        }
+                        else if (NoItemsTemplate is not null)
+                        {
+                            <div class="hamkare-autocomplete-no-items">
+                                @NoItemsTemplate
+                            </div>
+                        }
+                    </HamkarePopover>
+                </InputContent>
+            </HamkareInputControl>
+        </div>
+    </CascadingValue>
 
-<HamkareOverlay AutoClose
-            Visible="Open"
-            OnClosed="OnOverlayClosedAsync"
-            LockScroll="@LockScroll"
-            Modal="@GetModal()" />
+    <HamkareOverlay AutoClose
+                    Visible="Open"
+                    data-modeless-ignore-element-id="@_componentId"
+                    OnClosed="OnOverlayClosedAsync"
+                    LockScroll="@LockScroll"
+                    Modal="@GetModal()"/>
 }

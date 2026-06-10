@@ -11,7 +11,6 @@ using HamkareBlazor.Utilities;
 
 namespace HamkareBlazor
 {
-#nullable enable
     /// <summary>
     /// Represents a cell displayed at the top of a <see cref="HamkareDataGrid{T}"/> column.
     /// </summary>
@@ -23,9 +22,10 @@ namespace HamkareBlazor
         private bool _isResizing;
         private double? _resizerHeight;
         private bool _filtersMenuVisible;
+        private (double Top, double Left) _filtersMenuPosition;
         private ElementReference _headerElement;
         private ElementReference _resizerElement;
-        private string _id = Identifier.Create();
+        private readonly string _id = Identifier.Create();
 
         // Resize state
         private double _resizeStartX;
@@ -76,9 +76,9 @@ namespace HamkareBlazor
         public SortDirection SortDirection { get; set; }
 
         private string Classname =>
-            new CssBuilder(Column?.HeaderClass)
+            new CssBuilder(Column?.HeaderClassname)
                 .AddClass(Column?.HeaderClassFunc?.Invoke(DataGrid?.CurrentPageItems ?? Enumerable.Empty<T>()))
-                .AddClass(Column?.HeaderClassname)
+                .AddClass(Column?.HeaderClass)
                 .AddClass(Class)
                 .Build();
 
@@ -140,7 +140,7 @@ namespace HamkareBlazor
         {
             get
             {
-                return Column?.Sortable ?? DataGrid?.SortMode != SortMode.None;
+                return Column?.Sortable ?? (DataGrid?.SortMode != SortMode.None);
             }
         }
 
@@ -148,7 +148,7 @@ namespace HamkareBlazor
         {
             get
             {
-                return Column?.Resizable ?? DataGrid?.ColumnResizeMode != ResizeMode.None;
+                return Column?.Resizable ?? (DataGrid?.ColumnResizeMode != ResizeMode.None);
             }
         }
 
@@ -217,12 +217,15 @@ namespace HamkareBlazor
         {
             get
             {
-                if (DataGrid == null)
-                    return false;
-
-                return DataGrid.FilterDefinitions.Any(x => x.Column?.PropertyName == Column?.PropertyName && x.Operator != null);
+                return DataGrid?.HasFilter(Column) ?? false;
             }
         }
+
+        private Dictionary<string, object> PositionAttributes => new()
+        {
+            { "data-pc-x", _filtersMenuPosition.Left.ToString(System.Globalization.CultureInfo.InvariantCulture) },
+            { "data-pc-y", _filtersMenuPosition.Top.ToString(System.Globalization.CultureInfo.InvariantCulture) }
+        };
 
         #endregion
         protected override async Task OnParametersSetAsync()
@@ -451,7 +454,7 @@ namespace HamkareBlazor
             var actualWidth = await columnToShrink.UpdateColumnWidth(shrinkedWidth, gridHeight, finish);
             // Use actualWidth to see if the column could be made smaller or if it reached its min size.
             if (actualWidth >= shrinkedWidth)
-                enlargedWidth -= (actualWidth - shrinkedWidth);
+                enlargedWidth -= actualWidth - shrinkedWidth;
 
             await columnToEnlarge.UpdateColumnWidth(enlargedWidth, gridHeight, finish);
         }
@@ -491,13 +494,17 @@ namespace HamkareBlazor
                 return;
             }
 
+            var initialSortDirection = Column?.InitialSortDirection ?? SortDirection.Ascending;
+
             SortDirection = SortDirection switch
             {
                 SortDirection.Ascending => SortDirection.Descending,
                 SortDirection.Descending => DataGrid.AllowUnsorted
                     ? SortDirection.None
                     : SortDirection.Ascending,
-                _ => SortDirection.Ascending
+                _ => initialSortDirection == SortDirection.None
+                    ? SortDirection.Ascending
+                    : initialSortDirection
             };
 
             if (SortDirection == SortDirection.None)
@@ -528,20 +535,24 @@ namespace HamkareBlazor
         {
             Debug.Assert(DataGrid is not null);
             var filterDefinition = Column?.FilterContext.FilterDefinition;
+
             if (DataGrid.FilterMode == DataGridFilterMode.Simple && filterDefinition != null)
             {
-                if (DataGrid.FilterDefinitions.All(x => x.Title != filterDefinition.Title))
+                var filterDefinitionToFocus = DataGrid.FilterDefinitions
+                    .FirstOrDefault(x => x.Title == filterDefinition.Title);
+
+                if (filterDefinitionToFocus is null)
                 {
-                    DataGrid.FilterDefinitions.Add(filterDefinition.Clone());
+                    filterDefinitionToFocus = filterDefinition.Clone();
+                    DataGrid.FilterDefinitions.Add(filterDefinitionToFocus);
                 }
-                DataGrid._openPosition.Top = args.PageY;
-                DataGrid._openPosition.Left = args.PageX;
-                DataGrid.OpenFilters();
+
+                DataGrid.SetFiltersMenuPosition(args.PageY, args.PageX);
+                DataGrid.OpenFilters(filterDefinitionToFocus.Id);
             }
             else if (DataGrid.FilterMode == DataGridFilterMode.ColumnFilterMenu)
             {
-                DataGrid._openPosition.Top = args.PageY;
-                DataGrid._openPosition.Left = args.PageX;
+                _filtersMenuPosition = (args.PageY, args.PageX);
                 _filtersMenuVisible = true;
                 DataGrid.DropContainerHasChanged();
             }
@@ -550,16 +561,20 @@ namespace HamkareBlazor
         internal void OpenFilters(MouseEventArgs args)
         {
             Debug.Assert(DataGrid is not null);
+
             if (DataGrid.FilterMode == DataGridFilterMode.Simple)
             {
-                DataGrid._openPosition.Top = args.PageY;
-                DataGrid._openPosition.Left = args.PageX;
-                DataGrid.OpenFilters();
+                var filterDefinitionToFocus = DataGrid.FilterDefinitions
+                    .FirstOrDefault(x =>
+                        ReferenceEquals(x.Column, Column) ||
+                        (Column?.PropertyName is not null && x.Column?.PropertyName == Column.PropertyName));
+
+                DataGrid.SetFiltersMenuPosition(args.PageY, args.PageX);
+                DataGrid.OpenFilters(filterDefinitionToFocus?.Id);
             }
             else if (DataGrid.FilterMode == DataGridFilterMode.ColumnFilterMenu)
             {
-                DataGrid._openPosition.Top = args.PageY;
-                DataGrid._openPosition.Left = args.PageX;
+                _filtersMenuPosition = (args.PageY, args.PageX);
                 _filtersMenuVisible = true;
                 DataGrid.DropContainerHasChanged();
             }
@@ -581,6 +596,7 @@ namespace HamkareBlazor
             {
                 ((IHamkareStateHasChanged)DataGrid).StateHasChanged();
             }
+            await DataGrid.NotifyFilterChangedAsync();
             _filtersMenuVisible = false;
             DataGrid.DropContainerHasChanged();
         }
@@ -600,6 +616,7 @@ namespace HamkareBlazor
             {
                 ((IHamkareStateHasChanged)DataGrid).StateHasChanged();
             }
+            await DataGrid.NotifyFilterChangedAsync();
             _filtersMenuVisible = false;
             DataGrid.DropContainerHasChanged();
         }
@@ -617,6 +634,7 @@ namespace HamkareBlazor
             {
                 ((IHamkareStateHasChanged)DataGrid).StateHasChanged();
             }
+            await DataGrid.NotifyFilterChangedAsync();
             _filtersMenuVisible = false;
             DataGrid.DropContainerHasChanged();
         }
@@ -656,8 +674,23 @@ namespace HamkareBlazor
             {
                 ((IHamkareStateHasChanged)DataGrid).StateHasChanged();
             }
+            await DataGrid.NotifyFilterChangedAsync();
             _filtersMenuVisible = false;
             DataGrid.DropContainerHasChanged();
+        }
+
+        /// <summary>
+        /// Closes the filter UI owned by this header cell.
+        /// </summary>
+        /// <remarks>
+        /// This method closes the column filter popover used by <see cref="DataGridFilterMode.ColumnFilterMenu"/>.
+        /// </remarks>
+        internal Task CloseFilterAsync()
+        {
+            _filtersMenuVisible = false;
+            StateHasChanged();
+            DataGrid.DropContainerHasChanged();
+            return Task.CompletedTask;
         }
 
         private async Task CheckedChangedAsync(bool value)
@@ -716,6 +749,21 @@ namespace HamkareBlazor
         /// </summary>
         public void Dispose()
         {
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// Releases resources used by this header cell.
+        /// </summary>
+        /// <param name="disposing">When <c>true</c>, managed resources should be released.</param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposing)
+            {
+                return;
+            }
+
             if (DataGrid is not null)
             {
                 DataGrid.SortChangedEvent -= OnGridSortChanged;

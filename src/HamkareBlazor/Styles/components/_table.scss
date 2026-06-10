@@ -12,7 +12,7 @@ $header-height-with-filter-dense: 89px; // 39px + 50px (filter row height)
   transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
 
   &.hamkare-table-square {
-    border-radius: 0px;
+    border-radius: 0;
   }
 
   &.hamkare-table-outlined {
@@ -73,6 +73,10 @@ $header-height-with-filter-dense: 89px; // 39px + 50px (filter row height)
   flex-direction: inherit;
   justify-content: flex-start;
 
+  &.hamkare-table-sort-label-full-width {
+    width: 100%;
+  }
+
   &.hamkare-clickable {
     cursor: pointer;
     user-select: none;
@@ -91,7 +95,7 @@ $header-height-with-filter-dense: 89px; // 39px + 50px (filter row height)
 
   .hamkare-table-sort-label-icon {
     font-size: 18px;
-    transition: opacity 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,transform 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    transition: opacity 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, transform 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
     margin-left: 4px;
     user-select: none;
     margin-right: 4px;
@@ -218,12 +222,12 @@ $header-height-with-filter-dense: 89px; // 39px + 50px (filter row height)
       & .hamkare-table-row {
         .hamkare-table-cell:first-child {
           border-right: none;
-          border-top-right-radius: 0px;
+          border-top-right-radius: 0;
         }
 
         .hamkare-table-cell:last-child {
           border-right: 1px solid var(--hamkare-palette-table-lines);
-          border-top-right-radius: 0px;
+          border-top-right-radius: 0;
         }
       }
     }
@@ -232,7 +236,7 @@ $header-height-with-filter-dense: 89px; // 39px + 50px (filter row height)
       & .hamkare-table-row {
         .hamkare-table-cell:last-child {
           border-right: 1px solid var(--hamkare-palette-table-lines);
-          border-top-right-radius: 0px;
+          border-top-right-radius: 0;
         }
 
         .hamkare-table-cell:only-child {
@@ -255,7 +259,7 @@ $header-height-with-filter-dense: 89px; // 39px + 50px (filter row height)
       & .hamkare-table-row {
         .hamkare-table-cell:last-child {
           border-right: 1px solid var(--hamkare-palette-table-lines);
-          border-top-right-radius: 0px;
+          border-top-right-radius: 0;
         }
       }
     }
@@ -278,42 +282,50 @@ $header-height-with-filter-dense: 89px; // 39px + 50px (filter row height)
   & * .hamkare-table-root {
     .hamkare-table-head {
       & * .hamkare-table-cell:first-child {
-        border-radius: var(--hamkare-default-borderradius) 0px 0px 0px;
+        border-radius: var(--hamkare-default-borderradius) 0 0 0;
       }
 
       & * .hamkare-table-cell:last-child {
-        border-radius: 0px var(--hamkare-default-borderradius) 0px 0px;
+        border-radius: 0 var(--hamkare-default-borderradius) 0 0;
       }
+
       //Shared Sticky Header Styles
       .hamkare-table-cell, .hamkare-table-loading {
         background-color: var(--hamkare-palette-surface);
         position: sticky;
         z-index: 2;
       }
+
       // Row 1 (always)
       .hamkare-table-cell {
         top: 0;
       }
+
       // Row 2 (filter or panel row)
       .filter-header-cell {
         top: $header-height;
       }
+
       // Row 2 (filter or panel row if table is dense)
       &.hamkare-table-dense .filter-header-cell {
         top: $header-height-dense;
       }
+
       // Row 2 (loading row without filter header)
       .hamkare-table-loading {
         top: $header-height;
       }
+
       // Row 2 (loading row without filter header if table is dense)
       &.hamkare-table-dense .hamkare-table-loading {
         top: $header-height-dense;
       }
+
       // Row 3 (loading row with filter header)
       &:has(.filter-header-cell) .hamkare-table-loading {
         top: $header-height-with-filter;
       }
+
       // Row 3 (loading row with filter header if table is dense)
       &.hamkare-table-dense:has(.filter-header-cell) .hamkare-table-loading {
         top: $header-height-with-filter-dense;
@@ -334,7 +346,6 @@ $header-height-with-filter-dense: 89px; // 39px + 50px (filter row height)
   }
 
   & * .hamkare-table-root {
-
     .hamkare-table-foot {
       position: sticky;
       z-index: 2;
@@ -347,12 +358,25 @@ $header-height-with-filter-dense: 89px; // 39px + 50px (filter row height)
   }
 }
 
-
 .hamkare-table-row {
   color: inherit;
   display: table-row;
   outline: 0;
   vertical-align: middle;
+}
+
+.hamkare-table-row-clickable {
+  cursor: pointer;
+}
+
+.hamkare-table-row-disabled {
+  color: var(--hamkare-palette-text-disabled);
+  cursor: default;
+  pointer-events: none;
+
+  & .hamkare-table-cell {
+    color: var(--hamkare-palette-text-disabled) !important;
+  }
 }
 
 .hamkare-table-hover {
@@ -367,7 +391,14 @@ $header-height-with-filter-dense: 89px; // 39px + 50px (filter row height)
 
 .hamkare-table-striped {
   & .hamkare-table-container .hamkare-table-root .hamkare-table-body {
-    & .hamkare-table-row:nth-of-type(odd) {
+    // Non-virtualized: nth-of-type works because no <tr> spacers exist.
+    &:not(.hamkare-table-body-virtualized) .hamkare-table-row:nth-of-type(odd) {
+      background-color: var(--hamkare-palette-table-striped);
+    }
+
+    // Virtualized: <Virtualize> renders <tr> spacers that shift nth-of-type ordering.
+    // Use index-based .hamkare-table-row-stripe class instead.
+    &.hamkare-table-body-virtualized .hamkare-table-row.hamkare-table-row-stripe {
       background-color: var(--hamkare-palette-table-striped);
     }
   }
@@ -375,9 +406,19 @@ $header-height-with-filter-dense: 89px; // 39px + 50px (filter row height)
 
 .hamkare-table-hover.hamkare-table-striped {
   & .hamkare-table-container .hamkare-table-root .hamkare-table-body {
-    @media(hover: hover) and (pointer: fine) {
-      & .hamkare-table-row:nth-of-type(odd):hover {
-        background-color: var(--hamkare-palette-table-hover);
+    &:not(.hamkare-table-body-virtualized) {
+      @media(hover: hover) and (pointer: fine) {
+        & .hamkare-table-row:nth-of-type(odd):hover {
+          background-color: var(--hamkare-palette-table-hover);
+        }
+      }
+    }
+
+    &.hamkare-table-body-virtualized {
+      @media(hover: hover) and (pointer: fine) {
+        & .hamkare-table-row.hamkare-table-row-stripe:hover {
+          background-color: var(--hamkare-palette-table-hover);
+        }
       }
     }
   }
@@ -432,7 +473,6 @@ $header-height-with-filter-dense: 89px; // 39px + 50px (filter row height)
   display: initial;
   position: sticky;
   left: 0;
-  margin-top:auto;
 }
 
 .hamkare-table-pagination:last-child {
@@ -454,10 +494,6 @@ $header-height-with-filter-dense: 89px; // 39px + 50px (filter row height)
   & .hamkare-tablepager-right {
     flex-direction: row-reverse !important;
   }
-
-  & > .hamkare-select{
-    top: 2px;
-  }
 }
 
 .hamkare-table-pagination-spacer {
@@ -476,11 +512,11 @@ $header-height-with-filter-dense: 89px; // 39px + 50px (filter row height)
   cursor: pointer;
   margin-left: 10px !important;
   margin-right: 10px !important;
-  margin-top: 0px !important;
+  margin-top: 0 !important;
   min-width: 52px;
 
   & .hamkare-select-input {
-    margin-top: 0px !important;
+    margin-top: 0 !important;
     padding: 0 7px !important;
   }
 
@@ -531,7 +567,7 @@ $header-height-with-filter-dense: 89px; // 39px + 50px (filter row height)
 }
 
 .hamkare-header-togglehierarchy .hamkare-table-row-expander {
-    padding: 6px;
+  padding: 6px;
 }
 
 .hamkare-table-row-expander {
@@ -541,7 +577,7 @@ $header-height-with-filter-dense: 89px; // 39px + 50px (filter row height)
   margin-inline-end: -2px;
 }
 
-@mixin table-display-smalldevices ($breakpoint) {
+@mixin table-display-smalldevices($breakpoint) {
   .hamkare-#{$breakpoint}table {
     .hamkare-table-root .hamkare-table-head .hamkare-table-row,
     .hamkare-table-root .hamkare-table-foot {
@@ -574,7 +610,6 @@ $header-height-with-filter-dense: 89px; // 39px + 50px (filter row height)
       text-align: start !important;
     }
 
-
     &.hamkare-table-dense {
       & .hamkare-table-cell {
         padding: 6px 16px;
@@ -601,7 +636,6 @@ $header-height-with-filter-dense: 89px; // 39px + 50px (filter row height)
     }
 
     .hamkare-table-pagination {
-
       .hamkare-table-pagination-spacer {
         flex: none;
       }
@@ -641,8 +675,9 @@ $header-height-with-filter-dense: 89px; // 39px + 50px (filter row height)
     }
   }
 }
+
 // Table Pagination Flex Wrapper on old phones
-@media (max-width:360px) {
+@media (max-width: 360px) {
   .hamkare-table {
     .hamkare-table-pagination {
       .hamkare-select {
@@ -660,7 +695,7 @@ $header-height-with-filter-dense: 89px; // 39px + 50px (filter row height)
   }
 }
 
-@media (max-width:416px) {
+@media (max-width: 416px) {
   .hamkare-table {
     .hamkare-table-pagination {
       .hamkare-table-pagination-toolbar {
@@ -682,26 +717,26 @@ $header-height-with-filter-dense: 89px; // 39px + 50px (filter row height)
   }
 }
 
-@media (max-width:$breakpoint-sm) {
+@media (max-width: $breakpoint-sm) {
   @include table-display-smalldevices("xs-");
 }
 
-@media (max-width:$breakpoint-md) {
+@media (max-width: $breakpoint-md) {
   @include table-display-smalldevices("sm-");
 }
 
-@media (max-width:$breakpoint-lg) {
+@media (max-width: $breakpoint-lg) {
   @include table-display-smalldevices("md-");
 }
 
-@media (max-width:$breakpoint-xl) {
+@media (max-width: $breakpoint-xl) {
   @include table-display-smalldevices("lg-");
 }
 
-@media (max-width:$breakpoint-xxl) {
+@media (max-width: $breakpoint-xxl) {
   @include table-display-smalldevices("xl-");
 }
 
-@media (min-width:$breakpoint-xxl) {
+@media (min-width: $breakpoint-xxl) {
   @include table-display-smalldevices("xxl-");
 }

@@ -6,7 +6,6 @@ using Microsoft.JSInterop;
 
 namespace HamkareBlazor.Interop;
 
-#nullable enable
 internal class PopoverJsInterop
 {
     private readonly IJSRuntime _jsRuntime;
@@ -36,7 +35,7 @@ internal class PopoverJsInterop
         return _jsRuntime.InvokeAsyncWithErrorHandling<int>("hamkarepopoverHelper.countProviders", cancellationToken);
     }
 
-    public ValueTask Dispose(CancellationToken cancellationToken = default)
+    public ValueTask DisposeAsync(CancellationToken cancellationToken = default)
     {
         return _jsRuntime.InvokeVoidAsyncIgnoreErrors("hamkarePopover.dispose", cancellationToken);
     }

@@ -4,7 +4,6 @@
 
 namespace HamkareBlazor.Justification.StackedBars;
 
-#nullable enable
 internal interface IStackedBarPositionStrategy
 {
     double[] CalculatePositions(StackedBarContext ctx);

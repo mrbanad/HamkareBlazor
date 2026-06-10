@@ -4,6 +4,7 @@
     <Nullable>enable</Nullable>
     <LangVersion>latest</LangVersion>
     <IncludeBuildOutput>false</IncludeBuildOutput>
+    <RootNamespace>HamkareBlazor.Analyzers.CodeFixes</RootNamespace>
   </PropertyGroup>
   
   <ItemGroup>

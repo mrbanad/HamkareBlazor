@@ -4,7 +4,6 @@
 
 namespace HamkareBlazor.Utilities;
 
-#nullable enable
 public static class RangeUtility
 {
     /// <summary>

@@ -8,7 +8,6 @@ using HamkareBlazor.Utilities;
 
 namespace HamkareBlazor.Internal;
 
-#nullable enable
 /// <summary>
 /// An icon displayed within an input component.
 /// </summary>

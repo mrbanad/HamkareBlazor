@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Components;
 
 namespace HamkareBlazor.Components.Snackbar.InternalComponents;
 
-#nullable enable
 public partial class SnackbarMessageText : ComponentBase
 {
     /// <summary>

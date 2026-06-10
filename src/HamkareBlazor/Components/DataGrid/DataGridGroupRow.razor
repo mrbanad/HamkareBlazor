@@ -1,12 +1,14 @@
 ﻿@namespace HamkareBlazor
 @inherits HamkareComponentBase
+@using HamkareBlazor.Resources
+@inject InternalHamkareLocalizer Localizer
 @typeparam T
 
 <tr class="hamkare-table-row">
     <td class="@GroupClassname" colspan="1000" style="@GroupStylename">
         <div style="display:flex; align-items:center;">
-            <HamkareIconButton Class="hamkare-table-row-expander" Icon="@(DataGrid.GetGroupIcon(_expanded))"
-                           OnClick="@GroupExpandClick" />
+            <HamkareIconButton Class="hamkare-table-row-expander" Icon="@(DataGrid.GetGroupIcon(_expanded))" OnClick="@GroupExpandClick"
+                           aria-label="@(_expanded ? @Localizer[LanguageResource.HamkareDataGrid_CollapseGroup] : @Localizer[LanguageResource.HamkareDataGrid_ExpandGroup])" />
             @if (GroupDefinition.GroupTemplate is not null)
             {
                 @GroupDefinition.GroupTemplate(GroupDefinition)

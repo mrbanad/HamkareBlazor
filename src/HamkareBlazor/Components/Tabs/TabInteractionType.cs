@@ -4,7 +4,6 @@
 
 namespace HamkareBlazor;
 
-#nullable enable
 
 /// <summary>
 /// The type of user interaction when <see cref="HamkareTabs.OnPreviewInteraction"/> occurs.

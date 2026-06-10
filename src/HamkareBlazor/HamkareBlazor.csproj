@@ -1,8 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
-    <Nullable>enable</Nullable>
     <TargetFrameworks>net9.0;net10.0</TargetFrameworks>
+    <Nullable>enable</Nullable>
+    <EnumGenerator_ForceInternal>true</EnumGenerator_ForceInternal>
+    <RootNamespace>HamkareBlazor</RootNamespace>
   </PropertyGroup>
   
   <PropertyGroup>
@@ -89,11 +91,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.CodeAnalysis.ResxSourceGenerator" Version="3.11.0-beta1.25173.3">
+    <PackageReference Include="Microsoft.CodeAnalysis.ResxSourceGenerator" Version="3.11.0-beta1.26075.3">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="NetEscapades.EnumGenerators.Generators" Version="1.0.0-beta20" PrivateAssets="all" />
+    <PackageReference Include="NetEscapades.EnumGenerators.Generators" Version="1.0.0-beta21" PrivateAssets="all" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="HamkareBlazor.Utilities.StringHelpers" Static="True" />
   </ItemGroup>
 
   <ItemGroup>
@@ -101,9 +107,7 @@
     <ScssAssetInputs Include="Styles/**/*.scss" />
     <WebAssetInputs Include="@(JsAssetInputs);@(ScssAssetInputs)" />
     <UpToDateCheckInput Include="@(WebAssetInputs)" />
-    <WebAssetOutputs Include="wwwroot/HamkareBlazor.min.js" />
-    <WebAssetOutputs Include="wwwroot/HamkareBlazor.min.js.map" />
-    <WebAssetOutputs Include="wwwroot\HamkareBlazor.min.css" />
+    <WebAssetOutputs Include="wwwroot/HamkareBlazor.min.js;wwwroot/HamkareBlazor.min.js.map;wwwroot/HamkareBlazor.min.css" />
   </ItemGroup>
 
   <PropertyGroup>
@@ -121,6 +125,9 @@
     <Message Importance="High"
              Text="Building HamkareBlazor web assets (outer build)" />
 
+    <Exec Command="$(BunToolRestore)"
+          WorkingDirectory="$(MSBuildProjectDirectory)" />
+
     <Exec Command="$(BunWrapper) run build.mjs"
           WorkingDirectory="$(MSBuildProjectDirectory)" />
   </Target>
@@ -136,6 +143,9 @@
 
     <Message Importance="High"
              Text="Building HamkareBlazor web assets (inner build, TFM: $(TargetFramework))" />
+
+    <Exec Command="$(BunToolRestore)"
+          WorkingDirectory="$(MSBuildProjectDirectory)" />
 
     <Exec Command="$(BunWrapper) run build.mjs"
           WorkingDirectory="$(MSBuildProjectDirectory)" />

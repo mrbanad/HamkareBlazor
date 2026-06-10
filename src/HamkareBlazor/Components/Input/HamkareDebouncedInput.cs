@@ -4,7 +4,6 @@ using HamkareBlazor.Utilities.Debounce;
 
 namespace HamkareBlazor
 {
-#nullable enable
     /// <summary>
     /// A base class for designing input components which update after a delay.
     /// </summary>
@@ -48,7 +47,7 @@ namespace HamkareBlazor
             var suppressTextUpdate = !updateValue
                                      && DebounceInterval > 0
                                      && _debouncer is not null
-                                     && (!ReadValue?.Equals(ConvertGet(ReadText)) ?? false);
+                                     && _debouncer.IsPending;
 
             return suppressTextUpdate
                 ? Task.CompletedTask
@@ -75,6 +74,17 @@ namespace HamkareBlazor
             // Debounce the update - use fire-and-forget pattern to match the old Timer implementation.
             _ = _debouncer.DebounceAsync(OnDebouncedUpdate);
             return Task.CompletedTask;
+        }
+
+        /// <inheritdoc />
+        protected override async Task ValidateValue()
+        {
+            if (await SynchronizePendingValueForValidationAsync())
+            {
+                return;
+            }
+
+            await base.ValidateValue();
         }
 
         /// <inheritdoc />
@@ -114,6 +124,29 @@ namespace HamkareBlazor
                     await _debouncer.UpdateIntervalAsync(TimeSpan.FromMilliseconds(args.Value));
                 }
             }
+        }
+
+        private async Task<bool> SynchronizePendingValueForValidationAsync()
+        {
+            if (DebounceInterval <= 0 || _debouncer is null || !_debouncer.IsPending)
+            {
+                return false;
+            }
+
+            var pendingValue = ConvertGet(ReadText);
+            var pendingValueChanged = !EqualityComparer<T?>.Default.Equals(ReadValue, pendingValue);
+
+            await _debouncer.CancelAsync();
+
+            if (!pendingValueChanged)
+            {
+                return false;
+            }
+
+            // SetValueAndUpdateTextAsync already triggers FieldChanged and BeginValidateAsync,
+            // so the synced validation happens there and this call can stop.
+            await SetValueAndUpdateTextAsync(pendingValue, updateText: false);
+            return true;
         }
 
         private Task OnDebouncedUpdate()

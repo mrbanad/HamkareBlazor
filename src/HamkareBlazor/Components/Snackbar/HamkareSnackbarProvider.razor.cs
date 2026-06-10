@@ -5,7 +5,6 @@
 using Microsoft.AspNetCore.Components;
 using HamkareBlazor.Utilities;
 
-#nullable enable
 
 namespace HamkareBlazor
 {
@@ -14,6 +13,9 @@ namespace HamkareBlazor
         [Inject]
         private ISnackbar Snackbars { get; set; } = null!;
 
+        /// <summary>
+        /// Displays snackbar positions right-to-left.
+        /// </summary>
         [CascadingParameter(Name = "RightToLeft")]
         public bool RightToLeft { get; set; }
 

@@ -3,7 +3,6 @@ using HamkareBlazor.Utilities;
 
 namespace HamkareBlazor
 {
-#nullable enable
 
     /// <summary>
     /// A table similar to <see cref="HamkareTable{T}"/> but with basic styling features.

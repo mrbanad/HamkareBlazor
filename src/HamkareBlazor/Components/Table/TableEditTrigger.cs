@@ -4,7 +4,6 @@
 
 namespace HamkareBlazor;
 
-#nullable enable
 
 /// <summary>
 /// Indicates the behavior which begins inline editing for a <see cref="HamkareTable{T}"/>.

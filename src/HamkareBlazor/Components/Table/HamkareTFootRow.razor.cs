@@ -5,12 +5,11 @@ using HamkareBlazor.Utilities;
 
 namespace HamkareBlazor
 {
-#nullable enable
 
     /// <summary>
     /// A footer row displayed at the bottom of a <see cref="HamkareTable{T}"/> and each group.
     /// </summary>
-    public partial class HamkareTFootRow : HamkareComponentBase
+    public partial class HamkareTFootRow : HamkareComponentBase, IDisposable
     {
         private bool? _checked = false;
 
@@ -111,6 +110,21 @@ namespace HamkareBlazor
         /// </summary>
         public void Dispose()
         {
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// Releases resources used by this footer row.
+        /// </summary>
+        /// <param name="disposing">When <c>true</c>, managed resources should be released.</param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposing)
+            {
+                return;
+            }
+
             Context?.FooterRows.Remove(this);
         }
 

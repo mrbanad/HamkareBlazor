@@ -8,6 +8,14 @@
 
     & .hamkare-select-input {
       cursor: text;
+
+      &.hamkare-readonly {
+        cursor: default;
+
+        & .hamkare-input-adornment {
+          cursor: default;
+        }
+      }
     }
 
     & .hamkare-input-adornment {
@@ -53,6 +61,10 @@
   .hamkare-select-input {
     cursor: pointer;
 
+    &.hamkare-readonly {
+      cursor: default;
+    }
+
     & .hamkare-input-slot {
       overflow: hidden;
       white-space: nowrap;
@@ -91,6 +103,15 @@
 
 .hamkare-select > .hamkare-form-helpertext {
   margin-top: -21px;
+}
+
+.hamkare-autocomplete-before-items,
+.hamkare-autocomplete-after-items,
+.hamkare-autocomplete-more-items,
+.hamkare-autocomplete-no-items {
+  &:not(:empty) {
+    padding: 4px;
+  }
 }
 
 .hamkare-select-all {

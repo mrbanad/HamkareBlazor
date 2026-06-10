@@ -2,7 +2,6 @@
 
 namespace HamkareBlazor;
 
-#nullable enable
 
 /// <summary>
 /// A component which defines a common structure for multiple pages.

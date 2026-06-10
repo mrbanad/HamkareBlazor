@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using HamkareBlazor.Utilities;
 
-#nullable enable
 namespace HamkareBlazor
 {
     /// <summary>

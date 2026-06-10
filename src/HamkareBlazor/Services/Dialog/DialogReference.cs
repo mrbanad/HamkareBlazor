@@ -7,12 +7,14 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Components;
 
-#nullable enable
 namespace HamkareBlazor
 {
     /// <summary>
-    /// An instance of a <see cref="HamkareDialog"/>.
+    /// Handle for an active <see cref="HamkareDialog"/> instance.
     /// </summary>
+    /// <remarks>
+    /// Use this to close dialogs, await results, or access the rendered fragment after creation.
+    /// </remarks>
     /// <seealso cref="HamkareDialog"/>
     /// <seealso cref="HamkareDialogContainer"/>
     /// <seealso cref="HamkareDialogProvider"/>
@@ -58,6 +60,9 @@ namespace HamkareBlazor
         public Guid Id { get; }
 
         /// <inheritdoc />
+        public DialogOptions? Options { get; private set; }
+
+        /// <inheritdoc />
         public object? Dialog { get; private set; }
 
         /// <inheritdoc />
@@ -78,6 +83,12 @@ namespace HamkareBlazor
         public void InjectRenderFragment(RenderFragment rf)
         {
             RenderFragment = rf;
+        }
+
+        /// <inheritdoc />
+        public void InjectOptions(DialogOptions options)
+        {
+            Options = options;
         }
 
         /// <inheritdoc />

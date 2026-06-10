@@ -5,7 +5,6 @@ using HamkareBlazor.Utilities;
 
 namespace HamkareBlazor
 {
-#nullable enable
     /// <summary>
     /// Badges show notifications, counts, or status information on navigation items and icons.
     /// </summary>

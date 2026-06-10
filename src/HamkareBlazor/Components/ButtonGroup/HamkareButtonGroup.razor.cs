@@ -3,7 +3,6 @@ using HamkareBlazor.Utilities;
 
 namespace HamkareBlazor
 {
-#nullable enable
     /// <summary>
     /// Groups related <see cref="HamkareButton"/> components together visually.
     /// </summary>
@@ -24,6 +23,9 @@ namespace HamkareBlazor
             .AddClass(Class)
             .Build();
 
+        /// <summary>
+        /// Displays buttons right-to-left.
+        /// </summary>
         [CascadingParameter(Name = "RightToLeft")]
         public bool RightToLeft { get; set; }
 

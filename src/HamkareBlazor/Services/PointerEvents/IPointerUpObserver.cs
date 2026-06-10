@@ -4,7 +4,6 @@
 
 namespace HamkareBlazor;
 
-#nullable enable
 
 /// <summary>
 /// Represents an observer that observes and responds to pointer up events.

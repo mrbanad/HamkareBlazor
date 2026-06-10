@@ -4,7 +4,6 @@
 
 namespace HamkareBlazor;
 
-#nullable enable
 internal interface IHamkareRadioGroup
 {
     //This interface need to throw exception properly.

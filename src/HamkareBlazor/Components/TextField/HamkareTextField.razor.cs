@@ -6,7 +6,6 @@ using HamkareBlazor.Utilities;
 
 namespace HamkareBlazor
 {
-#nullable enable
     /// <summary>
     /// An input for collecting text values.
     /// </summary>

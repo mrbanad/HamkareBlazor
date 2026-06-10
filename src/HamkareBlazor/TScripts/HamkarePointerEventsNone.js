@@ -2,6 +2,10 @@
 // HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+/**
+ * Recovers pointer hits for elements intentionally styled with `pointer-events: none`.
+ * Temporarily enables pointer events to perform hit-testing and report matches to .NET.
+ */
 class HamkarePointerEventsNone {
     constructor() {
         this.dotnet = null;
@@ -12,6 +16,9 @@ class HamkarePointerEventsNone {
         this.pointerUpMap = new Map();
     }
 
+    /**
+     * Starts global pointer listeners for an element configured with pointer-events-none behavior.
+     */
     listenForPointerEvents(dotNetReference, elementId, options) {
         if (!options) {
             this.logger("options object is required but was not provided");
@@ -68,10 +75,16 @@ class HamkarePointerEventsNone {
         }
     }
 
+    /**
+     * Handles global pointerdown and routes matching IDs to .NET.
+     */
     pointerDownHandler(event) {
         this._handlePointerEvent(event, this.pointerDownMap, "RaiseOnPointerDown");
     }
 
+    /**
+     * Handles global pointerup and routes matching IDs to .NET.
+     */
     pointerUpHandler(event) {
         this._handlePointerEvent(event, this.pointerUpMap, "RaiseOnPointerUp");
     }
@@ -116,6 +129,11 @@ class HamkarePointerEventsNone {
                 break;
             }
 
+            if (this._shouldIgnorePointerEvent(element, event.target)) {
+                this.logger("Ignoring pointer event for element", element.id);
+                continue;
+            }
+
             matchingIds.push(element.id);
         }
 
@@ -128,6 +146,19 @@ class HamkarePointerEventsNone {
         this.dotnet.invokeMethodAsync(raiseMethod, matchingIds);
     }
 
+    _shouldIgnorePointerEvent(element, target) {
+        const ignoreElementId = element.dataset.modelessIgnoreElementId;
+        if (!ignoreElementId || !(target instanceof Element)) {
+            return false;
+        }
+
+        const ignoreElement = document.getElementById(ignoreElementId);
+        return !!ignoreElement && ignoreElement.contains(target);
+    }
+
+    /**
+     * Stops pointer listener participation for a specific element ID.
+     */
     cancelListener(elementId) {
         if (!elementId) {
             this.logger("cancelListener called with invalid elementId");
@@ -156,6 +187,9 @@ class HamkarePointerEventsNone {
         }
     }
 
+    /**
+     * Removes global listeners and clears all tracked element subscriptions.
+     */
     dispose() {
         if (!this.dotnet && !this.pointerDownHandlerRef && !this.pointerUpHandlerRef) {
             this.logger("dispose() called but instance was already cleaned up");

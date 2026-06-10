@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Components;
 
 namespace HamkareBlazor;
 
-#nullable enable
 /// <summary>
 /// Represents the grouping information for columns in a <see cref="HamkareDataGrid{T}"/>.
 /// </summary>

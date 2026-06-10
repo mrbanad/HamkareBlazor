@@ -11,7 +11,6 @@ using HamkareBlazor.State.Invocation;
 
 namespace HamkareBlazor.State;
 
-#nullable enable
 /// <summary>
 /// Represents a collection of multiple <see cref="ParameterScopeContainer"/> instances combined into a union.
 /// </summary>

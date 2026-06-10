@@ -8,14 +8,13 @@ using HamkareBlazor.Utilities;
 
 namespace HamkareBlazor
 {
-#nullable enable
 
     /// <summary>
     /// A drawer used to navigate sections on a page.
     /// </summary>
     public partial class HamkarePageContentNavigation : IAsyncDisposable, IHamkareStateHasChanged
     {
-        private List<HamkarePageContentSection> _sections = new();
+        private readonly List<HamkarePageContentSection> _sections = new();
         private IScrollSpy? _scrollSpy;
 
         [Inject]
@@ -124,7 +123,7 @@ namespace HamkareBlazor
         /// <param name="forceUpdate">If true, StateHasChanged is called, forcing a re-render of the component</param>
         public void AddSection(string sectionName, string sectionId, bool forceUpdate) => AddSection(new HamkarePageContentSection(sectionName, sectionId), forceUpdate);
 
-        private Dictionary<HamkarePageContentSection, HamkarePageContentSection> _parentMapper = new();
+        private readonly Dictionary<HamkarePageContentSection, HamkarePageContentSection> _parentMapper = new();
 
         /// <summary>
         /// Add a section to the content navigation

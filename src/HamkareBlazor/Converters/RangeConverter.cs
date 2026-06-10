@@ -7,7 +7,6 @@ using HamkareBlazor.Utilities;
 
 namespace HamkareBlazor;
 
-#nullable enable
 /// <summary>
 /// Converter that serializes and deserializes a <see cref="Range{T}"/> to and from a string representation.
 /// </summary>

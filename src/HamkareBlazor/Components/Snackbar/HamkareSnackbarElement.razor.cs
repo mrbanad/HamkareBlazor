@@ -6,11 +6,13 @@ using HamkareBlazor.Components.Snackbar;
 
 namespace HamkareBlazor
 {
-#nullable enable
     public partial class HamkareSnackbarElement : HamkareComponentBase, IDisposable
     {
         private RenderFragment? _css;
 
+        /// <summary>
+        /// The snackbar instance displayed by this component.
+        /// </summary>
         [Parameter]
         public Snackbar? Snackbar { get; set; }
 

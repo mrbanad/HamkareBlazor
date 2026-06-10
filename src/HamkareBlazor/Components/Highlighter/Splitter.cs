@@ -2,7 +2,6 @@
 using System.Text;
 using System.Text.RegularExpressions;
 
-#nullable enable
 namespace HamkareBlazor.Components.Highlighter;
 
 public enum FragmentType { Text, HighlightedText, Markup }

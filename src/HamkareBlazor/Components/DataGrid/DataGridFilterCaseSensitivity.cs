@@ -5,7 +5,6 @@
 using System;
 
 namespace HamkareBlazor;
-#nullable enable
 
 /// <summary>
 /// Indicates how string values are compared for a <see cref="HamkareDataGrid{T}"/> filter.

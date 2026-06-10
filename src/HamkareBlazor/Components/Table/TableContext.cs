@@ -7,7 +7,6 @@ using HamkareBlazor.Extensions;
 
 namespace HamkareBlazor
 {
-#nullable enable
 
     /// <summary>
     /// The current state of a <see cref="HamkareTable{T}"/>.

@@ -4,8 +4,8 @@
 
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Components;
+using HamkareBlazor.Resources;
 
-#nullable enable
 namespace HamkareBlazor;
 
 /// <summary>
@@ -15,6 +15,9 @@ namespace HamkareBlazor;
 /// <seealso cref="HamkareDataGrid{T}"/>
 public partial class SelectColumn<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)] T> : TemplateColumn<T>
 {
+    [Inject]
+    private InternalHamkareLocalizer Localizer { get; set; } = null!;
+
     /// <summary>
     /// Shows a checkbox in the header.
     /// </summary>
@@ -51,6 +54,16 @@ public partial class SelectColumn<[DynamicallyAccessedMembers(DynamicallyAccesse
     [Parameter]
     public Func<T, bool>? DisabledFunc { get; set; }
 
+    /// <summary>
+    /// Provides a custom <c>aria-label</c> for a row selection checkbox.
+    /// </summary>
+    /// <remarks>
+    /// This function is evaluated for each row item.  When the returned value is <c>null</c>, empty, or whitespace,
+    /// the checkbox falls back to the default row selection label.
+    /// </remarks>
+    [Parameter]
+    public Func<T, string?>? AriaLabelFunc { get; set; }
+
     public override RenderFragment<HeaderContext<T>>? GetHeaderTemplate() => ShowInHeader ? GetSelectHeaderTemplate() : null;
     public override RenderFragment<CellContext<T>> GetCellTemplate() => GetSelectCellTemplate();
     public override RenderFragment<FooterContext<T>>? GetFooterTemplate() => ShowInFooter ? GetSelectFooterTemplate() : null;
@@ -64,5 +77,29 @@ public partial class SelectColumn<[DynamicallyAccessedMembers(DynamicallyAccesse
         Filterable = false;
         ShowColumnOptions = false;
         HeaderStyle = "width:0%";
+    }
+
+    private Dictionary<string, object> GetSelectAllAttributes()
+    {
+        return new Dictionary<string, object>(1)
+        {
+            ["aria-label"] = Localizer[LanguageResource.HamkareDataGrid_SelectAllRows].Value
+        };
+    }
+
+    private string GetRowCheckboxAriaLabel(T item)
+    {
+        var ariaLabel = GetCustomAriaLabel(item);
+        if (!string.IsNullOrWhiteSpace(ariaLabel))
+        {
+            return ariaLabel;
+        }
+
+        return Localizer[LanguageResource.HamkareDataGrid_SelectRow].Value;
+    }
+
+    private string? GetCustomAriaLabel(T item)
+    {
+        return AriaLabelFunc?.Invoke(item);
     }
 }

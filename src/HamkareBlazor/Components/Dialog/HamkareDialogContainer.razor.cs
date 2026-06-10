@@ -7,7 +7,6 @@ using HamkareBlazor.Services;
 using HamkareBlazor.State;
 using HamkareBlazor.Utilities;
 
-#nullable enable
 namespace HamkareBlazor
 {
     /// <summary>
@@ -29,7 +28,8 @@ namespace HamkareBlazor
         private ElementReference _dialogContainerReference;
         private readonly ParameterState<DialogOptions> _dialogOptionsState;
         private readonly ParameterState<string?> _titleState;
-        private readonly string _elementId = Identifier.Create("dialog");
+
+        internal string ElementId { get; } = Identifier.Create("dialog");
 
         public HamkareDialogContainer()
         {
@@ -43,6 +43,9 @@ namespace HamkareBlazor
         [Inject]
         private IKeyInterceptorService KeyInterceptorService { get; set; } = null!;
 
+        /// <summary>
+        /// Displays this dialog right-to-left.
+        /// </summary>
         [CascadingParameter(Name = "RightToLeft")]
         public bool RightToLeft { get; set; }
 
@@ -122,7 +125,7 @@ namespace HamkareBlazor
             new CssBuilder("hamkare-overlay-dialog")
                 .AddClass($"hamkare-skip-overlay-section") // dialog overlay remains outside of Section
                 .AddClass("hamkare-skip-overlay-positioning") // popovers try to position the overlay by zindex, this skips that behavior if a user puts the dialog provider above the popover provider
-                .AddClass(GetDialogOptionsOrDefault.BackgroundClass)
+                .AddClass(GetBackgroundClass())
                 .Build();
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -135,22 +138,29 @@ namespace HamkareBlazor
                         new("/./", subscribeDown: true, subscribeUp: true)
                     ]);
 
-                await KeyInterceptorService.SubscribeAsync(_elementId, options, keyDown: HandleKeyDownAsync, keyUp: HandleKeyUpAsync);
+                await KeyInterceptorService.SubscribeAsync(ElementId, options, keys => keys
+                    .OnKeyDown("Escape", HandleEscapeAsync)
+                    .OnKeyDown("/./", HandleAnyKeyDownAsync)
+                    .OnKeyUp("/./", HandleAnyKeyUpAsync));
             }
             await base.OnAfterRenderAsync(firstRender);
         }
 
-        internal async Task HandleKeyDownAsync(KeyboardEventArgs args)
+        private Task HandleEscapeAsync()
         {
-            switch (args.Key)
+            if (GetCloseOnEscapeKey())
             {
-                case "Escape":
-                    if (GetCloseOnEscapeKey())
-                    {
-                        ((IHamkareDialogInstance)this).Cancel();
-                    }
-                    break;
+                ((IHamkareDialogInstance)this).Cancel();
             }
+            return Task.CompletedTask;
+        }
+
+        private async Task HandleAnyKeyDownAsync(KeyboardEventArgs args)
+        {
+            // Don't invoke callback for Escape - it's handled separately
+            if (args.Key == "Escape")
+                return;
+
             if (_dialog is not null && _dialog.OnKeyDown.HasDelegate)
             {
                 await _dialog.OnKeyDown.InvokeAsync(args);
@@ -160,13 +170,7 @@ namespace HamkareBlazor
             }
         }
 
-        private async Task OnMouseUpAsync(MouseEventArgs args)
-        {
-            if (args.Button > 0)
-                await RefocusDialogAsync();
-        }
-
-        internal async Task HandleKeyUpAsync(KeyboardEventArgs args)
+        private async Task HandleAnyKeyUpAsync(KeyboardEventArgs args)
         {
             if (_dialog is not null && _dialog.OnKeyUp.HasDelegate)
             {
@@ -175,6 +179,12 @@ namespace HamkareBlazor
                 // Since the event originates from KeyInterceptor it will not cause a render automatically.
                 await InvokeAsync(StateHasChanged);
             }
+        }
+
+        private async Task OnMouseUpAsync(MouseEventArgs args)
+        {
+            if (args.Button > 0)
+                await RefocusDialogAsync();
         }
 
         private bool GetHideHeader()
@@ -290,6 +300,8 @@ namespace HamkareBlazor
 
         private bool GetFullScreen() => GetDialogOptionsOrDefault.FullScreen ?? GlobalDialogOptions.FullScreen ?? false;
 
+        private string? GetBackgroundClass() => GetDialogOptionsOrDefault.BackgroundClass ?? GlobalDialogOptions.BackgroundClass;
+
         private DialogOptions GetDialogOptionsOrDefault => _dialogOptionsState.Value ?? DialogOptions.Default;
 
         protected virtual async ValueTask DisposeAsyncCore()
@@ -302,7 +314,7 @@ namespace HamkareBlazor
             _disposed = true;
             if (IsJSRuntimeAvailable)
             {
-                await KeyInterceptorService.UnsubscribeAsync(_elementId);
+                await KeyInterceptorService.UnsubscribeAsync(ElementId);
             }
         }
 
@@ -314,7 +326,7 @@ namespace HamkareBlazor
         }
 
         /// <inheritdoc />
-        string IHamkareDialogInstance.ElementId => _elementId;
+        string IHamkareDialogInstance.ElementId => ElementId;
 
         /// <inheritdoc />
         string? IHamkareDialogInstance.Title => _titleState.Value;
@@ -326,6 +338,7 @@ namespace HamkareBlazor
         async Task IHamkareDialogInstance.SetOptionsAsync(DialogOptions options)
         {
             await _dialogOptionsState.SetValueAsync(options);
+            Parent.SetOptions(Id, options);
             await InvokeAsync(StateHasChanged);
         }
 

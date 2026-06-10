@@ -1,5 +1,4 @@
-﻿#nullable enable
-namespace HamkareBlazor.Interpolation
+﻿namespace HamkareBlazor.Interpolation
 {
     internal interface ILineInterpolator
     {

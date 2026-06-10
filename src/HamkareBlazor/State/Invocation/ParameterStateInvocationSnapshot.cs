@@ -6,7 +6,6 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace HamkareBlazor.State.Invocation;
 
-#nullable enable
 
 /// <summary>
 /// Implements <see cref="IParameterStateInvocationSnapshot"/>.

@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Components.Web;
 using HamkareBlazor.Extensions;
 using HamkareBlazor.Utilities;
 
-#nullable enable
 namespace HamkareBlazor
 {
     /// <summary>
@@ -31,23 +30,27 @@ namespace HamkareBlazor
             set => SetDateAsync(value, true).CatchAndLog();
         }
 
-        private DateTime _lastSetTime = DateTime.MinValue;
+        private DateTimeOffset _lastSetTime = DateTimeOffset.MinValue;
         private const int DebounceTimeoutMs = 100;
 
-        protected async Task SetDateAsync(DateTime? date, bool updateValue)
+        protected Task SetDateAsync(DateTime? date, bool updateValue)
+            => SetDateAsync(date, updateValue, false);
+
+        protected async Task SetDateAsync(DateTime? date, bool updateValue, bool forceUpdate)
         {
             if (_value != null && date != null && date.Value.Kind == DateTimeKind.Unspecified)
             {
                 date = DateTime.SpecifyKind(date.Value, _value.Value.Kind);
             }
 
-            var now = DateTime.UtcNow;
+            var now = TimeProvider.GetUtcNow();
 
             /* See #7866 for more details
              * When the date is set in the UI, this method gets called with the same value multiple time. This guard
-             * debounces the value to the same value in a short time frame is ignored
+             * debounces the value to the same value in a short time frame is ignored. The debounce is ignored if
+             * forceUpdate is true
              */
-            if (_value == date && (now - _lastSetTime).TotalMilliseconds < DebounceTimeoutMs)
+            if (_value == date && (now - _lastSetTime).TotalMilliseconds < DebounceTimeoutMs && !forceUpdate)
             {
                 return;
             }
@@ -87,6 +90,12 @@ namespace HamkareBlazor
                 await BeginValidateAsync();
                 FieldChanged(_value);
             }
+            else if (forceUpdate)
+            {
+                // If the field is quickly cleared after an error: just reset and resubmit.
+                ResetConverterErrors();
+                await BeginValidateAsync();
+            }
         }
 
         protected override Task DateFormatChangedAsync(string? newFormat)
@@ -98,8 +107,11 @@ namespace HamkareBlazor
         protected override Task StringValueChangedAsync(string? value)
         {
             Touched = true;
+            var hadConversionError = ConversionError;
+            var date = ConvertGet(value);
             // Update the date property (without updating back the Value property)
-            return SetDateAsync(ConvertGet(value), false);
+            // If the date had a conversion error and is now null or empty forceUpdate is true
+            return SetDateAsync(date, false, forceUpdate: string.IsNullOrEmpty(value) && hadConversionError);
         }
 
         protected override string GetDayClasses(int month, DateTime day)
@@ -120,6 +132,8 @@ namespace HamkareBlazor
 
         protected override async Task OnDayClickedAsync(DateTime dateTime)
         {
+            if (GetReadOnlyState())
+                return;
             await FocusAsync();
             _selectedDate = dateTime;
             if (PickerActions == null || AutoClose || PickerVariant == PickerVariant.Static)
@@ -128,7 +142,7 @@ namespace HamkareBlazor
 
                 if (PickerVariant != PickerVariant.Static)
                 {
-                    await Task.Delay(ClosingDelay);
+                    await Task.Delay(TimeSpan.FromMilliseconds(ClosingDelay), TimeProvider);
                     await CloseAsync(false);
                 }
             }
@@ -140,6 +154,8 @@ namespace HamkareBlazor
         /// <param name="month"></param>
         protected override async Task OnMonthSelectedAsync(DateTime month)
         {
+            if (GetReadOnlyState())
+                return;
             await FocusAsync();
             PickerMonth = month;
             var nextView = GetNextView();
@@ -179,6 +195,8 @@ namespace HamkareBlazor
         /// <param name="year"></param>
         protected override async Task OnYearClickedAsync(int year)
         {
+            if (GetReadOnlyState())
+                return;
             await FocusAsync();
             var current = GetMonthStart(0);
             var culture = GetCulture();

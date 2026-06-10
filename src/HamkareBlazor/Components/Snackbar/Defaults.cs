@@ -3,7 +3,6 @@
 
 namespace HamkareBlazor;
 
-#nullable enable
 
 /// <summary>
 /// Contains common snackbar CSS classes.

@@ -6,7 +6,6 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace HamkareBlazor;
 
-#nullable enable
 
 /// <summary>
 /// Provides the contract for data that can be rendered inside a <see cref="HamkareTreeView{T}"/>.

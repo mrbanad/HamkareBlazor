@@ -4,7 +4,6 @@
 
 namespace HamkareBlazor;
 
-#nullable enable
 /// <summary>
 /// Factory interface for creating instances of <see cref="IScrollListener"/>.
 /// </summary>

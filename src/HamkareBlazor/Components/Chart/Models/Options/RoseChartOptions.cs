@@ -6,7 +6,6 @@ using HamkareBlazor.Charts;
 
 namespace HamkareBlazor;
 
-#nullable enable
 /// <summary>
 /// Options specific to rose charts, extending <see cref="DefaultRadialChartOptions"/>.
 /// </summary>

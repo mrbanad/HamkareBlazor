@@ -1,6 +1,5 @@
 ﻿namespace HamkareBlazor.Extensions
 {
-#nullable enable
     public static class ObjectExtensions
     {
         public static T? As<T>(this object? self)

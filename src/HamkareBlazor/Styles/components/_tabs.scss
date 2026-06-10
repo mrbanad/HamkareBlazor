@@ -128,6 +128,20 @@
   }
 }
 
+.hamkare-tabs-dropzone-horizontal {
+  > .hamkare-drop-item-preview-start {
+    width: 20px;
+    height: 100%;
+  }
+}
+
+.hamkare-tabs-dropzone-vertical {
+  > .hamkare-drop-item-preview-start {
+    width: 100%;
+    height: 20px;
+  }
+}
+
 .hamkare-tab {
   width: 100%;
   display: inline-flex;
@@ -212,6 +226,16 @@
   margin-left: 8px;
   margin-inline-start: 8px;
   margin-inline-end: unset;
+}
+
+.hamkare-tab-slider.hamkare-default {
+  background: var(--hamkare-palette-action-default);
+}
+
+@each $color in $hamkare-palette-colors {
+  .hamkare-tab-slider.hamkare-#{$color} {
+    background: var(--hamkare-palette-#{$color});
+  }
 }
 
 @each $color in $hamkare-palette-colors {

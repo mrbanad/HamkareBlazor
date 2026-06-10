@@ -1,0 +1,3 @@
+Get-ChildItem -File -Recurse | Where-Object { $_.Name -like "Mud*" } | ForEach-Object {
+    Rename-Item $_.FullName ($_.Name -replace '^Mud', 'Hamkare')
+}

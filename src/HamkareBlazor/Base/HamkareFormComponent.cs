@@ -18,7 +18,6 @@ using static System.String;
 
 namespace HamkareBlazor
 {
-#nullable enable
     /// <summary>
     /// Represents a base class for designing form input components.
     /// </summary>
@@ -81,7 +80,7 @@ namespace HamkareBlazor
         public bool Required { get; set; }
         
         /// <summary>
-        /// Show Skeleton Before Render Component.
+        /// Show Skeleton Before Render Component. Hamkare Customize
         /// </summary>
         /// <remarks>
         /// Defaults to false/>.
@@ -305,7 +304,7 @@ namespace HamkareBlazor
                 // if it has in fact changed, another validate call will follow anyway
                 if (EqualityComparer<T>.Default.Equals(value, ReadValue))
                 {
-                    await BeginValidateAsync();
+                    await ValidateValue();
                 }
             };
 
@@ -435,7 +434,7 @@ namespace HamkareBlazor
                     ValidationErrors = errors;
                     await ErrorState.SetValueAsync(errors.Count > 0);
                     await ErrorTextState.SetValueAsync(errors.FirstOrDefault());
-                    await ErrorIdState.SetValueAsync(HasErrors ? Guid.NewGuid().ToString() : null);
+                    await UpdateErrorIdStateAsync(HasErrors);
                     Form?.Update(this);
                     StateHasChanged();
                 }
@@ -682,6 +681,7 @@ namespace HamkareBlazor
             await ErrorState.SetValueAsync(false);
             ValidationErrors.Clear();
             await ErrorTextState.SetValueAsync(null);
+            await UpdateErrorIdStateAsync(false);
             ResetConverterErrors();
             await InvokeAsync(StateHasChanged);
         }
@@ -742,6 +742,7 @@ namespace HamkareBlazor
                     //TODO: v9 there no async API, but just make it async void (acceptable for EventHandler) 
                     await ErrorState.SetValueAsync(hasError);
                     await ErrorTextState.SetValueAsync(hasError ? errorMessages[0] : null);
+                    await UpdateErrorIdStateAsync(hasError);
 
                     ValidationErrors.Clear();
                     ValidationErrors.AddRange(errorMessages);
@@ -753,6 +754,15 @@ namespace HamkareBlazor
             {
                 Logger.LogError(exception, "An unexpected exception occurred: {ExceptionMessage}", exception.Message);
             }
+        }
+
+        private Task UpdateErrorIdStateAsync(bool hasErrors)
+        {
+            var errorId = hasErrors
+                ? ErrorIdState.RenderValue ?? ErrorIdState.Value ?? Guid.NewGuid().ToString()
+                : ErrorIdState.RenderValue;
+
+            return ErrorIdState.SetValueAsync(errorId);
         }
 
         /// <summary>

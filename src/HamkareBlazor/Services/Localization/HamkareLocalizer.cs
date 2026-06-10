@@ -2,14 +2,14 @@
 
 namespace HamkareBlazor;
 
-#nullable enable
 /// <summary>
-/// This customizable localizer service allows users to supply custom translations for HamkareBlazor components.
-/// Users can register custom implementations using the following syntax, where the scope depends on the implementation:
-/// <c>services.Add{scope}Transient&lt;HamkareLocalizer, CustomHamkareLocalizerImpl&gt;()</c>
-/// or
-/// <c>services.TryAdd{scope}Transient&lt;HamkareLocalizer, CustomHamkareLocalizerImpl&gt;()</c>
+/// Base localizer that applications can override to supply HamkareBlazor translations.
 /// </summary>
+/// <remarks>
+/// Register a custom implementation with DI (for example,
+/// <c>services.Add{scope}Transient&lt;HamkareLocalizer, CustomHamkareLocalizerImpl&gt;()</c> or
+/// <c>services.TryAdd{scope}Transient&lt;HamkareLocalizer, CustomHamkareLocalizerImpl&gt;()</c>) to provide localized strings for components.
+/// </remarks>
 public class HamkareLocalizer
 {
     /// <summary>

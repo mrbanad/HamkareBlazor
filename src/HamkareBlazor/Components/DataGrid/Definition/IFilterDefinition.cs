@@ -7,7 +7,6 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace HamkareBlazor;
 
-#nullable enable
 
 /// <summary>
 /// Defines filter definition features for a column.

@@ -4,7 +4,6 @@
 
 using HamkareBlazor.Utilities;
 
-#nullable enable
 
 namespace HamkareBlazor.Charts;
 

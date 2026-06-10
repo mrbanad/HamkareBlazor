@@ -9,7 +9,6 @@ using HamkareBlazor.Interfaces;
 
 namespace HamkareBlazor
 {
-#nullable enable
     /// <summary>
     /// Represents a base class for designing HamkareBlazor components.
     /// </summary>

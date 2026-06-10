@@ -5,7 +5,6 @@ using HamkareBlazor.Utilities;
 
 namespace HamkareBlazor
 {
-#nullable enable
     /// <summary>
     /// Represents a slide displayed within a <see cref="HamkareCarousel{TData}"/>.
     /// </summary>
@@ -28,8 +27,8 @@ namespace HamkareBlazor
             .AddClass("hamkare-carousel-transition-slide-prev-rtl-enter", !_disposed && Transition == Transition.Slide && RightToLeft && Parent?.SelectedContainer == this && !Parent._moveNext)
             .AddClass("hamkare-carousel-transition-slide-prev-rtl-exit", !_disposed && Transition == Transition.Slide && RightToLeft && Parent?.LastContainer == this && !Parent._moveNext)
             .AddClass("hamkare-carousel-transition-none", !_disposed && Transition == Transition.None && Parent?.SelectedContainer != this)
-            .AddClass(CustomTransitionEnter, !_disposed && Transition == Transition.Custom && Parent?.SelectedContainer == this && Parent.SelectedContainer == this)
-            .AddClass(CustomTransitionExit, !_disposed && Transition == Transition.Custom && Parent?.LastContainer == this && Parent.LastContainer == this)
+            .AddClass(CustomTransitionEnter, !_disposed && Transition == Transition.Custom && Parent?.SelectedContainer == this)
+            .AddClass(CustomTransitionExit, !_disposed && Transition == Transition.Custom && Parent?.LastContainer == this)
             .AddClass(Class)
             .Build();
 
@@ -43,6 +42,9 @@ namespace HamkareBlazor
         [CascadingParameter]
         protected internal HamkareBaseItemsControl<HamkareCarouselItem>? Parent { get; set; }
 
+        /// <summary>
+        /// Displays this item right-to-left.
+        /// </summary>
         [CascadingParameter(Name = "RightToLeft")]
         public bool RightToLeft { get; set; }
 
@@ -98,6 +100,21 @@ namespace HamkareBlazor
         /// </summary>
         public void Dispose()
         {
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// Releases resources used by this component.
+        /// </summary>
+        /// <param name="disposing">When <c>true</c>, managed resources should be released.</param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposing)
+            {
+                return;
+            }
+
             _disposed = true;
             Parent?.Items.Remove(this);
         }

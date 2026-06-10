@@ -6,10 +6,12 @@ using Microsoft.JSInterop;
 
 namespace HamkareBlazor;
 
-#nullable enable
 /// <summary>
-/// Manages scroll behavior.
+/// Centralizes scroll operations that need JS interop (scrolling to elements, locking scroll, etc.).
 /// </summary>
+/// <remarks>
+/// Components use this service to perform consistent scroll behaviors across the library, keeping JS interop calls in one place and avoiding duplicate logic.
+/// </remarks>
 internal sealed class ScrollManager : IScrollManager
 {
     private readonly IJSRuntime _jSRuntime;
@@ -24,8 +26,8 @@ internal sealed class ScrollManager : IScrollManager
     }
 
     /// <inheritdoc />
-    public ValueTask ScrollToAsync(string? id, int left, int top, ScrollBehavior behavior) =>
-        _jSRuntime.InvokeVoidAsync("hamkareScrollManager.scrollTo", id, left, top, behavior.ToStringFast(true));
+    public ValueTask ScrollToAsync(string? id, int left, int top, ScrollBehavior scrollBehavior) =>
+        _jSRuntime.InvokeVoidAsync("hamkareScrollManager.scrollTo", id, left, top, scrollBehavior.ToStringFast(true));
 
     /// <inheritdoc />
     public ValueTask ScrollIntoViewAsync(string? selector, ScrollBehavior behavior) =>
@@ -36,8 +38,8 @@ internal sealed class ScrollManager : IScrollManager
         ScrollToAsync(id, 0, 0, scrollBehavior);
 
     /// <inheritdoc />
-    public ValueTask ScrollToBottomAsync(string id, ScrollBehavior behavior) =>
-        _jSRuntime.InvokeVoidAsync("hamkareScrollManager.scrollToBottom", id, behavior.ToStringFast(true));
+    public ValueTask ScrollToBottomAsync(string elementId, ScrollBehavior scrollBehavior = ScrollBehavior.Auto) =>
+        _jSRuntime.InvokeVoidAsync("hamkareScrollManager.scrollToBottom", elementId, scrollBehavior.ToStringFast(true));
 
     /// <inheritdoc />
     public ValueTask ScrollToYearAsync(string elementId) =>

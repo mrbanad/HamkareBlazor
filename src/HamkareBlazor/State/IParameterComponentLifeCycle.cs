@@ -7,7 +7,6 @@ using HamkareBlazor.State.Invocation;
 
 namespace HamkareBlazor.State;
 
-#nullable enable
 /// <summary>
 /// Represents the lifecycle methods for Blazor component parameters used by the ParameterState framework.
 /// </summary>

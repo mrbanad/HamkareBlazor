@@ -6,7 +6,6 @@ using System;
 
 namespace HamkareBlazor
 {
-#nullable enable
     /// <summary>
     /// Represents a description of a <see cref="HamkareGrid"/> field.
     /// </summary>

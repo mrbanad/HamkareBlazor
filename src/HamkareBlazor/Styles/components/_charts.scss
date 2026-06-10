@@ -2,7 +2,6 @@
   display: flex;
   min-height: fit-content;
   min-width: fit-content;
-  width: 100%;
 
   svg {
     order: 2
@@ -36,6 +35,7 @@
       flex-direction: column;
       order: 3;
       min-width: fit-content;
+      margin-left: 10px;
     }
   }
 
@@ -46,18 +46,19 @@
       flex-direction: column;
       order: 1;
       min-width: fit-content;
+      margin-right: 10px;
     }
   }
 
-
-  & .hamkare-chart-donut, .hamkare-chart-pie, hamkare-chart-line, hamkare-chart-bar {
+  & .hamkare-chart-donut, .hamkare-chart-pie, .hamkare-chart-radar, .hamkare-chart-line, .hamkare-chart-bar {
     display: flex;
     margin: auto;
+    overflow: unset; // Workaround for clipped axis notations
   }
 
   & .hamkare-chart-legend {
     display: flex;
-    padding: 10px 0px;
+    padding: 10px 0;
     margin: auto;
     flex-wrap: wrap;
 
@@ -87,6 +88,13 @@
       }
     }
   }
+}
+
+.hamkare-chart-fill-bounds {
+  height: 100%;
+  width: 100%;
+  min-height: unset;
+  min-width: unset;
 }
 
 .hamkare-charts-yaxis {
@@ -121,6 +129,12 @@
     -moz-transition: stroke .2s ease;
     -o-transition: stroke .2s ease;
     transition: stroke .2s ease;
+  }
+
+  & .hamkare-donut-text {
+    dominant-baseline: central;
+    text-anchor: middle;
+    fill: var(--hamkare-palette-text-primary);
   }
 }
 

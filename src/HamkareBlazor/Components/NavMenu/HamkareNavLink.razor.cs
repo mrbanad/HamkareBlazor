@@ -10,7 +10,6 @@ using HamkareBlazor.Utilities;
 
 namespace HamkareBlazor
 {
-#nullable enable
 
     /// <summary>
     /// A navigation link as part of a <see cref="HamkareNavMenu"/>.

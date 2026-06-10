@@ -2,11 +2,18 @@
 // HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+/**
+ * Factory that maps .NET observer IDs to HamkareResizeObserver instances.
+ * Enables independent element-observer lifecycles per service instance.
+ */
 class HamkareResizeObserverFactory {
     constructor() {
         this._maps = {};
     }
 
+    /**
+     * Creates (or reuses) an observer instance for an ID and starts observing elements.
+     */
     connect(id, dotNetRef, elements, elementIds, options) {
         const existingEntry = this._maps[id];
         if (!existingEntry) {
@@ -18,6 +25,9 @@ class HamkareResizeObserverFactory {
         return result;
     }
 
+    /**
+     * Stops observing a specific element for an observer ID.
+     */
     disconnect(id, element) {
         //I can't think about a case, where this can be called, without observe has been called before
         //however, a check is not harmful either
@@ -27,6 +37,9 @@ class HamkareResizeObserverFactory {
         }
     }
 
+    /**
+     * Disposes and removes the observer instance for an ID.
+     */
     cancelListener(id) {
         //cancelListener is called during dispose of .net instance
         //in rare cases it could be possible, that no object has been connect so far
@@ -39,14 +52,17 @@ class HamkareResizeObserverFactory {
     }
 }
 
+/**
+ * Wraps the browser ResizeObserver and forwards size changes to .NET.
+ * Aggregates observed element metadata needed for stable interop callbacks.
+ */
 class HamkareResizeObserver {
-
     constructor(dotNetRef, options) {
         this.logger = options.enableLogging ? console.log : () => { };
         this.options = options;
         this._dotNetRef = dotNetRef;
 
-        const delay = (this.options || {}).reportRate || 200;
+        const delay = this.options?.reportRate || 200;
 
         this.throttleResizeHandlerId = -1;
 
@@ -85,6 +101,9 @@ class HamkareResizeObserver {
         });
     }
 
+    /**
+     * Forwards accumulated resize changes to .NET.
+     */
     resizeHandler(changes) {
         try {
             this.logger("[HamkareBlazor | ResizeObserver] OnSizeChanged handler invoked");
@@ -94,6 +113,9 @@ class HamkareResizeObserver {
         }
     }
 
+    /**
+     * Starts observing all provided elements and returns initial rect snapshots.
+     */
     connect(elements, ids) {
         const result = [];
         this.logger('[HamkareBlazor | ResizeObserver] Start observing elements...');
@@ -116,6 +138,9 @@ class HamkareResizeObserver {
         return result;
     }
 
+    /**
+     * Stops observing one element by observer element ID.
+     */
     disconnect(elementId) {
         this.logger('[HamkareBlazor | ResizeObserver] Try to unobserve element with id', { elementId });
 
@@ -131,6 +156,9 @@ class HamkareResizeObserver {
         }
     }
 
+    /**
+     * Disconnects the underlying ResizeObserver and clears .NET references.
+     */
     cancelListener() {
         this.logger('[HamkareBlazor | ResizeObserver] Closing ResizeObserver. Detaching all observed elements');
 
@@ -138,6 +166,4 @@ class HamkareResizeObserver {
         this._dotNetRef = undefined;
     }
 }
-
-
 window.hamkareResizeObserver = new HamkareResizeObserverFactory();

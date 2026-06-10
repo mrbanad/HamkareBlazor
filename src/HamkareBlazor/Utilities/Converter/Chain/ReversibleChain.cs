@@ -3,7 +3,6 @@ using HamkareBlazor.Utilities.Converter.Base;
 
 namespace HamkareBlazor.Utilities.Converter.Chain;
 
-#nullable enable
 /// <summary>
 /// A chainable, reversible converter that supports both forward and backward conversions.
 /// </summary>

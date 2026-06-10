@@ -5,7 +5,6 @@ using static System.String;
 
 namespace HamkareBlazor
 {
-#nullable enable
     /// <summary>
     /// Represents a base class for designing button components.
     /// </summary>
@@ -23,13 +22,6 @@ namespace HamkareBlazor
         [CascadingParameter(Name = "ParentDisabled")]
         private bool ParentDisabled { get; set; }
 
-        /// <summary>
-        /// For Send Just One Request
-        /// </summary>
-        /// <remarks>
-        /// </remarks>
-        private bool Processing { get; set; }
-        
         /// <summary>
         /// The HTML tag rendered for this component.
         /// </summary>
@@ -133,14 +125,8 @@ namespace HamkareBlazor
         {
             if (GetDisabledState())
                 return;
-            
-            if (!Processing)
-            {
-                Processing = true;
-                await OnClick.InvokeAsync(ev);
-                Activatable?.Activate(this, ev);
-                Processing = false;
-            }
+            await OnClick.InvokeAsync(ev);
+            Activatable?.Activate(this, ev);
         }
 
         protected override void OnInitialized()

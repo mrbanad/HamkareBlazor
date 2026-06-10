@@ -11,7 +11,6 @@ using HamkareBlazor.State.Rule;
 
 namespace HamkareBlazor.State;
 
-#nullable enable
 /// <summary>
 /// The <see cref="ParameterState{T}"/> automatically manages parameter value changes for <see cref="ParameterAttribute"/> as part of
 /// HamkareBlazor's ParameterState framework. For details and usage please read CONTRIBUTING.md

@@ -3,7 +3,6 @@ using HamkareBlazor.Utilities;
 
 namespace HamkareBlazor
 {
-#nullable enable
     /// <summary>
     /// Represents the primary content displayed within a <see cref="HamkareCard"/>.
     /// </summary>

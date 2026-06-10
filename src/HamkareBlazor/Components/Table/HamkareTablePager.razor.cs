@@ -7,7 +7,6 @@ using HamkareBlazor.Utilities;
 
 namespace HamkareBlazor
 {
-#nullable enable
 
     /// <summary>
     /// A component which changes pages and page size for a <see cref="HamkareTable{T}"/>.
@@ -28,6 +27,9 @@ namespace HamkareBlazor
                 .AddClass(Class)
                 .Build();
 
+        /// <summary>
+        /// Displays pager controls right-to-left.
+        /// </summary>
         [CascadingParameter(Name = "RightToLeft")]
         public bool RightToLeft { get; set; }
 
@@ -113,18 +115,18 @@ namespace HamkareBlazor
                 Debug.Assert(Table != null);
 
                 // fetch number of filtered items (once only)
-                var filteredItemsCount = Table?.GetFilteredItemsCount() ?? 0;
-                var firstItem = (filteredItemsCount == 0 ? 0 : (Table?.CurrentPage * Table?.RowsPerPage) + 1) ?? 0;
-                var lastItem = Math.Min((Table?.CurrentPage + 1) * Table?.RowsPerPage ?? 0, filteredItemsCount);
+                var filteredItemsCount = Table.GetFilteredItemsCount();
+                var firstItem = filteredItemsCount == 0 ? 0 : (Table.CurrentPage * Table.RowsPerPage) + 1;
+                var lastItem = Math.Min((Table.CurrentPage + 1) * Table.RowsPerPage, filteredItemsCount);
 
                 if (string.IsNullOrEmpty(InfoFormat))
                 {
-                    return Localizer[LanguageResource.HamkareDataGridPager_InfoFormat, firstItem, lastItem, $"{filteredItemsCount:N0}"];
+                    return Localizer[LanguageResource.HamkareDataGridPager_InfoFormat, $"{firstItem:N0}", $"{lastItem:N0}", $"{filteredItemsCount:N0}"];
                 }
 
                 return InfoFormat
-                    .Replace("{first_item}", $"{firstItem}")
-                    .Replace("{last_item}", $"{lastItem}")
+                    .Replace("{first_item}", $"{firstItem:N0}")
+                    .Replace("{last_item}", $"{lastItem:N0}")
                     .Replace("{all_items}", $"{filteredItemsCount:N0}");
             }
         }

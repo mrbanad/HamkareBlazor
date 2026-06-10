@@ -4,7 +4,6 @@
 
 namespace HamkareBlazor.Utilities
 {
-#nullable enable
     /// <summary>
     /// Represents the information related to a <see cref="HamkareDataGrid{T}.HierarchyVisibilityToggled"/> event.
     /// </summary>

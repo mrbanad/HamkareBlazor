@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Components;
 
 namespace HamkareBlazor.State;
 
-#nullable enable
 /// <summary>
 /// Represents information about a parameter.
 /// </summary>

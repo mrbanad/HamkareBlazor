@@ -4,7 +4,6 @@
 
 namespace HamkareBlazor;
 
-#nullable enable
 /// <summary>
 /// Information about the Edit button of a <see cref="HamkareBlazor.HamkareTable{T}"/> row.
 /// </summary>

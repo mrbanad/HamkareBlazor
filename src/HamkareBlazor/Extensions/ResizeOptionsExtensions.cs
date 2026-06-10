@@ -6,7 +6,6 @@ using HamkareBlazor.Services;
 
 namespace HamkareBlazor.Extensions;
 
-#nullable enable
 internal static class ResizeOptionsExtensions
 {
     /// <summary>

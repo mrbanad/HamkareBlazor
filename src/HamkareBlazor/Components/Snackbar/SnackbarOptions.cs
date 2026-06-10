@@ -3,7 +3,6 @@
 
 namespace HamkareBlazor
 {
-#nullable enable
 
     /// <summary>
     /// The options applied to an individual snackbar.

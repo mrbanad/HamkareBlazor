@@ -7,7 +7,6 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace HamkareBlazor.State;
 
-#nullable enable
 /// <summary>
 /// A collection of parameter state values that allows efficient lookup by parameter name.
 /// </summary>

@@ -4,7 +4,6 @@
 
 using System.Globalization;
 
-#nullable enable
 namespace HamkareBlazor.Utilities
 {
     public class NaturalComparer : IComparer<object?>

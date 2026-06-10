@@ -6,7 +6,6 @@ using System;
 
 namespace HamkareBlazor;
 
-#nullable enable
 
 /// <summary>
 /// The information related to a <see cref="HamkareDropZone{T}"/> completed drag-and-drop transaction.

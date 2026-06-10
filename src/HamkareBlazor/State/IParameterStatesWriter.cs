@@ -6,7 +6,6 @@ using HamkareBlazor.State.Builder;
 
 namespace HamkareBlazor.State;
 
-#nullable enable
 /// <summary>
 /// Represents a writer for parameter states.
 /// </summary>

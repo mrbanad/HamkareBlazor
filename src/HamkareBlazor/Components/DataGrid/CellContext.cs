@@ -6,7 +6,6 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace HamkareBlazor
 {
-#nullable enable
     /// <summary>
     /// Represents the current state of a cell in a <see cref="HamkareDataGrid{T}"/>.
     /// </summary>

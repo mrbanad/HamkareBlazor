@@ -3,7 +3,6 @@
 // See the LICENSE file in the project root for more information.
 
 namespace HamkareBlazor;
-#nullable enable
 
 /// <summary>
 /// Indicates how values are edited for <see cref="HamkareDataGrid{T}"/> cells.

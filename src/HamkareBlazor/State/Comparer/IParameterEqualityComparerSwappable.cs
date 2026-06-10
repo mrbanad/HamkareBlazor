@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Components;
 
 namespace HamkareBlazor.State.Comparer;
 
-#nullable enable
 /// <summary>
 /// Represents an interface for a hot swappable parameter comparer.
 /// </summary>

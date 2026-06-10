@@ -1,6 +1,6 @@
 ﻿@namespace HamkareBlazor
 @inherits HamkareComponentBase
 
-<div role="group" @attributes="UserAttributes" class="@Classname" style="@Style">
+<HamkareElement HtmlTag="@HtmlTag" role="@Role" @attributes="UserAttributes" class="@Classname" style="@Style">
     @ChildContent
-</div>
+</HamkareElement>

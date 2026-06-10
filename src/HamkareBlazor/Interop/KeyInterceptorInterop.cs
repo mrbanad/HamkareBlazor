@@ -8,7 +8,6 @@ using HamkareBlazor.Services;
 
 namespace HamkareBlazor.Interop;
 
-#nullable enable
 internal class KeyInterceptorInterop
 {
     private readonly IJSRuntime _jsRuntime;

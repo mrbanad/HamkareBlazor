@@ -3,7 +3,6 @@
 
 namespace HamkareBlazor;
 
-#nullable enable
 internal enum SnackbarState
 {
     Init,

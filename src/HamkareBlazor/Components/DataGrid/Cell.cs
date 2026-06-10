@@ -8,7 +8,6 @@ using HamkareBlazor.Utilities;
 
 namespace HamkareBlazor
 {
-#nullable enable
     internal class Cell<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)] T>
     {
         private readonly HamkareDataGrid<T> _dataGrid;
@@ -30,13 +29,13 @@ namespace HamkareBlazor
         }
 
         internal string ComputedClass =>
-            new CssBuilder(_column.CellClassFunc?.Invoke(_item))
-                .AddClass(_column.CellClass)
-                .AddClass("hamkare-table-cell")
+            new CssBuilder("hamkare-table-cell")
                 .AddClass("hamkare-table-cell-hide", _column.HideSmall)
                 .AddClass("sticky-left", _column.StickyLeft)
                 .AddClass("sticky-right", _column.StickyRight)
                 .AddClass($"edit-mode-cell", _dataGrid.EditMode == DataGridEditMode.Cell && _column.Editable)
+                .AddClass(_column.CellClassFunc?.Invoke(_item))
+                .AddClass(_column.CellClass)
                 .Build();
 
         internal string ComputedStyle =>

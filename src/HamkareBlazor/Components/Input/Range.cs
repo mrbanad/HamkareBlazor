@@ -1,5 +1,4 @@
-﻿#nullable enable
-namespace HamkareBlazor;
+﻿namespace HamkareBlazor;
 
 /// <summary>
 /// A range of values.

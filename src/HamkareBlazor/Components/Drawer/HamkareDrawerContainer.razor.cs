@@ -4,7 +4,6 @@ using HamkareBlazor.Utilities;
 
 namespace HamkareBlazor
 {
-#nullable enable
 
     /// <summary>
     /// A container for a <see cref="HamkareDrawer"/> component.
@@ -34,6 +33,9 @@ namespace HamkareBlazor
                 .AddStyle(Style)
                 .Build();
 
+        /// <summary>
+        /// Displays drawers right-to-left.
+        /// </summary>
         [CascadingParameter(Name = "RightToLeft")]
         public bool RightToLeft { get; set; }
 

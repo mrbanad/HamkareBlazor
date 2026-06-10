@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 
 namespace HamkareBlazor
 {
-#nullable enable
 #pragma warning disable CS1998
     public static class TaskExtensions
     {

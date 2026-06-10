@@ -5,7 +5,6 @@
 using System.Collections.Concurrent;
 using System.Collections.Immutable;
 using System.Diagnostics;
-using HamkareBlazor.Analyzers.Internal;
 using Microsoft.CodeAnalysis.Text;
 
 namespace HamkareBlazor.Analyzers

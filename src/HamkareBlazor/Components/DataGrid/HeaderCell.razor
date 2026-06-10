@@ -42,7 +42,6 @@ else if (Column != null && !Column.HiddenState.Value)
 }
 
 @code {
-#nullable enable
 
     internal RenderFragment TableHeader()
     {
@@ -88,14 +87,7 @@ else if (Column != null && !Column.HiddenState.Value)
             <span class="@OptionsClass">
                 @if (sortable)
                 {
-                    if (SortDirection == SortDirection.None)
-                    {
-                        <HamkareIconButton Icon="@Column.SortIcon" Class="@sortIconClass" Size="@Size.Small" OnClick="@SortChangedAsync" aria-label="@Localizer[LanguageResource.HamkareDataGrid_Sort]"></HamkareIconButton>
-                    }
-                    else
-                    {
-                        <HamkareIconButton Icon="@Column.SortIcon" Class="@sortIconClass" Size="@Size.Small" OnClick="@SortChangedAsync" aria-label="@Localizer[LanguageResource.HamkareDataGrid_Sort]"></HamkareIconButton>
-                    }
+                    <HamkareIconButton Icon="@DataGrid.SortIcon" Class="@sortIconClass" Size="@Size.Small" OnClick="@SortChangedAsync" aria-label="@Localizer[LanguageResource.HamkareDataGrid_Sort]"></HamkareIconButton>
 
                     if (DataGrid.SortMode == SortMode.Multiple)
                     {
@@ -124,7 +116,7 @@ else if (Column != null && !Column.HiddenState.Value)
 
                 @if (showColumnOptions)
                 {
-                    <HamkareMenu Icon="@Icons.Material.Filled.MoreVert" Size="Size.Small" Dense="true" AriaLabel="@Localizer[LanguageResource.HamkareDataGrid_ShowColumnOptions]">
+                    <HamkareMenu Icon="@DataGrid.ColumnOptionsIcon" Size="Size.Small" Dense="true" AriaLabel="@Localizer[LanguageResource.HamkareDataGrid_ShowColumnOptions]">
                         <HamkareMenuItem Disabled="@(SortDirection == SortDirection.None)" OnClick="@RemoveSortAsync">@Localizer[LanguageResource.HamkareDataGrid_Unsort]</HamkareMenuItem>
                         @if (filterable && DataGrid.FilterMode != DataGridFilterMode.ColumnFilterRow)
                         {
@@ -156,10 +148,10 @@ else if (Column != null && !Column.HiddenState.Value)
         @if (filterable && DataGrid.FilterMode == DataGridFilterMode.ColumnFilterMenu)
         {
             <HamkareOverlay @bind-Visible="@_filtersMenuVisible" AutoClose />
-            <HamkarePopover UserAttributes="@DataGrid?.PositionAttributes" Open="@_filtersMenuVisible" AnchorOrigin="@Origin.BottomRight" TransformOrigin="@Origin.TopRight" Class="pa-4 column-filter-popup hamkare-popover-position-override">
+            <HamkarePopover UserAttributes="@PositionAttributes" Open="@_filtersMenuVisible" OverflowBehavior="OverflowBehavior.FlipOnOpen" AnchorOrigin="@Origin.BottomRight" TransformOrigin="@Origin.TopRight" Class="pa-4 column-filter-popup hamkare-popover-position-override">
                 @if (Column.FilterTemplate != null)
                 {
-                    @Column.FilterTemplate(Column.FilterContext) 
+                    @Column.FilterTemplate(Column.FilterContext)
                 }
                 else
                 {

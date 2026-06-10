@@ -8,16 +8,15 @@ using HamkareBlazor.Utilities;
 
 namespace HamkareBlazor
 {
-#nullable enable
     /// <summary>
     /// A list of clickable page numbers along with navigation buttons.
     /// </summary>
     public partial class HamkarePagination : HamkareComponentBase
     {
-        private ParameterState<int> _countState;
-        private ParameterState<int> _selectedState;
-        private ParameterState<int> _middleCountState;
-        private ParameterState<int> _boundaryCountState;
+        private readonly ParameterState<int> _countState;
+        private readonly ParameterState<int> _selectedState;
+        private readonly ParameterState<int> _middleCountState;
+        private readonly ParameterState<int> _boundaryCountState;
 
         private string Classname =>
             new CssBuilder("hamkare-pagination")

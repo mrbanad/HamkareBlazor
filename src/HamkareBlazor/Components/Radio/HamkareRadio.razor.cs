@@ -9,7 +9,6 @@ using HamkareBlazor.Utilities;
 
 namespace HamkareBlazor
 {
-#nullable enable
 
     /// <summary>
     /// Allows the user to select a single choice from a group of options. Use radio buttons (not switches) when only one item can be selected from a list.
@@ -21,7 +20,8 @@ namespace HamkareBlazor
     public partial class HamkareRadio<T> : HamkareBooleanInput<T>
     {
         private IHamkareRadioGroup? _parent;
-        private string _elementId = Identifier.Create("radio");
+        private readonly string _elementId = Identifier.Create("radio");
+        private readonly string _ariaId = Identifier.Create("radio-aria-");
 
         protected override string Classname => new CssBuilder("hamkare-input-control-boolean-input")
             .AddClass("hamkare-disabled", GetDisabledState())
@@ -73,6 +73,16 @@ namespace HamkareBlazor
         [Parameter]
         [Category(CategoryTypes.Radio.Appearance)]
         public Color? UncheckedColor { get; set; } = null;
+
+        /// <summary>
+        /// The Aria Label to be assigned to the radio button.
+        /// </summary>
+        /// <remarks>
+        /// Defaults to <c>null</c>. Used to improve accessibility for screen readers. Adds an <c>aria-labelledby</c> to the <c>input</c> element.
+        /// </remarks>
+        [Parameter]
+        [Category(CategoryTypes.Radio.Appearance)]
+        public string? AriaLabel { get; set; }
 
         /// <summary>
         /// Uses compact vertical padding.
@@ -167,27 +177,15 @@ namespace HamkareBlazor
             return Task.CompletedTask;
         }
 
-        protected internal async Task HandleKeyDownAsync(KeyboardEventArgs keyboardEventArgs)
+        protected Task HandleKeyDownAsync(KeyboardEventArgs obj) => KeyInterceptorService.DispatchAsync(_elementId, KeyEventKind.Down, obj);
+
+        private bool CanHandleKeys() => !GetDisabledState() && !GetReadOnlyState() && !(HamkareRadioGroup?.GetReadOnlyState() ?? false);
+
+        private async Task HandleBackspaceAsync()
         {
-            if (GetDisabledState() || GetReadOnlyState() || (HamkareRadioGroup?.GetReadOnlyState() ?? false))
+            if (HamkareRadioGroup is not null)
             {
-                return;
-            }
-
-            switch (keyboardEventArgs.Key)
-            {
-                case "Enter" or "NumpadEnter" or " ":
-                    await SelectAsync();
-                    break;
-                case "Backspace":
-                    {
-                        if (HamkareRadioGroup is not null)
-                        {
-                            await HamkareRadioGroup.ResetAsync();
-                        }
-
-                        break;
-                    }
+                await HamkareRadioGroup.ResetAsync();
             }
         }
 
@@ -217,7 +215,10 @@ namespace HamkareBlazor
                         new("Backspace", preventDown: "key+none")
                     ]);
 
-                await KeyInterceptorService.SubscribeAsync(_elementId, options, KeyObserver.KeyDownIgnore(), KeyObserver.KeyUpIgnore());
+                await KeyInterceptorService.SubscribeAsync(_elementId, options, keys => keys
+                    .When(CanHandleKeys, builder => builder
+                        .OnKeyDownAny(["Enter", "NumpadEnter", " "], SelectAsync)
+                        .OnKeyDown("Backspace", HandleBackspaceAsync)));
             }
 
             await base.OnAfterRenderAsync(firstRender);

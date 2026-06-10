@@ -7,12 +7,12 @@ using System.Globalization;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using HamkareBlazor.Interop;
+using HamkareBlazor.Resources;
 using HamkareBlazor.Services;
 using HamkareBlazor.State;
 using HamkareBlazor.Utilities;
 using HamkareBlazor.Utilities.Throttle;
 
-#nullable enable
 namespace HamkareBlazor
 {
     /// <summary>
@@ -96,6 +96,16 @@ namespace HamkareBlazor
         [Parameter]
         [Category(CategoryTypes.Tabs.Behavior)]
         public bool KeepPanelsAlive { get; set; }
+
+        /// <summary>
+        /// Disables user interaction for all tab panels.
+        /// </summary>
+        /// <remarks>
+        /// Defaults to <c>false</c>.
+        /// </remarks>
+        [Parameter]
+        [Category(CategoryTypes.Tabs.Behavior)]
+        public bool Disabled { get; set; }
 
         /// <summary>
         /// Uses rounded corners on the tab's edges.
@@ -559,17 +569,22 @@ namespace HamkareBlazor
         }
 
         /// <summary>
-        /// Releases resources used by this component.
+        /// Called to dispose this instance.
         /// </summary>
-        public async ValueTask DisposeAsync()
+        protected virtual async ValueTask DisposeAsyncCore()
         {
             if (_isDisposed)
+            {
                 return;
+            }
+
             _isDisposed = true;
+
             if (_throttleDispatcher.IsValueCreated)
             {
                 _throttleDispatcher.Value.Dispose();
             }
+
             if (_resizeObserver is not null)
             {
                 _resizeObserver.OnResized -= OnResized;
@@ -578,10 +593,20 @@ namespace HamkareBlazor
                     await _resizeObserver.DisposeAsync();
                 }
             }
+
             if (IsJSRuntimeAvailable)
             {
                 await KeyInterceptorService.UnsubscribeAsync(_elementId);
             }
+        }
+
+        /// <summary>
+        /// Releases resources used by this component.
+        /// </summary>
+        public async ValueTask DisposeAsync()
+        {
+            await DisposeAsyncCore();
+            GC.SuppressFinalize(this);
         }
 
         #endregion
@@ -633,7 +658,7 @@ namespace HamkareBlazor
             _panels.RemoveAt(index);
 
             // no panels left that are visible and not disabled
-            if (!_panels.Any(x => x.Visible && !x.Disabled))
+            if (!_panels.Any(x => x.Visible && !IsPanelDisabled(x)))
             {
                 await _activePanelIndexState.SetValueAsync(-1);
             }
@@ -672,19 +697,19 @@ namespace HamkareBlazor
             // Clamp starting point
             startIndex = Math.Clamp(startIndex, 0, _panels.Count - 1);
             // If the provided index is good stop here.
-            if (_panels[startIndex] is { Visible: true, Disabled: false })
+            if (_panels[startIndex].Visible && !IsPanelDisabled(_panels[startIndex]))
                 return startIndex;
 
             // Search to the left
             for (int i = startIndex; i >= 0; i--)
             {
-                if (_panels[i].Visible && !_panels[i].Disabled)
+                if (_panels[i].Visible && !IsPanelDisabled(_panels[i]))
                     return i;
             }
             // Search to the right
             for (int i = startIndex + 1; i < _panels.Count; i++)
             {
-                if (_panels[i].Visible && !_panels[i].Disabled)
+                if (_panels[i].Visible && !IsPanelDisabled(_panels[i]))
                     return i;
             }
             return null;
@@ -738,7 +763,7 @@ namespace HamkareBlazor
             {
                 await _activePanelIndexState.SetValueAsync(-1);
             }
-            else if (panel.Visible && (!panel.Disabled || ignoreDisabledState))
+            else if (panel.Visible && (!IsPanelDisabled(panel) || ignoreDisabledState))
             {
                 var index = _panels.IndexOf(panel);
                 var previewArgs = new TabInteractionEventArgs
@@ -795,7 +820,7 @@ namespace HamkareBlazor
                 .AddClass($"hamkare-elevation-{Elevation}", ApplyEffectsToContainer && Elevation != 0)
                 .AddClass($"hamkare-tabs-reverse", Position == Position.Bottom)
                 .AddClass($"hamkare-tabs-vertical", _isVerticalTabs)
-                .AddClass($"hamkare-tabs-vertical-reverse", Position == Position.Right && !RightToLeft || (Position == Position.Left) && RightToLeft || Position == Position.End)
+                .AddClass($"hamkare-tabs-vertical-reverse", (Position == Position.Right && !RightToLeft) || ((Position == Position.Left) && RightToLeft) || Position == Position.End)
                 .AddClass(InternalClassName)
                 .AddClass(Class)
                 .Build();
@@ -839,12 +864,14 @@ namespace HamkareBlazor
                 .AddClass($"hamkare-tab-slider-horizontal", Position is Position.Top or Position.Bottom)
                 .AddClass($"hamkare-tab-slider-vertical", _isVerticalTabs)
                 .AddClass($"hamkare-tab-slider-horizontal-reverse", Position == Position.Bottom)
-                .AddClass($"hamkare-tab-slider-vertical-reverse", Position == Position.Right || Position == Position.Start && RightToLeft || Position == Position.End && !RightToLeft)
+                .AddClass($"hamkare-tab-slider-vertical-reverse", Position == Position.Right || (Position == Position.Start && RightToLeft) || (Position == Position.End && !RightToLeft))
                 .Build();
 
         protected string DropZoneClassnames =>
             new CssBuilder("hamkare-tabs-dropzone")
                 .AddClass("d-flex", !_isVerticalTabs)
+                .AddClass("hamkare-tabs-dropzone-horizontal", !_isVerticalTabs)
+                .AddClass("hamkare-tabs-dropzone-vertical", _isVerticalTabs)
                 .AddClass($"hamkare-tabs-vertical", _isVerticalTabs)
                 .AddClass("flex-grow-1")
                 .Build();
@@ -886,7 +913,7 @@ namespace HamkareBlazor
         {
             var tabClass = new CssBuilder("hamkare-tab")
               .AddClass($"hamkare-tab-active", when: () => panel == ActivePanel)
-              .AddClass($"hamkare-disabled", panel.Disabled)
+              .AddClass($"hamkare-disabled", IsPanelDisabled(panel))
               .AddClass($"hamkare-ripple", Ripple)
               .AddClass(ActiveTabClass, when: () => panel == ActivePanel)
               .AddClass(TabButtonsClass)
@@ -919,10 +946,20 @@ namespace HamkareBlazor
 
         private Color GetPanelIconColor(HamkareTabPanel panel)
         {
-            var iconColor = panel.Disabled ? Color.Inherit : panel.IconColor != default ? panel.IconColor : IconColor;
+            if (IsPanelDisabled(panel))
+            {
+                return Color.Inherit;
+            }
 
-            return iconColor;
+            if (panel.IconColor != default)
+            {
+                return panel.IconColor;
+            }
+
+            return IconColor;
         }
+
+        private bool IsPanelDisabled(HamkareTabPanel panel) => Disabled || panel.Disabled;
 
         #endregion
 
@@ -970,8 +1007,8 @@ namespace HamkareBlazor
             {
                 return;
             }
-            _sliderPositionPercentage = (GetLengthOfPanelItems(ActivePanel) / _allTabsSize) * 100;
-            _sliderSizePercentage = (GetPanelLength(ActivePanel) / _allTabsSize) * 100;
+            _sliderPositionPercentage = GetLengthOfPanelItems(ActivePanel) / _allTabsSize * 100;
+            _sliderSizePercentage = GetPanelLength(ActivePanel) / _allTabsSize * 100;
             _isSliderPositionDetermined =
                 (_activePanelIndexState.Value > 0 && _sliderPositionPercentage > 0)
                 || IsFirstVisiblePanel(ActivePanel);
@@ -1304,7 +1341,7 @@ namespace HamkareBlazor
         /// </summary>
         private async Task MoveFocusToPreviousTab(HamkareTabPanel currentPanel)
         {
-            var enabledPanels = _panels.Where(p => !p.Disabled).ToList();
+            var enabledPanels = _panels.Where(p => !IsPanelDisabled(p)).ToList();
             if (enabledPanels.Count <= 1) return;
 
             var currentIndex = enabledPanels.IndexOf(currentPanel);
@@ -1319,7 +1356,7 @@ namespace HamkareBlazor
         /// </summary>
         private async Task MoveFocusToNextTab(HamkareTabPanel currentPanel)
         {
-            var enabledPanels = _panels.Where(p => !p.Disabled).ToList();
+            var enabledPanels = _panels.Where(p => !IsPanelDisabled(p)).ToList();
             if (enabledPanels.Count <= 1) return;
 
             var currentIndex = enabledPanels.IndexOf(currentPanel);
@@ -1365,6 +1402,32 @@ namespace HamkareBlazor
         internal string GetTabListId()
         {
             return _tabListId!;
+        }
+
+        /// <summary>
+        /// Generates a string with the relevant aria label information.
+        /// </summary>
+        internal string GetPrevAriaLabel()
+        {
+            if (_isVerticalTabs)
+                return Localizer[LanguageResource.HamkareTabs_ScrollUp];
+
+            return RightToLeft
+                ? Localizer[LanguageResource.HamkareTabs_ScrollRight]
+                : Localizer[LanguageResource.HamkareTabs_ScrollLeft];
+        }
+
+        /// <summary>
+        /// Generates a string with the relevant aria label information.
+        /// </summary>
+        internal string GetNextAriaLabel()
+        {
+            if (_isVerticalTabs)
+                return Localizer[LanguageResource.HamkareTabs_ScrollDown];
+
+            return RightToLeft
+                ? Localizer[LanguageResource.HamkareTabs_ScrollLeft]
+                : Localizer[LanguageResource.HamkareTabs_ScrollRight];
         }
     }
 }

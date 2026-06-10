@@ -2,7 +2,6 @@
 
 namespace HamkareBlazor.State.Rule;
 
-#nullable enable
 /// <summary>
 /// Provides rules for processing <see cref="ParameterMetadata"/>.
 /// </summary>

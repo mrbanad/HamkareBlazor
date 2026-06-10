@@ -4,7 +4,6 @@
 
 namespace HamkareBlazor.State;
 
-#nullable enable
 /// <summary>
 /// Represents an interface for handling parameter change.
 /// </summary>

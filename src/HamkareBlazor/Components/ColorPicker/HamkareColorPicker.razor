@@ -62,7 +62,8 @@
                                          id="@_id"
                                          @onpointerdown="OnColorOverlayClick"
                                          @onpointerup="OnColorOverlayClick"
-                                         @onpointermove="OnPointerMoveAsync">
+                                         @onpointermove="OnPointerMoveAsync"
+                                         @onpointerleave="OnPointerLeaveAsync">
                                         <svg class="hamkare-picker-color-selector"
                                              height="26"
                                              width="26"
@@ -113,7 +114,7 @@
                                     <div class="hamkare-picker-color-dot hamkare-picker-color-dot-current hamkare-ripple"
                                          @onclick="ToggleCollection"
                                          aria-label="@(_collectionOpen ? @Localizer[LanguageResource.HamkareColorPicker_HideSwatches] : @Localizer[LanguageResource.HamkareColorPicker_ShowSwatches])">
-                                        <div class="hamkare-picker-color-fill" style="@($"background: {_valueState.Value?.ToString(HamkareColorOutputFormats.RGBA)};")"></div>
+                                        <div class="hamkare-picker-color-fill" style="@($"background: {ValueOrDefault.ToString(HamkareColorOutputFormats.RGBA)};")"></div>
                                     </div>
                                 }
                                 @if (ShowSliders && !_collectionOpen)

@@ -4,6 +4,7 @@
     <Nullable>enable</Nullable>
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
+    <RootNamespace>HamkareBlazor.Analyzers</RootNamespace>
   </PropertyGroup>
   
   <ItemGroup>
@@ -12,11 +13,22 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Using Include="System" />
+    <Using Include="System.Collections.Generic" />
+    <Using Include="System.Linq" />
+    <Using Include="Microsoft.CodeAnalysis" />
+    <Using Include="Microsoft.CodeAnalysis.CSharp.Syntax" />
+    <Using Include="Microsoft.CodeAnalysis.Diagnostics" />
+    <Using Include="Microsoft.CodeAnalysis.Operations" />
+    <Using Include="HamkareBlazor.Analyzers.Internal" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Update="Resources.Designer.cs" DesignTime="True" AutoGen="True" DependentUpon="Resources.resx" />
     <EmbeddedResource Update="Resources.resx" Generator="ResXFileCodeGenerator" LastGenOutput="Resources.Designer.cs" />
   </ItemGroup>
   
   <ItemGroup>
-    <InternalsVisibleTo Include="HamkareBlazor.UnitTests" />
+    <InternalsVisibleTo Include="HamkareBlazor.UnitTests.Analyzers" />
   </ItemGroup>
 </Project>

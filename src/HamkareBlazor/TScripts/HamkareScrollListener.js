@@ -1,7 +1,14 @@
-﻿"use strict";
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
+
+"use strict";
 
 // noinspection JSUnusedGlobalSymbols
-/** This is the companion class for the HamkareBlazor.ScrollListener. */
+/**
+ * Companion interop for the ScrollListener service.
+ * Keeps one throttled handler per listener ID for independent subscriptions.
+ */
 class HamkareScrollListener {
     constructor() {
         this.EVENT_TYPE = "scroll";
@@ -10,6 +17,9 @@ class HamkareScrollListener {
         this.targetElements = Object.create(null);
     }
 
+    /**
+     * Starts a throttled scroll subscription for a selector and listener ID.
+     */
     listenForScroll(dotnetReference, listenerId, selector, reportRateMs) {
         if (this.targetElements[listenerId]) {
             this.cancelListener(listenerId);
@@ -30,6 +40,9 @@ class HamkareScrollListener {
         return element;
     }
 
+    /**
+     * Debounces scroll callbacks according to report rate.
+     */
     throttleScrollHandler(dotnetReference, listenerId, reportRateMs) {
         clearTimeout(this.throttleScrollHandlerIds[listenerId]);
 
@@ -39,6 +52,9 @@ class HamkareScrollListener {
         );
     }
 
+    /**
+     * Captures current scroll state and forwards it to .NET.
+     */
     scrollHandler(dotnetReference, listenerId) {
         try {
             const scrollData = this._getCurrentScrollPosition(this.targetElements[listenerId]);
@@ -50,6 +66,9 @@ class HamkareScrollListener {
         }
     }
 
+    /**
+     * Returns current scroll metrics for the provided selector.
+     */
     getCurrentScrollPosition(selector) {
         const element = this._getElementBySelector(selector);
         return this._getCurrentScrollPosition(element);
@@ -75,6 +94,9 @@ class HamkareScrollListener {
         };
     }
 
+    /**
+     * Stops and removes a scroll subscription by listener ID.
+     */
     cancelListener(listenerId) {
         if (this.throttleScrollHandlerIds[listenerId]) {
             clearTimeout(this.throttleScrollHandlerIds[listenerId]);

@@ -6,7 +6,6 @@ using HamkareBlazor.Utilities;
 
 namespace HamkareBlazor
 {
-#nullable enable
     /// <summary>
     /// Allows users to select a value within a specified range. Sliders should present the full range of available values and the value should take effect immediately.
     /// </summary>
@@ -300,5 +299,13 @@ namespace HamkareBlazor
         }
 
         private string Width => CalculatePosition().ToString(CultureInfo.InvariantCulture);
+
+        private string ValueLabelPositionStyle => RightToLeft ? $"right:{Width}%;" : $"left:{Width}%;";
+
+        /// <summary>
+        /// Displays content in right-to-left order.
+        /// </summary>
+        [CascadingParameter(Name = "RightToLeft")]
+        public bool RightToLeft { get; set; }
     }
 }

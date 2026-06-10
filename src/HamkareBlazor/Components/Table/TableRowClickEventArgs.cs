@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Components.Web;
 
 namespace HamkareBlazor;
 
-#nullable enable
 
 /// <summary>
 /// The information passed during a <see cref="HamkareTable{T}"/> row click event.

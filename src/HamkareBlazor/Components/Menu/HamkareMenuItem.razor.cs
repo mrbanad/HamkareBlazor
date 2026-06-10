@@ -4,7 +4,6 @@ using HamkareBlazor.Utilities;
 
 namespace HamkareBlazor
 {
-#nullable enable
     /// <summary>
     /// A choice displayed as part of a list within a <see cref="HamkareMenu"/> component.
     /// </summary>
@@ -132,6 +131,12 @@ namespace HamkareBlazor
         protected bool GetDense() => ParentMenu?.GetDense() == true;
 
         protected Typo GetTypo() => GetDense() ? Typo.body2 : Typo.body1;
+
+        /// <summary>
+        /// Enables right-to-left layout.
+        /// </summary>
+        [CascadingParameter(Name = "RightToLeft")]
+        public bool RightToLeft { get; set; }
 
         /// <summary>
         /// The menu item is acting as the activator for a sub menu.

@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Components.Web;
 using HamkareBlazor.Services;
 using HamkareBlazor.Utilities;
 
-#nullable enable
 namespace HamkareBlazor
 {
     /// <summary>
@@ -28,7 +27,8 @@ namespace HamkareBlazor
         private ElementReference _elementReference;
         private ElementReference _elementReference1;
         private IMask _mask = new PatternMask("** **-** **");
-        private readonly string _elementId = Identifier.Create("mask");
+
+        internal string ElementId { get; } = Identifier.Create("mask");
 
         protected string Classname =>
             new CssBuilder("hamkare-input")
@@ -148,7 +148,7 @@ namespace HamkareBlazor
             {
                 _jsEvent = JsEventFactory.Create();
 
-                await _jsEvent.Connect(_elementId,
+                await _jsEvent.Connect(ElementId,
                     new JsEventOptions
                     {
                         //EnableLogging = true,
@@ -182,11 +182,11 @@ namespace HamkareBlazor
                         new("Delete", preventDown: "key+none")
                     ]);
 
-                await KeyInterceptorService.SubscribeAsync(_elementId, options, keyDown: HandleKeyDown);
+                await KeyInterceptorService.SubscribeAsync(ElementId, options, keyDown: HandleKeyDown);
             }
 
             if (_isFocused && Mask.Selection == null)
-                await SetCaretPositionAsync(Mask.CaretPos, _selection, render: false);
+                await SetCaretPositionAsync(Mask.CaretPos, _selection);
             await base.OnAfterRenderAsync(firstRender);
         }
 
@@ -203,10 +203,10 @@ namespace HamkareBlazor
         {
             try
             {
-                if (e.CtrlKey && e.Key != "Backspace"
+                if ((e.CtrlKey && e.Key != "Backspace")
                     // on macOS, the copy-paste command is Cmd + V
                     // cmd is identified using the MetaKey property
-                    || e.MetaKey && e.Key != "Backspace"
+                    || (e.MetaKey && e.Key != "Backspace")
                     || e.AltKey
                     || GetReadOnlyState())
                     return;
@@ -404,7 +404,7 @@ namespace HamkareBlazor
             _isFocused = false;
         }
 
-        private async Task SetCaretPositionAsync(int caret, (int, int)? selection = null, bool render = true)
+        private async Task SetCaretPositionAsync(int caret, (int, int)? selection = null)
         {
             if (!_isFocused)
                 return;
@@ -462,7 +462,7 @@ namespace HamkareBlazor
             _mask = other;
         }
 
-        private async Task OnCutAsync(ClipboardEventArgs obj)
+        private async Task OnCutAsync()
         {
             if (GetReadOnlyState())
                 return;
@@ -480,7 +480,7 @@ namespace HamkareBlazor
 
             if (IsJSRuntimeAvailable)
             {
-                await KeyInterceptorService.UnsubscribeAsync(_elementId);
+                await KeyInterceptorService.UnsubscribeAsync(ElementId);
                 if (_jsEvent is not null)
                 {
                     _jsEvent.CaretPositionChanged -= OnCaretPositionChanged;

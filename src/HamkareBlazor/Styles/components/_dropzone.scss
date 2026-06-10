@@ -17,8 +17,23 @@
 }
 
 .hamkare-drop-item:not(.hamkare-drop-item-preview-start) {
+  cursor: default;
+  user-select: none;
+}
+
+.hamkare-drop-item.hamkare-drop-item-draggable:not(.hamkare-drop-item-preview-start) {
+  cursor: grab;
+
+  &:active {
+    cursor: grabbing;
+  }
+}
+
+.hamkare-drag-handle {
   cursor: grab;
   user-select: none;
+  display: inline-flex;
+  align-items: center;
 
   &:active {
     cursor: grabbing;
@@ -42,4 +57,9 @@
       transform: none;
     }
   }
+}
+
+.hamkare-drop-item[draggable="true"],
+.hamkare-drag-handle[draggable="true"] {
+  touch-action: none;
 }

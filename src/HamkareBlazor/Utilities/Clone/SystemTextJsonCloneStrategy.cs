@@ -8,7 +8,6 @@ using System.Text.Json.Serialization;
 
 namespace HamkareBlazor.Utilities.Clone;
 
-#nullable enable
 /// <summary>
 /// Provides a deep copy implementation using System.Text.Json.
 /// </summary>

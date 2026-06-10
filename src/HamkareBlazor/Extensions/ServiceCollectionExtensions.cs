@@ -8,7 +8,6 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace HamkareBlazor.Services
 {
-#nullable enable
     [ExcludeFromCodeCoverage]
     public static class ServiceCollectionExtensions
     {
@@ -31,6 +30,7 @@ namespace HamkareBlazor.Services
         /// <returns>Continues the IServiceCollection chain.</returns>
         public static IServiceCollection AddHamkareBlazorSnackbar(this IServiceCollection services)
         {
+            services.AddCommonServices();
             services.TryAddScoped<ISnackbar, SnackbarService>();
 
             return services;
@@ -170,6 +170,7 @@ namespace HamkareBlazor.Services
         /// <param name="services">IServiceCollection</param>
         public static IServiceCollection AddHamkarePopoverService(this IServiceCollection services)
         {
+            services.AddCommonServices();
             services.TryAddScoped<IPopoverService, PopoverService>();
 
             return services;
@@ -396,7 +397,6 @@ namespace HamkareBlazor.Services
                     popoverOptions.FlipMargin = options.PopoverOptions.FlipMargin;
                     popoverOptions.QueueDelay = options.PopoverOptions.QueueDelay;
                     popoverOptions.ThrowOnDuplicateProvider = options.PopoverOptions.ThrowOnDuplicateProvider;
-                    popoverOptions.Mode = options.PopoverOptions.Mode;
                     popoverOptions.OverflowPadding = options.PopoverOptions.OverflowPadding;
                     popoverOptions.ModalOverlay = options.PopoverOptions.ModalOverlay;
                     popoverOptions.OverflowBehavior = options.PopoverOptions.OverflowBehavior;

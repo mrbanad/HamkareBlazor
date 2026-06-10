@@ -5,7 +5,6 @@ using HamkareBlazor.Utilities;
 
 namespace HamkareBlazor
 {
-#nullable enable
     /// <summary>
     /// Represents a grouping of multiple <see cref="HamkareAvatar"/> components.
     /// </summary>

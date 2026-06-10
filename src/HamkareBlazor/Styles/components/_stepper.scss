@@ -114,17 +114,17 @@
 
   &.hamkare-stepper__horizontal {
 
-    .hamkare-stepper-nav {
+    > .hamkare-stepper-nav {
       display: flex;
     }
 
     &.hamkare-stepper__center-labels {
 
-      .hamkare-step {
+      > .hamkare-stepper-nav > .hamkare-step {
         flex-basis: 175px;
       }
 
-      .hamkare-step-label {
+      > .hamkare-stepper-nav > .hamkare-step > .hamkare-step-label {
         flex-direction: column;
         justify-content: flex-start;
         align-items: center;
@@ -139,13 +139,13 @@
         }
       }
 
-      .hamkare-stepper-nav-connector {
+      > .hamkare-stepper-nav > .hamkare-stepper-nav-connector {
         margin: 35px -67px 0;
         align-self: flex-start;
       }
     }
 
-    .hamkare-stepper-nav-connector {
+    > .hamkare-stepper-nav > .hamkare-stepper-nav-connector {
       align-self: center;
       margin: 0 -16px;
 
@@ -158,11 +158,12 @@
 
   &.hamkare-stepper__vertical {
 
-    .hamkare-stepper-nav {
+    > .hamkare-stepper-nav {
+      display: block;
       padding: 8px 0px;
     }
 
-    .hamkare-step {
+    > .hamkare-stepper-nav > .hamkare-step {
       padding: 0 16px;
 
       .hamkare-step-label {
@@ -170,17 +171,18 @@
       }
     }
 
-    .hamkare-stepper-nav-connector {
+    > .hamkare-stepper-nav > .hamkare-stepper-nav-connector {
       margin-inline-start: 28px;
       margin-inline-end: 0;
 
       .hamkare-stepper-nav-connector-line {
         border-inline-start: 1px solid rgb(189, 189, 189);
+        border-top: none;
         min-height: 24px;
       }
     }
 
-    .hamkare-stepper-content {
+    > .hamkare-stepper-content {
       margin-inline-start: 28px;
       margin-inline-end: 0;
       padding-inline-start: 20px;

@@ -6,7 +6,6 @@ using System.Numerics;
 
 namespace HamkareBlazor.Charts;
 
-#nullable enable
 /// <summary>
 /// Represents a chart component.
 /// </summary>

@@ -1,6 +1,5 @@
 ﻿namespace HamkareBlazor
 {
-#nullable enable
     /// <summary>
     /// Represents the theme settings for the HamkareBlazor user interface.
     /// </summary>

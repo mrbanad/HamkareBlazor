@@ -13,7 +13,6 @@ using HamkareBlazor.Utilities;
 
 namespace HamkareBlazor
 {
-#nullable enable
     /// <summary>
     /// Displays a list of options that users can select from. Make menus easy to open, close, and select. Menus can open from a variety of components.
     /// </summary>
@@ -35,7 +34,7 @@ namespace HamkareBlazor
         private ElementReference _menuWrapperRef;
         private readonly List<object> _menuItems = [];
         private readonly string _elementId = Identifier.Create("menu");
-        private DateTime _lastKeyboardActivation = DateTime.MinValue;
+        private DateTimeOffset _lastKeyboardActivation = DateTimeOffset.MinValue;
         private readonly MenuContext _menuContext;
 
         [Inject]
@@ -43,6 +42,9 @@ namespace HamkareBlazor
 
         [Inject]
         private IPopoverService PopoverService { get; set; } = null!;
+
+        [Inject]
+        private TimeProvider TimeProvider { get; set; } = null!;
 
         public HamkareMenu()
         {
@@ -496,7 +498,8 @@ namespace HamkareBlazor
             CancelPendingActions();
 
             // Recursively close all child menus.
-            foreach (var child in _subMenus.Where(m => m._openState.Value))
+            var openChildren = _subMenus.Where(m => m._openState.Value).ToArray();
+            foreach (var child in openChildren)
             {
                 await child.CloseMenuAsync();
             }
@@ -601,7 +604,8 @@ namespace HamkareBlazor
             // Close siblings (and self) first.
             if (ParentMenu is not null)
             {
-                foreach (var sibling in ParentMenu._subMenus.Where(m => m._openState.Value))
+                var openSiblings = ParentMenu._subMenus.Where(m => m._openState.Value).ToArray();
+                foreach (var sibling in openSiblings)
                 {
                     await sibling.CloseMenuAsync();
                 }
@@ -629,7 +633,7 @@ namespace HamkareBlazor
             {
                 // Determine if the click matches the expected activation event.
                 // This indicates it's a synthetic click following Enter/Space
-                var timeSinceKeyboard = DateTime.UtcNow - _lastKeyboardActivation;
+                var timeSinceKeyboard = TimeProvider.GetUtcNow() - _lastKeyboardActivation;
                 if (timeSinceKeyboard.TotalMilliseconds < 50)
                 {
                     return Task.CompletedTask;
@@ -699,7 +703,7 @@ namespace HamkareBlazor
 
                 try
                 {
-                    await Task.Delay(HamkareGlobal.MenuDefaults.HoverDelay, _hoverCts.Token);
+                    await Task.Delay(TimeSpan.FromMilliseconds(HamkareGlobal.MenuDefaults.HoverDelay), TimeProvider, _hoverCts.Token);
                 }
                 catch (TaskCanceledException)
                 {
@@ -740,7 +744,7 @@ namespace HamkareBlazor
 
                 try
                 {
-                    await Task.Delay(HamkareGlobal.MenuDefaults.HoverDelay, _leaveCts.Token);
+                    await Task.Delay(TimeSpan.FromMilliseconds(HamkareGlobal.MenuDefaults.HoverDelay), TimeProvider, _leaveCts.Token);
                 }
                 catch (TaskCanceledException)
                 {
@@ -950,7 +954,7 @@ namespace HamkareBlazor
                         var submenu = FindSubmenuForItem(menuItem);
                         if (submenu != null)
                         {
-                            submenu._lastKeyboardActivation = DateTime.UtcNow;
+                            submenu._lastKeyboardActivation = TimeProvider.GetUtcNow();
                             submenu._lastInteractionWasKeyboard = true;
                             await submenu.OpenSubMenuAsync(EventArgs.Empty);
                         }
@@ -963,7 +967,7 @@ namespace HamkareBlazor
 
                     case HamkareMenu menu:
                         // For HamkareMenu items, always open the submenu
-                        menu._lastKeyboardActivation = DateTime.UtcNow;
+                        menu._lastKeyboardActivation = TimeProvider.GetUtcNow();
                         menu._lastInteractionWasKeyboard = true;
                         await menu.OpenSubMenuAsync(EventArgs.Empty);
                         break;
@@ -1150,7 +1154,7 @@ namespace HamkareBlazor
             if (e.Key == "Enter" || e.Key == " ")
             {
                 _lastInteractionWasKeyboard = true;
-                _lastKeyboardActivation = DateTime.UtcNow;
+                _lastKeyboardActivation = TimeProvider.GetUtcNow();
 
                 await ToggleMenuAsync(e);
             }

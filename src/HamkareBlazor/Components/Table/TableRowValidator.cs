@@ -4,7 +4,6 @@ using HamkareBlazor.Interfaces;
 
 namespace HamkareBlazor
 {
-#nullable enable
 
     /// <summary>
     /// A validator for rows within a <see cref="HamkareTable{T}"/>.
@@ -52,7 +51,6 @@ namespace HamkareBlazor
 
         void IForm.Update(IFormComponent formControl)
         {
-            //Validate(formControl);
         }
 
         protected HashSet<IFormComponent> _formControls = new();

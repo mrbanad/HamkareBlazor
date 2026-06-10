@@ -8,7 +8,6 @@ using System.Reflection;
 
 namespace HamkareBlazor.Utilities.Expressions;
 
-#nullable enable
 internal static class PropertyPath
 {
     public static PropertyHolder Visit<TSource, TResult>(Expression<Func<TSource, TResult>> expression)
@@ -38,6 +37,7 @@ internal static class PropertyPath
 
         public string GetPath() => string.Join(".", _members.Select(x => x.Name));
 
+        // Hamkare: Customize
         public string GetLastMemberName()
         {
             var lastMember = _members.LastOrDefault();

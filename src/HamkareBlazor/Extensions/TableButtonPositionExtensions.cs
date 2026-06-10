@@ -4,7 +4,6 @@
 
 namespace HamkareBlazor;
 
-#nullable enable
 public static class TableButtonPositionExtensions
 {
     public static bool Editable(this TableContext? context, bool ignoreEditable) =>

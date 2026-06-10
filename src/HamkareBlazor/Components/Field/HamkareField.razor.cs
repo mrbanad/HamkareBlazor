@@ -4,7 +4,6 @@ using HamkareBlazor.Utilities;
 
 namespace HamkareBlazor
 {
-#nullable enable
     // TODO: Maybe can inherit from HamkareBaseInput?
     /// <summary>
     /// A component similar to <see cref="HamkareTextField{T}"/> which supports custom content.

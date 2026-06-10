@@ -4,11 +4,9 @@ using HamkareBlazor.Extensions;
 using HamkareBlazor.Interfaces;
 using HamkareBlazor.State;
 using HamkareBlazor.Utilities;
-using HamkareBlazor.Utilities.Converter;
 
 namespace HamkareBlazor
 {
-#nullable enable
     /// <summary>
     /// An expandable branch of a <see cref="HamkareTreeView{T}"/>.
     /// </summary>
@@ -24,7 +22,7 @@ namespace HamkareBlazor
         private readonly ParameterState<bool> _selectedState;
         private readonly ParameterState<bool> _expandedState;
         private readonly ParameterState<IReadOnlyCollection<ITreeItemData<T>>?> _itemsState;
-        private readonly IConverter<T?, string?> _converter = new DefaultConverter<T?>();
+        private readonly DefaultConverter<T?> _converter = new();
         private readonly HashSet<HamkareTreeViewItem<T>> _childItems = new();
 
         public HamkareTreeViewItem()
@@ -51,8 +49,8 @@ namespace HamkareBlazor
 
         protected string ContentClassname =>
             new CssBuilder("hamkare-treeview-item-content")
-                .AddClass("cursor-pointer", !GetDisabled() && (!GetReadOnly() || GetExpandOnClick() && HasChildren()))
-                .AddClass("hamkare-ripple", GetRipple() && !GetDisabled() && !GetExpandOnDoubleClick() && (!GetReadOnly() || GetExpandOnClick() && HasChildren()))
+                .AddClass("cursor-pointer", !GetDisabled() && (!GetReadOnly() || (GetExpandOnClick() && HasChildren())))
+                .AddClass("hamkare-ripple", GetRipple() && !GetDisabled() && !GetExpandOnDoubleClick() && (!GetReadOnly() || (GetExpandOnClick() && HasChildren())))
                 .AddClass("hamkare-treeview-item-selected", !GetDisabled() && !MultiSelection && _selectedState)
                 .Build();
 
@@ -68,6 +66,10 @@ namespace HamkareBlazor
 
         [CascadingParameter]
         internal HamkareTreeViewItem<T>? Parent { get; set; }
+
+        // When the item comes from ItemTemplate, this links the component instance to its backing node object.
+        [CascadingParameter(Name = HamkareTreeViewCascadingValues.ItemData)]
+        private ITreeItemData<T>? CurrentItemData { get; set; }
 
         /// <summary>
         /// The value associated with this item.
@@ -208,7 +210,7 @@ namespace HamkareBlazor
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.TreeView.Behavior)]
-        public RenderFragment<HamkareTreeViewItem<T?>>? BodyContent { get; set; }
+        public RenderFragment<HamkareTreeViewItem<T>>? BodyContent { get; set; }
 
         /// <summary>
         /// The child items underneath this item.
@@ -369,7 +371,7 @@ namespace HamkareBlazor
         {
             return ChildContent != null
                 || (HamkareTreeRoot != null && GetItems().Count != 0)
-                || (HamkareTreeRoot?.ServerData != null && CanExpand && !_isServerLoaded && GetItems().Count == 0);
+                || (HamkareTreeRoot?.ServerData != null && CanExpand && !GetServerDataLoaded() && GetItems().Count == 0);
         }
 
         private bool AreChildrenVisible() => _itemsState.Value is null || _itemsState.Value.Any(i => i.Visible);
@@ -393,6 +395,27 @@ namespace HamkareBlazor
         private string? GetText() => string.IsNullOrEmpty(Text) ? _converter.Convert(Value) : Text;
 
         private bool GetDisabled() => Disabled || HamkareTreeRoot?.Disabled == true;
+
+        private bool GetServerDataLoaded()
+        {
+            if (CurrentItemData is not null && HamkareTreeRoot is not null)
+            {
+                return HamkareTreeRoot.GetServerDataLoaded(CurrentItemData);
+            }
+
+            return _isServerLoaded;
+        }
+
+        private void SetServerDataLoaded(bool isLoaded)
+        {
+            if (CurrentItemData is not null && HamkareTreeRoot is not null)
+            {
+                HamkareTreeRoot.SetServerDataLoaded(CurrentItemData, isLoaded);
+                return;
+            }
+
+            _isServerLoaded = isLoaded;
+        }
 
         private bool? GetCheckBoxStateTriState()
         {
@@ -424,7 +447,9 @@ namespace HamkareBlazor
                 StateHasChanged();
             }
             foreach (var item in _childItems)
+            {
                 await item.ExpandAllAsync();
+            }
         }
 
         /// <summary>
@@ -438,7 +463,9 @@ namespace HamkareBlazor
                 StateHasChanged();
             }
             foreach (var item in _childItems)
+            {
                 await item.CollapseAllAsync();
+            }
         }
 
         /// <inheritdoc />
@@ -562,6 +589,8 @@ namespace HamkareBlazor
         /// </summary>
         public async Task ReloadAsync()
         {
+            SetServerDataLoaded(false);
+
             if (_itemsState.Value is not null)
             {
                 await _itemsState.SetValueAsync(Array.Empty<ITreeItemData<T>>());
@@ -584,7 +613,7 @@ namespace HamkareBlazor
 
         internal List<HamkareTreeViewItem<T>> ChildItems => _childItems.ToList();
 
-        private bool HasIcon => _expandedState && (!string.IsNullOrWhiteSpace(IconExpanded) || !string.IsNullOrWhiteSpace(Icon)) || !_expandedState && !string.IsNullOrWhiteSpace(Icon);
+        private bool HasIcon => (_expandedState && (!string.IsNullOrWhiteSpace(IconExpanded) || !string.IsNullOrWhiteSpace(Icon))) || (!_expandedState && !string.IsNullOrWhiteSpace(Icon));
 
         private string? GetIcon() => _expandedState && !string.IsNullOrWhiteSpace(IconExpanded) ? IconExpanded : Icon;
 
@@ -610,15 +639,17 @@ namespace HamkareBlazor
                 return;
             _loading = true;
             StateHasChanged();
+            var loaded = false;
             try
             {
                 var items = await HamkareTreeRoot.ServerData(GetValue());
                 await _itemsState.SetValueAsync(items);
+                loaded = true;
             }
             finally
             {
                 _loading = false;
-                _isServerLoaded = true;
+                SetServerDataLoaded(loaded);
 
                 StateHasChanged();
             }

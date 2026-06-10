@@ -4,10 +4,10 @@
 
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Components;
+using HamkareBlazor.Utilities;
 
 namespace HamkareBlazor;
 
-#nullable enable
 /// <summary>
 /// Represents a column in a <see cref="HamkareDataGrid{T}"/> which can be expanded to show additional information.
 /// </summary>
@@ -134,7 +134,6 @@ public partial class HierarchyColumn<[DynamicallyAccessedMembers(DynamicallyAcce
     [Parameter]
     public RenderFragment<CellContext<T>>? CellTemplate { get; set; }
 
-#nullable enable
     /// <summary>
     /// The function which determines whether the row should be initially expanded.
     /// </summary>
@@ -145,6 +144,12 @@ public partial class HierarchyColumn<[DynamicallyAccessedMembers(DynamicallyAcce
     /// </remarks>
     [Parameter]
     public Func<T, bool>? InitiallyExpandedFunc { get; set; }
+
+    /// <summary>
+    /// Occurs when hierarchy visibility is toggled for an item in this column.
+    /// </summary>
+    [Parameter]
+    public EventCallback<DataGridHierarchyVisibilityToggledEventArgs<T>> HierarchyVisibilityToggled { get; set; }
 #nullable disable
 
     private string GetGroupIcon(CellContext<T> context)

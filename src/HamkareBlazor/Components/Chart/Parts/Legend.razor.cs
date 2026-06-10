@@ -1,7 +1,6 @@
 ﻿using System.Numerics;
 using Microsoft.AspNetCore.Components;
 
-#nullable enable
 namespace HamkareBlazor.Charts
 {
     /// <summary>

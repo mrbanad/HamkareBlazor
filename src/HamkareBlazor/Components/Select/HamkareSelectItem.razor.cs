@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNetCore.Components;
-using HamkareBlazor.Extensions;
+using HamkareBlazor.State;
 using HamkareBlazor.Utilities;
 
 namespace HamkareBlazor
 {
-#nullable enable
     /// <summary>
     /// A selectable option displayed within a <see cref="HamkareSelect{T}"/> component.
     /// </summary>
@@ -12,8 +11,9 @@ namespace HamkareBlazor
     /// <seealso cref="HamkareSelect{T}"/>
     public partial class HamkareSelectItem<T> : HamkareComponentBase, IDisposable
     {
-        private IHamkareSelect? _parent;
-        private IHamkareShadowSelect? _shadowParent;
+        private HamkareSelectContext<T>? _context;
+        private HamkareSelectContext<T>? _shadowContext;
+        private IDisposable? _selectionSubscription;
 
         private string GetCssClasses() => new CssBuilder()
             .AddClass(Class)
@@ -22,62 +22,71 @@ namespace HamkareBlazor
         internal string ItemId { get; } = Identifier.Create();
 
         /// <summary>
-        /// The <see cref="HamkareSelect{T}"/> hosting this item.
+        /// Builds fallback accessibility attributes for the rendered option element.
         /// </summary>
-        [CascadingParameter]
-        internal IHamkareSelect? IHamkareSelect
+        /// <remarks>
+        /// Option semantics come from this item's selection state rather than the popup's temporary active item.
+        /// </remarks>
+        private Dictionary<string, object?> GetUserAttributes()
         {
-            get => _parent;
-            set
+            var attributes = new Dictionary<string, object?>(UserAttributes, StringComparer.OrdinalIgnoreCase);
+            attributes.TryAdd("aria-selected", Selected ? "true" : "false");
+
+            if (Disabled)
             {
-                _parent = value;
-                if (_parent == null)
-                    return;
-                _parent.CheckGenericTypeMatch(this);
-                if (HamkareSelect == null)
-                    return;
-                var selected = HamkareSelect.Add(this);
-                if (_parent.MultiSelection)
-                {
-                    HamkareSelect.SelectionChangedFromOutside += OnUpdateSelectionStateFromOutside;
-                    InvokeAsync(() => OnUpdateSelectionStateFromOutside(HamkareSelect.GetState(x => x.SelectedValues)));
-                }
-                else
-                {
-                    Selected = selected;
-                }
+                attributes.TryAdd("aria-disabled", "true");
             }
+
+            return attributes;
         }
 
-        [CascadingParameter]
-        internal IHamkareShadowSelect? IHamkareShadowSelect
+        public HamkareSelectItem()
         {
-            get => _shadowParent;
-            set
-            {
-                _shadowParent = value;
-                ((HamkareSelect<T>?)_shadowParent)?.RegisterShadowItem(this);
-            }
+            using var registerScope = CreateRegisterScope();
+            registerScope.RegisterParameter<IHamkareSelect?>(nameof(IHamkareSelect))
+                .WithParameter(() => IHamkareSelect)
+                .WithChangeHandler(OnHamkareSelectChanged);
+            registerScope.RegisterParameter<IHamkareShadowSelect?>(nameof(IHamkareShadowSelect))
+                .WithParameter(() => IHamkareShadowSelect)
+                .WithChangeHandler(OnHamkareShadowSelectChanged);
+            registerScope.RegisterParameter<T?>(nameof(Value))
+                .WithParameter(() => Value)
+                .WithChangeHandler(OnValueChanged)
+                .WithComparer(() => (_context ?? _shadowContext)?.Comparer ?? EqualityComparer<T?>.Default);
         }
 
         /// <summary>
+        /// The <see cref="HamkareSelect{T}"/> hosting this item.
+        /// </summary>
+        /// <remarks>
+        /// This cascading parameter is used to obtain the context for registration.
+        /// When this parameter changes, OnHamkareSelectChanged is invoked to handle
+        /// registration and unregistration with the appropriate parent.
+        /// </remarks>
+        [CascadingParameter]
+        internal IHamkareSelect? IHamkareSelect { get; set; }
+
+        /// <summary>
+        /// The shadow select used for items that only provide RenderFragments.
+        /// </summary>
+        /// <remarks>
+        /// Shadow items (HideContent=true) are registered in a separate lookup
+        /// for value-to-RenderFragment resolution when the dropdown is closed.
+        /// </remarks>
+        [CascadingParameter]
+        internal IHamkareShadowSelect? IHamkareShadowSelect { get; set; }
+
+        /// <summary>
         /// Select items with HideContent==true are only there to register their RenderFragment with the select but
-        /// wont render and have no other purpose!
+        /// won't render and have no other purpose!
         /// </summary>
         [CascadingParameter(Name = "HideContent")]
         internal bool HideContent { get; set; }
 
+        /// <summary>
+        /// Gets the parent HamkareSelect component.
+        /// </summary>
         internal HamkareSelect<T>? HamkareSelect => (HamkareSelect<T>?)IHamkareSelect;
-
-        private void OnUpdateSelectionStateFromOutside(IEnumerable<T?>? selection)
-        {
-            if (selection == null)
-                return;
-            var oldSelected = Selected;
-            Selected = selection.Contains(Value);
-            if (oldSelected != Selected)
-                InvokeAsync(StateHasChanged);
-        }
 
         /// <summary>
         /// The custom value associated with this item.
@@ -106,13 +115,16 @@ namespace HamkareBlazor
         /// <summary>
         /// Whether multi-selection is enabled in the parent <see cref="HamkareSelect{T}"/>.
         /// </summary>
-        protected bool MultiSelection => HamkareSelect is { MultiSelection: true };
+        protected bool MultiSelection => _context?.MultiSelection == true;
 
         /// <summary>
         /// Whether this item is selected.
         /// </summary>
         /// <remarks>
-        /// Only applies when <see cref="MultiSelection"/> is <c>true</c>.
+        /// <para>
+        /// This state is updated by observing the parent's selection via the context.
+        /// Items subscribe to selection changes and update this state accordingly.
+        /// </para>
         /// </remarks>
         internal bool Selected { get; set; }
 
@@ -132,7 +144,7 @@ namespace HamkareBlazor
             }
         }
 
-        protected string? DisplayString
+        protected string DisplayString
         {
             get
             {
@@ -141,33 +153,141 @@ namespace HamkareBlazor
             }
         }
 
-        private async Task OnClickHandleAsync()
+        /// <summary>
+        /// Handles changes to the IHamkareShadowSelect cascading parameter.
+        /// </summary>
+        /// <remarks>
+        /// This is invoked when the shadow select parent changes (e.g., when moving between different selects).
+        /// It unregisters from the old parent and registers with the new one.
+        /// </remarks>
+        private void OnHamkareShadowSelectChanged(ParameterChangedEventArgs<IHamkareShadowSelect?> args)
         {
-            if (MultiSelection)
+            if (args.LastValue?.SelectContext is HamkareSelectContext<T> oldContext)
             {
-                Selected = !Selected;
+                oldContext.UnregisterShadowItem(this);
             }
 
-            if (HamkareSelect != null)
-                await HamkareSelect.SelectOption(Value);
+            if (args.Value?.SelectContext is HamkareSelectContext<T> newContext)
+            {
+                _shadowContext = newContext;
+                _shadowContext.RegisterShadowItem(this);
+            }
+        }
 
-            await InvokeAsync(StateHasChanged);
+        /// <summary>
+        /// Handles changes to the IHamkareSelect cascading parameter.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// This is invoked when the select parent changes (e.g., when moving between different selects).
+        /// It handles the complete lifecycle:
+        /// </para>
+        /// <list type="number">
+        /// <item><description>Unsubscribes from the old parent's selection changes</description></item>
+        /// <item><description>Unregisters from the old parent's context</description></item>
+        /// <item><description>Registers with the new parent's context</description></item>
+        /// <item><description>Subscribes to the new parent's selection changes</description></item>
+        /// <item><description>Updates the initial Selected state</description></item>
+        /// </list>
+        /// </remarks>
+        private void OnHamkareSelectChanged(ParameterChangedEventArgs<IHamkareSelect?> args)
+        {
+            if (args.LastValue?.SelectContext is HamkareSelectContext<T> oldContext)
+            {
+                _selectionSubscription?.Dispose();
+                _selectionSubscription = null;
+                oldContext.UnregisterItem(this);
+            }
+
+            if (args.Value?.SelectContext is HamkareSelectContext<T> newContext)
+            {
+                _context = newContext;
+
+                // Register as a visible item (adds to _items, _valueLookup, and _shadowLookup)
+                var isSelected = _context.RegisterItem(this);
+                Selected = isSelected;
+
+                _selectionSubscription = _context.SubscribeToSelectionChanges(OnSelectionChangedAsync);
+            }
+        }
+
+        /// <summary>
+        /// Handles selection changes from the parent select.
+        /// </summary>
+        /// <remarks>
+        /// This callback is invoked when the parent's SelectedValues changes.
+        /// It updates the local Selected state and triggers a re-render if needed.
+        /// This replaces the OnUpdateSelectionStateFromOutside method.
+        /// </remarks>
+        private Task OnSelectionChangedAsync(IReadOnlyCollection<T?> selectedValues)
+        {
+            var oldSelected = Selected;
+            Selected = selectedValues.Contains(Value);
+
+            if (oldSelected != Selected)
+            {
+                // Avoid await InvokeAsync(StateHasChanged) due to a MAUI dispatcher bug:
+                // https://github.com/HamkareBlazor/HamkareBlazor/issues/13009
+                // This issue does not occur on other platforms (e.g., WASM, WinForms Hybrid, etc).
+                StateHasChanged();
+            }
+
+            return Task.CompletedTask;
+        }
+
+        /// <summary>
+        /// Handles changes to the <see cref="Value"/> parameter.
+        /// </summary>
+        /// <remarks>
+        /// When the parent swaps the underlying data collection while Blazor reuses the same component instances
+        /// (e.g. a keyless <c>@foreach</c> binding new items to existing <see cref="HamkareSelectItem{T}"/> positions),
+        /// the value-keyed lookups in <see cref="HamkareSelectContext{T}"/> must be updated to avoid stale keys.
+        /// </remarks>
+        private void OnValueChanged(ParameterChangedEventArgs<T?> args)
+        {
+            _context?.OnItemValueChanged(this, args.LastValue, args.Value);
+            _shadowContext?.OnShadowItemValueChanged(this, args.LastValue, args.Value);
+        }
+
+        /// <summary>
+        /// Handles click events on the item.
+        /// </summary>
+        private async Task OnClickHandleAsync()
+        {
+            if (HamkareSelect is not null)
+            {
+                await HamkareSelect.SelectOption(Value);
+            }
+        }
+
+        /// <inheritdoc />
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
         /// <summary>
         /// Releases resources used by this component.
         /// </summary>
-        public void Dispose()
+        protected virtual void Dispose(bool disposing)
         {
-            try
+            if (!disposing)
             {
-                HamkareSelect?.Remove(this);
-                ((HamkareSelect<T>?)_shadowParent)?.UnregisterShadowItem(this);
+                return;
             }
-            catch (Exception)
-            {
-                // ignored
-            }
+
+            var selection = _selectionSubscription;
+            var context = _context;
+            var shadow = _shadowContext;
+
+            _selectionSubscription = null;
+            _context = null;
+            _shadowContext = null;
+
+            selection?.Dispose();
+            context?.UnregisterItem(this);
+            shadow?.UnregisterShadowItem(this);
         }
     }
 }

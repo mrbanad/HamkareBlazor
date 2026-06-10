@@ -6,7 +6,6 @@
 @inject InternalHamkareLocalizer Localizer
 
 @{
-#nullable enable
     var resolvedItems = new List<IndexBag<T>>(0);
     if (DataGrid.IsGrouped)
     {
@@ -32,6 +31,7 @@
                Items="@resolvedItems"
                OverscanCount="@DataGrid.OverscanCount"
                ItemSize="@DataGrid.ItemSize"
+               SpacerElement="tr"
                Context="itemBag">
     <Placeholder>
         @if (DataGrid.RowLoadingContent != null)
@@ -50,10 +50,14 @@
 
     <ChildContent>
         @{
-            var rowClass = new CssBuilder(DataGrid.RowClass).AddClass(DataGrid.RowClassFunc?.Invoke(itemBag.Item, itemBag.Index)).Build();
+            var rowClass = new CssBuilder(DataGrid.RowClass)
+                .AddClass(DataGrid.RowClassFunc?.Invoke(itemBag.Item, itemBag.Index))
+                .AddClass("hamkare-table-row-stripe", DataGrid.Striped && itemBag.Index % 2 == 0)
+                .Build();
             var rowStyle = new StyleBuilder().AddStyle(DataGrid.RowStyle).AddStyle(DataGrid.RowStyleFunc?.Invoke(itemBag.Item, itemBag.Index)).Build();
         }
-        <tr class="hamkare-table-row w-max @rowClass" Style="@rowStyle" @key="itemBag.Item"
+        <tr class="hamkare-table-row @rowClass" Style="@rowStyle" @key="itemBag.Item"
+            @attributes="GetRowAttributes(itemBag.Item)"
             @onclick="@((args) => RowClick.InvokeAsync((args, itemBag.Item, itemBag.Index)))"
             @oncontextmenu="@((args) => ContextRowClick.InvokeAsync((args, itemBag.Item, itemBag.Index)))"
             @oncontextmenu:preventDefault="@(DataGrid.RowContextMenuClick.HasDelegate ? true : false)">
@@ -93,3 +97,19 @@
         </tr>
     </NoRecordsContent>
 </HamkareVirtualize>
+
+@code {
+    private Dictionary<string, object?>? GetRowAttributes(T item)
+    {
+        var rowSelectionState = DataGrid.GetRowSelectionState(item);
+        if (rowSelectionState is null)
+        {
+            return null;
+        }
+
+        return new Dictionary<string, object?>(1)
+        {
+            ["aria-selected"] = rowSelectionState.Value.ToString().ToLowerInvariant()
+        };
+    }
+}

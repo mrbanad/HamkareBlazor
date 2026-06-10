@@ -7,7 +7,6 @@ using System.Reflection;
 
 namespace HamkareBlazor;
 
-#nullable enable
 /// <summary>
 /// Provides extension methods for sorting queryable data sources using sort definitions.
 /// </summary>

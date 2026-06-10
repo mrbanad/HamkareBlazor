@@ -4,7 +4,6 @@
 
 namespace HamkareBlazor;
 
-#nullable enable
 /// <summary>
 /// A base class for designing input masks for the <see cref="HamkareMask"/>, <see cref="HamkareTextField{T}"/>, and <see cref="HamkarePicker{T}"/> components.
 /// </summary>

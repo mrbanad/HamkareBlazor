@@ -15,6 +15,9 @@
                        Height="@Height"
                        ViewBoxWidth="_boundWidth"
                        ViewBoxHeight="_boundHeight"
+                       @bind-XAxisLabelSize="XAxisLabelSize"
+                       @bind-YAxisLabelSize="YAxisLabelSize"
+                       MatchBoundsToSize="@MatchBoundsToSize"
                        ChartClass="hamkare-chart-line"
                        ChartSeries="@ChartSeries"
                        ChartLabels="@ChartLabels"
@@ -39,7 +42,6 @@
 }
 
 @code {
-#nullable enable
     private const double DataPointStroke = 2d;
     
     private double LineStrokeWidth => ChartOptions?.LineStrokeWidth ?? 3;

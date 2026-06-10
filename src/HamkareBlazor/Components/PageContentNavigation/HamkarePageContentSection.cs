@@ -4,7 +4,6 @@
 
 using System.Collections.Generic;
 
-#nullable enable
 namespace HamkareBlazor
 {
     /// <summary>

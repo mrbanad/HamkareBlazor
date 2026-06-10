@@ -3,7 +3,6 @@
 
 namespace HamkareBlazor
 {
-#nullable enable
     public class SnackbarConfiguration : CommonSnackbarOptions
     {
         private bool _newestOnTop;

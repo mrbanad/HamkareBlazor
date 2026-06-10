@@ -4,7 +4,6 @@ using HamkareBlazor.Utilities;
 
 namespace HamkareBlazor
 {
-#nullable enable
 
     /// <summary>
     /// Detects and responds to swipe gestures for navigation or actions.
@@ -171,9 +170,15 @@ namespace HamkareBlazor
                 return;
             }
 
-            var swipeDirection = Math.Abs(xDiff) > Math.Abs(yDiff) ?
-                xDiff > 0 ? SwipeDirection.RightToLeft : SwipeDirection.LeftToRight :
-                yDiff > 0 ? SwipeDirection.BottomToTop : SwipeDirection.TopToBottom;
+            SwipeDirection swipeDirection;
+            if (Math.Abs(xDiff) > Math.Abs(yDiff))
+            {
+                swipeDirection = xDiff > 0 ? SwipeDirection.RightToLeft : SwipeDirection.LeftToRight;
+            }
+            else
+            {
+                swipeDirection = yDiff > 0 ? SwipeDirection.BottomToTop : SwipeDirection.TopToBottom;
+            }
 
             if (Math.Abs(xDiff) > Math.Abs(yDiff))
             {

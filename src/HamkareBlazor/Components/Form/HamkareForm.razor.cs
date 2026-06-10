@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 using HamkareBlazor.Interfaces;
 using HamkareBlazor.Utilities;
 
-#nullable enable
 namespace HamkareBlazor
 {
     /// <summary>
@@ -15,9 +15,12 @@ namespace HamkareBlazor
         // a required field is added or the user touches a field that fails validation.
         private bool _valid = true;
         private bool _touched = false;
-        private Timer? _timer;
+        private ITimer? _timer;
         // Default is true, we need the form children to render
         private bool _shouldRender = true;
+
+        [Inject]
+        private TimeProvider TimeProvider { get; set; } = null!;
 
         protected string Classname =>
             new CssBuilder("hamkare-form")
@@ -147,6 +150,12 @@ namespace HamkareBlazor
         /// </summary>
         [Parameter]
         public EventCallback<FormFieldChangedEventArgs> FieldChanged { get; set; }
+
+        /// <summary>
+        /// Occurs when <c>Enter</c> is pressed on any child input of this form.
+        /// </summary>
+        [Parameter]
+        public EventCallback OnEnterPressed { get; set; }
 
         /// <summary>
         /// The default function or attribute used to validate form components which cannot validate themselves.
@@ -288,13 +297,25 @@ namespace HamkareBlazor
         /// <remarks>
         /// Validation will occur even if form controls haven't changed yet.
         /// </remarks>
-        public async Task Validate()
+        [Obsolete("Use ValidateAsync instead.")]
+        public Task Validate()
+        {
+            return ValidateAsync();
+        }
+
+        /// <summary>
+        /// Forces a validation of all form controls (including in child forms).
+        /// </summary>
+        /// <remarks>
+        /// Validation will occur even if form controls haven't changed yet.
+        /// </remarks>
+        public async Task ValidateAsync()
         {
             await Task.WhenAll(_formControls.Select(x => x.ValidateAsync()));
 
             if (ChildForms.Count > 0)
             {
-                await Task.WhenAll(ChildForms.Select(x => x.Validate()));
+                await Task.WhenAll(ChildForms.Select(x => x.ValidateAsync()));
             }
 
             EvaluateForm(debounce: false);
@@ -375,7 +396,7 @@ namespace HamkareBlazor
         {
             _timer?.Dispose();
             if (debounce && ValidationDelay > 0)
-                _timer = new Timer(OnTimerComplete, null, ValidationDelay, Timeout.Infinite);
+                _timer = TimeProvider.CreateTimer(OnTimerComplete, null, TimeSpan.FromMilliseconds(ValidationDelay), Timeout.InfiniteTimeSpan);
             else
                 _ = OnEvaluateForm();
         }
@@ -411,10 +432,18 @@ namespace HamkareBlazor
         }
 
         /// <summary>
-        /// Called by any input of the form to signal that its value changed. 
+        /// Called by any input of the form to signal that its value changed.
         /// </summary>
         /// <param name="formControl"></param>
         void IForm.Update(IFormComponent formControl) => EvaluateForm();
+
+        private async Task OnKeyDownAsync(KeyboardEventArgs args)
+        {
+            if (args.Key is "Enter" or "NumpadEnter")
+            {
+                await OnEnterPressed.InvokeAsync();
+            }
+        }
 
         protected virtual void Dispose(bool disposing)
         {

@@ -3,7 +3,6 @@ using HamkareBlazor.Utilities;
 
 namespace HamkareBlazor
 {
-#nullable enable
 
     /// <summary>
     /// A cell within a <see cref="HamkareTr" />, <see cref="HamkareTHeadRow"/>, or <see cref="HamkareTFootRow"/> row component.

@@ -4,7 +4,6 @@
 
 namespace HamkareBlazor;
 
-#nullable enable
 
 /// <summary>
 /// The current state of a <see cref="HamkareSlider{T}"/> component, containing both the value and nullable value.

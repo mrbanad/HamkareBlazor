@@ -1,13 +1,47 @@
-﻿// Copyright (c) HamkareBlazor 2021
+// Copyright (c) HamkareBlazor 2021
 // HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+/**
+ * Shared ElementReference interop surface for focus, selection, and DOM metrics.
+ * Centralizes browser-specific behavior used by components and extension helpers.
+ */
 class HamkareElementReference {
     constructor() {
         this.listenerId = 0;
         this.eventListeners = {};
     }
 
+    /**
+     * Some input types (e.g., "email" and "number") can surface caret APIs but still throw at runtime when selecting ranges.
+     */
+    _supportsTextSelection(element) {
+        if (!element) {
+            return false;
+        }
+
+        const tagName = element.tagName?.toUpperCase();
+        if (tagName === 'TEXTAREA') {
+            return true;
+        }
+
+        if (tagName !== 'INPUT') {
+            return typeof element.setSelectionRange === 'function'
+                || !!element.createTextRange
+                || typeof element.selectionStart === 'number';
+        }
+
+        const type = (element.type || 'text').toLowerCase();
+        return type === 'text'
+            || type === 'search'
+            || type === 'tel'
+            || type === 'url'
+            || type === 'password';
+    }
+
+    /**
+     * Moves focus to the provided element.
+     */
     focus (element) {
         if (element)
         {
@@ -15,16 +49,24 @@ class HamkareElementReference {
         }
     }
 
+    /**
+     * Removes focus from the provided element.
+     */
     blur(element) {
         if (element) {
             element.blur();
         }
     }
 
+    /**
+     * Focuses the first tabbable descendant, with optional skipping.
+     * Falls back to the container when not enough tabbable elements exist.
+     */
     focusFirst (element, skip = 0, min = 0) {
         if (element)
         {
             const tabbables = window.getTabbableElements(element);
+            // Fallback avoids trapping focus when a dialog/container has too few tabbable children.
             if (tabbables.length <= min)
                 element.focus();
             else
@@ -32,6 +74,10 @@ class HamkareElementReference {
         }
     }
 
+    /**
+     * Focuses the last tabbable descendant, with optional reverse skipping.
+     * Falls back to the container when not enough tabbable elements exist.
+     */
     focusLast (element, skip = 0, min = 0) {
         if (element)
         {
@@ -43,13 +89,20 @@ class HamkareElementReference {
         }
     }
 
+    /**
+     * Stores the currently active element on the container for later restoration.
+     */
     saveFocus (element) {
         if (element)
         {
+            // Store on the container instance so restoration survives intermediate re-renders.
             element['hamkareblazor_savedFocus'] = document.activeElement;
         }
     }
 
+    /**
+     * Restores focus previously captured by saveFocus.
+     */
     restoreFocus (element) {
         if (element)
         {
@@ -60,25 +113,34 @@ class HamkareElementReference {
         }
     }
 
+    /**
+     * Selects a text range and focuses the element.
+     * Uses legacy-compatible APIs when needed.
+     */
     selectRange(element, pos1, pos2) {
         if (element)
         {
-            if (element.createTextRange) {
-                const selRange = element.createTextRange();
-                selRange.collapse(true);
-                selRange.moveStart('character', pos1);
-                selRange.moveEnd('character', pos2);
-                selRange.select();
-            } else if (element.setSelectionRange) {
-                element.setSelectionRange(pos1, pos2);
-            } else if (element.selectionStart) {
-                element.selectionStart = pos1;
-                element.selectionEnd = pos2;
+            if (this._supportsTextSelection(element)) {
+                if (element.createTextRange) {
+                    const selRange = element.createTextRange();
+                    selRange.collapse(true);
+                    selRange.moveStart('character', pos1);
+                    selRange.moveEnd('character', pos2);
+                    selRange.select();
+                } else if (element.setSelectionRange) {
+                    element.setSelectionRange(pos1, pos2);
+                } else if (element.selectionStart) {
+                    element.selectionStart = pos1;
+                    element.selectionEnd = pos2;
+                }
             }
             element.focus();
         }
     }
 
+    /**
+     * Selects the element's full text content.
+     */
     select(element) {
         if (element)
         {
@@ -86,6 +148,9 @@ class HamkareElementReference {
         }
     }
 
+    /**
+     * Returns a serializable bounding rectangle enriched with scroll and viewport data.
+     */
     getBoundingClientRect(element) {
         if (!element) return;
 
@@ -99,6 +164,9 @@ class HamkareElementReference {
         return rect;
     }
 
+    /**
+     * Replaces the element className in one operation.
+     */
     changeCss (element, css) {
         if (element)
         {
@@ -106,11 +174,18 @@ class HamkareElementReference {
         }
     }
 
+    /**
+     * Removes a tracked event listener by event name and listener ID.
+     */
     removeEventListener (element, event, eventId) {
         element.removeEventListener(event, this.eventListeners[eventId]);
         delete this.eventListeners[eventId];
     }
 
+    /**
+     * Adds an event listener that always prevents default behavior.
+     * Returns a generated listener ID for later removal.
+     */
     addDefaultPreventingHandler(element, eventName) {
         const listener = function (e) {
             // Only prevent default if not already prevented
@@ -124,10 +199,17 @@ class HamkareElementReference {
         return this.listenerId;
     }
 
+    /**
+     * Removes a default-preventing listener by its generated listener ID.
+     */
     removeDefaultPreventingHandler(element, eventName, listenerId) {
         this.removeEventListener(element, eventName, listenerId);
     }
 
+    /**
+     * Adds default-preventing listeners for multiple event names.
+     * Returns listener IDs aligned with the provided event list.
+     */
     addDefaultPreventingHandlers(element, eventNames) {
         const listeners = [];
 
@@ -139,6 +221,9 @@ class HamkareElementReference {
         return listeners;
     }
 
+    /**
+     * Removes default-preventing listeners for multiple event names.
+     */
     removeDefaultPreventingHandlers(element, eventNames, listenerIds) {
         for (let index = 0; index < eventNames.length; ++index) {
             const eventName = eventNames[index];
@@ -147,32 +232,55 @@ class HamkareElementReference {
         }
     }
 
-    // ios doesn't trigger Blazor/React/Other dom style blur event so add a base event listener here
-    // that will trigger with IOS Done button and regular blur events
+    // Some virtual keyboard flows can dismiss focus without Blazor observing the blur.
+    // Bridge only those fallback cases and keep normal focus-to-control transitions on Blazor's native path.
+    /**
+     * Attaches a blur bridge that calls back into .NET.
+     * Used as a fallback when blur doesn't move focus to another interactive element.
+     */
     addOnBlurEvent(element, dotNetReference) {
         if (!element) return;
 
         element._hamkareBlurHandler = function (e) {
-            if (!element || !document.contains(element)) {
-                // Element is no longer in the DOM, clean up
-                window.hamkareElementRef.removeOnBlurEvent(element);
-                return;
-            }
-            e.preventDefault();
+            const relatedTarget = e.relatedTarget;
 
-            if (dotNetReference) {
-                dotNetReference.invokeMethodAsync('CallOnBlurredAsync').catch(err => {
-                    console.warn("Error invoking CallOnBlurredAsync, possibly disposed:", err);
+            window.setTimeout(() => {
+                if (!element || !document.contains(element)) {
+                    // Virtual keyboard flows can blur after disposal; clean up to prevent stale callbacks.
                     window.hamkareElementRef.removeOnBlurEvent(element);
-                });
-            } else {
-                console.error("No dotNetReference found for iosKeyboardFocus");
-            }
+                    return;
+                }
+
+                const activeElement = document.activeElement;
+                const nextFocusedElement = relatedTarget && document.contains(relatedTarget)
+                    ? relatedTarget
+                    : activeElement;
+                const movedFocusToAnotherElement = !!nextFocusedElement
+                    && nextFocusedElement !== element
+                    && nextFocusedElement !== document.body
+                    && nextFocusedElement !== document.documentElement;
+
+                if (movedFocusToAnotherElement) {
+                    return;
+                }
+
+                if (dotNetReference) {
+                    dotNetReference.invokeMethodAsync('CallOnBlurredAsync').catch(err => {
+                        console.warn("Error invoking CallOnBlurredAsync, possibly disposed:", err);
+                        window.hamkareElementRef.removeOnBlurEvent(element);
+                    });
+                } else {
+                    console.error("No dotNetReference found for blur fallback");
+                }
+            }, 0);
         };
 
         element.addEventListener('blur', element._hamkareBlurHandler);
     }
 
+    /**
+     * Detaches the blur bridge previously installed by addOnBlurEvent.
+     */
     removeOnBlurEvent(element) {
         if (!element) return;
         if (element._hamkareBlurHandler) {

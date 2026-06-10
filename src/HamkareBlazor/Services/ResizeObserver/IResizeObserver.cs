@@ -3,7 +3,6 @@ using HamkareBlazor.Interop;
 
 namespace HamkareBlazor.Services
 {
-#nullable enable
     /// <summary>
     /// Interface for observing resize events on elements.
     /// </summary>

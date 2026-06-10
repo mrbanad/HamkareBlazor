@@ -1,19 +1,24 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿// Copyright (c) HamkareBlazor 2021
+// HamkareBlazor licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
+
+using Microsoft.AspNetCore.Components;
 using HamkareBlazor.State;
 using HamkareBlazor.Utilities;
 
 namespace HamkareBlazor
 {
-#nullable enable
 
     /// <summary>
     /// Displays additional context when users hover over or focus on an element.
     /// </summary>
     public partial class HamkareTooltip : HamkareComponentBase
     {
+        private int _parentUpdateCount;
         private readonly ParameterState<bool> _visibleState;
         private Origin _anchorOrigin;
         private Origin _transformOrigin;
+
         public HamkareTooltip()
         {
             using var registerScope = CreateRegisterScope();
@@ -213,6 +218,14 @@ namespace HamkareBlazor
         internal bool ShowToolTip()
         {
             return !Disabled && (TooltipContent is not null || !string.IsNullOrEmpty(Text));
+        }
+
+        /// <inheritdoc />
+        public override Task SetParametersAsync(ParameterView parameters)
+        {
+            unchecked { _parentUpdateCount++; }
+
+            return base.SetParametersAsync(parameters);
         }
 
         /// <inheritdoc />

@@ -9,7 +9,6 @@ using System.Text;
 using System.Threading.Tasks;
 using HamkareBlazor.Interfaces;
 
-#nullable enable
 namespace HamkareBlazor.Utilities
 {
     public class FormFieldChangedEventArgs

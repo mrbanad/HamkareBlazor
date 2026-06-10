@@ -1,10 +1,11 @@
 ﻿@namespace HamkareBlazor
 @inherits HamkareBaseDatePicker
+@using HamkareBlazor.Resources
+@inject InternalHamkareLocalizer Localizer
 
 @Render
 
 @code{
-#nullable enable
 
     protected override RenderFragment InputContent=>
         @<HamkareInputControl Label="@Label" Variant="@Variant" HelperText="@HelperText" Error="@ErrorState.Value"
@@ -34,6 +35,8 @@
                                   AdornmentAriaLabel="@AdornmentAriaLabel"
                                   PlaceholderStart="@PlaceholderStart"
                                   PlaceholderEnd="@PlaceholderEnd"
+                                  StartInputAriaLabel="@(Localizer[LanguageResource.HamkareDateRangePicker_Start])"
+                                  EndInputAriaLabel="@(Localizer[LanguageResource.HamkareDateRangePicker_End])"
                                   SeparatorIcon="@SeparatorIcon"
                                   Clearable="@(Clearable && !GetReadOnlyState())"
                                   ClearIcon="@ClearIcon"

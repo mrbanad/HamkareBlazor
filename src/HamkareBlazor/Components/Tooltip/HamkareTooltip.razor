@@ -2,14 +2,14 @@
 @inherits HamkareComponentBase
 
 <div @attributes="UserAttributes" class="@ContainerClass" style="@RootStyle" @onpointerenter="@HandlePointerEnterAsync" @onpointerleave="@HandlePointerLeaveAsync" @onpointerup="@HandlePointerUpAsync" @onfocusin="@HandleFocusInAsync" @onfocusout="@HandleFocusOutAsync">
-    @ChildContent
+    <HamkareTooltipChildContainer ChildContent="@ChildContent" UpdateCount="@_parentUpdateCount" />
     @if (ShowToolTip())
     {
         <HamkarePopover Open="@_visibleState.Value" Duration="@Duration" Delay="@Delay" AnchorOrigin="@_anchorOrigin" TransformOrigin="@_transformOrigin" Class="@Classname" Style="@Style" Paper="false">
             @if (TooltipContent is not null)
             {
                 <div class="d-block">
-                    @TooltipContent
+                    <HamkareTooltipChildContainer ChildContent="@TooltipContent" UpdateCount="@_parentUpdateCount" />
                 </div>
             }
             else if (!string.IsNullOrEmpty(Text))

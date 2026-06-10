@@ -6,7 +6,6 @@ using HamkareBlazor.Charts;
 
 namespace HamkareBlazor;
 
-#nullable enable
 public partial class ChartData<T>
 {
     public ChartData(DateTime dateTime, T value) => Points = [new ChartPoint<T>(dateTime, value)];

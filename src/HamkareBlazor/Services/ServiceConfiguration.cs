@@ -1,11 +1,13 @@
 ﻿namespace HamkareBlazor.Services
 {
-#nullable enable
     // Add additional configuration objects here when adding new services
 
     /// <summary>
-    /// Common services configuration required by HamkareBlazor components
+    /// Shared configuration container for HamkareBlazor services registered in DI.
     /// </summary>
+    /// <remarks>
+    /// This is the aggregation point used by the HamkareBlazor service registration helpers so callers can configure related services in one place.
+    /// </remarks>
     public class HamkareServicesConfiguration
     {
         public SnackbarConfiguration SnackbarConfiguration { get; set; } = new SnackbarConfiguration();

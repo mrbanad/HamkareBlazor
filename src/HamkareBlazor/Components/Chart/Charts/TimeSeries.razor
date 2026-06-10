@@ -1,6 +1,4 @@
-﻿@using System.Globalization;
-
-@namespace HamkareBlazor.Charts
+﻿@namespace HamkareBlazor.Charts
 
 @inherits HamkareAxisLineChartBase<T, TimeSeriesChartOptions>
 
@@ -16,7 +14,10 @@
                        Width="@Width"
                        Height="@Height"
                        ViewBoxWidth="_boundWidth"
-                       ViewBoxHeight="@(_boundHeight + 20)"
+                       ViewBoxHeight="@(_boundHeight)"
+                       @bind-XAxisLabelSize="XAxisLabelSize"
+                       @bind-YAxisLabelSize="YAxisLabelSize"
+                       MatchBoundsToSize="@MatchBoundsToSize"
                        ChartClass="hamkare-chart-line"
                        ChartSeries="@ChartSeries"
                        ChartLabels="@ChartLabels"
@@ -41,7 +42,6 @@
 }
 
 @code {
-#nullable enable
     private const double DataPointStroke = 2d;
 
     private double LineStrokeWidth => ChartOptions?.LineStrokeWidth ?? 3;

@@ -10,7 +10,6 @@ using HamkareBlazor.Components.Highlighter; // Added for FragmentInfo
 
 namespace HamkareBlazor;
 
-#nullable enable
 
 /// <summary>
 /// A component which highlights words or phrases within text.

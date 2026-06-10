@@ -8,7 +8,6 @@ using HamkareBlazor.Utilities;
 
 namespace HamkareBlazor
 {
-#nullable enable
     /// <summary>
     /// A language support provider for Right-to-Left (RTL) languages such as Arabic, Hebrew, and Persian.
     /// </summary>

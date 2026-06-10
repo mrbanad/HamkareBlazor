@@ -12,7 +12,6 @@ using HamkareBlazor.Utilities;
 
 namespace HamkareBlazor
 {
-#nullable enable
 
     /// <summary>
     /// A location which can participate in a drag-and-drop operation.
@@ -26,9 +25,9 @@ namespace HamkareBlazor
         private bool _canDrop = false;
         private bool _dragInProgress = false;
         private bool _disposedValue = false;
-        private string _id = HamkareBlazor.Identifier.Create();
+        private readonly string _id = HamkareBlazor.Identifier.Create();
 
-        private Dictionary<T, int> _indices = new();
+        private readonly Dictionary<T, int> _indices = new();
 
         [Inject] private IJSRuntime JsRuntime { get; set; } = null!;
 

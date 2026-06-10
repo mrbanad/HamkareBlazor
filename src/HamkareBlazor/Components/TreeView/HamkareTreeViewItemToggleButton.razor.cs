@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Components;
 using HamkareBlazor.State;
 using HamkareBlazor.Utilities;
 
-#nullable enable
 namespace HamkareBlazor;
 
 /// <summary>

@@ -4,7 +4,6 @@
 
 namespace HamkareBlazor;
 
-#nullable enable
 /// <summary>
 /// Represents a container that holds an item and its corresponding index in a virtualized list.
 /// </summary>

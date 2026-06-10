@@ -8,7 +8,6 @@ using HamkareBlazor.Utilities.Exceptions;
 
 namespace HamkareBlazor;
 
-#nullable enable
 internal partial class DefaultConverter
 {
     internal sealed class DateOnlyConverter(Func<CultureInfo> culture, Func<string?> format)

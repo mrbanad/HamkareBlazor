@@ -12,7 +12,6 @@ using HamkareBlazor.Utilities;
 namespace HamkareBlazor
 {
 
-#nullable enable
 
     /// <summary>
     /// A container of <see cref="HamkareDropZone{T}"/> components for drag-and-drop operations.
@@ -23,7 +22,7 @@ namespace HamkareBlazor
     public partial class HamkareDropContainer<T> : HamkareComponentBase where T : notnull
     {
         private HamkareDragAndDropItemTransaction<T>? _transaction;
-        private Dictionary<string, HamkareDropZone<T>> _hamkareDropZones = new();
+        private readonly Dictionary<string, HamkareDropZone<T>> _hamkareDropZones = new();
 
         protected string Classname =>
             new CssBuilder("hamkare-drop-container")

@@ -2,7 +2,6 @@
 
 namespace HamkareBlazor
 {
-#nullable enable
     public partial class Icons
     {
         public partial class Custom

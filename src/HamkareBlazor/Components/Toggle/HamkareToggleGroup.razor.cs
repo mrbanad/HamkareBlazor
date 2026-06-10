@@ -10,7 +10,6 @@ using HamkareBlazor.Utilities;
 
 namespace HamkareBlazor
 {
-#nullable enable
 
     /// <summary>
     /// Toggle buttons grouped to select one or multiple values.
@@ -162,6 +161,9 @@ namespace HamkareBlazor
         [Category(CategoryTypes.List.Appearance)]
         public bool Vertical { get; set; }
 
+        /// <summary>
+        /// Displays items right-to-left.
+        /// </summary>
         [CascadingParameter(Name = "RightToLeft")]
         public bool RightToLeft { get; set; }
 

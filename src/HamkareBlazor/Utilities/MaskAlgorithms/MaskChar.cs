@@ -4,7 +4,6 @@
 
 namespace HamkareBlazor;
 
-#nullable enable
 /// <summary>
 /// A character which represents a set of allowed values in a <see cref="HamkareMask"/>.
 /// </summary>

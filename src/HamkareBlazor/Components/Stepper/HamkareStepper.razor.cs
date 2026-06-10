@@ -2,7 +2,6 @@
 // HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-#nullable enable
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using HamkareBlazor.State;
@@ -27,6 +26,7 @@ public partial class HamkareStepper : HamkareComponentBase
     private HamkareStep? _activeStep;
     private readonly ParameterState<int> _activeIndex;
     private readonly List<HamkareStep> _steps = [];
+    private readonly string _componentId = Identifier.Create();
 
     protected string Classname =>
         new CssBuilder("hamkare-stepper")
@@ -46,6 +46,25 @@ public partial class HamkareStepper : HamkareComponentBase
             .AddClass("hamkare-stepper-nav-scrollable", ScrollableNavigation)
             .AddClass(NavClass)
             .Build();
+
+    internal string GetStepButtonId(HamkareStep step) => $"stepper-{_componentId}-tab-{step.FieldId}";
+
+    internal string GetStepPanelId(HamkareStep step) => $"stepper-{_componentId}-tabpanel-{step.FieldId}";
+
+    internal string? GetStepPanelIdIfRendered(HamkareStep step)
+    {
+        if (IsCompleted && CompletedContent is not null)
+        {
+            return null;
+        }
+
+        if (Vertical)
+        {
+            return GetStepPanelId(step);
+        }
+
+        return step == _activeStep ? GetStepPanelId(step) : null;
+    }
 
     /// <summary>
     /// The steps to step through.
@@ -304,12 +323,12 @@ public partial class HamkareStepper : HamkareComponentBase
     /// <remarks>
     /// Typically used to enable or disable a custom <c>Next</c> button.
     /// </remarks>
-    public bool CanGoToNextStep => _steps.Any() && _steps.SkipWhile(x => _steps.IndexOf(x) <= _activeIndex).Count(x => !x.DisabledState.Value) > 0;
+    public bool CanGoToNextStep => _steps.Any() && _steps.SkipWhile(x => _steps.IndexOf(x) <= _activeIndex).Any(x => !x.DisabledState.Value);
 
     /// <summary>
     /// Whether the <c>Previous</c> button is enabled.
     /// </summary>
-    public bool PreviousStepEnabled => _steps.Any() && _steps.TakeWhile(x => _steps.IndexOf(x) < _activeIndex).Count(x => !x.DisabledState.Value) > 0;
+    public bool PreviousStepEnabled => _steps.Any() && _steps.TakeWhile(x => _steps.IndexOf(x) < _activeIndex).Any(x => !x.DisabledState.Value);
 
     /// <summary>
     /// Whether all steps have been completed.

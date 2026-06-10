@@ -11,7 +11,6 @@ using HamkareBlazor.Utilities.Expressions;
 
 namespace HamkareBlazor
 {
-#nullable enable
     /// <summary>
     /// Represents a column in a <see cref="HamkareDataGrid{T}"/> associated with an object's property.
     /// </summary>

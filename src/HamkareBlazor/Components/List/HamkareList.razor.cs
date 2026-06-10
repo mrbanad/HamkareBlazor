@@ -6,7 +6,6 @@ using HamkareBlazor.Utilities;
 
 namespace HamkareBlazor
 {
-#nullable enable
 
     /// <summary>
     /// A scrollable list for displaying text, avatars, and icons. Use lists to help users find a specific item and act on it.
@@ -53,12 +52,13 @@ namespace HamkareBlazor
                 .WithChangeHandler(Update);
         }
 
-        private ParameterState<T?> _selectedValueState;
-        private ParameterState<IReadOnlyCollection<T>?> _selectedValuesState;
+        private readonly ParameterState<T?> _selectedValueState;
+        private readonly ParameterState<IReadOnlyCollection<T>?> _selectedValuesState;
 
-        private HashSet<HamkareListItem<T>> _items = new();
-        private HashSet<HamkareList<T>> _childLists = new();
+        private readonly List<HamkareListItem<T>> _items = [];
+        private readonly HashSet<HamkareList<T>> _childLists = new();
         private HashSet<T> _selection = new();
+        private HamkareListItem<T>? _activeItem;
         internal HamkareList<T> TopLevelList { get; private set; }
 
         protected string Classname =>
@@ -251,11 +251,17 @@ namespace HamkareBlazor
                 {
                     UpdateSelectedItem(_selectedValueState);
                 }
+
+                if (EnsureActiveItem() is not null)
+                {
+                    StateHasChanged();
+                }
             }
         }
 
         internal void Update()
         {
+            StateHasChanged();
             foreach (var item in _items)
                 ((IHamkareStateHasChanged)item).StateHasChanged();
             foreach (var list in _childLists)
@@ -298,17 +304,38 @@ namespace HamkareBlazor
 
         internal async Task RegisterAsync(HamkareListItem<T> item)
         {
+            if (_items.Contains(item))
+            {
+                return;
+            }
+
             _items.Add(item);
             if (_selectedValueState.Value is not null && Equals(item.GetValue(), _selectedValueState.Value))
             {
                 item.SetSelected(true);
+                _activeItem = item;
                 await _selectedValueState.SetValueAsync(item.GetValue());
+                return;
+            }
+
+            if (_activeItem is null && item.IsEnabled())
+            {
+                _activeItem = item;
             }
         }
 
         internal void Unregister(HamkareListItem<T> item)
         {
-            _items.Remove(item);
+            if (!_items.Remove(item))
+            {
+                return;
+            }
+
+            if (ReferenceEquals(_activeItem, item))
+            {
+                _activeItem = null;
+                EnsureActiveItem();
+            }
         }
 
         internal void Register(HamkareList<T> child)
@@ -356,6 +383,7 @@ namespace HamkareBlazor
 
         internal void UpdateSelection()
         {
+            StateHasChanged();
             if (SelectionMode == SelectionMode.MultiSelection)
             {
                 UpdateSelectedItems(new HashSet<T>(TopLevelList.GetState<IReadOnlyCollection<T>?>(nameof(TopLevelList.SelectedValues)) ?? Array.Empty<T>(), Comparer));
@@ -373,15 +401,28 @@ namespace HamkareBlazor
         /// </summary>
         private void UpdateSelectedItem(T? value)
         {
+            HamkareListItem<T>? selectedItem = null;
             foreach (var item in _items.ToArray())
             {
                 var selected = value is not null && Comparer.Equals(value, item.GetValue());
                 item.SetSelected(selected);
+                if (selected)
+                {
+                    selectedItem = item;
+                }
             }
             foreach (var childList in _childLists.ToArray())
             {
                 childList.UpdateSelectedItem(value);
             }
+
+            if (selectedItem is not null)
+            {
+                SetActiveItem(selectedItem);
+                return;
+            }
+
+            EnsureActiveItem();
         }
 
         /// <summary>
@@ -399,6 +440,108 @@ namespace HamkareBlazor
             {
                 childList.SetSelectedValues(selection);
             }
+
+            EnsureActiveItem();
+        }
+
+        internal bool IsInteractive() => !GetReadOnly();
+
+        internal bool IsTabbable(HamkareListItem<T> item)
+        {
+            if (TopLevelList != this)
+            {
+                return TopLevelList.IsTabbable(item);
+            }
+
+            if (!IsInteractive() || !item.IsEnabled())
+            {
+                return false;
+            }
+
+            return ReferenceEquals(EnsureActiveItem(), item);
+        }
+
+        internal void SetActiveItem(HamkareListItem<T> item)
+        {
+            if (TopLevelList != this)
+            {
+                TopLevelList.SetActiveItem(item);
+                return;
+            }
+
+            if (ReferenceEquals(_activeItem, item))
+            {
+                return;
+            }
+
+            var previous = _activeItem;
+            _activeItem = item;
+            ((IHamkareStateHasChanged?)previous)?.StateHasChanged();
+            ((IHamkareStateHasChanged)item).StateHasChanged();
+        }
+
+        internal async Task FocusAdjacentItemAsync(HamkareListItem<T> currentItem, int direction)
+        {
+            var items = _items.Where(x => x.IsEnabled()).ToList();
+            if (items.Count == 0)
+            {
+                return;
+            }
+
+            var currentIndex = items.FindIndex(x => ReferenceEquals(x, currentItem));
+            if (currentIndex < 0)
+            {
+                currentIndex = direction > 0 ? -1 : items.Count;
+            }
+
+            var nextIndex = Math.Clamp(currentIndex + direction, 0, items.Count - 1);
+            await items[nextIndex].FocusAsync();
+        }
+
+        internal async Task FocusBoundaryItemAsync(bool first)
+        {
+            var items = _items.Where(x => x.IsEnabled()).ToList();
+            if (items.Count == 0)
+            {
+                return;
+            }
+
+            await (first ? items[0] : items[^1]).FocusAsync();
+        }
+
+        private HamkareListItem<T>? EnsureActiveItem()
+        {
+            if (TopLevelList != this)
+            {
+                return TopLevelList.EnsureActiveItem();
+            }
+
+            if (_activeItem?.IsEnabled() == true && _items.Contains(_activeItem))
+            {
+                return _activeItem;
+            }
+
+            _activeItem = _items.FirstOrDefault(x => x.IsEnabled());
+            return _activeItem;
+        }
+
+        /// <summary>
+        /// Builds fallback accessibility attributes for the list container.
+        /// </summary>
+        /// <remarks>
+        /// <see cref="HamkareList{T}"/> derives its container semantics from its selection behavior.
+        /// </remarks>
+        private Dictionary<string, object?> GetUserAttributes()
+        {
+            var attributes = new Dictionary<string, object?>(UserAttributes, StringComparer.OrdinalIgnoreCase);
+            attributes.TryAdd("role", GetReadOnly() ? "list" : "listbox");
+
+            if (!GetReadOnly() && SelectionMode == SelectionMode.MultiSelection)
+            {
+                attributes.TryAdd("aria-multiselectable", "true");
+            }
+
+            return attributes;
         }
 
         /// <summary>

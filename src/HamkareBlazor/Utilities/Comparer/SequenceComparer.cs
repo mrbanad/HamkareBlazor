@@ -4,7 +4,6 @@
 
 namespace HamkareBlazor.Utilities.Comparer;
 
-#nullable enable
 
 /// <summary>
 /// Compares two sequences element-by-element using a specified element comparer.
@@ -51,7 +50,7 @@ internal class SequenceComparer<T> : IEqualityComparer<IEnumerable<T?>?>
             var hash = 17;
             foreach (var item in obj)
             {
-                hash = hash * 31 + (item is null ? 0 : _elementComparer.GetHashCode(item));
+                hash = (hash * 31) + (item is null ? 0 : _elementComparer.GetHashCode(item));
             }
 
             return hash;

@@ -4,7 +4,6 @@ using HamkareBlazor.Interfaces;
 using HamkareBlazor.State;
 using HamkareBlazor.Utilities;
 
-#nullable enable
 namespace HamkareBlazor;
 
 /// <summary>

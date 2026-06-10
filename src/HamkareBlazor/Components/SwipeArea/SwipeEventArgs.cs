@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Components.Web;
 
 namespace HamkareBlazor
 {
-#nullable enable
     /// <summary>
     /// Information about a swipe event when <see cref="HamkareSwipeArea.OnSwipeEnd"/> occurs.
     /// </summary>

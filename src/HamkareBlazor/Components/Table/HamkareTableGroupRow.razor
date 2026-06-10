@@ -1,6 +1,8 @@
 ﻿@namespace HamkareBlazor
 @implements IDisposable
 @inherits HamkareComponentBase
+@using HamkareBlazor.Resources
+@inject InternalHamkareLocalizer Localizer
 @typeparam T
 
 @*HEADER:*@
@@ -13,7 +15,8 @@
             <div class="d-flex">
                 @if (GroupDefinition?.Expandable ?? false)
                 {
-                    <HamkareIconButton Class="hamkare-table-row-expander" Icon="@(Expanded ? ExpandIcon : CollapseIcon)" OnClick="@(() => Expanded = !Expanded)"/>
+                    <HamkareIconButton Class="hamkare-table-row-expander" Icon="@(Expanded ? ExpandIcon : CollapseIcon)" OnClick="@(() => Expanded = !Expanded)"
+                                       aria-label="@(Expanded? Localizer[LanguageResource.HamkareTable_CollapseGroup] : Localizer[LanguageResource.HamkareTable_ExpandGroup])" />
                 }
                 else
                 {

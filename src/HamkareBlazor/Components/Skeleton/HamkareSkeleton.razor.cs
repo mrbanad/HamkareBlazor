@@ -3,7 +3,6 @@ using HamkareBlazor.Utilities;
 
 namespace HamkareBlazor
 {
-#nullable enable
 
     /// <summary>
     /// Displays a placeholder preview of content before the data gets loaded, reducing load-time frustration.
@@ -19,9 +18,6 @@ namespace HamkareBlazor
 
         protected string Stylename =>
             new StyleBuilder()
-                .AddStyle("maxWidth", $"{MaxWidth}", !string.IsNullOrEmpty(MaxWidth))
-                .AddStyle("MaxHeight", $"{MaxHeight}", !string.IsNullOrEmpty(MaxHeight))
-                .AddStyle("border-radius", $"{BorderRadius}", !string.IsNullOrEmpty(BorderRadius))
                 .AddStyle("height", $"{Height}", !string.IsNullOrEmpty(Height))
                 .AddStyle("width", $"{Width}", !string.IsNullOrEmpty(Width))
                 .AddStyle(Style)
@@ -51,29 +47,20 @@ namespace HamkareBlazor
         /// The shape of this skeleton.
         /// </summary>
         /// <remarks>
-        /// Defaults to <see cref="SkeletonType.Rectangle"/>.
+        /// Defaults to <see cref="SkeletonType.Text"/>.
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.Skeleton.Appearance)]
-        public SkeletonType SkeletonType { set; get; } = SkeletonType.Rectangle;
+        public SkeletonType SkeletonType { set; get; } = SkeletonType.Text;
 
         /// <summary>
         /// The type of animation to display.
         /// </summary>
         /// <remarks>
-        /// Defaults to <see cref="Animation.Wave"/>.
+        /// Defaults to <see cref="Animation.Pulse"/>.
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.Skeleton.Appearance)]
-        public Animation Animation { set; get; } = Animation.Wave;
-        
-        [Category(CategoryTypes.Skeleton.Appearance)]
-        [Parameter] public string? MaxWidth { get; set; }
-        
-        [Category(CategoryTypes.Skeleton.Appearance)]
-        [Parameter] public string? MaxHeight { get; set; }
-        
-        [Category(CategoryTypes.Skeleton.Appearance)]
-        [Parameter] public string? BorderRadius { get; set; }
+        public Animation Animation { set; get; } = Animation.Pulse;
     }
 }

@@ -4,7 +4,6 @@ using HamkareBlazor.Utilities;
 
 namespace HamkareBlazor;
 
-#nullable enable
 /// <summary>
 /// Represents a date range used by a <see cref="HamkareDatePicker"/>.
 /// </summary>

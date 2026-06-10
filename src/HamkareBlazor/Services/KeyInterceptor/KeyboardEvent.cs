@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Components.Web;
 
 namespace HamkareBlazor.Services;
 
-#nullable enable
 /// <summary>
 /// Represents a method that will handle keyboard events.
 /// </summary>

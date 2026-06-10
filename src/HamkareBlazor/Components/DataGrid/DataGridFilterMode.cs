@@ -3,7 +3,6 @@
 // See the LICENSE file in the project root for more information.
 
 namespace HamkareBlazor;
-#nullable enable
 
 /// <summary>
 /// Indicates the filtering behavior for <see cref="HamkareDataGrid{T}"/> rows.

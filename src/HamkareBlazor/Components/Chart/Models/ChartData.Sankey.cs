@@ -5,7 +5,6 @@
 using HamkareBlazor.Charts;
 
 namespace HamkareBlazor;
-#nullable enable
 
 public partial class ChartData<T>
 {

@@ -65,6 +65,7 @@ label.hamkare-input-label.hamkare-input-label-inputcontrol {
   .hamkare-input:focus-within ~ & {
     transform: translate(0, 1.5px) scale(0.75);
     transform-origin: top left;
+    max-width: calc(100% / 0.75);
 
     &.hamkare-input-label-filled {
       transform: translate(12px, 10px) scale(0.75);

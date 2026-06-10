@@ -3,7 +3,6 @@ using HamkareBlazor.Extensions;
 using HamkareBlazor.State;
 using HamkareBlazor.Utilities;
 
-#nullable enable
 namespace HamkareBlazor
 {
     /// <summary>
@@ -120,6 +119,9 @@ namespace HamkareBlazor
 
         protected async Task SetDateRangeAsync(DateRange? range, bool updateValue)
         {
+            // Normalize the DateRange before exception is thrown
+            range = NormalizeDateRange(range);
+
             if (_dateRange != range)
             {
                 var doesRangeContainDisabledDates = !AllowDisabledDatesInRange && range is { Start: not null, End: not null } && Enumerable
@@ -172,12 +174,12 @@ namespace HamkareBlazor
             get => _rangeText;
             set
             {
-                if (_rangeText?.Equals(value) ?? value == null)
+                if (_rangeText?.Equals(value) ?? (value == null))
                     return;
 
                 Touched = true;
                 _rangeText = value;
-                SetDateRangeAsync(ParseDateRangeValue(value?.Start, value?.End), false).CatchAndLog();
+                SetDateRangeAsync(value is null ? null : ParseDateRangeValue(value.Start, value.End), false).CatchAndLog();
             }
         }
 
@@ -354,6 +356,7 @@ namespace HamkareBlazor
 
         protected override string GetDayClasses(int month, DateTime day)
         {
+            var today = TimeProvider.GetLocalNow().Date;
             var b = new CssBuilder("hamkare-day");
             b.AddClass(AdditionalDateClassesFunc?.Invoke(day) ?? string.Empty);
             if (day < GetMonthStart(month) || day > GetMonthEnd(month))
@@ -371,7 +374,7 @@ namespace HamkareBlazor
                 return b
                     .AddClass("hamkare-range")
                     .AddClass("hamkare-range-between")
-                    .AddClass($"hamkare-current hamkare-{Color.ToStringFast(true)}-text hamkare-button-outlined hamkare-button-outlined-{Color.ToStringFast(true)}", day == DateTime.Today)
+                    .AddClass($"hamkare-current hamkare-{Color.ToStringFast(true)}-text hamkare-button-outlined hamkare-button-outlined-{Color.ToStringFast(true)}", day == today)
                     .Build();
             }
 
@@ -408,14 +411,14 @@ namespace HamkareBlazor
 
             if (_firstDate?.Date < day)
             {
-                return b.AddClass("hamkare-range", _secondDate is null && day != DateTime.Today)
+                return b.AddClass("hamkare-range", _secondDate is null && day != today)
                     .AddClass("hamkare-range-selection")
                     .AddClass($"hamkare-range-selection-{Color.ToStringFast(true)}", _firstDate is not null)
-                    .AddClass($"hamkare-current hamkare-{Color.ToStringFast(true)}-text hamkare-button-outlined hamkare-button-outlined-{Color.ToStringFast(true)}", day == DateTime.Today)
+                    .AddClass($"hamkare-current hamkare-{Color.ToStringFast(true)}-text hamkare-button-outlined hamkare-button-outlined-{Color.ToStringFast(true)}", day == today)
                     .Build();
             }
 
-            if (day == DateTime.Today)
+            if (day == today)
             {
                 return b.AddClass("hamkare-current")
                     .AddClass($"hamkare-button-outlined hamkare-button-outlined-{Color.ToStringFast(true)}")
@@ -428,6 +431,8 @@ namespace HamkareBlazor
 
         protected override async Task OnDayClickedAsync(DateTime dateTime)
         {
+            if (GetReadOnlyState())
+                return;
             if (_firstDate == null || _secondDate != null)
             {
                 _secondDate = null;
@@ -452,7 +457,7 @@ namespace HamkareBlazor
 
                 if (PickerVariant != PickerVariant.Static)
                 {
-                    await Task.Delay(ClosingDelay);
+                    await Task.Delay(TimeSpan.FromMilliseconds(ClosingDelay), TimeProvider);
                     await CloseAsync(false);
                 }
             }
@@ -479,11 +484,11 @@ namespace HamkareBlazor
 
         protected override Task ResetValueAsync() => ClearAsync();
 
-        public override Task ClearAsync(bool close = true)
+        public override async Task ClearAsync(bool close = true)
         {
-            DateRange = null;
+            await SetDateRangeAsync(null, true);
             _firstDate = _secondDate = null;
-            return base.ClearAsync(close);
+            await base.ClearAsync(close);
         }
 
         protected override string GetTitleDateString()
@@ -498,16 +503,63 @@ namespace HamkareBlazor
 
         protected override DateTime GetCalendarStartOfMonth()
         {
-            var date = StartMonth ?? DateRange?.Start ?? DateTime.Today;
+            var date = StartMonth ?? DateRange?.Start ?? TimeProvider.GetLocalNow().Date;
             return date.StartOfMonth(GetCulture());
+        }
+
+        protected override async Task OnYearClickedAsync(int year)
+        {
+            await base.OnYearClickedAsync(year);
+
+            if (DateRange?.Start is null && _firstDate is null)
+            {
+                HighlightedDate = PickerMonth;
+            }
         }
 
         protected override int GetCalendarYear(DateTime yearDate)
         {
-            var date = DateRange?.Start ?? DateTime.Today;
+            var date = DateRange?.Start ?? TimeProvider.GetLocalNow().Date;
             var diff = GetCulture().Calendar.GetYear(date) - GetCulture().Calendar.GetYear(yearDate);
             var calenderYear = GetCulture().Calendar.GetYear(date);
             return calenderYear - diff;
         }
+
+        /// <summary>
+        /// Normalize a date by treating DateTime.MinValue as null
+        /// This prevents an ArgumentOutOfRangeException from happening when performing date arithmetic
+        /// </summary>
+        /// <param name="date">The date to normalize</param>
+        /// <returns>Normalized date or null</returns>
+        private static DateTime? NormalizeDate(DateTime? date)
+        {
+            if (date is null)
+                return null;
+
+            // Treat DateTime.MinValue as null
+            if (date.Value == DateTime.MinValue)
+                return null;
+
+            return date;
+        }
+
+        /// <summary>
+        /// Normalize a date range by checking the start date and end date for DateTime.MinValue
+        /// This prevents an ArgumentOutOfRangeException from happening when performing date arithmetic
+        /// </summary>
+        /// <see cref="NormalizeDate"/>
+        /// <param name="range">The date range to normalize</param>
+        /// <returns>Normalized date range or null</returns>
+        private static DateRange? NormalizeDateRange(DateRange? range)
+        {
+            if (range is null)
+                return null;
+
+            var start = NormalizeDate(range.Start);
+            var end = NormalizeDate(range.End);
+
+            return new DateRange(start, end);
+        }
+
     }
 }

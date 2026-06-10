@@ -9,7 +9,6 @@ using HamkareBlazor.State;
 
 namespace HamkareBlazor.Extensions;
 
-#nullable enable
 /// <summary>
 /// Provides extension methods for <see cref="ComponentBaseWithState"/> components to facilitate accessing parameter states.
 /// </summary>

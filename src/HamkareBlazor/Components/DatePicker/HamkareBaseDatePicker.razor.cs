@@ -4,7 +4,6 @@ using HamkareBlazor.Extensions;
 using HamkareBlazor.State;
 using HamkareBlazor.Utilities;
 
-#nullable enable
 namespace HamkareBlazor
 {
     /// <summary>
@@ -59,6 +58,8 @@ namespace HamkareBlazor
         [Category(CategoryTypes.FormComponent.PickerBehavior)]
         public OpenTo OpenTo { get; set; } = OpenTo.Date;
 
+        hjafdshhafhkf
+        
         /// <summary>
         /// The format for selected dates.
         /// Defaults to <c>"HH:mm yyyy/MM/dd" Or "HH:mm MM/dd/yyyy"</c> Base On CultureUI.
@@ -309,7 +310,7 @@ namespace HamkareBlazor
                 return calendar.MinSupportedDateTime;
             }
 
-            var baseDate = _picker_month ?? DateTime.Today.StartOfMonth(culture);
+            var baseDate = _picker_month ?? TimeProvider.GetLocalNow().Date.StartOfMonth(culture);
 
             var year = FixYear ?? calendar.GetYear(baseDate);
             var startMonth = FixMonth ?? calendar.GetMonth(baseDate);
@@ -336,7 +337,7 @@ namespace HamkareBlazor
         {
             var culture = GetCulture();
             var calendar = culture.Calendar;
-            var monthStartDate = _picker_month ?? DateTime.Today.StartOfMonth(culture);
+            var monthStartDate = _picker_month ?? TimeProvider.GetLocalNow().Date.StartOfMonth(culture);
             return calendar.AddMonths(monthStartDate, month).EndOfMonth(culture);
         }
 
@@ -403,7 +404,7 @@ namespace HamkareBlazor
         {
             OpenTo? nextView = CurrentView switch
             {
-                OpenTo.Year => !FixMonth.HasValue ? OpenTo.Month : !FixDay.HasValue ? OpenTo.Date : null,
+                OpenTo.Year => GetNextViewFromYear(),
                 OpenTo.Month => !FixDay.HasValue ? OpenTo.Date : null,
                 _ => null,
             };
@@ -414,11 +415,41 @@ namespace HamkareBlazor
         {
             OpenTo? previousView = CurrentView switch
             {
-                OpenTo.Date => !FixMonth.HasValue ? OpenTo.Month : !FixYear.HasValue ? OpenTo.Year : null,
+                OpenTo.Date => GetPreviousViewFromDate(),
                 OpenTo.Month => !FixYear.HasValue ? OpenTo.Year : null,
                 _ => null,
             };
             return previousView;
+        }
+
+        private OpenTo? GetNextViewFromYear()
+        {
+            if (!FixMonth.HasValue)
+            {
+                return OpenTo.Month;
+            }
+
+            if (!FixDay.HasValue)
+            {
+                return OpenTo.Date;
+            }
+
+            return null;
+        }
+
+        private OpenTo? GetPreviousViewFromDate()
+        {
+            if (!FixMonth.HasValue)
+            {
+                return OpenTo.Month;
+            }
+
+            if (!FixYear.HasValue)
+            {
+                return OpenTo.Year;
+            }
+
+            return null;
         }
 
         protected virtual async Task SubmitAndCloseAsync()
@@ -429,7 +460,7 @@ namespace HamkareBlazor
 
                 if (PickerVariant != PickerVariant.Static)
                 {
-                    await Task.Delay(ClosingDelay);
+                    await Task.Delay(TimeSpan.FromMilliseconds(ClosingDelay), TimeProvider);
                     await CloseAsync(false);
                 }
             }
@@ -648,7 +679,7 @@ namespace HamkareBlazor
             var calendar = culture.Calendar;
             if (MinDate.HasValue)
                 return calendar.GetYear(MinDate.Value);
-            return calendar.GetYear(DateTime.Today) - 100;
+            return calendar.GetYear(TimeProvider.GetLocalNow().Date) - 100;
         }
 
         protected int GetMaxYear()
@@ -657,7 +688,7 @@ namespace HamkareBlazor
             var calendar = culture.Calendar;
             if (MaxDate.HasValue)
                 return calendar.GetYear(MaxDate.Value);
-            return calendar.GetYear(DateTime.Today) + 100;
+            return calendar.GetYear(TimeProvider.GetLocalNow().Date) + 100;
         }
 
         private string? GetYearClasses(int year)

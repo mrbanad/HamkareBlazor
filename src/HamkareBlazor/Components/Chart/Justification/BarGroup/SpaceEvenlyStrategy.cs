@@ -4,7 +4,6 @@
 
 namespace HamkareBlazor.Justification.BarGroup;
 
-#nullable enable
 internal class SpaceEvenlyStrategy : IBarGroupPositionStrategy
 {
     public double[] CalculatePositions(BarGroupContext ctx)

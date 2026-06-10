@@ -9,7 +9,6 @@ using HamkareBlazor.Utilities;
 
 namespace HamkareBlazor;
 
-#nullable enable
 
 /// <summary>
 /// A collection of multiple <see cref="HamkareChip{T}"/> components that allows single or multi-selection.
@@ -43,7 +42,7 @@ public partial class HamkareChipSet<T> : HamkareComponentBase, IDisposable
     private readonly ParameterState<IReadOnlyCollection<T>?> _selectedValues;
 
     private HashSet<T> _selection = new();
-    private HashSet<HamkareChip<T>> _chips = new();
+    private readonly HashSet<HamkareChip<T>> _chips = new();
     private bool MultiSelection => SelectionMode == SelectionMode.MultiSelection;
     private bool Mandatory => SelectionMode == SelectionMode.SingleSelection;
 
@@ -321,7 +320,7 @@ public partial class HamkareChipSet<T> : HamkareComponentBase, IDisposable
         var value = chip.GetValue();
         if (MultiSelection)
         {
-            if (value is not null && (chip.Default == true && !_selection.Contains(value) || (chip.Default == false && _selection.Contains(value))))
+            if (value is not null && ((chip.Default == true && !_selection.Contains(value)) || (chip.Default == false && _selection.Contains(value))))
             {
                 var newSelection = MultiSelection ? new HashSet<T>(_selection, Comparer) : new HashSet<T>(Comparer);
                 if (chip.Default == true)
@@ -352,11 +351,7 @@ public partial class HamkareChipSet<T> : HamkareComponentBase, IDisposable
         if (_disposed)
             return; // don't raise any events if we are already disposed
         var value = chip.GetValue();
-        //if (chip.IsSelectedState.Value && value is not null)
-        //{
         await UpdateSelectedValuesAsync(_selection.Where(x => !Comparer.Equals(x, value)).ToList());
-        //}
-        // return Task.CompletedTask;
         StateHasChanged();
     }
 
@@ -405,6 +400,21 @@ public partial class HamkareChipSet<T> : HamkareComponentBase, IDisposable
     /// </summary>
     public void Dispose()
     {
+        Dispose(disposing: true);
+        GC.SuppressFinalize(this);
+    }
+
+    /// <summary>
+    /// Releases unused resources.
+    /// </summary>
+    /// <param name="disposing">When <c>true</c>, managed resources should be released.</param>
+    protected virtual void Dispose(bool disposing)
+    {
+        if (!disposing)
+        {
+            return;
+        }
+
         _disposed = true;
     }
 }

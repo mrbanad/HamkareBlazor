@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Components.Web;
 using HamkareBlazor.Extensions;
 using HamkareBlazor.Utilities;
 
-#nullable enable
 namespace HamkareBlazor.Charts;
 
 /// <summary>
@@ -133,6 +132,13 @@ public partial class BaseRadialChart<T, TChartOptions> : HamkareComponentBase
     [Parameter]
     [Category(CategoryTypes.Chart.Appearance)]
     public RenderFragment? ChartGrid { get; set; }
+
+    /// <summary>
+    /// The labels overlaying the grid area.
+    /// </summary>
+    [Parameter]
+    [Category(CategoryTypes.Chart.Appearance)]
+    public RenderFragment? ChartAxisLabels { get; set; }
 
     /// <summary>
     /// The data points for the chart.

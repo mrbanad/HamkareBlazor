@@ -2,19 +2,16 @@
 // HamkareBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using HamkareBlazor.Resources;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using HamkareBlazor.Extensions;
 using HamkareBlazor.Services;
 using HamkareBlazor.State;
 using HamkareBlazor.Utilities;
 using HamkareBlazor.Utilities.Comparer;
-using HamkareBlazor.Utilities.Exceptions;
 
 namespace HamkareBlazor
 {
-#nullable enable
-
     /// <summary>
     /// A dropdown input for selecting an item from a list of options.
     /// </summary>
@@ -26,24 +23,32 @@ namespace HamkareBlazor
         private string? _activeItemId;
         private bool? _selectAllChecked;
         private string? _multiSelectionText;
-        private int _longestItemLength;
         private HamkareSelectItem<T>? _longestItem;
         private bool _needsHighlightAfterRender;
+        private bool _needsFitContentRefresh;
         private HamkareInput<string> _elementReference = null!;
-        private HashSet<T?> _selectedValues = new HashSet<T?>();
-        protected internal List<HamkareSelectItem<T>> _items = new();
-        private readonly string _elementId = Identifier.Create("select");
+        private HashSet<T?> _selectedValues = [];
         private string _searchText = string.Empty;
         private string? _lastSelectedId = string.Empty;
-        private DateTime _lastSearchTime = DateTime.MinValue;
-        private readonly ParameterState<IEnumerable<T?>?> _selectedValuesState;
+        private DateTimeOffset _lastSearchTime = DateTimeOffset.MinValue;
+        private readonly string _listboxId = Identifier.Create("select-listbox");
+        private readonly ParameterState<bool> _openState;
+        private readonly ParameterState<IReadOnlyCollection<T?>?> _selectedValuesState;
+        private readonly HamkareSelectContext<T> _context;
+
+        internal string ElementId { get; } = Identifier.Create("select");
+
+        /// <inheritdoc />
+        object IHamkareSelect.SelectContext => _context;
+
+        /// <inheritdoc />
+        object IHamkareShadowSelect.SelectContext => _context;
 
         public HamkareSelect()
         {
+            _context = new HamkareSelectContext<T>(this);
             Adornment = Adornment.End;
             IconSize = Size.Medium;
-            // Set default value to ensure ParameterState never holds null
-            SelectedValues = new HashSet<T?>();
             using var registerScope = CreateRegisterScope();
             registerScope.RegisterParameter<bool>(nameof(MultiSelection))
                 .WithParameter(() => MultiSelection)
@@ -51,11 +56,17 @@ namespace HamkareBlazor
             registerScope.RegisterParameter<IEqualityComparer<T?>?>(nameof(Comparer))
                 .WithParameter(() => Comparer)
                 .WithChangeHandler(OnComparerChangedAsync);
-            _selectedValuesState = registerScope.RegisterParameter<IEnumerable<T?>?>(nameof(SelectedValues))
+            _openState = registerScope.RegisterParameter<bool>(nameof(Open))
+                .WithParameter(() => Open)
+                .WithEventCallback(() => OpenChanged);
+            _selectedValuesState = registerScope.RegisterParameter<IReadOnlyCollection<T?>?>(nameof(SelectedValues))
                 .WithParameter(() => SelectedValues)
                 .WithEventCallback(() => SelectedValuesChanged)
                 .WithChangeHandler(OnSelectedValuesChangedAsync)
                 .WithComparer(() => new SequenceComparer<T?>(Comparer));
+            registerScope.RegisterParameter<bool>(nameof(FitContent))
+                .WithParameter(() => FitContent)
+                .WithChangeHandler(OnFitContentChanged);
         }
 
         protected string OuterClassname =>
@@ -72,6 +83,7 @@ namespace HamkareBlazor
 
         protected string InputClassname =>
             new CssBuilder("hamkare-select-input")
+                .AddClass("hamkare-readonly", GetReadOnlyState())
                 .AddClass(InputClass)
                 .Build();
 
@@ -84,6 +96,9 @@ namespace HamkareBlazor
                 .Build();
 
         [Inject]
+        private TimeProvider TimeProvider { get; set; } = null!;
+
+        [Inject]
         private IKeyInterceptorService KeyInterceptorService { get; set; } = null!;
 
         [Inject]
@@ -92,159 +107,22 @@ namespace HamkareBlazor
         [Inject]
         private IPopoverService PopoverService { get; set; } = null!;
 
-        private Task SelectNextItem() => SelectAdjacentItem(+1);
+        /// <summary>
+        /// Whether this select dropdown is open and the options are visible.
+        /// </summary>
+        /// <remarks>
+        /// When this property changes, <see cref="OpenChanged"/> occurs.
+        /// </remarks>
+        [Parameter, ParameterState]
+        [Category(CategoryTypes.Popover.Behavior)]
+        public bool Open { get; set; }
 
-        private Task SelectPreviousItem() => SelectAdjacentItem(-1);
-
-        private async Task SelectAdjacentItem(int direction)
-        {
-            if (_items.Count == 0)
-                return;
-            var index = _items.FindIndex(x => x.ItemId == _activeItemId);
-            if (direction < 0 && index < 0)
-                index = 0;
-            HamkareSelectItem<T>? item = null;
-            // the loop allows us to jump over disabled items until we reach the next non-disabled one
-            for (var i = 0; i < _items.Count; i++)
-            {
-                index += direction;
-                if (index < 0)
-                    index = 0;
-                if (index >= _items.Count)
-                    index = _items.Count - 1;
-                if (_items[index].Disabled)
-                    continue;
-                item = _items[index];
-                if (!MultiSelection)
-                {
-                    // When SelectionOnEnter is true, we only update the visual highlight during navigation.
-                    // When false (default), the value is immediately updated as the user moves through the list.
-                    if (!SelectionOnEnter)
-                    {
-                        _selectedValues.Clear();
-                        _selectedValues.Add(item.Value);
-                        await SetValueAndUpdateTextAsync(item.Value, updateText: true);
-                    }
-
-                    await HighlightItemAsync(item);
-                    break;
-                }
-
-                // in multiselect mode don't select anything, just highlight.
-                // selecting is done by Enter
-                await HighlightItemAsync(item);
-                break;
-            }
-            await _elementReference.SetText(ReadText);
-            await ScrollToItemAsync(item);
-        }
-        private ValueTask ScrollToItemAsync(HamkareSelectItem<T>? item)
-            => item != null ? ScrollManager.ScrollToListItemAsync(item.ItemId) : ValueTask.CompletedTask;
-
-        private async Task SelectFirstItem(string? startChar = null)
-        {
-            var selectList = _items;
-
-            if (!_open)
-                selectList = _shadowLookup.Values.ToList();
-
-            if (selectList.Count == 0)
-                return;
-
-            var items = selectList.Where(x => !x.Disabled);
-
-            if (!string.IsNullOrWhiteSpace(startChar))
-            {
-                var searchItem = SelectItemBySearch(items, startChar);
-
-                if (searchItem != null)
-                {
-                    await SelectAndHighlightItemAsync(searchItem);
-                    return;
-                }
-            }
-
-            // If no specific search or no matching items, select the first item
-            var firstItem = items.FirstOrDefault();
-            if (firstItem == null)
-                return;
-
-            await SelectAndHighlightItemAsync(firstItem);
-        }
-
-        private HamkareSelectItem<T>? SelectItemBySearch(IEnumerable<HamkareSelectItem<T>> items, string inputChar)
-        {
-            var now = DateTime.UtcNow;
-
-            if (now - _lastSearchTime > QuickSearchInterval)
-            {
-                _lastSelectedId = _activeItemId;
-                _searchText = inputChar;
-            }
-            else
-            {
-                _searchText += inputChar;
-            }
-
-            _lastSearchTime = now;
-
-            var hamkareSelectItems = items as HamkareSelectItem<T>[] ?? items.ToArray();
-
-            var matchingItems = hamkareSelectItems
-                .Where(x => !x.Disabled && ConvertSet(x.Value)?.StartsWith(_searchText, StringComparison.InvariantCultureIgnoreCase) == true)
-                .ToList();
-
-            if (matchingItems.Count == 0)
-                return hamkareSelectItems.FirstOrDefault(x => x.ItemId == _activeItemId);
-
-            var currentItem = hamkareSelectItems.FirstOrDefault(x => x.ItemId == _activeItemId);
-            if (currentItem == null)
-                return matchingItems[0];
-
-            var previousItem = hamkareSelectItems.First(x => x.ItemId == _lastSelectedId);
-            var currentIndex = matchingItems.IndexOf(previousItem);
-            var nextIndex = (currentIndex + 1) % matchingItems.Count;
-
-            return matchingItems[nextIndex];
-        }
-
-        private async Task SelectAndHighlightItemAsync(HamkareSelectItem<T> item)
-        {
-            if (!MultiSelection)
-            {
-                _selectedValues.Clear();
-                _selectedValues.Add(item.Value);
-                await SetValueAndUpdateTextAsync(item.Value, updateText: true);
-                // Update ParameterState to keep SelectedValues in sync
-                await _selectedValuesState.SetValueAsync(new HashSet<T?>(_selectedValues, Comparer));
-            }
-
-            await HighlightItemAsync(item);
-            await _elementReference.SetText(ReadText);
-            await ScrollToItemAsync(item);
-        }
-
-        private async Task SelectLastItem()
-        {
-            if (_items.Count == 0)
-                return;
-            var item = _items.LastOrDefault(x => !x.Disabled);
-            if (item == null)
-                return;
-            if (!MultiSelection)
-            {
-                _selectedValues.Clear();
-                _selectedValues.Add(item.Value);
-                await SetValueAndUpdateTextAsync(item.Value, updateText: true);
-                await HighlightItemAsync(item);
-            }
-            else
-            {
-                await HighlightItemAsync(item);
-            }
-            await _elementReference.SetText(ReadText);
-            await ScrollToItemAsync(item);
-        }
+        /// <summary>
+        /// Occurs when <see cref="Open"/> has changed.
+        /// </summary>
+        [Parameter]
+        [Category(CategoryTypes.Popover.Behavior)]
+        public EventCallback<bool> OpenChanged { get; set; }
 
         /// <summary>
         /// Displays the dropdown popover in a fixed position, even while scrolling.
@@ -274,7 +152,7 @@ namespace HamkareBlazor
         /// <remarks>
         /// Defaults to <c>false</c>. Requires FullWidth to be <c>false</c>
         /// </remarks>
-        [Parameter]
+        [Parameter, ParameterState(ParameterUsage = ParameterUsageOptions.None)]
         [Category(CategoryTypes.FormComponent.Appearance)]
         public bool FitContent { get; set; }
 
@@ -299,40 +177,34 @@ namespace HamkareBlazor
         public string? InputClass { get; set; }
 
         /// <summary>
-        /// Occurs when this drop-down opens.
-        /// </summary>
-        [Category(CategoryTypes.FormComponent.Behavior)]
-        [Parameter]
-        public EventCallback OnOpen { get; set; }
-
-        /// <summary>
-        /// Occurs when this drop-down closes.
-        /// </summary>
-        [Category(CategoryTypes.FormComponent.Behavior)]
-        [Parameter]
-        public EventCallback OnClose { get; set; }
-
-        /// <summary>
-        /// Prevents interaction with background elements while this list is open.
+        /// The icon for opening the popover of items.
         /// </summary>
         /// <remarks>
-        /// Defaults to <see cref="PopoverOptions.ModalOverlay" />.
+        /// Defaults to <see cref="Icons.Material.Filled.ArrowDropDown"/>.
         /// </remarks>
         [Parameter]
-        [Category(CategoryTypes.FormComponent.ListBehavior)]
-        public bool? Modal { get; set; }
+        [Category(CategoryTypes.FormComponent.Appearance)]
+        public string OpenIcon { get; set; } = Icons.Material.Filled.ArrowDropDown;
 
         /// <summary>
-        /// Gets the resolved modal overlay value, using the global default from <see cref="PopoverOptions"/> if not explicitly set.
+        /// The icon for closing the popover of items.
         /// </summary>
-        protected bool GetModal() => Modal ?? PopoverService.PopoverOptions.ModalOverlay;
-
-        /// <summary>
-        /// The content within this component, typically a list of <see cref="HamkareSelectItem{T}"/> components.
-        /// </summary>
+        /// <remarks>
+        /// Defaults to <see cref="Icons.Material.Filled.ArrowDropUp"/>.
+        /// </remarks>
         [Parameter]
-        [Category(CategoryTypes.FormComponent.ListBehavior)]
-        public RenderFragment? ChildContent { get; set; }
+        [Category(CategoryTypes.FormComponent.Appearance)]
+        public string CloseIcon { get; set; } = Icons.Material.Filled.ArrowDropUp;
+
+        /// <summary>
+        /// The icon displayed for the clear button when <see cref="Clearable"/> is <c>true</c>.
+        /// </summary>
+        /// <remarks>
+        /// Defaults to <see cref="Icons.Material.Filled.Clear"/>.
+        /// </remarks>
+        [Parameter]
+        [Category(CategoryTypes.FormComponent.Appearance)]
+        public string ClearIcon { get; set; } = Icons.Material.Filled.Clear;
 
         /// <summary>
         /// The CSS classes applied to the popover.
@@ -365,261 +237,6 @@ namespace HamkareBlazor
         public bool Dense { get; set; }
 
         /// <summary>
-        /// The icon for opening the popover of items.
-        /// </summary>
-        /// <remarks>
-        /// Defaults to <see cref="Icons.Material.Filled.ArrowDropDown"/>.
-        /// </remarks>
-        [Parameter]
-        [Category(CategoryTypes.FormComponent.Appearance)]
-        public string OpenIcon { get; set; } = Icons.Material.Filled.ArrowDropDown;
-
-        /// <summary>
-        /// The icon for closing the popover of items.
-        /// </summary>
-        /// <remarks>
-        /// Defaults to <see cref="Icons.Material.Filled.ArrowDropUp"/>.
-        /// </remarks>
-        [Parameter]
-        [Category(CategoryTypes.FormComponent.Appearance)]
-        public string CloseIcon { get; set; } = Icons.Material.Filled.ArrowDropUp;
-
-        /// <summary>
-        /// Shows a "Select all" checkbox to select all items.
-        /// </summary>
-        /// <remarks>
-        /// Defaults to <c>false</c>.  Only applies when <see cref="MultiSelection"/> is <c>true</c>.
-        /// </remarks>
-        [Parameter]
-        [Category(CategoryTypes.FormComponent.ListBehavior)]
-        public bool SelectAll { get; set; }
-
-        /// <summary>
-        /// The text of the "Select all" checkbox.
-        /// </summary>
-        /// <remarks>
-        /// Defaults to <c>"Select all"</c>.  Only applies when <see cref="SelectAll"/> is <c>true</c>.
-        /// </remarks>
-        [Parameter]
-        [Category(CategoryTypes.FormComponent.ListAppearance)]
-        public string SelectAllText { get; set; } = LanguageResource.HamkareSelect_SelectAll;
-
-        /// <summary>
-        /// Occurs when <see cref="SelectedValues"/> has changed.
-        /// </summary>
-        [Parameter]
-        public EventCallback<IEnumerable<T?>?> SelectedValuesChanged { get; set; }
-
-        /// <summary>
-        /// The custom function for setting the <c>Text</c> from a list of selected items.
-        /// </summary>
-        /// <remarks>
-        /// Defaults to <c>null</c>.
-        /// </remarks>
-        [Parameter]
-        [Category(CategoryTypes.FormComponent.Behavior)]
-        public Func<List<string?>?, string>? MultiSelectionTextFunc { get; set; }
-
-        /// <summary>
-        /// The string used to separate multiple selected values.
-        /// </summary>
-        /// <remarks>
-        /// Defaults to <c>", "</c>.  Only applies when <see cref="MultiSelection"/> is <c>true</c>.
-        /// </remarks>
-        [Parameter]
-        [Category(CategoryTypes.FormComponent.Behavior)]
-        public string Delimiter { get; set; } = ", ";
-
-        /// <summary>
-        /// The <see cref="TimeSpan"/> interval for accepting characters for search input.
-        /// </summary>
-        /// <remarks>
-        /// Defaults to <see cref="TimeSpan.Zero"/> for single-character searches. <br/>
-        /// Set to a value greater than zero to enable multi-character searches within the specified interval.
-        /// </remarks>
-        [Parameter]
-        [Category(CategoryTypes.FormComponent.Behavior)]
-        public TimeSpan QuickSearchInterval { get; set; } = TimeSpan.Zero;
-
-        /// <summary>
-        /// The currently selected values.
-        /// </summary>
-        /// <remarks>
-        /// When <see cref="MultiSelection"/> is <c>false</c>, only one value will be returned.  When this value changes, <see cref="SelectedValuesChanged"/> occurs.
-        /// </remarks>
-        [Parameter, ParameterState]
-        [Category(CategoryTypes.FormComponent.Data)]
-        public IEnumerable<T?>? SelectedValues { get; set; }
-
-        private async Task OnSelectedValuesChangedAsync(ParameterChangedEventArgs<IEnumerable<T?>?> arg)
-        {
-            var value = arg.Value;
-            var set = value ?? new HashSet<T?>(Comparer);
-
-            // Update internal HashSet with new values - make a defensive copy to avoid shared references
-            _selectedValues = new HashSet<T?>(set, Comparer);
-
-            SelectionChangedFromOutside?.Invoke(_selectedValues);
-
-            if (!MultiSelection)
-            {
-                await SetValueAndUpdateTextAsync(_selectedValues.FirstOrDefault());
-            }
-            else
-            {
-                //Warning. Here the Converter was not set yet
-                if (MultiSelectionTextFunc != null)
-                {
-                    await SetCustomizedTextAsync(string.Join(Delimiter, _selectedValues.Select(ConvertSet)),
-                        selectedConvertedValues: _selectedValues.Select(ConvertSet).ToList(),
-                        multiSelectionTextFunc: MultiSelectionTextFunc);
-                }
-                else
-                {
-                    await SetTextAndUpdateValueAsync(string.Join(Delimiter, _selectedValues.Select(ConvertSet)), updateValue: false);
-                }
-            }
-
-            // Only fire FieldChanged after the first render to avoid triggering during initialization
-            if (HasRendered)
-            {
-                FieldChanged(_selectedValues);
-            }
-            if (MultiSelection && typeof(T) == typeof(string))
-                await SetValueAndUpdateTextAsync((T?)(object?)ReadText, updateText: false);
-        }
-
-        /// <summary>
-        /// The comparer for testing equality of selected values.
-        /// </summary>
-        [Parameter, ParameterState(ParameterUsage = ParameterUsageOptions.None)]
-        [Category(CategoryTypes.FormComponent.Behavior)]
-        public IEqualityComparer<T?>? Comparer { get; set; }
-
-        private async Task OnComparerChangedAsync(ParameterChangedEventArgs<IEqualityComparer<T?>?> arg)
-        {
-            // Apply comparer and refresh selected values
-            _selectedValues = new HashSet<T?>(_selectedValues, arg.Value);
-            await _selectedValuesState.SetValueAsync(new HashSet<T?>(_selectedValues, arg.Value));
-        }
-
-        /// <summary>
-        /// The function for the <c>Text</c> in drop-down items.
-        /// </summary>
-        [Parameter]
-        [Category(CategoryTypes.FormComponent.ListBehavior)]
-        public Func<T?, string?>? ToStringFunc { get; set; }
-
-        /// <summary>
-        /// Whether the <c>Value</c> can be found in the list of <see cref="Items"/>.
-        /// </summary>
-        /// <remarks>
-        /// When <c>false</c>, the <c>Value</c> will be displayed as a string.
-        /// </remarks>
-        protected bool CanRenderValue
-        {
-            get
-            {
-                if (MultiSelection)
-                    return false;
-                if (!_shadowLookup.TryGetValue(ReadValue, out var item))
-                    return false;
-                return item.ChildContent != null;
-            }
-        }
-
-        protected bool IsValueInList
-        {
-            get
-            {
-                return _shadowLookup.TryGetValue(ReadValue, out _);
-            }
-        }
-
-        protected RenderFragment? GetSelectedValuePresenter()
-        {
-            if (!_shadowLookup.TryGetValue(ReadValue, out var item))
-                return null; //<-- for now. we'll add a custom template to present values (set from outside) which are not on the list?
-            return item.ChildContent;
-        }
-
-        protected override Task UpdateValuePropertyAsync(bool updateText)
-        {
-            // For MultiSelection of non-string T's we don't update the Value!!!
-            if (typeof(T) == typeof(string) || !MultiSelection)
-                base.UpdateValuePropertyAsync(updateText);
-            return Task.CompletedTask;
-        }
-
-        protected override Task UpdateTextPropertyAsync(bool updateValue)
-        {
-            // when multiselection is true, we return
-            // a comma separated list of selected values
-            if (MultiSelectionTextFunc != null)
-            {
-                return MultiSelection
-                    ? SetCustomizedTextAsync(string.Join(Delimiter, _selectedValues.Select(ConvertSet)),
-                        selectedConvertedValues: _selectedValues.Select(ConvertSet).ToList(),
-                        multiSelectionTextFunc: MultiSelectionTextFunc)
-                    : base.UpdateTextPropertyAsync(updateValue);
-            }
-
-            return MultiSelection
-                ? SetTextAndUpdateValueAsync(string.Join(Delimiter, _selectedValues.Select(ConvertSet)))
-                : base.UpdateTextPropertyAsync(updateValue);
-        }
-
-        internal event Action<ICollection<T?>>? SelectionChangedFromOutside;
-
-        /// <summary>
-        /// Allows multiple values to be selected via checkboxes.
-        /// </summary>
-        /// <remarks>
-        /// Defaults to <c>false</c>.  When <c>false</c>, only one value can be selected at a time.
-        /// </remarks>
-        [Parameter, ParameterState(ParameterUsage = ParameterUsageOptions.None)]
-        [Category(CategoryTypes.FormComponent.ListBehavior)]
-        public bool MultiSelection { get; set; }
-
-        /// <summary>
-        /// The list of choices the user can select.
-        /// </summary>
-        /// <remarks>
-        /// Use <see cref="HamkareSelectItem{T}"/> components to provide more items.
-        /// </remarks>
-        public IReadOnlyList<HamkareSelectItem<T>> Items => _items;
-
-        protected Dictionary<NullableObject<T?>, HamkareSelectItem<T>> _valueLookup = new();
-        protected Dictionary<NullableObject<T?>, HamkareSelectItem<T>> _shadowLookup = new();
-
-        internal bool Add(HamkareSelectItem<T>? item)
-        {
-            if (item == null)
-                return false;
-            bool? result = null;
-            if (!_items.Select(x => x.Value).Contains(item.Value))
-            {
-                _items.Add(item);
-
-                _valueLookup[item.Value] = item;
-                if (EqualityComparer<T?>.Default.Equals(item.Value, ReadValue) && !MultiSelection)
-                    result = true;
-            }
-            UpdateSelectAllChecked();
-            if (result.HasValue == false)
-            {
-                result = item.Value?.Equals(ReadValue);
-            }
-            return result == true;
-        }
-
-        internal void Remove(HamkareSelectItem<T> item)
-        {
-            _items.Remove(item);
-            _valueLookup.Remove(item.Value);
-        }
-
-        /// <summary>
         /// The maximum height, in pixels, of the popover of items.
         /// </summary>
         /// <remarks>
@@ -650,6 +267,146 @@ namespace HamkareBlazor
         public Origin TransformOrigin { get; set; } = Origin.TopLeft;
 
         /// <summary>
+        /// The text of the "Select all" checkbox.
+        /// </summary>
+        /// <remarks>
+        /// Defaults to <c>"Select all"</c>.  Only applies when <see cref="SelectAll"/> is <c>true</c>.
+        /// </remarks>
+        [Parameter]
+        [Category(CategoryTypes.FormComponent.ListAppearance)]
+        public string SelectAllText { get; set; } = "Select all";
+
+        /// <summary>
+        /// The icon used for selected items.
+        /// </summary>
+        /// <remarks>
+        /// Defaults to <see cref="Icons.Material.Filled.CheckBox"/>.  Only applies when <see cref="MultiSelection"/> is <c>true</c>.
+        /// </remarks>
+        [Parameter]
+        [Category(CategoryTypes.FormComponent.ListAppearance)]
+        public string CheckedIcon { get; set; } = Icons.Material.Filled.CheckBox;
+
+        /// <summary>
+        /// The icon used for unselected items.
+        /// </summary>
+        /// <remarks>
+        /// Defaults to <see cref="Icons.Material.Filled.CheckBoxOutlineBlank"/>.  Only applies when <see cref="MultiSelection"/> is <c>true</c>.
+        /// </remarks>
+        [Parameter]
+        [Category(CategoryTypes.FormComponent.ListAppearance)]
+        public string UncheckedIcon { get; set; } = Icons.Material.Filled.CheckBoxOutlineBlank;
+
+        /// <summary>
+        /// The icon used when at least one, but not all, items are selected.
+        /// </summary>
+        /// <remarks>
+        /// Defaults to <see cref="Icons.Material.Filled.IndeterminateCheckBox"/>.  Only applies when <see cref="MultiSelection"/> is <c>true</c>.
+        /// </remarks>
+        [Parameter]
+        [Category(CategoryTypes.FormComponent.ListAppearance)]
+        public string IndeterminateIcon { get; set; } = Icons.Material.Filled.IndeterminateCheckBox;
+
+        /// <summary>
+        /// The content within this component, typically a list of <see cref="HamkareSelectItem{T}"/> components.
+        /// </summary>
+        [Parameter]
+        [Category(CategoryTypes.FormComponent.ListBehavior)]
+        public RenderFragment? ChildContent { get; set; }
+
+        /// <summary>
+        /// Prevents interaction with background elements while this list is open.
+        /// </summary>
+        /// <remarks>
+        /// Defaults to <see cref="PopoverOptions.ModalOverlay" />.
+        /// </remarks>
+        [Parameter]
+        [Category(CategoryTypes.FormComponent.ListBehavior)]
+        public bool? Modal { get; set; }
+
+        /// <summary>
+        /// Allows multiple values to be selected via checkboxes.
+        /// </summary>
+        /// <remarks>
+        /// Defaults to <c>false</c>.  When <c>false</c>, only one value can be selected at a time.
+        /// </remarks>
+        [Parameter, ParameterState(ParameterUsage = ParameterUsageOptions.None)]
+        [Category(CategoryTypes.FormComponent.ListBehavior)]
+        public bool MultiSelection { get; set; }
+
+        /// <summary>
+        /// Shows a "Select all" checkbox to select all items.
+        /// </summary>
+        /// <remarks>
+        /// Defaults to <c>false</c>.  Only applies when <see cref="MultiSelection"/> is <c>true</c>.
+        /// </remarks>
+        [Parameter]
+        [Category(CategoryTypes.FormComponent.ListBehavior)]
+        public bool SelectAll { get; set; }
+
+        /// <summary>
+        /// If <c>true</c>, navigating with arrow keys will only highlight items without updating the selected value.
+        /// The selection must be confirmed by pressing Enter or clicking the item.
+        /// </summary>
+        [Parameter]
+        [Category(CategoryTypes.FormComponent.ListBehavior)]
+        public bool SelectionOnEnter { get; set; }
+
+        /// <summary>
+        /// Prevents scrolling while the dropdown is open.
+        /// </summary>
+        /// <remarks>
+        /// Defaults to <c>false</c>.
+        /// </remarks>
+        [Parameter]
+        [Category(CategoryTypes.FormComponent.ListBehavior)]
+        public bool LockScroll { get; set; }
+
+        /// <summary>
+        /// The function for the <c>Text</c> in drop-down items.
+        /// </summary>
+        [Parameter]
+        [Category(CategoryTypes.FormComponent.ListBehavior)]
+        public Func<T?, string?>? ToStringFunc { get; set; }
+
+        /// <summary>
+        /// The comparer for testing equality of selected values.
+        /// </summary>
+        [Parameter, ParameterState(ParameterUsage = ParameterUsageOptions.None)]
+        [Category(CategoryTypes.FormComponent.Behavior)]
+        public IEqualityComparer<T?>? Comparer { get; set; }
+
+        /// <summary>
+        /// The string used to separate multiple selected values.
+        /// </summary>
+        /// <remarks>
+        /// Defaults to <c>", "</c>.  Only applies when <see cref="MultiSelection"/> is <c>true</c>.
+        /// </remarks>
+        [Parameter]
+        [Category(CategoryTypes.FormComponent.Behavior)]
+        public string Delimiter { get; set; } = ", ";
+
+        /// <summary>
+        /// The custom function for setting the <c>Text</c> from a list of selected items.
+        /// </summary>
+        /// <remarks>
+        /// Defaults to <c>null</c>.
+        /// </remarks>
+        [Parameter]
+        [Category(CategoryTypes.FormComponent.Behavior)]
+        public Func<IReadOnlyList<string?>?, string>? MultiSelectionTextFunc { get; set; }
+
+        /// <summary>
+        /// The <see cref="TimeSpan"/> interval for accepting characters for search input.
+        /// </summary>
+        /// <remarks>
+        /// Defaults to <see cref="TimeSpan.Zero"/> for single-character searches. <br/>
+        /// Set to a value greater than zero to enable multi-character searches within the specified interval.
+        /// </remarks>
+        [Parameter]
+        [Category(CategoryTypes.FormComponent.Behavior)]
+        public TimeSpan QuickSearchInterval { get; set; } = TimeSpan.Zero;
+
+        /// <summary>
         /// Restricts the selected values to the ones defined in <see cref="HamkareSelectItem{T}"/> items.
         /// </summary>
         /// <remarks>
@@ -667,27 +424,23 @@ namespace HamkareBlazor
         /// </remarks>
         [Parameter]
         [Category(CategoryTypes.FormComponent.Behavior)]
-        public bool Clearable { get; set; } = false;
+        public bool Clearable { get; set; }
 
         /// <summary>
-        /// The icon displayed for the clear button when <see cref="Clearable"/> is <c>true</c>.
+        /// The currently selected values.
         /// </summary>
         /// <remarks>
-        /// Defaults to <see cref="Icons.Material.Filled.Clear"/>.
+        /// When <see cref="MultiSelection"/> is <c>false</c>, only one value will be returned.  When this value changes, <see cref="SelectedValuesChanged"/> occurs.
         /// </remarks>
-        [Parameter]
-        [Category(CategoryTypes.FormComponent.Appearance)]
-        public string ClearIcon { get; set; } = Icons.Material.Filled.Clear;
+        [Parameter, ParameterState]
+        [Category(CategoryTypes.FormComponent.Data)]
+        public IReadOnlyCollection<T?>? SelectedValues { get; set; } = [];
 
         /// <summary>
-        /// Prevents scrolling while the dropdown is open.
+        /// Occurs when <see cref="SelectedValues"/> has changed.
         /// </summary>
-        /// <remarks>
-        /// Defaults to <c>false</c>.
-        /// </remarks>
         [Parameter]
-        [Category(CategoryTypes.FormComponent.ListBehavior)]
-        public bool LockScroll { get; set; } = false;
+        public EventCallback<IReadOnlyCollection<T?>?> SelectedValuesChanged { get; set; }
 
         /// <summary>
         /// Occurs when the clear button is clicked.
@@ -699,14 +452,12 @@ namespace HamkareBlazor
         public EventCallback<MouseEventArgs> OnClearButtonClick { get; set; }
 
         /// <summary>
-        /// If <c>true</c>, navigating with arrow keys will only highlight items without updating the selected value.
-        /// The selection must be confirmed by pressing Enter or clicking the item.
+        /// The list of choices the user can select.
         /// </summary>
-        [Parameter]
-        [Category(CategoryTypes.FormComponent.ListBehavior)]
-        public bool SelectionOnEnter { get; set; }
-
-        internal bool _open;
+        /// <remarks>
+        /// Use <see cref="HamkareSelectItem{T}"/> components to provide more items.
+        /// </remarks>
+        public IReadOnlyList<HamkareSelectItem<T>> Items => _context.Items;
 
         /// <summary>
         /// The current adornment icon to display.
@@ -717,42 +468,156 @@ namespace HamkareBlazor
         internal string? _currentIcon { get; set; }
 
         /// <summary>
+        /// Whether the <c>Value</c> can be found in the list of <see cref="Items"/>.
+        /// </summary>
+        /// <remarks>
+        /// When <c>false</c>, the <c>Value</c> will be displayed as a string.
+        /// </remarks>
+        protected bool CanRenderValue
+        {
+            get
+            {
+                if (MultiSelection)
+                {
+                    return false;
+                }
+
+                if (ToStringFunc is not null && !string.IsNullOrEmpty(ToStringFunc(ReadValue)))
+                {
+                    return false;
+                }
+
+                if (!_context.TryGetShadowItemByValue(ReadValue, out var item))
+                {
+                    return false;
+                }
+
+                return item.ChildContent != null;
+            }
+        }
+
+        protected bool IsValueInList => _context.TryGetShadowItemByValue(ReadValue, out _);
+
+        /// <summary>
+        /// Builds fallback accessibility attributes for the focused select trigger.
+        /// </summary>
+        /// <remarks>
+        /// <see cref="HamkareSelect{T}"/> keeps focus on its trigger while the popup is open, so the trigger publishes the combobox relationship to the popup list.
+        /// </remarks>
+        private Dictionary<string, object?> GetInputUserAttributes()
+        {
+            var attributes = new Dictionary<string, object?>(UserAttributes, StringComparer.OrdinalIgnoreCase);
+            attributes.TryAdd("role", "combobox");
+            attributes.TryAdd("aria-autocomplete", "none");
+            attributes.TryAdd("aria-controls", _listboxId);
+            attributes.TryAdd("aria-expanded", _openState.Value ? "true" : "false");
+            attributes.TryAdd("aria-haspopup", "listbox");
+
+            if (!attributes.ContainsKey("aria-label") && !attributes.ContainsKey("aria-labelledby") && !string.IsNullOrWhiteSpace(Label))
+            {
+                attributes["aria-label"] = Label;
+            }
+
+            if (_openState.Value && _activeItemId is not null)
+            {
+                attributes.TryAdd("aria-activedescendant", _activeItemId);
+            }
+
+            return attributes;
+        }
+
+        /// <summary>
+        /// Builds the attributes applied to the internal popup list.
+        /// </summary>
+        /// <remarks>
+        /// Provides the stable list identifier and list-level semantics owned by <see cref="HamkareSelect{T}"/>.
+        /// </remarks>
+        private Dictionary<string, object?> GetListUserAttributes()
+        {
+            var attributes = new Dictionary<string, object?>(StringComparer.OrdinalIgnoreCase)
+            {
+                ["id"] = _listboxId
+            };
+
+            if (MultiSelection)
+            {
+                attributes["aria-multiselectable"] = "true";
+            }
+
+            return attributes;
+        }
+
+        /// <summary>
+        /// The icon to display whether all, none, or some items are selected.
+        /// </summary>
+        /// <remarks>
+        /// Only applies when <see cref="MultiSelection"/> is <c>true</c>.
+        /// If all items are selected, <see cref="CheckedIcon"/> is returned.
+        /// If no items are selected, <see cref="UncheckedIcon"/> is returned.
+        /// Otherwise, <see cref="IndeterminateIcon"/> is returned.
+        /// </remarks>
+        protected string SelectAllCheckBoxIcon
+        {
+            get
+            {
+                if (!_selectAllChecked.HasValue)
+                {
+                    return IndeterminateIcon;
+                }
+
+                return _selectAllChecked.Value ? CheckedIcon : UncheckedIcon;
+            }
+        }
+
+        /// <summary>
         /// Selects the item at the specified index.
         /// </summary>
         /// <param name="index">The ordinal of the item to select (starting at <c>0</c>).  When <see cref="MultiSelection"/> is <c>true</c>, the item will be added to the selected items.</param>
         public async Task SelectOption(int index)
         {
-            if (index < 0 || index >= _items.Count)
+            if (index < 0 || index >= Items.Count)
             {
                 if (!MultiSelection)
+                {
                     await CloseMenu();
+                }
+
                 return;
             }
-            await SelectOption(_items[index].Value);
+
+            await SelectOption(Items[index].Value);
         }
 
         /// <summary>
         /// Selects the item with the specified value.
         /// </summary>
-        /// <param name="obj">The value to select.  When <see cref="MultiSelection"/> is <c>true</c>, the selection is cleared if it was already selected.</param>
-        public async Task SelectOption(object? obj)
+        /// <param name="value">The value to select.  When <see cref="MultiSelection"/> is <c>true</c>, the selection is cleared if it was already selected.</param>
+        public async Task SelectOption(T? value)
         {
-            var value = (T?)obj;
+            var comparer = Comparer ?? EqualityComparer<T?>.Default;
+
             if (MultiSelection)
             {
-                // multi-selection: menu stays open
+                // Toggle selection
                 if (!_selectedValues.Add(value))
-                    _selectedValues.Remove(value);
-
-                if (MultiSelectionTextFunc != null)
                 {
-                    await SetCustomizedTextAsync(string.Join(Delimiter, _selectedValues.Select(ConvertSet!)),
-                        selectedConvertedValues: _selectedValues.Select(ConvertSet!).ToList(),
-                        multiSelectionTextFunc: MultiSelectionTextFunc);
+                    _selectedValues.Remove(value);
+                }
+
+                var converted = _selectedValues.Select(ConvertSet).ToList();
+                var text = string.Join(Delimiter, converted);
+
+                if (MultiSelectionTextFunc is not null)
+                {
+                    await SetCustomizedTextAsync(
+                        text,
+                        selectedConvertedValues: converted,
+                        multiSelectionTextFunc: MultiSelectionTextFunc
+                    );
                 }
                 else
                 {
-                    await SetTextAndUpdateValueAsync(string.Join(Delimiter, _selectedValues.Select(ConvertSet!)), updateValue: false);
+                    await SetTextAndUpdateValueAsync(text, updateValue: false);
                 }
 
                 UpdateSelectAllChecked();
@@ -760,49 +625,279 @@ namespace HamkareBlazor
             }
             else
             {
-                // single selection
-                // Highlight the item BEFORE closing so the next open shows it highlighted
+                // Highlight before closing
                 await HighlightItemForValueAsync(value);
 
-                // CloseMenu(true) doesn't close popover in BSS
                 await CloseMenu(false);
 
-                // Update internal selected values and ParameterState
-                _selectedValues.Clear();
-                _selectedValues.Add(value);
-
-                // Early return if value hasn't changed (but after updating SelectedValues)
-                // Use Comparer if available, otherwise use default
-                var comparer = Comparer ?? EqualityComparer<T?>.Default;
+                // Early exit if unchanged
                 if (comparer.Equals(ReadValue, value))
                 {
-                    // Still need to publish SelectedValues to ParameterState in case it wasn't initialized
-                    await _selectedValuesState.SetValueAsync(new HashSet<T?>(_selectedValues, Comparer));
-                    StateHasChanged();
+                    await UpdateSelectedValuesStateAsync(comparer);
                     return;
                 }
+
+                // Replace selection
+                _selectedValues.Clear();
+                _selectedValues.Add(value);
 
                 await SetValueAndUpdateTextAsync(value);
                 _elementReference.SetText(ReadText).CatchAndLog();
             }
 
-            // For multi-selection, highlight after value is set
             if (MultiSelection)
             {
                 await HighlightItemForValueAsync(value);
             }
 
-            // Create a new HashSet to ensure ParameterState detects the change
-            await _selectedValuesState.SetValueAsync(new HashSet<T?>(_selectedValues, Comparer));
+            await UpdateSelectedValuesStateAsync(comparer);
+
             FieldChanged(_selectedValues);
+
             if (MultiSelection && typeof(T) == typeof(string))
+            {
                 await SetValueAndUpdateTextAsync((T?)(object?)ReadText, updateText: false);
+            }
+
             await InvokeAsync(StateHasChanged);
+        }
+
+        /// <summary>
+        /// Opens or closes the drop-down menu.
+        /// </summary>
+        /// <remarks>
+        /// Has no effect if <c>Disabled</c> or <c>ReadOnly</c> is <c>true</c>.
+        /// </remarks>
+        public async Task ToggleMenu()
+        {
+            if (GetDisabledState() || GetReadOnlyState())
+            {
+                return;
+            }
+
+            if (_openState.Value)
+            {
+                await CloseMenu(true);
+            }
+            else
+            {
+                await OpenMenu();
+            }
+        }
+
+        /// <summary>
+        /// Opens the drop-down menu.
+        /// </summary>
+        /// <remarks>
+        /// Has no effect if <c>Disabled</c> or <c>ReadOnly</c> is <c>true</c>.
+        /// </remarks>
+        public async Task OpenMenu()
+        {
+            if (GetDisabledState() || GetReadOnlyState())
+            {
+                return;
+            }
+
+            await _openState.SetValueAsync(true);
+            _needsHighlightAfterRender = true;
+            UpdateIcon();
+            StateHasChanged();
+
+            //disable escape propagation: if selectmenu is open, only the select popover should close and underlying components should not handle escape key
+            await KeyInterceptorService.UpdateKeyAsync(ElementId, new("Escape", stopDown: "key+none"));
+        }
+
+        /// <summary>
+        /// Closes the drop-down menu.
+        /// </summary>
+        /// <remarks>
+        /// Has no effect if <c>Disabled</c> or <c>ReadOnly</c> is <c>true</c>.
+        /// </remarks>
+        public async Task CloseMenu(bool focusAgain = true)
+        {
+            await _openState.SetValueAsync(false);
+            UpdateIcon();
+            if (focusAgain)
+            {
+                StateHasChanged();
+                _elementReference.FocusAsync().CatchAndLog(ignoreExceptions: true);
+                StateHasChanged();
+            }
+
+            //enable escape propagation: the select popover was closed, now underlying components are allowed to handle escape key
+            await KeyInterceptorService.UpdateKeyAsync(ElementId, new("Escape", stopDown: "none"));
+        }
+
+        /// <summary>
+        /// Clears all selections.
+        /// </summary>
+        /// <remarks>
+        /// To reset validation errors (e.g. required), use <see cref="ResetValueAsync"/>
+        /// </remarks>
+        public async Task ClearAsync()
+        {
+            await SetValueAndUpdateTextAsync(default, false);
+            await SetTextAndUpdateValueAsync(null, false);
+            _selectedValues.Clear();
+            await BeginValidateAsync();
+            StateHasChanged();
+            await UpdateSelectedValuesStateAsync();
+            FieldChanged(_selectedValues);
+        }
+
+        /// <summary>
+        /// Sets the focus to this component.
+        /// </summary>
+        public override ValueTask FocusAsync()
+        {
+            return _elementReference.FocusAsync();
+        }
+
+        /// <summary>
+        /// Releases the focus from this component.
+        /// </summary>
+        public override ValueTask BlurAsync()
+        {
+            return _elementReference.BlurAsync();
+        }
+
+        /// <summary>
+        /// Selects the text within this component.
+        /// </summary>
+        public override ValueTask SelectAsync()
+        {
+            return _elementReference.SelectAsync();
+        }
+
+        /// <summary>
+        /// Selects a portion of text within this component.
+        /// </summary>
+        /// <param name="pos1">The index of the first character to select.  (Starting at <c>0</c>.)</param>
+        /// <param name="pos2">The index of the last character to select.</param>
+        public override ValueTask SelectRangeAsync(int pos1, int pos2)
+        {
+            return _elementReference.SelectRangeAsync(pos1, pos2);
+        }
+
+        private Task OnComparerChangedAsync(ParameterChangedEventArgs<IEqualityComparer<T?>?> arg)
+        {
+            // Rebuild the internal HashSet so future equality checks use the new comparer.
+            // Do NOT push to _selectedValuesState here: during initial parameter processing,
+            // this handler fires before OnSelectedValuesChangedAsync has populated _selectedValues,
+            // so SetValueAsync would publish an empty snapshot and invoke SelectedValuesChanged,
+            // silently overwriting the parent's @bind-SelectedValues binding to empty.
+            _selectedValues = new HashSet<T?>(_selectedValues, arg.Value);
+            return Task.CompletedTask;
+        }
+
+        private async Task OnSelectedValuesChangedAsync(ParameterChangedEventArgs<IReadOnlyCollection<T?>?> arg)
+        {
+            var value = arg.Value;
+
+            // Update internal HashSet with new values - make a defensive copy to avoid shared references
+            // The HashSet uses the Comparer for equality checks and ensures uniqueness
+            _selectedValues = value != null ? new HashSet<T?>(value, Comparer) : new HashSet<T?>(Comparer);
+
+            // Notify all subscribed items of the selection change
+            await _context.NotifySelectionChangedAsync();
+
+            if (!MultiSelection)
+            {
+                await SetValueAndUpdateTextAsync(_selectedValues.FirstOrDefault());
+            }
+            else
+            {
+                //Warning. Here the Converter was not set yet
+                if (MultiSelectionTextFunc != null)
+                {
+                    await SetCustomizedTextAsync(string.Join(Delimiter, _selectedValues.Select(ConvertSet)),
+                        selectedConvertedValues: _selectedValues.Select(ConvertSet).ToList(),
+                        multiSelectionTextFunc: MultiSelectionTextFunc);
+                }
+                else
+                {
+                    await SetTextAndUpdateValueAsync(string.Join(Delimiter, _selectedValues.Select(ConvertSet)), updateValue: false);
+                }
+            }
+
+            // Only fire FieldChanged after the first render to avoid triggering during initialization
+            if (HasRendered)
+            {
+                FieldChanged(_selectedValues);
+            }
+
+            if (MultiSelection && typeof(T) == typeof(string))
+            {
+                await SetValueAndUpdateTextAsync((T?)(object?)ReadText, updateText: false);
+            }
+        }
+
+        internal void UpdateFitContent()
+        {
+            if (FitContent)
+            {
+                var longestItemLength = 0;
+                var longestItem = default(HamkareSelectItem<T>);
+                foreach (var item in _context.ShadowItems)
+                {
+                    var value = item.Value;
+                    var valueToString = ConvertSet(value);
+                    var length = valueToString?.Length ?? 0;
+
+                    if (length > longestItemLength)
+                    {
+                        longestItem = item;
+                        longestItemLength = length;
+                    }
+                }
+
+                if (ReferenceEquals(_longestItem, longestItem))
+                {
+                    return;
+                }
+
+                _longestItem = longestItem;
+                StateHasChanged();
+                return;
+            }
+
+            _longestItem = null;
+        }
+
+        internal void InvalidateFitContent()
+        {
+            if (FitContent)
+            {
+                _needsFitContentRefresh = true;
+            }
+        }
+
+        private void OnFitContentChanged(ParameterChangedEventArgs<bool> args)
+        {
+            if (args.Value)
+            {
+                UpdateFitContent();
+                return;
+            }
+
+            _needsFitContentRefresh = false;
+            _longestItem = null;
+        }
+
+        private void UpdateIcon()
+        {
+            if (!string.IsNullOrWhiteSpace(AdornmentIcon))
+            {
+                _currentIcon = AdornmentIcon;
+                return;
+            }
+
+            _currentIcon = _openState.Value ? CloseIcon : OpenIcon;
         }
 
         private Task HighlightItemForValueAsync(T? value)
         {
-            _valueLookup.TryGetValue(value, out var item);
+            _context.TryGetItemByValue(value, out var item);
             return HighlightItemAsync(item);
         }
 
@@ -820,7 +915,7 @@ namespace HamkareBlazor
                 {
                     _selectAllChecked = false;
                 }
-                else if (_items.Count(x => !x.Disabled) == _selectedValues.Count)
+                else if (Items.Count(x => !x.Disabled) == _selectedValues.Count)
                 {
                     _selectAllChecked = true;
                 }
@@ -831,88 +926,440 @@ namespace HamkareBlazor
             }
         }
 
+        private async Task SelectAllClickAsync()
+        {
+            // Manage the fake tri-state of a checkbox
+            if (!_selectAllChecked.HasValue)
+            {
+                _selectAllChecked = true;
+            }
+            else if (_selectAllChecked.Value)
+            {
+                _selectAllChecked = false;
+            }
+            else
+            {
+                _selectAllChecked = true;
+            }
+
+            // Define the items selection
+            if (_selectAllChecked.Value)
+            {
+                await SelectAllItems();
+            }
+            else
+            {
+                await ClearAsync();
+            }
+        }
+
+        private async Task SelectAllItems()
+        {
+            if (!MultiSelection)
+            {
+                return;
+            }
+
+            var selectedValues = new HashSet<T?>(Items.Where(x => !x.Disabled && x.Value != null).Select(x => x.Value), Comparer);
+            _selectedValues = new HashSet<T?>(selectedValues, Comparer);
+
+            if (MultiSelectionTextFunc != null)
+            {
+                await SetCustomizedTextAsync(string.Join(Delimiter, _selectedValues.Select(ConvertSet)),
+                    selectedConvertedValues: _selectedValues.Select(ConvertSet).ToList(),
+                    multiSelectionTextFunc: MultiSelectionTextFunc);
+            }
+            else
+            {
+                await SetTextAndUpdateValueAsync(string.Join(Delimiter, _selectedValues.Select(ConvertSet)), updateValue: false);
+            }
+
+            UpdateSelectAllChecked();
+            _selectedValues = selectedValues; // need to force selected values because Blazor overwrites it under certain circumstances due to changes of Text or Value
+            await BeginValidateAsync();
+            await UpdateSelectedValuesStateAsync();
+            FieldChanged(_selectedValues);
+
+            if (MultiSelection && typeof(T) == typeof(string))
+            {
+                SetValueAndUpdateTextAsync((T?)(object?)ReadText, updateText: false).CatchAndLog();
+            }
+        }
+
+        private async Task OnFocusOutAsync(FocusEventArgs args)
+        {
+            if (_openState.Value)
+            {
+                // when the menu is open we immediately get back the focus if we lose it (i.e. because of checkboxes in multi-select)
+                // otherwise we can't receive key strokes any longer
+                await FocusAsync();
+            }
+            else
+            {
+                await OnBlurredAsync(args);
+            }
+        }
+
+        private Task SelectNextItem() => SelectAdjacentItem(+1);
+
+        private Task SelectPreviousItem() => SelectAdjacentItem(-1);
+
+        private async Task SelectAdjacentItem(int direction)
+        {
+            if (Items.Count == 0)
+            {
+                return;
+            }
+
+            var index = Items.FindIndex(x => x.ItemId == _activeItemId);
+            if (direction < 0 && index < 0)
+            {
+                index = 0;
+            }
+
+            HamkareSelectItem<T>? item = null;
+            // the loop allows us to jump over disabled items until we reach the next non-disabled one
+            for (var i = 0; i < Items.Count; i++)
+            {
+                index += direction;
+                if (index < 0)
+                {
+                    index = 0;
+                }
+
+                if (index >= Items.Count)
+                {
+                    index = Items.Count - 1;
+                }
+
+                if (Items[index].Disabled)
+                {
+                    continue;
+                }
+
+                item = Items[index];
+                if (!MultiSelection)
+                {
+                    // When SelectionOnEnter is true, we only update the visual highlight during navigation.
+                    // When false (default), the value is immediately updated as the user moves through the list.
+                    if (!SelectionOnEnter)
+                    {
+                        _selectedValues.Clear();
+                        _selectedValues.Add(item.Value);
+                        await SetValueAndUpdateTextAsync(item.Value, updateText: true);
+                    }
+
+                    await HighlightItemAsync(item);
+                    break;
+                }
+
+                // in multiselect mode don't select anything, just highlight.
+                // selecting is done by Enter
+                await HighlightItemAsync(item);
+                break;
+            }
+
+            await _elementReference.SetText(ReadText);
+            await ScrollToItemAsync(item);
+        }
+
+        private ValueTask ScrollToItemAsync(HamkareSelectItem<T>? item)
+            => item != null ? ScrollManager.ScrollToListItemAsync(item.ItemId) : ValueTask.CompletedTask;
+
+        private async Task SelectFirstItem(string? startChar = null)
+        {
+            IReadOnlyCollection<HamkareSelectItem<T>> selectList = Items;
+
+            if (!_openState.Value)
+            {
+                // When closed, use shadow lookup to include all items (visible + hidden)
+                selectList = _context.ShadowItems;
+            }
+
+            if (selectList.Count == 0)
+            {
+                return;
+            }
+
+            if (!string.IsNullOrWhiteSpace(startChar))
+            {
+                // SelectItemBySearch handles disabled items
+                var searchItem = SelectItemBySearch(selectList, startChar);
+                if (searchItem is not null)
+                {
+                    await SelectAndHighlightItemAsync(searchItem);
+                    return;
+                }
+            }
+
+            // Find first non-disabled item
+            foreach (var item in selectList)
+            {
+                if (item.Disabled)
+                {
+                    continue;
+                }
+
+                await SelectAndHighlightItemAsync(item);
+                return;
+            }
+        }
+
+        private HamkareSelectItem<T>? SelectItemBySearch(IReadOnlyCollection<HamkareSelectItem<T>> items, string inputChar)
+        {
+            UpdateSearchText(inputChar);
+
+            HamkareSelectItem<T>? activeItem = null;
+            HamkareSelectItem<T>? previousItem = null;
+            HamkareSelectItem<T>? firstMatch = null;
+            HamkareSelectItem<T>? nextMatch = null;
+            var foundPrevious = false;
+
+            foreach (var item in items)
+            {
+                TrackSpecialItems(item, ref activeItem, ref previousItem);
+
+                if (IsMatch(item))
+                {
+                    firstMatch ??= item;
+
+                    if (foundPrevious)
+                    {
+                        nextMatch ??= item;
+                    }
+
+                    if (item == previousItem)
+                    {
+                        foundPrevious = true;
+                    }
+                }
+            }
+
+            return DetermineResult(activeItem, previousItem, firstMatch, nextMatch);
+
+            void UpdateSearchText(string input)
+            {
+                var now = TimeProvider.GetUtcNow();
+
+                if (now - _lastSearchTime > QuickSearchInterval)
+                {
+                    _lastSelectedId = _activeItemId;
+                    _searchText = input;
+                }
+                else
+                {
+                    _searchText += input;
+                }
+
+                _lastSearchTime = now;
+            }
+
+            void TrackSpecialItems(HamkareSelectItem<T> item, ref HamkareSelectItem<T>? active, ref HamkareSelectItem<T>? previous)
+            {
+                if (item.ItemId == _activeItemId)
+                {
+                    active = item;
+                }
+
+                if (item.ItemId == _lastSelectedId)
+                {
+                    previous = item;
+                }
+            }
+
+            bool IsMatch(HamkareSelectItem<T> item)
+            {
+                if (item.Disabled)
+                {
+                    return false;
+                }
+
+                var text = ConvertSet(item.Value);
+                return text is not null && text.StartsWith(_searchText, StringComparison.InvariantCultureIgnoreCase);
+            }
+
+            HamkareSelectItem<T>? DetermineResult(HamkareSelectItem<T>? active, HamkareSelectItem<T>? previous,
+                                               HamkareSelectItem<T>? first, HamkareSelectItem<T>? next)
+            {
+                if (first is null)
+                {
+                    return active;
+                }
+
+                if (previous is null)
+                {
+                    return first;
+                }
+
+                return next ?? first;
+            }
+        }
+
+        private async Task SelectAndHighlightItemAsync(HamkareSelectItem<T> item)
+        {
+            if (!MultiSelection)
+            {
+                _selectedValues.Clear();
+                _selectedValues.Add(item.Value);
+                await SetValueAndUpdateTextAsync(item.Value, updateText: true);
+                await UpdateSelectedValuesStateAsync();
+            }
+
+            await HighlightItemAsync(item);
+            await _elementReference.SetText(ReadText);
+            await ScrollToItemAsync(item);
+        }
+
+        private async Task SelectLastItem()
+        {
+            if (Items.Count == 0)
+            {
+                return;
+            }
+
+            var item = Items.LastOrDefault(x => !x.Disabled);
+            if (item == null)
+            {
+                return;
+            }
+
+            if (!MultiSelection)
+            {
+                _selectedValues.Clear();
+                _selectedValues.Add(item.Value);
+                await SetValueAndUpdateTextAsync(item.Value, updateText: true);
+            }
+
+            await HighlightItemAsync(item);
+            await _elementReference.SetText(ReadText);
+            await ScrollToItemAsync(item);
+        }
+
         internal Task HandleMouseDown(MouseEventArgs args)
         {
             if (args.Button != 0) // if it wasn't left click drop out
+            {
                 return Task.CompletedTask;
+            }
+
             return ToggleMenu();
         }
 
         /// <summary>
-        /// Opens or closes the drop-down menu.
+        /// Internal method for HamkareSelectItem to access the converted string value.
         /// </summary>
-        /// <remarks>
-        /// Has no effect if <c>Disabled</c> or <c>ReadOnly</c> is <c>true</c>.
-        /// </remarks>
-        public async Task ToggleMenu()
-        {
-            if (GetDisabledState() || GetReadOnlyState())
-                return;
-            if (_open)
-                await CloseMenu(true);
-            else
-                await OpenMenu();
-        }
+        internal string? ConvertValueToString(T? value) => ConvertSet(value);
 
         /// <summary>
-        /// Opens the drop-down menu.
+        /// Internal method for the context to access the current selected values.
         /// </summary>
-        /// <remarks>
-        /// Has no effect if <c>Disabled</c> or <c>ReadOnly</c> is <c>true</c>.
-        /// </remarks>
-        public async Task OpenMenu()
+        internal IReadOnlyCollection<T?>? GetSelectedValues() => _selectedValuesState.Value;
+
+        private bool CanHandleKeys() => !GetDisabledState() && !GetReadOnlyState();
+
+        private async Task HandleArrowUpAsync(KeyboardEventArgs args)
         {
-            if (GetDisabledState() || GetReadOnlyState())
-                return;
-
-            _open = true;
-            _needsHighlightAfterRender = true;
-            UpdateIcon();
-            StateHasChanged();
-
-            //Scroll the active item on each opening
-            if (_activeItemId != null)
+            if (args.AltKey)
             {
-                var index = _items.FindIndex(x => x.ItemId == _activeItemId);
-                if (index > 0)
+                await CloseMenu();
+                return;
+            }
+
+            if (!_openState.Value)
+            {
+                await OpenMenu();
+                return;
+            }
+
+            await SelectPreviousItem();
+        }
+
+        private async Task HandleArrowDownAsync(KeyboardEventArgs args)
+        {
+            if (args.AltKey)
+            {
+                await OpenMenu();
+                return;
+            }
+
+            if (!_openState.Value)
+            {
+                await OpenMenu();
+                return;
+            }
+
+            await SelectNextItem();
+        }
+
+        private async Task HandleEnterAsync()
+        {
+            var index = Items.FindIndex(x => x.ItemId == _activeItemId);
+            if (!MultiSelection)
+            {
+                if (!_openState.Value)
                 {
-                    var item = _items[index];
-                    await ScrollToItemAsync(item);
+                    await OpenMenu();
+                    return;
+                }
+
+                // this also closes the menu
+                await SelectOption(index);
+                return;
+            }
+
+            if (!_openState.Value)
+            {
+                await OpenMenu();
+                return;
+            }
+
+            await SelectOption(index);
+            await _elementReference.SetText(ReadText);
+        }
+
+        private async Task HandleKeyAAsync(KeyboardEventArgs args)
+        {
+            if (args.CtrlKey)
+            {
+                if (MultiSelection)
+                {
+                    await SelectAllClickAsync();
+                    StateHasChanged();
                 }
             }
-            //disable escape propagation: if selectmenu is open, only the select popover should close and underlying components should not handle escape key
-            await KeyInterceptorService.UpdateKeyAsync(_elementId, new("Escape", stopDown: "key+none"));
-
-            await OnOpen.InvokeAsync();
+            else if (!args.ShiftKey && !args.AltKey && !args.MetaKey)
+            {
+                await SelectFirstItem(args.Key.ToLowerInvariant());
+                await FocusAsync();
+            }
         }
 
-        /// <summary>
-        /// Closes the drop-down menu.
-        /// </summary>
-        /// <remarks>
-        /// Has no effect if <c>Disabled</c> or <c>ReadOnly</c> is <c>true</c>.
-        /// </remarks>
-        public async Task CloseMenu(bool focusAgain = true)
+        private async Task HandleCharacterSearchAsync(KeyboardEventArgs args)
         {
-            _open = false;
-            UpdateIcon();
-            if (focusAgain)
+            if (args.CtrlKey || args.ShiftKey || args.AltKey || args.MetaKey)
             {
-                StateHasChanged();
-                await OnBlur.InvokeAsync(new FocusEventArgs());
-                _elementReference.FocusAsync().CatchAndLog(ignoreExceptions: true);
-                StateHasChanged();
+                return;
             }
 
-            //enable escape propagation: the select popover was closed, now underlying components are allowed to handle escape key
-            await KeyInterceptorService.UpdateKeyAsync(_elementId, new("Escape", stopDown: "none"));
+            var key = args.Key;
+            if (string.IsNullOrWhiteSpace(key))
+            {
+                return;
+            }
 
-            await OnClose.InvokeAsync();
+            key = key.ToLowerInvariant();
+            if (key.Length != 1)
+            {
+                return;
+            }
+
+            await SelectFirstItem(key);
+            await FocusAsync();
         }
 
-        private void UpdateIcon()
+        internal Task OnBlurAsync(FocusEventArgs obj)
         {
-            _currentIcon = !string.IsNullOrWhiteSpace(AdornmentIcon) ? AdornmentIcon : _open ? CloseIcon : OpenIcon;
+            return OnBlurredAsync(obj);
         }
 
         protected override void OnInitialized()
@@ -953,12 +1400,32 @@ namespace HamkareBlazor
                         new("/./", subscribeDown: true, subscribeUp: true)
                     ]);
 
-                await KeyInterceptorService.SubscribeAsync(_elementId, options, keyDown: HandleKeyDownAsync, keyUp: HandleKeyUpAsync);
+                await KeyInterceptorService.SubscribeAsync(ElementId, options, keys => keys
+                    .HookKeyUp(args => OnKeyUp.InvokeAsync(args))
+                    .When(CanHandleKeys, builder => builder
+                        .HookKeyDown(args => OnKeyDown.InvokeAsync(args))
+                        .OnKeyDown("Tab", () => CloseMenu(false))
+                        .OnKeyDown("ArrowUp", HandleArrowUpAsync)
+                        .OnKeyDown("ArrowDown", HandleArrowDownAsync)
+                        .OnKeyDown(" ", ToggleMenu)
+                        .OnKeyDown("Escape", () => CloseMenu(true))
+                        .OnKeyDown("Home", () => SelectFirstItem())
+                        .OnKeyDown("End", SelectLastItem)
+                        .OnKeyDownAny(["Enter", "NumpadEnter"], HandleEnterAsync)
+                        .OnKeyDownAny(["a", "A"], HandleKeyAAsync)
+                        .OnKeyDown("/^[^ ]$/", HandleCharacterSearchAsync)));
             }
 
             await base.OnAfterRenderAsync(firstRender);
 
-            if (firstRender)
+            var needsFitContentRefresh = _needsFitContentRefresh;
+            _needsFitContentRefresh = false;
+
+            if (needsFitContentRefresh)
+            {
+                UpdateFitContent();
+            }
+            else if (firstRender)
             {
                 // we need to render the initial Value which is not possible without the items
                 // which supply the RenderFragment. So in this case, a second render is necessary
@@ -975,7 +1442,7 @@ namespace HamkareBlazor
                 {
                     if (MultiSelection)
                     {
-                        var firstNonDisabled = _items.FirstOrDefault(x => !x.Disabled);
+                        var firstNonDisabled = Items.FirstOrDefault(x => !x.Disabled);
                         await HighlightItemAsync(firstNonDisabled);
                     }
                     else
@@ -983,6 +1450,79 @@ namespace HamkareBlazor
                         await HighlightItemForValueAsync(ReadValue);
                     }
                 });
+
+                if (_openState.Value && _activeItemId is not null)
+                {
+                    var index = Items.FindIndex(x => x.ItemId == _activeItemId);
+                    if (index > 0)
+                    {
+                        await ScrollToItemAsync(Items[index]);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets the resolved modal overlay value, using the global default from <see cref="PopoverOptions"/> if not explicitly set.
+        /// </summary>
+        protected bool GetModal() => Modal ?? PopoverService.PopoverOptions.ModalOverlay;
+
+        protected RenderFragment? GetSelectedValuePresenter()
+        {
+            if (!_context.TryGetShadowItemByValue(ReadValue, out var item))
+            {
+                return null; //<-- for now. we'll add a custom template to present values (set from outside) which are not on the list?
+            }
+
+            return item.ChildContent;
+        }
+
+        /// <summary>
+        /// Occurs when the <c>Clear</c> button has been clicked.
+        /// </summary>
+        /// <remarks>
+        /// This is the first event raised when the clear button is clicked.
+        /// The <see cref="SelectedValues"/> are cleared and the <see cref="OnClearButtonClick"/> event is raised.
+        /// </remarks>
+        protected async ValueTask SelectClearButtonClickHandlerAsync(MouseEventArgs e)
+        {
+            await SetValueAndUpdateTextAsync(default, false);
+            await SetTextAndUpdateValueAsync(null, false);
+            _selectedValues.Clear();
+            await BeginValidateAsync();
+            StateHasChanged();
+            await UpdateSelectedValuesStateAsync();
+            FieldChanged(_selectedValues);
+            await OnClearButtonClick.InvokeAsync(e);
+        }
+
+        private async Task UpdateSelectedValuesStateAsync(IEqualityComparer<T?>? comparer = null)
+        {
+            await _selectedValuesState.SetValueAsync(new HashSet<T?>(_selectedValues, comparer ?? Comparer));
+            await _context.NotifySelectionChangedAsync();
+        }
+
+        protected async Task SetCustomizedTextAsync(string text, bool updateValue = true,
+            IReadOnlyList<string?>? selectedConvertedValues = null,
+            Func<IReadOnlyList<string?>?, string>? multiSelectionTextFunc = null)
+        {
+            // The Text property of the control is updated
+            var customText = multiSelectionTextFunc?.Invoke(selectedConvertedValues);
+            await SetTextCoreAsync(customText);
+
+            // The comparison is made on the multiSelectionText variable
+            if (_multiSelectionText != text)
+            {
+                _multiSelectionText = text;
+                if (!string.IsNullOrWhiteSpace(_multiSelectionText))
+                {
+                    Touched = true;
+                }
+
+                if (updateValue)
+                {
+                    await UpdateValuePropertyAsync(false);
+                }
             }
         }
 
@@ -997,240 +1537,33 @@ namespace HamkareBlazor
                 : base.ConvertSet(input);
         }
 
-        /// <summary>
-        /// Internal method for HamkareSelectItem to access the converted string value.
-        /// </summary>
-        internal string? ConvertValueToString(T? value) => ConvertSet(value);
-
-        /// <summary>
-        /// Throws an exception if the specified item is not compatible with this component.
-        /// </summary>
-        /// <param name="selectItem">The item to compare.  Should be of type <c>T</c> for this component.</param>
-        public void CheckGenericTypeMatch(object selectItem)
+        protected override Task UpdateValuePropertyAsync(bool updateText)
         {
-            var itemT = selectItem.GetType().GenericTypeArguments[0];
-            if (itemT != typeof(T))
-                throw new GenericTypeMismatchException("HamkareSelect", "HamkareSelectItem", typeof(T), itemT);
-        }
-
-        /// <summary>
-        /// Sets the focus to this component.
-        /// </summary>
-        public override ValueTask FocusAsync()
-        {
-            return _elementReference.FocusAsync();
-        }
-
-        /// <summary>
-        /// Releases the focus from this component.
-        /// </summary>
-        public override ValueTask BlurAsync()
-        {
-            return _elementReference.BlurAsync();
-        }
-
-        /// <summary>
-        /// Selects the text within this component.
-        /// </summary>
-        public override ValueTask SelectAsync()
-        {
-            return _elementReference.SelectAsync();
-        }
-
-        /// <summary>
-        /// Selects a portion of text within this component.
-        /// </summary>
-        /// <param name="pos1">The index of the first character to select.  (Starting at <c>0</c>.)</param>
-        /// <param name="pos2">The index of the last character to select.</param>
-        public override ValueTask SelectRangeAsync(int pos1, int pos2)
-        {
-            return _elementReference.SelectRangeAsync(pos1, pos2);
-        }
-
-        /// <summary>
-        /// Occurs when the <c>Clear</c> button has been clicked.
-        /// </summary>
-        /// <remarks>
-        /// This is the first event raised when the clear button is clicked.
-        /// The <see cref="SelectedValues"/> are cleared and the <see cref="OnClearButtonClick"/> event is raised.
-        /// </remarks>
-        protected async ValueTask SelectClearButtonClickHandlerAsync(MouseEventArgs e)
-        {
-            await SetValueAndUpdateTextAsync(default, false);
-            await SetTextAndUpdateValueAsync(default, false);
-            _selectedValues.Clear();
-            await BeginValidateAsync();
-            StateHasChanged();
-            await _selectedValuesState.SetValueAsync(new HashSet<T?>(_selectedValues, Comparer));
-            FieldChanged(_selectedValues);
-            await OnClearButtonClick.InvokeAsync(e);
-        }
-
-        protected async Task SetCustomizedTextAsync(string text, bool updateValue = true,
-            List<string?>? selectedConvertedValues = null,
-            Func<List<string?>?, string>? multiSelectionTextFunc = null)
-        {
-            // The Text property of the control is updated
-            var customText = multiSelectionTextFunc?.Invoke(selectedConvertedValues);
-            await SetTextCoreAsync(customText);
-
-            // The comparison is made on the multiSelectionText variable
-            if (_multiSelectionText != text)
+            // For MultiSelection of non-string T's we don't update the Value!!!
+            if (typeof(T) == typeof(string) || !MultiSelection)
             {
-                _multiSelectionText = text;
-                if (!string.IsNullOrWhiteSpace(_multiSelectionText))
-                    Touched = true;
-                if (updateValue)
-                    await UpdateValuePropertyAsync(false);
-            }
-        }
-
-        /// <summary>
-        /// The icon used for selected items.
-        /// </summary>
-        /// <remarks>
-        /// Defaults to <see cref="Icons.Material.Filled.CheckBox"/>.  Only applies when <see cref="MultiSelection"/> is <c>true</c>.
-        /// </remarks>
-        [Parameter]
-        [Category(CategoryTypes.FormComponent.ListAppearance)]
-        public string CheckedIcon { get; set; } = Icons.Material.Filled.CheckBox;
-
-        /// <summary>
-        /// The icon used for unselected items.
-        /// </summary>
-        /// <remarks>
-        /// Defaults to <see cref="Icons.Material.Filled.CheckBoxOutlineBlank"/>.  Only applies when <see cref="MultiSelection"/> is <c>true</c>.
-        /// </remarks>
-        [Parameter]
-        [Category(CategoryTypes.FormComponent.ListAppearance)]
-        public string UncheckedIcon { get; set; } = Icons.Material.Filled.CheckBoxOutlineBlank;
-
-        /// <summary>
-        /// The icon used when at least one, but not all, items are selected.
-        /// </summary>
-        /// <remarks>
-        /// Defaults to <see cref="Icons.Material.Filled.IndeterminateCheckBox"/>.  Only applies when <see cref="MultiSelection"/> is <c>true</c>.
-        /// </remarks>
-        [Parameter]
-        [Category(CategoryTypes.FormComponent.ListAppearance)]
-        public string IndeterminateIcon { get; set; } = Icons.Material.Filled.IndeterminateCheckBox;
-
-        /// <summary>
-        /// The icon to display whether all, none, or some items are selected.
-        /// </summary>
-        /// <remarks>
-        /// Only applies when <see cref="MultiSelection"/> is <c>true</c>.
-        /// If all items are selected, <see cref="CheckedIcon"/> is returned.
-        /// If no items are selected, <see cref="UncheckedIcon"/> is returned.
-        /// Otherwise, <see cref="IndeterminateIcon"/> is returned.
-        /// </remarks>
-        protected string SelectAllCheckBoxIcon
-        {
-            get => _selectAllChecked.HasValue ? _selectAllChecked.Value ? CheckedIcon : UncheckedIcon : IndeterminateIcon;
-        }
-
-        internal async Task HandleKeyDownAsync(KeyboardEventArgs obj)
-        {
-            if (GetDisabledState() || GetReadOnlyState())
-                return;
-            var key = obj.Key.ToLowerInvariant();
-            if (key.Length == 1 && key != " " && !(obj.CtrlKey || obj.ShiftKey || obj.AltKey || obj.MetaKey))
-            {
-                await SelectFirstItem(key);
-                await FocusAsync();
-                return;
-            }
-            switch (obj.Key)
-            {
-                case "Tab":
-                    await CloseMenu(false);
-                    break;
-                case "ArrowUp":
-                    if (obj.AltKey)
-                    {
-                        await CloseMenu();
-                        break;
-                    }
-
-                    if (_open == false)
-                    {
-                        await OpenMenu();
-                        break;
-                    }
-
-                    await SelectPreviousItem();
-                    break;
-                case "ArrowDown":
-                    if (obj.AltKey)
-                    {
-                        await OpenMenu();
-                        break;
-                    }
-
-                    if (_open == false)
-                    {
-                        await OpenMenu();
-                        break;
-                    }
-
-                    await SelectNextItem();
-                    break;
-                case " ":
-                    await ToggleMenu();
-                    break;
-                case "Escape":
-                    await CloseMenu(true);
-                    break;
-                case "Home":
-                    await SelectFirstItem();
-                    break;
-                case "End":
-                    await SelectLastItem();
-                    break;
-                case "Enter":
-                case "NumpadEnter":
-                    var index = _items.FindIndex(x => x.ItemId == _activeItemId);
-                    if (!MultiSelection)
-                    {
-                        if (!_open)
-                        {
-                            await OpenMenu();
-                            break;
-                        }
-
-                        // this also closes the menu
-                        await SelectOption(index);
-                        break;
-                    }
-
-                    if (!_open)
-                    {
-                        await OpenMenu();
-                        break;
-                    }
-
-                    await SelectOption(index);
-                    await _elementReference.SetText(ReadText);
-                    break;
-                case "a":
-                case "A":
-                    if (obj.CtrlKey)
-                    {
-                        if (MultiSelection)
-                        {
-                            await SelectAllClickAsync();
-                            StateHasChanged();
-                        }
-                    }
-                    break;
+                base.UpdateValuePropertyAsync(updateText);
             }
 
-            await OnKeyDown.InvokeAsync(obj);
+            return Task.CompletedTask;
         }
 
-        internal Task HandleKeyUpAsync(KeyboardEventArgs obj)
+        protected override Task UpdateTextPropertyAsync(bool updateValue)
         {
-            return OnKeyUp.InvokeAsync(obj);
+            // when multiselection is true, we return
+            // a comma separated list of selected values
+            if (MultiSelectionTextFunc != null)
+            {
+                return MultiSelection
+                    ? SetCustomizedTextAsync(string.Join(Delimiter, _selectedValues.Select(ConvertSet)),
+                        selectedConvertedValues: _selectedValues.Select(ConvertSet).ToList(),
+                        multiSelectionTextFunc: MultiSelectionTextFunc)
+                    : base.UpdateTextPropertyAsync(updateValue);
+            }
+
+            return MultiSelection
+                ? SetTextAndUpdateValueAsync(string.Join(Delimiter, _selectedValues.Select(ConvertSet)))
+                : base.UpdateTextPropertyAsync(updateValue);
         }
 
         /// <summary>
@@ -1246,111 +1579,19 @@ namespace HamkareBlazor
         }
 
         /// <summary>
-        /// Clears all selections.
+        /// Gets whether the value is currently selected.
         /// </summary>
-        /// <remarks>
-        /// To reset validation errors (e.g. required), use <see cref="ResetValueAsync"/>
-        /// </remarks>
-        public async Task ClearAsync()
+        /// <param name="value">The value to test.</param>
+        /// <returns>When <c>true</c>, the specified value exists in <see cref="SelectedValues"/>.</returns>
+        protected override bool HasValue(T? value)
         {
-            await SetValueAndUpdateTextAsync(default, false);
-            await SetTextAndUpdateValueAsync(default, false);
-            _selectedValues.Clear();
-            await BeginValidateAsync();
-            StateHasChanged();
-            await _selectedValuesState.SetValueAsync(new HashSet<T?>(_selectedValues, Comparer));
-            FieldChanged(_selectedValues);
-        }
-
-        private async Task SelectAllClickAsync()
-        {
-            // Manage the fake tri-state of a checkbox
-            if (!_selectAllChecked.HasValue)
-                _selectAllChecked = true;
-            else if (_selectAllChecked.Value)
-                _selectAllChecked = false;
-            else
-                _selectAllChecked = true;
-            // Define the items selection
-            if (_selectAllChecked.Value)
-                await SelectAllItems();
-            else
-                await ClearAsync();
-        }
-
-        private async Task SelectAllItems()
-        {
-            if (!MultiSelection)
-                return;
-            var selectedValues = new HashSet<T?>(_items.Where(x => !x.Disabled && x.Value != null).Select(x => x.Value), Comparer);
-            _selectedValues = new HashSet<T?>(selectedValues, Comparer);
-            if (MultiSelectionTextFunc != null)
+            // Fixes issue #4328
+            if (MultiSelection)
             {
-                await SetCustomizedTextAsync(string.Join(Delimiter, _selectedValues.Select(ConvertSet)),
-                    selectedConvertedValues: _selectedValues.Select(ConvertSet).ToList(),
-                    multiSelectionTextFunc: MultiSelectionTextFunc);
+                return _selectedValues.Count != 0;
             }
-            else
-            {
-                await SetTextAndUpdateValueAsync(string.Join(Delimiter, _selectedValues.Select(ConvertSet)), updateValue: false);
-            }
-            UpdateSelectAllChecked();
-            _selectedValues = selectedValues; // need to force selected values because Blazor overwrites it under certain circumstances due to changes of Text or Value
-            await BeginValidateAsync();
-            await _selectedValuesState.SetValueAsync(new HashSet<T?>(_selectedValues, Comparer));
-            FieldChanged(_selectedValues);
-            if (MultiSelection && typeof(T) == typeof(string))
-                SetValueAndUpdateTextAsync((T?)(object?)ReadText, updateText: false).CatchAndLog();
-        }
 
-        /// <summary>
-        /// Links a selection item to this component.
-        /// </summary>
-        /// <param name="item">The item to add.</param>
-        public void RegisterShadowItem(HamkareSelectItem<T>? item)
-        {
-            if (item == null)
-                return;
-
-            _shadowLookup[item.Value] = item;
-
-            if (!FitContent) return;
-
-            var stringValue = ToStringFunc?.Invoke(item.Value) ?? ConvertSet(item.Value);
-
-            if (_longestItem is null || stringValue?.Length > _longestItemLength)
-            {
-                _longestItem = item;
-                _longestItemLength = stringValue?.Length ?? 0;
-
-                StateHasChanged();
-            }
-        }
-
-        /// <summary>
-        /// Unregisters a selection item to this component.
-        /// </summary>
-        /// <param name="item">The item to remove.</param>
-        public void UnregisterShadowItem(HamkareSelectItem<T>? item)
-        {
-            if (item == null)
-                return;
-            _shadowLookup.Remove(item.Value);
-        }
-
-        private async Task OnFocusOutAsync(FocusEventArgs focusEventArgs)
-        {
-            if (_open)
-            {
-                // when the menu is open we immediately get back the focus if we lose it (i.e. because of checkboxes in multi-select)
-                // otherwise we can't receive key strokes any longer
-                await FocusAsync();
-            }
-        }
-
-        internal Task OnBlurAsync(FocusEventArgs obj)
-        {
-            return base.OnBlur.InvokeAsync(obj);
+            return base.HasValue(value);
         }
 
         /// <inheritdoc />
@@ -1360,22 +1601,8 @@ namespace HamkareBlazor
 
             if (IsJSRuntimeAvailable)
             {
-                await KeyInterceptorService.UnsubscribeAsync(_elementId);
+                await KeyInterceptorService.UnsubscribeAsync(ElementId);
             }
-        }
-
-        /// <summary>
-        /// Gets whether the value is currently selected.
-        /// </summary>
-        /// <param name="value">The value to test.</param>
-        /// <returns>When <c>true</c>, the specified value exists in <see cref="SelectedValues"/>.</returns>
-        protected override bool HasValue(T? value)
-        {
-            // Fixes issue #4328
-
-            if (MultiSelection)
-                return _selectedValues?.Any() ?? false;
-            return base.HasValue(value);
         }
     }
 }

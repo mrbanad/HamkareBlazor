@@ -4,7 +4,6 @@
 
 namespace HamkareBlazor.Justification.StackedBars;
 
-#nullable enable
 internal class FlexStartStrategy : IStackedBarPositionStrategy
 {
     public double[] CalculatePositions(StackedBarContext ctx)
@@ -13,7 +12,7 @@ internal class FlexStartStrategy : IStackedBarPositionStrategy
         var startingPoint = ctx.HorizontalStartSpace + (ctx.BarWidth / 2);
 
         for (var i = 0; i < ctx.MaxColumns; i++)
-            positions[i] = startingPoint + i * (ctx.SpaceBetweenBars + ctx.BarWidth);
+            positions[i] = startingPoint + (i * (ctx.SpaceBetweenBars + ctx.BarWidth));
 
         return positions;
     }

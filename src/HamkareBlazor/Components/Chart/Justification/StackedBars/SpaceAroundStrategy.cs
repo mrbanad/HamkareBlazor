@@ -4,7 +4,6 @@
 
 namespace HamkareBlazor.Justification.StackedBars;
 
-#nullable enable
 internal class SpaceAroundStrategy : IStackedBarPositionStrategy
 {
     public double[] CalculatePositions(StackedBarContext ctx)
@@ -13,7 +12,7 @@ internal class SpaceAroundStrategy : IStackedBarPositionStrategy
         var spaceAround = ctx.HorizontalSpace / (ctx.MaxColumns * 2);
 
         for (var i = 0; i < ctx.MaxColumns; i++)
-            positions[i] = ctx.HorizontalStartSpace + spaceAround + i * (spaceAround * 2);
+            positions[i] = ctx.HorizontalStartSpace + spaceAround + (i * (spaceAround * 2));
 
         return positions;
     }

@@ -4,7 +4,6 @@
 
 namespace HamkareBlazor.State;
 
-#nullable enable
 internal interface IParameterScopeContainer : IParameterContainer, IDisposable
 {
     /// <summary>
