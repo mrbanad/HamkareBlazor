@@ -57,8 +57,6 @@ namespace HamkareBlazor
         [Parameter]
         [Category(CategoryTypes.FormComponent.PickerBehavior)]
         public OpenTo OpenTo { get; set; } = OpenTo.Date;
-
-        hjafdshhafhkf
         
         /// <summary>
         /// The format for selected dates.
@@ -66,8 +64,7 @@ namespace HamkareBlazor
         /// </summary>
         [Parameter, ParameterState]
         [Category(CategoryTypes.FormComponent.Behavior)]
-        public string? DateFormat { get; set; } =
-            Thread.CurrentThread.CurrentUICulture.IsRtl() ? "HH:mm yyyy/MM/dd" : "HH:mm MM/dd/yyyy";
+        public string? DateFormat { get; set; }
 
         /// <summary>
         /// Occurs when the <see cref="DateFormat"/> has changed.

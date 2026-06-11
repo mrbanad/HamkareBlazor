@@ -370,52 +370,85 @@
   <data name="HamkareFileUpload_FileSizeError" xml:space="preserve">
     <value>'{0}' dosyası izin verilen maksimum boyutu {1} byte aşıyor.</value>
   </data>
-  <data name="ErrorServerSendNull" xml:space="preserve">
-    <value>Sunucudan özel bir mesaj alınamadı!</value>
+  <data name="HamkareDataGrid_CollapseGroup" xml:space="preserve">
+    <value>Seti katlamak</value>
   </data>
-  <data name="ErrorServerExceptionDontHaveMessage" xml:space="preserve">
-    <value>Sunucu bir hata mesajı vermedi!</value>
+  <data name="HamkareDataGrid_ExpandGroup" xml:space="preserve">
+    <value>Grubu genişlet</value>
   </data>
-  <data name="ErrorServerStatusCode" xml:space="preserve">
-    <value>Sunucudan {0} hatası alındı!</value>
+  <data name="HamkareDataGrid_SelectAllRows" xml:space="preserve">
+    <value>Tüm satırları seç</value>
   </data>
-  <data name="ErrorConnectWithServer" xml:space="preserve">
-    <value>Sunucu ile iletişim hatası!</value>
+  <data name="HamkareDataGrid_SelectRow" xml:space="preserve">
+    <value>Satırı seçin</value>
   </data>
-  <data name="ErrorReadFile" xml:space="preserve">
-    <value>Dosya okuma hatası!</value>
+  <data name="HamkareDateRangePicker_End" xml:space="preserve">
+    <value>Bitiş tarihi</value>
   </data>
-  <data name="ErrorUploadingFile" xml:space="preserve">
-    <value>Dosya yüklenirken bilinmeyen bir hata oluştu!</value>
+  <data name="HamkareDateRangePicker_Start" xml:space="preserve">
+    <value>Başlangıç ​​tarihi</value>
   </data>
-  <data name="ErrorNotFound" xml:space="preserve">
-    <value>Belirtilen {0} bulunamadı!</value>
+  <data name="HamkareExitPrompt_Cancel" xml:space="preserve">
+    <value>İptal etmek</value>
   </data>
-  <data name="SuccessActiveMessage" xml:space="preserve">
-    <value>İstenen {0} etkinleştirildi!</value>
+  <data name="HamkareExitPrompt_Exit" xml:space="preserve">
+    <value>Tamam</value>
   </data>
-  <data name="SuccessDeactivateMessage" xml:space="preserve">
-    <value>İstenen {0} devre dışı bırakıldı!</value>
+  <data name="HamkareExitPrompt_Text" xml:space="preserve">
+    <value>Siteden ayrılıyor musunuz? Yaptığınız değişiklikler kaydedilmeyebilir.</value>
   </data>
-  <data name="SubmitSuccessMessage" xml:space="preserve">
-    <value>{0} kaydı başarıyla tamamlandı!</value>
+  <data name="HamkareExitPrompt_Title" xml:space="preserve">
+    <value>Navigasyonu Onayla</value>
   </data>
-  <data name="ErrorSubmit" xml:space="preserve">
-    <value>{0} kaydı sırasında bir sorun oluştu!</value>
+  <data name="HamkareFileUpload_Button" xml:space="preserve">
+    <value>Dosyalara göz at</value>
   </data>
-  <data name="RequiredNotFound" xml:space="preserve">
-    <value>Kayıt ve değişiklik için aktif {0} gereklidir!</value>
+  <data name="HamkareFileUpload_DragAndDrop" xml:space="preserve">
+    <value>Dosyaları buraya sürükleyin veya göz atmak için tıklayın.</value>
   </data>
-  <data name="Remove" xml:space="preserve">
-    <value>Kaldır</value>
+  <data name="HamkareFileUpload_MaximumFileCountExceeded" xml:space="preserve">
+    <value>Seçilen {0} dosya, maksimum {1} değerini aşıyor.</value>
   </data>
-  <data name="RemoveMessage" xml:space="preserve">
-    <value>Bu öğeyi silmek istediğinizden emin misiniz?</value>
+  <data name="HamkareRangeInput_End" xml:space="preserve">
+    <value>Son</value>
   </data>
-  <data name="Loading" xml:space="preserve">
-    <value>Yükleniyor</value>
+  <data name="HamkareRangeInput_Start" xml:space="preserve">
+    <value>Başlangıç</value>
   </data>
-  <data name="HamkareSelect_SelectAll" xml:space="preserve">
-    <value>Tümünü seç</value>
+  <data name="HamkareTable_CancelEditRow" xml:space="preserve">
+    <value>Düzenlemeyi iptal et</value>
+  </data>
+  <data name="HamkareTable_CollapseGroup" xml:space="preserve">
+    <value>Çökme grubu</value>
+  </data>
+  <data name="HamkareTable_CommitRow" xml:space="preserve">
+    <value>Düzenlemeyi kaydet</value>
+  </data>
+  <data name="HamkareTable_EditRow" xml:space="preserve">
+    <value>Satırı düzenle</value>
+  </data>
+  <data name="HamkareTable_ExpandGroup" xml:space="preserve">
+    <value>Grubu genişlet</value>
+  </data>
+  <data name="HamkareTable_Loading" xml:space="preserve">
+    <value>Yükleniyor...</value>
+  </data>
+  <data name="HamkareTabs_AddTab" xml:space="preserve">
+    <value>Sekme ekle</value>
+  </data>
+  <data name="HamkareTabs_CloseTab" xml:space="preserve">
+    <value>Sekmeyi kapat</value>
+  </data>
+  <data name="HamkareTabs_ScrollDown" xml:space="preserve">
+    <value>Sekmeleri aşağı kaydırın</value>
+  </data>
+  <data name="HamkareTabs_ScrollLeft" xml:space="preserve">
+    <value>Sekmeleri sola kaydırın</value>
+  </data>
+  <data name="HamkareTabs_ScrollRight" xml:space="preserve">
+    <value>Sekmeleri sağa kaydırın</value>
+  </data>
+  <data name="HamkareTabs_ScrollUp" xml:space="preserve">
+    <value>قم بتمرير علامات التبويب لأعلى</value>
   </data>
 </root>

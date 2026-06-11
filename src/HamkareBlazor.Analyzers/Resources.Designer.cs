@@ -60,7 +60,7 @@ namespace HamkareBlazor.Analyzers {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to https://hamkare.com/features/analyzers.
+        ///   Looks up a localized string similar to https://hamkare.com.
         /// </summary>
         internal static string HelpLinkUrl {
             get {
