@@ -229,4 +229,7 @@
   <data name="HamkareTabs_ScrollUp" xml:space="preserve">
     <value>پیمایش زبانه‌ها به بالا</value>
   </data>
+  <data name="HamkareSelect_SelectAll" xml:space="preserve">
+    <value>انتخاب همه</value>
+  </data>
 </root>

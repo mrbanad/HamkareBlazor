@@ -111,7 +111,7 @@ internal class PopoverService : IPopoverService, IBatchTimerHandler<HamkarePopov
         {
             if (ObserversCount == 0)
             {
-                throw new InvalidOperationException($"Missing <{nameof(HamkarePopoverProvider)} />, please add it to your layout. See https://hamkareblazor.com/getting-started/installation#manual-install-add-components");
+                throw new InvalidOperationException($"Missing <{nameof(HamkarePopoverProvider)} />, please add it to your layout. See https://hamkare.com/getting-started/installation#manual-install-add-components");
             }
         }
 
