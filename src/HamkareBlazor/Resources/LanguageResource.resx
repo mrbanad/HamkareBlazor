@@ -553,4 +553,7 @@
   <data name="HamkareExitPrompt_Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
+  <data name="HamkareSelect_SelectAll" xml:space="preserve">
+    <value>Select All</value>
+  </data>
 </root>

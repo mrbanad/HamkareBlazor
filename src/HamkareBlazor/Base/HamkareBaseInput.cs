@@ -648,6 +648,11 @@ namespace HamkareBlazor
                 Label = For.GetLabelString();
             }
             
+            if (HelperText == null && For != null)
+            {
+                Label = For.GetHelperString();
+            }
+            
             _userAttributesId = UserAttributes.FirstOrDefault(userAttribute => userAttribute.Key.Equals("id", StringComparison.InvariantCultureIgnoreCase)).Value?.ToString();
 
             if (_inputIdState.Value is null)

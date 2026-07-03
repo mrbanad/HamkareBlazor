@@ -1,6 +1,8 @@
 ﻿@namespace HamkareBlazor
 @typeparam T
+@using HamkareBlazor.Resources
 @inherits HamkareBaseInput<T>
+@inject InternalHamkareLocalizer Localizer
 
 <CascadingValue Name="SubscribeToParentForm" Value="false" IsFixed="true">
     <div class="@OuterClassname" id="@ElementId" @onfocusout="@OnFocusOutAsync" @onclick:stopPropagation @onmousedown:stopPropagation>
@@ -157,3 +159,7 @@ feature relies on pointerdown event resulting in the same order of events.
             AutoClose="@(!GetModal())"
             Modal="@GetModal()"
             OnClosed="@(() => CloseMenu(false))"/>
+
+@{
+    SelectAllText = Localizer[LanguageResource.HamkareSelect_SelectAll];
+}

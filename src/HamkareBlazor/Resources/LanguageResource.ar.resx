@@ -229,4 +229,7 @@
   <data name="HamkareTabs_ScrollUp" xml:space="preserve">
     <value>قم بتمرير علامات التبويب لأعلى</value>
   </data>
+  <data name="HamkareSelect_SelectAll" xml:space="preserve">
+    <value>حدد الكل</value>
+  </data>
 </root>

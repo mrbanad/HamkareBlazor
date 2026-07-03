@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Linq.Expressions;
 
@@ -19,13 +20,17 @@ namespace HamkareBlazor
             {
                 if (p.Expression is MemberExpression)
                 {
-                    resultingString = p.Member.Name + (resultingString != string.Empty ? "." : string.Empty) + resultingString;
+                    resultingString = p.Member.Name + (resultingString != string.Empty ? "." : string.Empty) +
+                                      resultingString;
                 }
+
                 p = p.Expression as MemberExpression;
             }
+
             return resultingString;
         }
 
+        /// Hamkare Customize
         /// <summary>
         /// Returns the display name attribute of the provided field property as a string. If this attribute is missing, the member name will be returned.
         /// </summary>
@@ -38,7 +43,35 @@ namespace HamkareBlazor
 #pragma warning disable IL2075
             var propertyInfo = memberExpression.Expression?.Type.GetProperty(memberExpression.Member.Name);
 #pragma warning restore IL2075
-            return propertyInfo?.GetCustomAttributes(typeof(LabelAttribute), true).Cast<LabelAttribute>().FirstOrDefault()?.Name ?? string.Empty;
+
+            var displayAttribute = propertyInfo?.GetCustomAttributes(typeof(DisplayAttribute), true)
+                .Cast<DisplayAttribute>().FirstOrDefault();
+            if (displayAttribute != null)
+            {
+                return displayAttribute.Name ?? string.Empty;
+            }
+
+            return propertyInfo?.GetCustomAttributes(typeof(LabelAttribute), true).Cast<LabelAttribute>()
+                .FirstOrDefault()?.Name ?? string.Empty;
+        }
+        
+        /// <summary>
+        /// Returns the display name attribute of the provided field property as a string. If this attribute is missing, the member name will be returned.
+        /// </summary>
+        public static string GetHelperString<T>(this Expression<Func<T>> expression)
+        {
+            var memberExpression = (MemberExpression)expression.Body;
+
+            // Currently we have no solution for this which is trimming incompatible
+            // A possible solution is to use source gen
+#pragma warning disable IL2075
+            var propertyInfo = memberExpression.Expression?.Type.GetProperty(memberExpression.Member.Name);
+#pragma warning restore IL2075
+
+            var displayAttribute = propertyInfo?.GetCustomAttributes(typeof(DisplayAttribute), true)
+                .Cast<DisplayAttribute>().FirstOrDefault();
+  
+                return displayAttribute?.Description ?? string.Empty;
         }
     }
 }

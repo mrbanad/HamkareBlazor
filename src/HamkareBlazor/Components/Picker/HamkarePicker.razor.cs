@@ -628,8 +628,8 @@ namespace HamkareBlazor
             if (Label == null && For != null)
                 Label = For.GetLabelString();
             
-            // if (HelperText == null && For != null)
-            //     HelperText = For.GetHelpTextString();
+            if (HelperText == null && For != null)
+                HelperText = For.GetHelperString();
         }
 
         private async Task EnsureKeyInterceptorAsync()

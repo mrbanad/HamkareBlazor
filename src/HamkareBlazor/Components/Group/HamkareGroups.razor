@@ -1,0 +1,12 @@
+﻿@namespace HamkareBlazor
+
+<HamkareExpansionPanels Elevation="0" Outlined="false" Class="@($"hamkare-width-full Group-section {Class}")" Gutters="false"
+                        MultiExpansion="true">
+    @ChildContent
+</HamkareExpansionPanels>
+
+@code {
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    [Parameter] public string? Class { get; set; }
+}
