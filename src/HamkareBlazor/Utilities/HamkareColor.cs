@@ -48,6 +48,7 @@ namespace HamkareBlazor.Utilities
     /// Represents a color with methods to manipulate color values.
     /// </summary>
     [Serializable]
+    [JsonConverter(typeof(HamkareColorJsonConverter))]
     public partial class HamkareColor : ISerializable, IEquatable<HamkareColor>, IParsable<HamkareColor>, IFormattable
     {
         private readonly record struct HSL(double H, double S, double L);

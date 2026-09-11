@@ -650,7 +650,7 @@ namespace HamkareBlazor
             
             if (HelperText == null && For != null)
             {
-                Label = For.GetHelperString();
+                HelperText = For.GetHelperString();
             }
             
             _userAttributesId = UserAttributes.FirstOrDefault(userAttribute => userAttribute.Key.Equals("id", StringComparison.InvariantCultureIgnoreCase)).Value?.ToString();

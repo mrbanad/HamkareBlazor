@@ -48,7 +48,7 @@ namespace HamkareBlazor
                 .Cast<DisplayAttribute>().FirstOrDefault();
             if (displayAttribute != null)
             {
-                return displayAttribute.Name ?? string.Empty;
+                return displayAttribute.GetName() ?? string.Empty;
             }
 
             return propertyInfo?.GetCustomAttributes(typeof(LabelAttribute), true).Cast<LabelAttribute>()
@@ -71,7 +71,7 @@ namespace HamkareBlazor
             var displayAttribute = propertyInfo?.GetCustomAttributes(typeof(DisplayAttribute), true)
                 .Cast<DisplayAttribute>().FirstOrDefault();
   
-                return displayAttribute?.Description ?? string.Empty;
+                return displayAttribute?.GetDescription() ?? string.Empty;
         }
     }
 }

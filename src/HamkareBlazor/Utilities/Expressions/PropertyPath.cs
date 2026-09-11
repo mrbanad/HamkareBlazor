@@ -44,7 +44,7 @@ internal static class PropertyPath
 
             var display = lastMember?.GetCustomAttribute<DisplayAttribute>();
             
-            return display?.Name ?? lastMember?.Name ??  string.Empty;
+            return display?.GetName() ?? lastMember?.Name ??  string.Empty;
         }
 
         public override string ToString() => GetPath();

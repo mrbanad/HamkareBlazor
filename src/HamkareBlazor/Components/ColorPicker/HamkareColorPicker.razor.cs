@@ -700,6 +700,15 @@ namespace HamkareBlazor
 
         private string AlphaSliderStyle => new StyleBuilder()
             .AddStyle($"background-image: linear-gradient(to {(RightToLeft ? "left" : "right")}, transparent, {ValueOrDefault.ToString(HamkareColorOutputFormats.RGB)})")
-            .Build();
+            .AddStyle("color",_value?.Value,!string.IsNullOrWhiteSpace(_value?.Value)) .Build();
+        
+        public override async Task SetParametersAsync(ParameterView parameters)
+        {
+            if (_valueState.Value != null)
+                Style = parameters.TryGetValue("Style", out string? style)
+                    ? style + $" color: {_valueState.Value};"
+                    : $"color: {_valueState.Value};";
+            await base.SetParametersAsync(parameters);
+        }
     }
 }
