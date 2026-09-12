@@ -232,4 +232,70 @@
   <data name="HamkareSelect_SelectAll" xml:space="preserve">
     <value>انتخاب همه</value>
   </data>
+  <data name="Error_ConnectWithServer" xml:space="preserve">
+    <value>خطا در ارتباط با سرور!</value>
+  </data>
+  <data name="Error_ServerExceptionDontHaveMessage" xml:space="preserve">
+    <value>سرور متن خطایی منتشر نکرده است!</value>
+  </data>
+  <data name="Error_ServerStatusCode" xml:space="preserve">
+    <value>خطای {0} از سرور دریافت شده است!</value>
+  </data>
+  <data name="Error_ServerSendNull" xml:space="preserve">
+    <value>پیام مشخصی از سرور دریافت نشده است!</value>
+  </data>
+  <data name="HamkareFileUpload_ErrorReadFile" xml:space="preserve">
+    <value>خطا در خواندن فایل!</value>
+  </data>
+  <data name="Ar" xml:space="preserve">
+    <value>عربی</value>
+  </data>
+  <data name="Fa" xml:space="preserve">
+    <value>فارسی</value>
+  </data>
+  <data name="Tr" xml:space="preserve">
+    <value>ترکی</value>
+  </data>
+  <data name="En" xml:space="preserve">
+    <value>انگلیسی</value>
+  </data>
+  <data name="HamkareDialog_Remove" xml:space="preserve">
+    <value>حذف</value>
+  </data>
+  <data name="HamkareDialog_RemoveMessage" xml:space="preserve">
+    <value>آیا از حذف این مورد مطمئن هستید؟</value>
+  </data>
+  <data name="HamkareForm_ErrorSubmit" xml:space="preserve">
+    <value>ثبت {0} با مشکل روبرو شده است!</value>
+  </data>
+  <data name="HamkareSnackbar_SuccessActiveMessage" xml:space="preserve">
+    <value>{0} موردنظر با موفقیت فعال شد!</value>
+  </data>
+  <data name="HamkareSnackbar_SuccessDeactivateMessage" xml:space="preserve">
+    <value>{0} موردنظر با موفقیت غیرفعال شد!</value>
+  </data>
+  <data name="HamkareForm_SuccessSubmit" xml:space="preserve">
+    <value>ثبت {0} با موفقیت انجام شد!</value>
+  </data>
+  <data name="HamkareSnackbar_RequiredNotFound" xml:space="preserve">
+    <value>{0} فعال برای ثبت یا تغییر لازم است!</value>
+  </data>
+  <data name="Return" xml:space="preserve">
+    <value>بازگشت</value>
+  </data>
+  <data name="Attachment" xml:space="preserve">
+    <value>پیوست</value>
+  </data>
+  <data name="HamkareFileUpload_WarningUploading" xml:space="preserve">
+    <value>در حال آپلود فایل ... </value>
+  </data>
+  <data name="HamkareFileUpload_ErrorUploading" xml:space="preserve">
+    <value>خطای ناشناخته در آپلود فایل!</value>
+  </data>
+  <data name="HamkareUpload_Video" xml:space="preserve">
+    <value>فیلم</value>
+  </data>
+  <data name="HamkareUpload_Image" xml:space="preserve">
+    <value>عکس</value>
+  </data>
 </root>

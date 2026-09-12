@@ -1,4 +1,7 @@
-﻿namespace HamkareBlazor.Extensions
+﻿using System.ComponentModel.DataAnnotations;
+using System.Reflection;
+
+namespace HamkareBlazor.Extensions
 {
     public static class EnumExtensions
     {
@@ -41,6 +44,28 @@
                 Adornment.End => Edge.End,
                 _ => Edge.False
             };
+        }
+        
+        /// <summary>
+        /// Converts a string to the corresponding enum value. Throws if conversion fails.
+        /// </summary>
+        public static TEnum ToEnum<TEnum>(this string value, bool ignoreCase = true) where TEnum : struct, Enum
+        {
+            return Enum.TryParse<TEnum>(value.Replace("-", ""), ignoreCase, out var result)
+                ? result
+                : throw new ArgumentException($"Unable to convert '{value}' to enum type {typeof(TEnum).Name}");
+        }
+
+        /// <summary>
+        /// Gets the display name of an enum value from its <see cref="DisplayAttribute"/> or returns its name.
+        /// </summary>
+        public static string GetEnumDisplayName(this Enum value)
+        {
+            var field = value.GetType().GetField(value.ToString());
+            if (field == null) return value.ToString();
+
+            var attribute = field.GetCustomAttribute<DisplayAttribute>();
+            return attribute?.GetName() ?? field.ToString() ?? value.ToString();
         }
     }
 }

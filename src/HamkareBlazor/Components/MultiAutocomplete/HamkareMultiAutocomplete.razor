@@ -1,0 +1,261 @@
+﻿@namespace HamkareBlazor
+@typeparam T
+@inherits HamkareAutocomplete<T>
+
+@{
+    base.BuildRenderTree(__builder);
+}
+
+<div class="Mud-input-control-helper-text-container multi-chip-container">
+    <div class="multi-chip-scroll-wrapper">
+
+        @if (_selectedItems.Count > 0)
+        {
+            <HamkareChipSet T="T"
+                            SelectionMode="SelectionMode.SingleSelection">
+
+                @foreach (var item in _selectedItems)
+                {
+                    if (item is not null &&
+                        !string.IsNullOrWhiteSpace(GetItemText(item)))
+                    {
+                        <HamkareChip T="T"
+                                     Value="item"
+                                     Color="@ChipColor"
+                                     OnClose="HandleChipClose">
+                            @GetItemText(item)
+                        </HamkareChip>
+                    }
+                }
+
+            </HamkareChipSet>
+        }
+
+    </div>
+</div>
+
+@code
+{
+    private readonly List<T> _selectedItems = [];
+
+    private EventCallback<T> _parentValueChanged;
+
+    private bool _hasParentValueChanged;
+
+    [Parameter]
+    public IReadOnlyList<T> SelectedItems { get; set; } = [];
+
+    [Parameter]
+    public EventCallback<IReadOnlyList<T>> SelectedItemsChanged { get; set; }
+
+    [Parameter]
+    public bool PreventDuplicates { get; set; } = true;
+
+    [Parameter]
+    public Color ChipColor { get; set; } = Color.Primary;
+
+    [Parameter]
+    public bool ChipCloseable { get; set; } = true;
+
+    [Parameter]
+    public EventCallback<T> ItemSelected { get; set; }
+
+    [Parameter]
+    public EventCallback<T> ItemRemoved { get; set; }
+
+
+    public override async Task SetParametersAsync(
+        ParameterView parameters)
+    {
+        if (parameters.TryGetValue<EventCallback<T>>(
+                nameof(ValueChanged),
+                out var valueChanged))
+        {
+            _parentValueChanged = valueChanged;
+            _hasParentValueChanged = valueChanged.HasDelegate;
+        }
+        else
+        {
+            _parentValueChanged = default;
+            _hasParentValueChanged = false;
+        }
+
+        await base.SetParametersAsync(parameters);
+
+        ValueChanged = EventCallback.Factory.Create<T>(
+            this,
+            HandleAutocompleteValueChanged)!;
+    }
+
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+
+        SyncSelectedItems();
+
+        RemoveDuplicatesIfNecessary();
+    }
+
+
+    private void SyncSelectedItems()
+    {
+        var incoming = SelectedItems ?? [];
+
+        if (_selectedItems.SequenceEqual(incoming))
+            return;
+
+        _selectedItems.Clear();
+        _selectedItems.AddRange(incoming);
+    }
+
+
+    private async Task HandleAutocompleteValueChanged(T value)
+    {
+        if (value is null)
+            return;
+
+        var comparer = EqualityComparer<T>.Default;
+
+        var exists = _selectedItems.Any(
+            x => comparer.Equals(x, value));
+
+        if (exists)
+        {
+            await ResetAutocompleteAsync();
+
+            return;
+        }
+
+        _selectedItems.Add(value);
+
+        await SelectedItemsChanged.InvokeAsync(
+            _selectedItems.ToList());
+
+        if (ItemSelected.HasDelegate)
+        {
+            await ItemSelected.InvokeAsync(value);
+        }
+
+        if (_hasParentValueChanged)
+        {
+            await _parentValueChanged.InvokeAsync(value);
+        }
+
+        await ResetAutocompleteAsync();
+    }
+
+
+    private async Task HandleChipClose(HamkareChip<T> chip)
+    {
+        if (chip.Value is not null)
+        {
+            await RemoveItemAsync(chip.Value);
+        }
+    }
+
+
+    public async Task RemoveItemAsync(T item)
+    {
+        var comparer = EqualityComparer<T>.Default;
+
+        var index = _selectedItems.FindIndex(
+            x => comparer.Equals(x, item));
+
+        if (index < 0)
+            return;
+
+        _selectedItems.RemoveAt(index);
+
+        await SelectedItemsChanged.InvokeAsync(
+            _selectedItems.ToList());
+
+        if (ItemRemoved.HasDelegate)
+        {
+            await ItemRemoved.InvokeAsync(item);
+        }
+
+        await FocusAutocompleteAsync();
+    }
+
+
+    public async Task RemoveAllItemsAsync()
+    {
+        if (_selectedItems.Count == 0)
+            return;
+
+        _selectedItems.Clear();
+
+        await SelectedItemsChanged.InvokeAsync(
+            _selectedItems.ToList());
+
+        await FocusAutocompleteAsync();
+    }
+
+
+    public bool IsSelected(T item)
+    {
+        return _selectedItems.Contains(
+            item,
+            EqualityComparer<T>.Default);
+    }
+
+
+    private async Task ResetAutocompleteAsync()
+    {
+        try
+        {
+            await ClearAsync();
+        }
+        catch
+        {
+        }
+
+        await FocusAutocompleteAsync();
+    }
+
+
+    private async Task FocusAutocompleteAsync()
+    {
+        try
+        {
+            await FocusAsync();
+        }
+        catch
+        {
+        }
+
+        await InvokeAsync(StateHasChanged);
+    }
+
+
+    private void RemoveDuplicatesIfNecessary()
+    {
+        if (!PreventDuplicates)
+            return;
+
+        if (_selectedItems.Count < 2)
+            return;
+
+        var unique = _selectedItems
+            .Distinct(EqualityComparer<T>.Default)
+            .ToList();
+
+        if (unique.Count == _selectedItems.Count)
+            return;
+
+        _selectedItems.Clear();
+        _selectedItems.AddRange(unique);
+    }
+
+
+    private string GetItemText(T item)
+    {
+        if (item is null)
+            return string.Empty;
+
+        return ToStringFunc?.Invoke(item)
+               ?? item.ToString()
+               ?? string.Empty;
+    }
+}

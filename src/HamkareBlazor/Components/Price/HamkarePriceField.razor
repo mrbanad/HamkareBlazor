@@ -1,0 +1,32 @@
+﻿@namespace HamkareBlazor
+@using System.Globalization
+
+@inherits HamkareNumericField<decimal>
+
+@if (ShowSkeleton)
+{
+    <HamkareSkeletonInput HaveHelper="!string.IsNullOrWhiteSpace(HelperText)"/>
+}
+else
+{
+    base.BuildRenderTree(__builder);
+}
+
+@code {
+
+    public override async Task SetParametersAsync(ParameterView parameters)
+    {
+        Min = parameters.TryGetValue("Min", out decimal min) ? min : 0;
+        Step = parameters.TryGetValue("Step", out decimal step) ? step : CultureInfo.CurrentUICulture.IsRtl() ? 1000 : 1;
+        Format = parameters.TryGetValue("Format", out string? format)
+                ? format
+                : CultureInfo.CurrentUICulture.IsRtl()
+                        ? "#,##0"
+                        : _value % 1 == 0
+                                ? _value.ToString("#,##0", CultureInfo.CurrentUICulture)
+                                : _value.ToString("#,##0.00", CultureInfo.CurrentUICulture);
+
+        await base.SetParametersAsync(parameters);
+    }
+
+}

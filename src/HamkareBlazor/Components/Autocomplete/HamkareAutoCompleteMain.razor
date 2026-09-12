@@ -1,0 +1,71 @@
+@namespace HamkareBlazor
+@inherits HamkareAutocomplete<SelectItemViewModel?>
+@inject ApiService ApiService
+
+@if (ShowSkeleton)
+{
+    <HamkareSkeletonInput HaveHelper="!string.IsNullOrWhiteSpace(HelperText)"/>
+}
+else
+{
+    base.BuildRenderTree(__builder);
+}
+
+@code {
+    [EditorRequired] [Parameter] public required string Url { get; set; }
+    [EditorRequired] [Parameter] public required List<FilterSpecification> FilterSpecifications { get; set; }
+
+    private IEnumerable<SelectItemViewModel> _cachedItems = [];
+
+    public override async Task SetParametersAsync(ParameterView parameters)
+    {
+        SearchFunc = SearchAsync;
+        ToStringFunc = ToStringFunction;
+
+        await base.SetParametersAsync(parameters);
+    }
+
+    private async Task<IEnumerable<SelectItemViewModel?>> SearchAsync(string? value, CancellationToken cancellationToken)
+    {
+        await Task.Delay(250, cancellationToken);
+
+        var result = await ApiService.PostAsync<PagingViewModel<SelectItemViewModel>>(Url, new FilterViewModel
+        {
+            SortItems =
+            [
+                new SortItem
+                {
+                    Direction = ESortDirection.Ascending,
+                    SortFieldsSelector = "Order"
+                }
+            ],
+            FilterSpecifications = string.IsNullOrWhiteSpace(value)
+                ? FilterSpecifications
+                :
+                [
+                    new FilterSpecification("Information.Name")
+                    {
+                        OrBinaryOperation = false,
+                        FilterOperation = EOperator.Like,
+                        FilterValue = value
+                    },
+                    .. FilterSpecifications
+                ],
+            PageIndex = 0,
+            PageSize = 5,
+        });
+
+        _cachedItems = result?.Results ?? [];
+        return result?.Results ?? [];
+    }
+
+    private string? ToStringFunction(SelectItemViewModel? id)
+    {
+        if (id?.Name == null)
+            return string.Empty;
+
+        var item = _cachedItems.FirstOrDefault(x => x.Id == id.Id);
+        return item?.Name ?? id.Name;
+    }
+
+}

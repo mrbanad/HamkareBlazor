@@ -1,0 +1,41 @@
+/* CSS for HamkareMultiAutocomplete component */
+::deep .hamkare-input-control-helper-text {
+    display: none !important;
+}
+
+.multi-chip-container {
+    display: block;
+    margin-top: 4px;
+    padding: 0 12px;
+    max-width: 100%;
+    min-height: 52px;
+}
+
+.multi-chip-scroll-wrapper {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 6px;
+    padding: 6px 0;
+    scrollbar-width: thin;
+    -webkit-overflow-scrolling: touch;
+}
+
+    .multi-chip-scroll-wrapper ::deep .hamkare-chipset {
+        display: flex;
+        flex-wrap: nowrap !important;
+        gap: 6px;
+    }
+
+    .multi-chip-scroll-wrapper::-webkit-scrollbar {
+        height: 4px;
+    }
+
+    .multi-chip-scroll-wrapper::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    .multi-chip-scroll-wrapper::-webkit-scrollbar-thumb {
+        background-color: var(--hamkare-palette-text-disabled);
+        border-radius: 4px;
+    }

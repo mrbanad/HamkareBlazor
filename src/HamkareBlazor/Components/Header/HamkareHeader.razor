@@ -1,0 +1,22 @@
+@namespace HamkareBlazor
+@using System.Reflection
+
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<base href="/"/>
+<link href="@Assets[PathFav]" rel="shortcut icon" type="image/png"/>
+<link href="@Assets[PathFav]" rel="icon" type="image/png"/>
+<link href="@Assets[PathFav]" rel="apple-touch-icon">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" name="robots">
+<meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+<meta content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" name="bingBot">
+<link rel="stylesheet" href="@Assets[$"{Assembly.GetEntryAssembly()?.GetName().Name}.styles.css"]"/>
+
+<link rel="stylesheet" href="@Assets["/_content/HamkareBlazor/HamkareBlazor.min.css"]"/>
+
+@code{
+    [Parameter]
+    [EditorRequired]
+    public string PathFav { get; set; }
+}

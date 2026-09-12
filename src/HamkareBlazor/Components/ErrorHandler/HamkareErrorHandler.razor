@@ -1,0 +1,74 @@
+﻿@namespace HamkareBlazor
+@inherits Microsoft.AspNetCore.Components.Web.ErrorBoundary
+@inject ISnackbar Snackbar
+@inject NavigationManager Navigation
+@inject IExceptionLogger ExceptionLogger
+@inject IExceptionPolicy ExceptionPolicy
+@inject IErrorTranslator ErrorTranslator
+
+@ChildContent
+
+@code
+{
+    protected override Task OnErrorAsync(Exception exception)
+    {
+        ExceptionLogger.Log(exception);
+
+        var behavior = ExceptionPolicy.GetBehavior(exception);
+
+        switch (behavior)
+        {
+            case ExceptionBehavior.Silence:
+                HandleSilence();
+                break;
+
+            case ExceptionBehavior.Toast:
+                HandleToast(exception);
+                break;
+
+            case ExceptionBehavior.Redirect:
+                HandleRedirect(exception);
+                break;
+
+            default:
+                HandleRedirect(exception);
+                break;
+        }
+
+        return Task.CompletedTask;
+    }
+
+    private static void HandleSilence()
+    {
+        // Intentionally empty.
+        // Exception has already been logged.
+    }
+
+    private void HandleToast(Exception exception)
+    {
+        var message = ErrorTranslator.Translate(exception);
+
+        if (string.IsNullOrWhiteSpace(message))
+            return;
+
+        foreach (var item in message.Split('|'))
+        {
+            var errorMessage = item.Trim();
+
+            if (!string.IsNullOrWhiteSpace(errorMessage))
+                Snackbar.Error(errorMessage);
+        }
+    }
+
+    private void HandleRedirect(Exception exception)
+    {
+        var url = exception is RedirectException redirectException
+            ? redirectException.Url
+            : "/error";
+
+        var forceLoad = exception is RedirectException redirect
+                        && redirect.ForceLoad;
+
+        Navigation.NavigateTo(url, forceLoad);
+    }
+}

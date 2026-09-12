@@ -1,0 +1,60 @@
+@namespace HamkareBlazor
+@using HamkareBlazor.Resources
+
+<HamkareStack Row="true" Class="@($"rounded-lg mb-2 stack-title-table {Class}")" AlignItems="AlignItems.Center"
+              Style="height: 48px;">
+
+    <HamkareItem xs="2">
+
+        @if (OnReturnClick != null || !string.IsNullOrWhiteSpace(ReturnLink))
+        {
+            <HamkareTooltip Text="@LanguageResource.Return" Placement="Placement.Bottom" Arrow="true">
+
+                @if (OnReturnClick != null)
+                {
+                    <HamkareIconButton Class="rounded-lg" OnClick="@Callback"
+                                       Icon="@(Thread.CurrentThread.CurrentUICulture.IsRtl() ? Icons.Material.TwoTone.ArrowForward : Icons.Material.TwoTone.ArrowBack)"/>
+                }
+                else
+                {
+                    <HamkareIconButton Href="@ReturnLink" Class="rounded-lg"
+                                       Icon="@(Thread.CurrentThread.CurrentUICulture.IsRtl() ? Icons.Material.TwoTone.ArrowForward : Icons.Material.TwoTone.ArrowBack)"/>
+                }
+
+            </HamkareTooltip>
+        }
+
+    </HamkareItem>
+
+    <HamkareItem xs="8" Class="d-flex justify-center align-center">
+
+        @if (ShowSkeleton)
+        {
+            <HamkareSkeleton Animation="Animation.Pulse" SkeletonType="SkeletonType.Text"/>
+        }
+        else
+        {
+            <HamkareText Typo="Typo.h5" Align="Align.Center">@Title</HamkareText>
+        }
+
+    </HamkareItem>
+
+    <HamkareItem xs="2" Class="d-flex justify-end">@Buttons</HamkareItem>
+
+</HamkareStack>
+
+@code {
+    [Parameter] public bool ShowSkeleton { get; set; } = true;
+
+    [Parameter] public string? Title { get; set; }
+
+    [Parameter] public string? Class { get; set; }
+
+    [Parameter] public string? ReturnLink { get; set; }
+
+    [Parameter] public Action? OnReturnClick { get; set; }
+
+    [Parameter] public RenderFragment? Buttons { get; set; }
+
+    private void Callback() => OnReturnClick?.Invoke();
+}

@@ -1,0 +1,93 @@
+﻿@namespace HamkareBlazor
+
+@inherits HamkareMultiAutocomplete<SelectItemViewModel?>
+
+@inject ApiService ApiService
+
+@if (ShowSkeleton)
+{
+    <HamkareSkeletonInput HaveHelper="!string.IsNullOrWhiteSpace(HelperText)" />
+}
+else
+{
+    base.BuildRenderTree(__builder);
+}
+
+@code
+{
+    [EditorRequired]
+    [Parameter]
+    public required string Url { get; set; }
+
+    [EditorRequired]
+    [Parameter]
+    public required List<FilterSpecification> FilterSpecifications { get; set; }
+
+    private IEnumerable<SelectItemViewModel> _cachedItems = [];
+
+    public override async Task SetParametersAsync(
+        ParameterView parameters)
+    {
+        SearchFunc = SearchAsync;
+        ToStringFunc = ToStringFunction;
+
+        await base.SetParametersAsync(parameters);
+    }
+
+    private async Task<IEnumerable<SelectItemViewModel?>>
+        SearchAsync(
+            string? value,
+            CancellationToken cancellationToken)
+    {
+        await Task.Delay(250, cancellationToken);
+
+        var filterSpecifications =
+            string.IsNullOrWhiteSpace(value)
+                ? FilterSpecifications
+                :
+                [
+                    new FilterSpecification("Information.Name")
+                    {
+                        OrBinaryOperation = false,
+                        FilterOperation = EOperator.Like,
+                        FilterValue = value
+                    },
+
+                    ..FilterSpecifications
+                ];
+
+        var result = await ApiService.PostAsync<PagingViewModel<SelectItemViewModel>>(Url,
+                new FilterViewModel
+                {
+                    SortItems =
+                    [
+                        new SortItem
+                        {
+                            Direction = ESortDirection.Ascending,
+                            SortFieldsSelector = "Order"
+                        }
+                    ],
+
+                    FilterSpecifications = filterSpecifications,
+
+                    PageIndex = 0,
+                    PageSize = 5
+                });
+
+        _cachedItems = result?.Results ?? [];
+
+        return result?.Results ?? [];
+    }
+
+    private string ToStringFunction(
+        SelectItemViewModel? item)
+    {
+        if (item is null || string.IsNullOrWhiteSpace(item.Name))
+            return string.Empty;
+
+        var cachedItem = _cachedItems.FirstOrDefault(
+            x => x.Id == item.Id);
+
+        return cachedItem?.Name ?? item.Name;
+    }
+}

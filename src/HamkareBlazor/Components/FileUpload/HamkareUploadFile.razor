@@ -1,0 +1,244 @@
+﻿@namespace HamkareBlazor
+@using HamkareBlazor.Resources
+@using Microsoft.AspNetCore.Components.Forms
+@inject ApiService ApiService
+@inject ISnackbar Snackbar
+
+<HamkareGrid Justify="Justify.Center">
+
+    <HamkareItem xs="12" md="8">
+
+        <HamkareStack Class="p-2" Spacing="2">
+
+            @if (_isUploading)
+            {
+                <HamkareProgressCircular Color="Color.Info" Indeterminate="true"/>
+            }
+            else
+            {
+                @if (_selectedFile != null)
+                {
+                    <HamkareStack Spacing="1" Class="p-4 border rounded-lg d-flex align-center">
+                        <HamkareIcon Icon="@Icons.Material.TwoTone.Description" Color="Color.Primary"
+                                     Class="me-2"></HamkareIcon>
+                        <div>
+                            <HamkareText Typo="Typo.subtitle1">@_selectedFile.Name</HamkareText>
+                            <HamkareText Typo="Typo.body2"
+                                         Class="text-grey">@FormatFileSize(_selectedFile.Size)</HamkareText>
+                        </div>
+                    </HamkareStack>
+                }
+                else if (!string.IsNullOrWhiteSpace(_currentFileName))
+                {
+                    <HamkareStack Spacing="1" Class="p-4 border rounded-lg d-flex align-center">
+                        <HamkareIcon Icon="@Icons.Material.TwoTone.Attachment" Color="Color.Secondary"
+                                     Class="me-2"></HamkareIcon>
+                        <div>
+                            <HamkareText Typo="Typo.subtitle1">فایل فعلی: @_currentFileName</HamkareText>
+                        </div>
+                    </HamkareStack>
+                }
+            }
+
+            <HamkareItem xs="12">
+
+                <HamkareStack Row="true" Spacing="2" AlignItems="AlignItems.Start" Justify="Justify.FlexStart">
+
+                    <HamkareFileUpload T="IBrowserFile" OnFilesChanged="@OnFileSelected" Files="_selectedFile" MaxFileSize="UploadLimit"
+                                       Accept="@AcceptFormats" Class="mt-0">
+
+                        <CustomContent>
+
+                            <HamkareItem xs="6">
+
+                                <HamkareButton HtmlTag="label" Variant="Variant.Filled" Class="rounded-lg"
+                                               DropShadow="true" Color="Color.Primary"
+                                               OnClick="@context.OpenFilePickerAsync"
+                                               StartIcon="@Icons.Material.TwoTone.CloudUpload">
+                                    @Title
+                                </HamkareButton>
+
+                            </HamkareItem>
+
+                        </CustomContent>
+
+                        <SelectedTemplate>
+                            @if (context != null)
+                            {
+                                <HamkareText>@context.Name (@FormatFileSize(context.Size))</HamkareText>
+                            }
+                            else
+                            {
+                                if (!string.IsNullOrWhiteSpace(FileName ?? DefaultFileName))
+                                {
+                                    <HamkareText>@(FileName ?? DefaultFileName)</HamkareText>
+                                }
+                            }
+                        </SelectedTemplate>
+
+                    </HamkareFileUpload>
+
+                    @if (_selectedFile != null || (_selectedFile == null && FileName == null && DefaultFileName != null))
+                    {
+                        <HamkareIconButton Icon="@Icons.Material.TwoTone.Refresh" Variant="Variant.Outlined"
+                                           OnClick="@ResetToOriginalFile" Color="Color.Error"
+                                           Size="Size.Medium"
+                                           Class="rounded-lg"/>
+                    }
+
+                    @if (!string.IsNullOrEmpty(FileName) && FileName != DefaultFileName)
+                    {
+                        <HamkareIconButton Icon="@Icons.Material.TwoTone.Delete" Variant="Variant.Outlined"
+                                           OnClick="@RemoveFileButton" Color="Color.Error"
+                                           Size="Size.Medium"
+                                           Class="rounded-lg"/>
+                    }
+
+                </HamkareStack>
+
+            </HamkareItem>
+
+        </HamkareStack>
+
+    </HamkareItem>
+
+</HamkareGrid>
+
+@code {
+    [Parameter] [EditorRequired] public string? FileName { get; set; }
+    [Parameter] public EventCallback<string?> FileNameChanged { get; set; }
+    [Parameter] [EditorRequired] public string Folder { get; set; }
+    [Parameter] public string? DefaultFileName { get; set; }
+    [Parameter] public string AcceptFormats { get; set; } = "*/*";
+    [Parameter] public string Title { get; set; } = LanguageResource.Attachment;
+    [Parameter] public string UploadUrl { get; set; } = "/Hamkare/File/UploadFile?path={0}";
+    [Parameter] public string DeleteUrl { get; set; } = "/Hamkare/File?path={0}&filename={0}";
+    [Parameter] public int UploadLimit { get; set; } = 10485760;
+    private bool _isUploading;
+    private bool _isEmpty;
+    private string? _firstFileName;
+    private IBrowserFile? _selectedFile;
+    private string _currentFileName = string.Empty;
+
+    protected override void OnParametersSet()
+    {
+        if (_selectedFile != null)
+            return;
+
+        if (!string.IsNullOrWhiteSpace(FileName))
+        {
+            _currentFileName = FileName;
+            _firstFileName = FileName;
+        }
+        else if (!string.IsNullOrWhiteSpace(DefaultFileName) && !_isEmpty)
+        {
+            _currentFileName = DefaultFileName;
+        }
+        else
+        {
+            _currentFileName = string.Empty;
+        }
+    }
+
+    private void OnFileSelected(InputFileChangeEventArgs inputFileChangeEventArgs)
+    {
+        if (inputFileChangeEventArgs.File == null)
+            return;
+
+        _isEmpty = false;
+
+        if (inputFileChangeEventArgs.File.Size > UploadLimit)
+        {
+            Snackbar.Error(string.Format(LanguageResource.HamkareFileUpload_FileSizeError,Title, UploadLimit));
+            return;
+        }
+
+        _selectedFile = inputFileChangeEventArgs.File;
+        StateHasChanged();
+    }
+
+    public async Task SubmitUploadAsync()
+    {
+        try
+        {
+            if (_selectedFile == null)
+                return;
+
+            _isUploading = true;
+            StateHasChanged();
+
+            Snackbar.Warning(LanguageResource.HamkareFileUpload_WarningUploading);
+
+            var response = await ApiService.UploadFileAsync(string.Format(UploadUrl, Folder), _selectedFile);
+
+            if (response is not null)
+            {
+                var file = Path.GetFileName(response);
+                FileName = file;
+
+                _currentFileName = file;
+                await FileNameChanged.InvokeAsync(file);
+
+                _selectedFile = null;
+            }
+            else
+            {
+                Snackbar.Error(LanguageResource.HamkareFileUpload_ErrorUploading);
+            }
+        }
+        finally
+        {
+            _isUploading = false;
+            StateHasChanged();
+        }
+    }
+
+    public async Task RemoveOldFile()
+    {
+        if (!string.IsNullOrEmpty(_firstFileName) && FileName != _firstFileName && _firstFileName != DefaultFileName)
+            await ApiService.DeleteAsync(string.Format(DeleteUrl, Folder, _firstFileName));
+    }
+
+    public async Task RollBackFile()
+    {
+        if (!string.IsNullOrEmpty(FileName) && FileName != DefaultFileName && FileName != _firstFileName)
+            await ApiService.DeleteAsync(string.Format(DeleteUrl, Folder, FileName));
+    }
+
+    private async Task RemoveFileButton()
+    {
+        _isEmpty = true;
+        FileName = null;
+        _selectedFile = null;
+        _currentFileName = string.Empty;
+
+        await FileNameChanged.InvokeAsync(null);
+    }
+
+    private async Task ResetToOriginalFile()
+    {
+        _isEmpty = false;
+        _selectedFile = null;
+
+        if (!string.IsNullOrWhiteSpace(FileName))
+            _currentFileName = FileName;
+        else if (!string.IsNullOrWhiteSpace(DefaultFileName))
+        {
+            _currentFileName = DefaultFileName;
+            FileName = DefaultFileName;
+            await FileNameChanged.InvokeAsync(FileName);
+        }
+        else
+            _currentFileName = string.Empty;
+
+        StateHasChanged();
+    }
+
+    private string FormatFileSize(long bytes)
+    {
+        if (bytes < 1024) return $"{bytes} B";
+        if (bytes < 1024 * 1024) return $"{bytes / 1024.0:0.##} KB";
+        return $"{bytes / (1024.0 * 1024.0):0.##} MB";
+    }
+
+}

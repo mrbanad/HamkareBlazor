@@ -232,4 +232,70 @@
   <data name="HamkareSelect_SelectAll" xml:space="preserve">
     <value>حدد الكل</value>
   </data>
+  <data name="Error_ConnectWithServer" xml:space="preserve">
+        <value>خطأ في التواصل مع الخادم!</value>
+    </data>
+  <data name="Error_ServerExceptionDontHaveMessage" xml:space="preserve">
+    <value>لم يقم الخادم بإرسال نص خطأ!</value>
+  </data>
+  <data name="Error_ServerStatusCode" xml:space="preserve">
+    <value>تم استلام الخطأ {0} من الخادم!</value>
+  </data>
+  <data name="Error_ServerSendNull" xml:space="preserve">
+    <value>لم يتم استلام رسالة محددة من الخادم!</value>
+  </data>
+  <data name="HamkareFileUpload_ErrorReadFile" xml:space="preserve">
+    <value>خطأ في قراءة الملف!</value>
+  </data>
+  <data name="Ar" xml:space="preserve">
+    <value>عربي</value>
+  </data>
+  <data name="Fa" xml:space="preserve">
+    <value>الفارسية</value>
+  </data>
+  <data name="Tr" xml:space="preserve">
+    <value>اللغة التركية</value>
+  </data>
+  <data name="En" xml:space="preserve">
+    <value>إنجليزي</value>
+  </data>
+  <data name="HamkareDialog_Remove" xml:space="preserve">
+    <value>يمسح</value>
+  </data>
+  <data name="HamkareDialog_RemoveMessage" xml:space="preserve">
+    <value>متأكد تريد تحذف هذا العنصر؟</value>
+  </data>
+  <data name="HamkareForm_ErrorSubmit" xml:space="preserve">
+    <value>هناك مشكلة في تسجيل {0}!</value>
+  </data>
+  <data name="HamkareSnackbar_SuccessActiveMessage" xml:space="preserve">
+    <value>{0} تم تفعيله!</value>
+  </data>
+  <data name="HamkareSnackbar_SuccessDeactivateMessage" xml:space="preserve">
+    <value>{0} تم تعطيله!</value>
+  </data>
+  <data name="HamkareForm_SuccessSubmit" xml:space="preserve">
+    <value>تم تسجيل {0} بنجاح!</value>
+  </data>
+  <data name="HamkareSnackbar_RequiredNotFound" xml:space="preserve">
+    <value>مطلوب {0} ليتم التسجيل والتعديل!</value>
+  </data>
+  <data name="Return" xml:space="preserve">
+    <value>العودة</value>
+  </data>
+  <data name="Attachment" xml:space="preserve">
+    <value>مرفق</value>
+  </data>
+  <data name="HamkareFileUpload_WarningUploading" xml:space="preserve">
+    <value>جارٍ تحميل الملف...</value>
+  </data>
+  <data name="HamkareFileUpload_ErrorUploading" xml:space="preserve">
+    <value>خطأ غير معروف أثناء تحميل الملف!</value>
+  </data>
+  <data name="HamkareUpload_Video" xml:space="preserve">
+    <value>فيديو</value>
+  </data>
+  <data name="HamkareUpload_Image" xml:space="preserve">
+    <value>صورة</value>
+  </data>
 </root>

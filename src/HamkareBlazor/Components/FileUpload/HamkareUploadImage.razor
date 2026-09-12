@@ -1,0 +1,249 @@
+﻿@namespace HamkareBlazor
+@using HamkareBlazor.Resources
+@using Microsoft.AspNetCore.Components.Forms
+@inject ApiService ApiService
+@inject ISnackbar Snackbar
+
+<HamkareGrid Justify="Justify.Center">
+
+    <HamkareItem xs="12" md="8">
+
+
+        <HamkareStack Class="p-2" Spacing="2">
+
+            @if (_isUploading)
+            {
+                <HamkareProgressCircular Color="Color.Info" Indeterminate="true"/>
+            }
+            else
+            {
+                @if (!string.IsNullOrWhiteSpace(_currentImageSrc))
+                {
+                    <HamkareImage Src="@_currentImageSrc" Elevation="25"
+                                  Class="img-fluid rounded-lg"></HamkareImage>
+                }
+            }
+
+            <HamkareItem xs="12">
+
+                <HamkareStack Row="true" Spacing="2" AlignItems="AlignItems.Start" Justify="Justify.FlexStart">
+
+                    <HamkareFileUpload T="IBrowserFile" OnFilesChanged="@OnFileSelected" Files="_selectedFile" MaxFileSize="UploadLimit"
+                                       Accept="@FileExtension.ImageFormatString" Class="mt-0">
+
+                        <CustomContent>
+
+                            <HamkareItem xs="6">
+
+                                <HamkareButton HtmlTag="label" Variant="Variant.Filled" Class="rounded-lg"
+                                               DropShadow="true" Color="Color.Primary"
+                                               OnClick="@context.OpenFilePickerAsync"
+                                               StartIcon="@Icons.Material.TwoTone.CloudUpload">
+                                    @Title
+                                </HamkareButton>
+
+                            </HamkareItem>
+
+                        </CustomContent>
+
+                        <SelectedTemplate>
+                            @if (context != null)
+                            {
+                                <HamkareText>@context.Name <br> @($"{Width} * {Height}")
+                                </HamkareText>
+                            }
+                            else
+                            {
+                                if (!string.IsNullOrWhiteSpace(Image ?? ImageTemplate))
+                                {
+                                    <HamkareText>@(Image) <br>
+                                        @($"{Width} * {Height}")
+                                    </HamkareText>
+                                }
+                                else
+                                {
+                                    <HamkareText>
+                                        @($"{Width} * {Height}")</HamkareText>
+                                }
+                            }
+                        </SelectedTemplate>
+
+                    </HamkareFileUpload>
+
+                    @if (_selectedFile != null || (_selectedFile == null && Image == null && ImageTemplate != null))
+                    {
+                        <HamkareIconButton Icon="@Icons.Material.TwoTone.Refresh" Variant="Variant.Outlined"
+                                           OnClick="@ResetToOriginalImage" Color="Color.Error"
+                                           Size="Size.Medium"
+                                           Class="rounded-lg"/>
+                    }
+
+                    @if (!string.IsNullOrEmpty(Image) && Image != ImageTemplate)
+                    {
+                        <HamkareIconButton Icon="@Icons.Material.TwoTone.Delete" Variant="Variant.Outlined"
+                                           OnClick="@RemoveImageButton" Color="Color.Error"
+                                           Size="Size.Medium"
+                                           Class="rounded-lg"/>
+                    }
+
+                </HamkareStack>
+
+            </HamkareItem>
+
+        </HamkareStack>
+
+    </HamkareItem>
+
+
+</HamkareGrid>
+
+@code {
+    [Parameter] [EditorRequired] public string? Image { get; set; }
+    [Parameter] public EventCallback<string?> ImageChanged { get; set; }
+    [Parameter] [EditorRequired] public string Folder { get; set; }
+    [Parameter] [EditorRequired] public string? ImageTemplate { get; set; }
+    [Parameter] [EditorRequired] public int? Width { get; set; }
+    [Parameter] [EditorRequired] public int? Height { get; set; }
+    [Parameter] public string Title { get; set; } = LanguageResource.HamkareUpload_Image;
+    [Parameter] public string UploadUrl { get; set; } = "/Hamkare/File/UploadImage?path={0}";
+    [Parameter] public string DeleteUrl { get; set; } = "/Hamkare/File?path={0}&filename={0}";
+    [Parameter] public string UploadPath { get; set; } = "/Upload/{0}/{1}";
+    [Parameter] public int UploadLimit { get; set; } = 10485760;
+    
+    private bool _isUploading;
+    private bool _isEmpty;
+    private string? _firstImage;
+    private IBrowserFile? _selectedFile;
+    private string _currentImageSrc = string.Empty;
+
+    protected override void OnParametersSet()
+    {
+        if (_selectedFile != null)
+            return;
+
+        if (!string.IsNullOrWhiteSpace(Image))
+        {
+            _currentImageSrc = string.Format(UploadPath, Folder, Image);
+            _firstImage = Image;
+        }
+        else if (!string.IsNullOrWhiteSpace(ImageTemplate) && !_isEmpty)
+            _currentImageSrc = string.Format(UploadPath, Folder, ImageTemplate);
+        else
+            _currentImageSrc = string.Empty;
+    }
+
+    private async void OnFileSelected(InputFileChangeEventArgs inputFileChangeEventArgs)
+    {
+        if (inputFileChangeEventArgs.File == null)
+            return;
+
+        _isEmpty = false;
+        if (inputFileChangeEventArgs.File.Size > UploadLimit)
+        {
+            Snackbar.Error(string.Format(LanguageResource.HamkareFileUpload_FileSizeError,Title, UploadLimit));
+            return;
+        }
+
+        _selectedFile = inputFileChangeEventArgs.File;
+
+        await ConvertToBase64Preview(inputFileChangeEventArgs.File);
+        StateHasChanged();
+    }
+
+    private async Task ConvertToBase64Preview(IBrowserFile file)
+    {
+        _isUploading = true;
+        StateHasChanged();
+
+        try
+        {
+            await using var stream = file.OpenReadStream(file.Size);
+            using var memoryStream = new MemoryStream();
+            await stream.CopyToAsync(memoryStream);
+            var fileBytes = memoryStream.ToArray();
+
+            _currentImageSrc = $"data:{file.ContentType};base64,{Convert.ToBase64String(fileBytes)}";
+        }
+        catch
+        {
+            Snackbar.Error(LanguageResource.HamkareFileUpload_ErrorUploading);
+        }
+        finally
+        {
+            _isUploading = false;
+            StateHasChanged();
+        }
+    }
+
+    public async Task SubmitUploadAsync()
+    {
+        try
+        {
+            if (_selectedFile == null)
+                return;
+
+            Snackbar.Warning(LanguageResource.HamkareFileUpload_WarningUploading);
+            var response = await ApiService.UploadFileAsync(string.Format(UploadUrl, Folder), _selectedFile);
+
+            if (response is not null)
+            {
+                var fileName = Path.GetFileName(response);
+                Image = fileName;
+
+                _currentImageSrc = string.Format(UploadPath, Folder, fileName);
+                await ImageChanged.InvokeAsync(fileName);
+
+                _selectedFile = null;
+            }
+            else
+                Snackbar.Error(LanguageResource.HamkareFileUpload_ErrorUploading);
+        }
+        finally
+        {
+            _isUploading = false;
+            StateHasChanged();
+        }
+    }
+
+    public async Task RemoveImage()
+    {
+        if (!string.IsNullOrEmpty(_firstImage) && Image != _firstImage && _firstImage != ImageTemplate)
+            await ApiService.DeleteAsync(string.Format(DeleteUrl, Folder, _firstImage));
+    }
+
+    public async Task RollBackImage()
+    {
+        if (!string.IsNullOrEmpty(Image) && Image != ImageTemplate && Image != _firstImage)
+            await ApiService.DeleteAsync(string.Format(DeleteUrl, Folder, Image));
+    }
+
+    private async Task RemoveImageButton()
+    {
+        _isEmpty = true;
+        Image = null;
+        _selectedFile = null;
+        _currentImageSrc = string.Empty;
+
+        await ImageChanged.InvokeAsync(null);
+    }
+
+    private async Task ResetToOriginalImage()
+    {
+        _isEmpty = false;
+        _selectedFile = null;
+
+        if (!string.IsNullOrWhiteSpace(Image))
+            _currentImageSrc = string.Format(UploadPath, Folder, Image);
+        else if (!string.IsNullOrWhiteSpace(ImageTemplate))
+        {
+            _currentImageSrc = string.Format(UploadPath, Folder, ImageTemplate);
+            Image = ImageTemplate;
+            await ImageChanged.InvokeAsync(Image);
+        }
+        else
+            _currentImageSrc = string.Empty;
+
+        StateHasChanged();
+    }
+
+}

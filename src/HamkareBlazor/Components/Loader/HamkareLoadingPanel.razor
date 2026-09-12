@@ -1,0 +1,18 @@
+@namespace HamkareBlazor
+@using HamkareBlazor.Resources
+
+<HamkareGrid Justify="Justify.Center" Class="h-100">
+
+    <HamkareItem xs="12" md="4" Class="d-flex justify-content-center align-center flex-column h-100 gap-3">
+
+        <HamkareIcon Icon="@Icons.Material.Rounded.HourglassBottom" Color="Color.Primary"
+                     Size="Size.Large"></HamkareIcon>
+
+        <HamkareText Typo="Typo.h6" Color="Color.Primary">@LanguageResource.HamkareTable_Loading</HamkareText>
+
+        <HamkareProgressLinear Color="Color.Primary" Indeterminate="true" Size="Size.Medium" Rounded="true"
+                               Style="width: 90%;"/>
+
+    </HamkareItem>
+
+</HamkareGrid>

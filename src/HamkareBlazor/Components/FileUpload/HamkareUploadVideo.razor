@@ -1,0 +1,244 @@
+﻿@namespace HamkareBlazor
+@using HamkareBlazor.Resources
+@using Microsoft.AspNetCore.Components.Forms
+@inject ApiService ApiService
+@inject ISnackbar Snackbar
+
+<HamkareGrid Justify="Justify.Center">
+
+    <HamkareItem xs="12" md="8">
+
+        <HamkareStack Class="p-2" Spacing="2">
+
+            @if (_isUploading)
+            {
+                <HamkareProgressCircular Color="Color.Info" Indeterminate="true"/>
+            }
+            else
+            {
+                @if (!string.IsNullOrWhiteSpace(_currentVideoSrc))
+                {
+                    <video src="@_currentVideoSrc" controls class="w-100 rounded-lg"
+                           style="max-height: 400px; object-fit: contain; box-shadow: 0 10px 20px rgba(0,0,0,0.3);"></video>
+                }
+            }
+
+            <HamkareItem xs="12">
+
+                <HamkareStack Row="true" Spacing="2" AlignItems="AlignItems.Start" Justify="Justify.FlexStart">
+
+                    <HamkareFileUpload T="IBrowserFile" OnFilesChanged="@OnFileSelected" Files="_selectedFile" MaxFileSize="UploadLimit"
+                                       Accept="@FileExtension.VideoFormatString" Class="mt-0">
+
+                        <CustomContent>
+
+                            <HamkareItem xs="6">
+
+                                <HamkareButton HtmlTag="label" Variant="Variant.Filled" Class="rounded-lg"
+                                               DropShadow="true" Color="Color.Primary"
+                                               OnClick="@context.OpenFilePickerAsync"
+                                               StartIcon="@Icons.Material.TwoTone.VideoCall">
+                                    @Title
+                                </HamkareButton>
+
+                            </HamkareItem>
+
+                        </CustomContent>
+
+                        <SelectedTemplate>
+                            @if (context != null)
+                            {
+                                <HamkareText>@context.Name <br> @($"{Width} * {Height}")
+                                </HamkareText>
+                            }
+                            else
+                            {
+                                if (!string.IsNullOrWhiteSpace(Video ?? VideoTemplate))
+                                {
+                                    <HamkareText>@(Video) <br>
+                                        @($"{Width} * {Height}")
+                                    </HamkareText>
+                                }
+                                else
+                                {
+                                    <HamkareText>
+                                        @($"{Width} * {Height}")</HamkareText>
+                                }
+                            }
+                        </SelectedTemplate>
+
+                    </HamkareFileUpload>
+
+                    @if (_selectedFile != null || (_selectedFile == null && Video == null && VideoTemplate != null))
+                    {
+                        <HamkareIconButton Icon="@Icons.Material.TwoTone.Refresh" Variant="Variant.Outlined"
+                                           OnClick="@ResetToOriginalVideo" Color="Color.Error"
+                                           Size="Size.Medium"
+                                           Class="rounded-lg"/>
+                    }
+
+                    @if (!string.IsNullOrEmpty(Video) && Video != VideoTemplate)
+                    {
+                        <HamkareIconButton Icon="@Icons.Material.TwoTone.Delete" Variant="Variant.Outlined"
+                                           OnClick="@RemoveVideoButton" Color="Color.Error"
+                                           Size="Size.Medium"
+                                           Class="rounded-lg"/>
+                    }
+
+                </HamkareStack>
+
+            </HamkareItem>
+
+        </HamkareStack>
+
+    </HamkareItem>
+
+</HamkareGrid>
+
+@code {
+    [Parameter] [EditorRequired] public string? Video { get; set; }
+    [Parameter] public EventCallback<string?> VideoChanged { get; set; }
+    [Parameter] [EditorRequired] public string Folder { get; set; }
+    [Parameter] [EditorRequired] public string? VideoTemplate { get; set; }
+    [Parameter] public int? Width { get; set; }
+    [Parameter] public int? Height { get; set; }
+    [Parameter] public string Title { get; set; } = LanguageResource.HamkareUpload_Video;
+    [Parameter] public string UploadUrl { get; set; } = "/Hamkare/File/UploadVideo?path={0}";
+    [Parameter] public string DeleteUrl { get; set; } = "/Hamkare/File?path={0}&filename={0}";
+    [Parameter] public string UploadPath { get; set; } = "/Upload/{0}/{1}";
+    [Parameter] public int UploadLimit { get; set; } = 10485760;
+
+    private bool _isUploading;
+    private bool _isEmpty;
+    private string? _firstVideo;
+    private IBrowserFile? _selectedFile;
+    private string _currentVideoSrc = string.Empty;
+
+    protected override void OnParametersSet()
+    {
+        if (!string.IsNullOrWhiteSpace(Video))
+        {
+            _currentVideoSrc = string.Format(UploadPath, Folder,Video);
+            _firstVideo = Video;
+        }
+        else if (!string.IsNullOrWhiteSpace(VideoTemplate) && !_isEmpty)
+            _currentVideoSrc = string.Format(UploadPath, Folder,VideoTemplate);
+        else
+            _currentVideoSrc = string.Empty;
+    }
+
+    private async void OnFileSelected(InputFileChangeEventArgs inputFileChangeEventArgs)
+    {
+        if (inputFileChangeEventArgs.File == null)
+            return;
+
+        _isEmpty = false;
+        if (inputFileChangeEventArgs.File.Size > UploadLimit)
+        {
+            Snackbar.Error(string.Format(LanguageResource.HamkareFileUpload_FileSizeError,Title, UploadLimit));
+            return;
+        }
+
+        _selectedFile = inputFileChangeEventArgs.File;
+
+        await ConvertToBase64Preview(inputFileChangeEventArgs.File);
+        StateHasChanged();
+    }
+
+    private async Task ConvertToBase64Preview(IBrowserFile file)
+    {
+        _isUploading = true;
+        StateHasChanged();
+
+        try
+        {
+            await using var stream = file.OpenReadStream(file.Size);
+            using var memoryStream = new MemoryStream();
+            await stream.CopyToAsync(memoryStream);
+            var fileBytes = memoryStream.ToArray();
+
+            _currentVideoSrc = $"data:{file.ContentType};base64,{Convert.ToBase64String(fileBytes)}";
+        }
+        catch
+        {
+            Snackbar.Error(LanguageResource.HamkareFileUpload_ErrorUploading);
+        }
+        finally
+        {
+            _isUploading = false;
+            StateHasChanged();
+        }
+    }
+
+    public async Task SubmitUploadAsync()
+    {
+        try
+        {
+            if (_selectedFile == null)
+                return;
+
+            Snackbar.Warning(LanguageResource.HamkareFileUpload_WarningUploading);
+            var response = await ApiService.UploadFileAsync(string.Format(UploadUrl, Folder), _selectedFile);
+
+            if (response is not null)
+            {
+                var fileName = Path.GetFileName(response);
+                Video = fileName;
+
+                _currentVideoSrc = string.Format(UploadPath, Folder,fileName);
+                await VideoChanged.InvokeAsync(fileName);
+
+                _selectedFile = null;
+            }
+            else
+                Snackbar.Error(LanguageResource.HamkareFileUpload_ErrorUploading);
+        }
+        finally
+        {
+            _isUploading = false;
+            StateHasChanged();
+        }
+    }
+
+    public async Task RemoveVideo()
+    {
+        if (!string.IsNullOrEmpty(_firstVideo) && Video != _firstVideo && _firstVideo != VideoTemplate)
+            await ApiService.DeleteAsync(string.Format(DeleteUrl, Folder, _firstVideo));
+    }
+
+    public async Task RollBackVideo()
+    {
+        if (!string.IsNullOrEmpty(Video) && Video != VideoTemplate && Video != _firstVideo)
+            await ApiService.DeleteAsync(string.Format(DeleteUrl, Folder, Video));
+    }
+
+    private async Task RemoveVideoButton()
+    {
+        _isEmpty = true;
+        Video = null;
+        _selectedFile = null;
+        _currentVideoSrc = string.Empty;
+
+        await VideoChanged.InvokeAsync(null);
+    }
+
+    private async Task ResetToOriginalVideo()
+    {
+        _isEmpty = false;
+        _selectedFile = null;
+
+        if (!string.IsNullOrWhiteSpace(Video))
+            _currentVideoSrc = string.Format(UploadPath, Folder,Video);
+        else if (!string.IsNullOrWhiteSpace(VideoTemplate))
+        {
+            _currentVideoSrc = string.Format(UploadPath, Folder,VideoTemplate);
+            Video = VideoTemplate;
+            await VideoChanged.InvokeAsync(Video);
+        }
+        else
+            _currentVideoSrc = string.Empty;
+
+        StateHasChanged();
+    }
+
+}

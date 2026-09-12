@@ -380,3 +380,12 @@ resharper_check_namespace_highlighting = none
 
 [*]
 end_of_line = lf
+
+# Customize Hamkare
+[*.cs]
+
+# Trimming / Native AOT is not supported/required
+dotnet_diagnostic.IL2026.severity = none
+dotnet_diagnostic.IL2075.severity = none
+dotnet_diagnostic.IL3050.severity = none
+dotnet_diagnostic.IL2091.severity = none

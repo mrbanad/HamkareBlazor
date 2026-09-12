@@ -1,0 +1,63 @@
+@namespace HamkareBlazor
+@using Blazored.LocalStorage
+@using HamkareBlazor.Utilities
+
+<HamkareRTLProvider RightToLeft="@(Thread.CurrentThread.CurrentUICulture.IsRtl())">
+
+    <HamkareThemeProvider Theme="HamkareTheme"
+                          IsDarkMode="@PanelContext.IsDarkMode"/>
+    
+    <HamkarePopoverProvider/>
+    <HamkareDialogProvider/>
+    <HamkareSnackbarProvider/>
+
+    @if (_showSkeleton)
+    {
+        @ChildContent
+    }
+
+</HamkareRTLProvider>
+
+@code {
+    [Inject] public ILocalStorageService? LocalStorage { get; set; }
+    [Parameter] [EditorRequired] public PanelContext PanelContext { get; set; } = new();
+    [Parameter] public EventCallback<PanelContext> PanelContextChanged { get; set; }
+    [Parameter] [EditorRequired] public required HamkareTheme HamkareTheme { get; set; }
+
+    private bool _showSkeleton;
+
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        PanelContext.OnChange += StateHasChanged;
+
+        if (LocalStorage != null)
+        {
+            var darkModeValue = await LocalStorage.GetItemAsync<string>("DarkMode");
+
+            if (darkModeValue == null)
+            {
+                await LocalStorage.SetItemAsync("DarkMode", "false");
+                PanelContext.SetDarkMode(false);
+                await LocalStorage.SetItemAsync("PanelColorPrimary", HamkareTheme.PaletteLight.Primary.ToString(HamkareColorOutputFormats.Hex));
+                await LocalStorage.SetItemAsync("PanelColorBackground", HamkareTheme.PaletteLight.Background.ToString(HamkareColorOutputFormats.Hex));
+            }
+            else
+            {
+                PanelContext.SetDarkMode(darkModeValue == "true");
+
+                var palette = darkModeValue == "true"
+                    ? HamkareTheme.PaletteDark
+                    : HamkareTheme.PaletteLight;
+
+                await LocalStorage.SetItemAsync("PanelColorPrimary", palette.Primary.ToString(HamkareColorOutputFormats.Hex));
+                await LocalStorage.SetItemAsync("PanelColorBackground", palette.Background.ToString(HamkareColorOutputFormats.Hex));
+            }
+        }
+        else
+            PanelContext.SetDarkMode(false);
+
+        _showSkeleton = true;
+    }
+}
