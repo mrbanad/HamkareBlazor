@@ -96,33 +96,33 @@
 
 
 @font-face {
-  font-family: panel-fa-Font;
-  src: url(_content/HamkareBlazor/Fonts/Shabnam-FD-WOL.woff2) format('woff2'),
-  url(_content/HamkareBlazor/Fonts/Shabnam-FD-WOL.woff) format('woff'),
-  url(_content/HamkareBlazor/Fonts/Shabnam-FD-WOL.ttf) format('truetype');
+  font-family: FaPanelFont;
+  src: url(_content/Fonts/FaPanelFont.woff2) format('woff2'),
+  url(_content/Fonts/FaPanelFont.woff) format('woff'),
+  url(_content/Fonts/FaPanelFont.ttf) format('truetype');
   font-weight: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: panel-fa-Font;
-  src: url(_content/HamkareBlazor/Fonts/Shabnam-Bold-FD-WOL.woff2) format('woff2'),
-  url(_content/HamkareBlazor/Fonts/Shabnam-Bold-FD-WOL.woff) format('woff'),
-  url(_content/HamkareBlazor/Fonts/Shabnam-Bold-FD-WOL.ttf) format('truetype');
+  font-family: FaPanelFont;
+  src: url(_content/Fonts/FaPanelFont-Bold.woff2) format('woff2'),
+  url(_content/Fonts/FaPanelFont-Bold.woff) format('woff'),
+  url(_content/Fonts/FaPanelFont-Bold.ttf) format('truetype');
   font-weight: bold;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'OpenSans';
-  src: url(_content/HamkareBlazor/Fonts/OpenSans-Medium.ttf) format('truetype');
+  font-family: EnPanelFont;
+  src: url(_content/Fonts/EnPanelFont.ttf) format('truetype');
   font-weight: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'OpenSans';
-  src: url(_content/HamkareBlazor/Fonts/OpenSans-Bold.ttf) format('truetype');
+  font-family: EnPanelFont;
+  src: url(_content/Fonts/EnPanelFont-Bold.ttf) format('truetype');
   font-weight: bold;
   font-display: swap;
 }

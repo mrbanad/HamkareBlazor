@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 using System.Diagnostics.CodeAnalysis;
+using Blazored.LocalStorage;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
@@ -325,7 +326,8 @@ namespace HamkareBlazor.Services
                 .AddHamkareBlazorScrollSpy()
                 .AddHamkarePopoverService()
                 .AddHamkareBlazorPointerEventsNoneService()
-                .AddHamkareLocalization();
+                .AddHamkareLocalization()
+                .AddCustomizeServices();
         }
 
         /// <summary>
@@ -405,13 +407,26 @@ namespace HamkareBlazor.Services
                 })
                 .AddHamkareBlazorScrollSpy()
                 .AddHamkareBlazorPointerEventsNoneService()
-                .AddHamkareLocalization();
+                .AddBlazoredLocalStorage()
+                .AddHamkareLocalization()
+                .AddCustomizeServices();
         }
 
         private static IServiceCollection AddCommonServices(this IServiceCollection service)
         {
             service.TryAddSingleton(TimeProvider.System);
 
+            return service;
+        }
+
+        // Hamkare Customize
+        private static IServiceCollection AddCustomizeServices(this IServiceCollection service)
+        {
+            service.AddScoped<IErrorTranslator, ErrorTranslator>();
+            service.AddScoped<IExceptionLogger, ExceptionLogger>();
+            service.AddScoped<IExceptionPolicy, ExceptionPolicy>();
+            service.AddBlazoredLocalStorage();
+            
             return service;
         }
     }
