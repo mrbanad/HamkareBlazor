@@ -1,5 +1,6 @@
 @namespace HamkareBlazor
 @using HamkareBlazor.Resources
+@inject InternalHamkareLocalizer Localizer
 
 <HamkareStack Row="true" Class="@($"rounded-lg mb-2 stack-title-table {Class}")" AlignItems="AlignItems.Center"
               Style="height: 48px;">
@@ -8,7 +9,7 @@
 
         @if (OnReturnClick != null || !string.IsNullOrWhiteSpace(ReturnLink))
         {
-            <HamkareTooltip Text="@LanguageResource.Return" Placement="Placement.Bottom" Arrow="true">
+            <HamkareTooltip Text="@Localizer[LanguageResource.Return]" Placement="Placement.Bottom" Arrow="true">
 
                 @if (OnReturnClick != null)
                 {

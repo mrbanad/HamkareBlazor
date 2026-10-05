@@ -1,5 +1,6 @@
 @namespace HamkareBlazor
 @using HamkareBlazor.Resources
+@inject InternalHamkareLocalizer Localizer
 
 <HamkareGrid Justify="Justify.Center" Class="h-100">
 
@@ -8,7 +9,7 @@
         <HamkareIcon Icon="@Icons.Material.Rounded.HourglassBottom" Color="Color.Primary"
                      Size="Size.Large"></HamkareIcon>
 
-        <HamkareText Typo="Typo.h6" Color="Color.Primary">@LanguageResource.HamkareTable_Loading</HamkareText>
+        <HamkareText Typo="Typo.h6" Color="Color.Primary"> @Localizer[LanguageResource.HamkareTable_Loading]</HamkareText>
 
         <HamkareProgressLinear Color="Color.Primary" Indeterminate="true" Size="Size.Medium" Rounded="true"
                                Style="width: 90%;"/>
