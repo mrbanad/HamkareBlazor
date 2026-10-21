@@ -199,7 +199,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>LanguageResource.resx</DependentUpon>
     </Compile>
-    <Compile Remove="Services\FormHandler\FormSubmitHandler.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -224,7 +223,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Services\FormHandler\" />
     <Folder Include="wwwroot\Fonts\" />
   </ItemGroup>
 
