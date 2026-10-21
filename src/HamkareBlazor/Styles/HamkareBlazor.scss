@@ -94,39 +94,6 @@
 @import 'core/_ripple';
 @import 'core/_rtl';
 
-
-@font-face {
-  font-family: FaPanelFont;
-  src: url(_content/Fonts/FaPanelFont.woff2) format('woff2'),
-  url(_content/Fonts/FaPanelFont.woff) format('woff'),
-  url(_content/Fonts/FaPanelFont.ttf) format('truetype');
-  font-weight: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: FaPanelFont;
-  src: url(_content/Fonts/FaPanelFont-Bold.woff2) format('woff2'),
-  url(_content/Fonts/FaPanelFont-Bold.woff) format('woff'),
-  url(_content/Fonts/FaPanelFont-Bold.ttf) format('truetype');
-  font-weight: bold;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: EnPanelFont;
-  src: url(_content/Fonts/EnPanelFont.ttf) format('truetype');
-  font-weight: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: EnPanelFont;
-  src: url(_content/Fonts/EnPanelFont-Bold.ttf) format('truetype');
-  font-weight: bold;
-  font-display: swap;
-}
-
 .hamkare-table .hamkare-toolbar {
   height: fit-content;
   z-index: 3;
