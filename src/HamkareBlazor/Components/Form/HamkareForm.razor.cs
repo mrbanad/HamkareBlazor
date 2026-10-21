@@ -309,7 +309,7 @@ namespace HamkareBlazor
         /// <remarks>
         /// Validation will occur even if form controls haven't changed yet.
         /// </remarks>
-        public async Task ValidateAsync()
+        public virtual async Task ValidateAsync()
         {
             await Task.WhenAll(_formControls.Select(x => x.ValidateAsync()));
 
@@ -327,7 +327,7 @@ namespace HamkareBlazor
         /// <remarks>
         /// Any existing value in any form input component will be cleared.
         /// </remarks>
-        public async Task ResetAsync()
+        public virtual async Task ResetAsync()
         {
             foreach (var control in _formControls.ToArray())
             {
@@ -348,7 +348,7 @@ namespace HamkareBlazor
         /// <remarks>
         /// The values in each form input component will not be changed.
         /// </remarks>
-        public async Task ResetValidationAsync()
+        public virtual async Task ResetValidationAsync()
         {
             foreach (var control in _formControls.ToArray())
             {
