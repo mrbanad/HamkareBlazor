@@ -8,7 +8,7 @@ public static class CultureExtension
     private static CultureInfo? _culture;
 
     public static CultureInfo GetPersianCulture()
-    {
+     {
         if (_culture != null)
             return _culture;
 
@@ -34,23 +34,18 @@ public static class CultureExtension
             "فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند",
             ""
         ];
-        formatInfo.AbbreviatedDayNames = ["ی", "د", "س", "چ", "پ", "ج", "ش"];
-        formatInfo.ShortestDayNames = ["ی", "د", "س", "چ", "پ", "ج", "ش"];
-        formatInfo.DayNames = ["یکشنبه", "دوشنبه", "ﺳﻪشنبه", "چهارشنبه", "پنجشنبه", "جمعه", "شنبه"];
-        formatInfo.AMDesignator = "ق.ظ";
-        formatInfo.PMDesignator = "ب.ظ";
         formatInfo.ShortTimePattern = "HH:mm";
 
         formatInfo.DateSeparator = "/";
 
-        formatInfo.FullDateTimePattern = "dd/MM/yyyy HH:mm";
+        formatInfo.FullDateTimePattern = "yyyy/MM/dd HH:mm";
 
         formatInfo.FirstDayOfWeek = DayOfWeek.Saturday;
-        formatInfo.ShortDatePattern = "dd/MM/yyyy";
+        formatInfo.ShortDatePattern = "yyyy/MM/dd";
 
-        formatInfo.LongDatePattern = "dd/MM/yyyy HH:mm";
-        formatInfo.SetAllDateTimePatterns(["dd/MM/yyyy"], 'd');
-        formatInfo.SetAllDateTimePatterns(["dddd, dd MMMM yyyy"], 'D');
+        formatInfo.LongDatePattern = "yyyy/MM/dd HH:mm";
+        formatInfo.SetAllDateTimePatterns(["yyyy/MM/dd"], 'd');
+        formatInfo.SetAllDateTimePatterns(["dddd, yyyy MMMM dd"], 'D');
 
         formatInfo.SetAllDateTimePatterns(["yyyy MMMM"], 'y');
         formatInfo.SetAllDateTimePatterns(["yyyy MMMM"], 'Y');
