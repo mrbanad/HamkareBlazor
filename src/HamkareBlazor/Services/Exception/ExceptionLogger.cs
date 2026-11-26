@@ -19,9 +19,12 @@ public sealed class ExceptionLogger(
                 hamkareException.ErrorCode,
                 hamkareException.Behavior);
 
+            Console.Error.WriteLine(exception);
             return;
         }
 
+        Console.Error.WriteLine(exception);
+        
         logger.LogError(
             exception,
             "Unhandled exception occurred. Type: {ExceptionType}",
